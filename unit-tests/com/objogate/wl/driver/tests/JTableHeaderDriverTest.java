@@ -17,9 +17,9 @@ public class  JTableHeaderDriverTest extends AbstractComponentDriverTest<JTableH
 
     @Test
     public void testMovingColumnsToTheRight() throws Exception {
-        driver.moveColumn(2, 4);
+        driver.moveColumn(2, 3);
 
-        driver.indexOfColumnIdentifiedBy("c", 6);
+        driver.indexOfColumnIdentifiedBy("c", 5);
 
         driver.moveColumn("b", 1);
 

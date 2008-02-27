@@ -1,5 +1,6 @@
 package com.objogate.wl.driver.tests;
 
+import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -9,6 +10,9 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -28,6 +32,9 @@ class ReallyBigTable extends JTable {
         for (int i = 0; i < getColumnCount(); i++) {
             getColumnModel().getColumn(i).setIdentifier(getColumnName(i));
         }
+
+        // workaround for jvm bug 6503981 in 1.6
+        getTableHeader().addMouseListener(new WorkaroundMouseListener());
     }
 
     public void stripe(final Color evenRowBackgroundColor, final Color oddRowBackgroundColor, Color textColor) {
@@ -99,4 +106,32 @@ class ReallyBigTable extends JTable {
             return row + "x" + col;
         }
     }
+
+    private class WorkaroundMouseListener implements MouseListener {
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        public void mousePressed(MouseEvent e) {
+            int column = getTableHeader().getColumnModel().getColumnIndexAtX(e.getPoint().x);
+            if ( column >= 0 ) {
+                setColumnSelectionInterval(column, column);
+                Action action = getActionMap().get("focusHeader");
+                action.actionPerformed(new ActionEvent(ReallyBigTable.this, 0, "focusHeader"));
+            }
+        }
+
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        public void mouseExited(MouseEvent e) {
+
+        }
+    }
+
 }
