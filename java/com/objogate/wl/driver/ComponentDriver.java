@@ -169,6 +169,10 @@ public abstract class ComponentDriver<T extends Component> {
         return new ComponentCenterTracker(prober, selector);
     }
 
+    protected Prober prober() {
+        return prober;
+    }
+    
     public void leftClickOnComponent() {
         isShowingOnScreen();
         performGesture(moveMouseTo(centerOfComponent()), clickMouseButton(BUTTON1));
