@@ -1,0 +1,64 @@
+<project name="windowlicker-cruise">
+
+    <property name="label" value="LABEL"/>
+    <property name="svnrevision" value="SVN_REVISION"/>
+    <property name="build.number" value="${label}-rev-${svnrevision}"/>
+
+    <!-- this directory is the document root -->
+    <property name="website.dir" location="/data/website/objogate"/>
+    <property name="tools.dir" location="/data/cruise/tools/"/>
+    <property name="vnc2swf" location="${tools.dir}/pyvnc2swf-0.9.3/pyvnc2swf/vnc2swf.py"/>
+
+    <property name="keyboard.type" value="US"/>
+
+    <import file="build.xml"/>
+
+    <!-- cruisecontrol doesn't do the update for you -->
+    <target name="update">
+       <exec dir="${basedir}" executable="svn">
+           <arg value="update"/>
+           <arg value="--revision"/>
+           <arg value="${svnrevision}"/>
+       </exec>
+    </target>
+
+    <target name="start-recording">
+        <exec executable="${basedir}/tools/start-recording-vnc.sh">
+            <arg value="${vnc2swf}"/>
+            <arg value="${basedir}/build/capture-${build.number}.swf"/>
+            <arg value="localhost:1"/>
+        </exec>
+    </target>
+
+    <target name="stop-recording">
+        <exec executable="${basedir}/tools/stop-recording-vnc.sh">
+            <arg value="${basedir}/build/capture-${build.number}.swf"/>
+        </exec>
+    </target>
+
+    <target name="copy-stuff">
+        <property name="website.build.dir" location="${website.dir}/artifacts/${build.number}"/>
+        <mkdir dir="${website.build.dir}/binaries"/>
+        <copy todir="${website.build.dir}/binaries">
+            <fileset dir="${basedir}/build">
+                <include name="*.jar"/>
+                <include name="*.swf"/>
+            </fileset>
+        </copy>
+
+        <mkdir dir="${website.build.dir}/tests"/>
+        <copy todir="${website.build.dir}/tests">
+            <fileset dir="${basedir}/build/test/reports/">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- This aint gonna work except from cruise -->
+    <!-- start-recording, stop-recording,  -->
+    <target name="cruise" description="Runs the cruise build"
+            depends="update, clean, -unit-test, junit-report, copy-stuff">
+        <fail if="test.failure" message="There were test failures. Look at ${test.report.dir}/index.html"/>
+    </target>
+
+</project>

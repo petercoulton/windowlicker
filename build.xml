@@ -1,0 +1,106 @@
+<project name="windowlicker" default="build">
+ 
+    <property name="build.number" value="DEVELOPER-BUILD"/>
+
+    <property name="build.dir" location="${basedir}/build"/>
+    <property name="product.class.dir" location="${build.dir}/product-classes"/>
+    <property name="test.class.dir" location="${build.dir}/test-classes"/>
+
+    <property name="test.report.dir" location="${build.dir}/test/reports"/>
+    <property name="test.output.dir" location="${build.dir}/test/output"/>
+
+    <property name="product.jar.path" location="${build.dir}/windowlicker-${build.number}.jar"/>
+    <property name="test.jar.path" location="${build.dir}/windowlicker-tests-${build.number}.jar"/>
+
+    <property name="tests" value="*"/>
+
+    <property name="keyboard.type" value="GB"/>
+
+    <path id="library.path">
+        <fileset dir="${basedir}/lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="unit-test.classpath">
+        <path refid="library.path"/>
+        <pathelement location="${product.jar.path}"/>
+        <pathelement location="${test.jar.path}"/>
+    </path>
+
+    <path id="unit-test-source.path">
+        <pathelement location="${basedir}/unit-tests"/>
+    </path>
+
+    <path id="product-source.path">
+        <pathelement location="${basedir}/java"/>
+    </path>
+    
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="build" depends="unit-test"/>
+
+    <target name="compile" description="Compile all code and create product and test jar files">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${product.class.dir}"/>
+        <mkdir dir="${test.class.dir}"/>
+
+        <javac  destdir="${product.class.dir}"
+                debug="true" source="1.5" target="1.5" fork="true">
+            <src refid="product-source.path"/>
+            <classpath refid="library.path"/>
+        </javac>
+
+        <copy todir="${product.class.dir}">
+            <fileset dir="${basedir}/java" excludes="**/*.java"/>
+        </copy>
+
+        <jar destfile="${product.jar.path}">
+            <fileset dir="${product.class.dir}"/>
+        </jar>
+
+        <javac  destdir="${test.class.dir}"
+                debug="true" source="1.5" target="1.5" fork="true">
+            <src refid="unit-test-source.path"/>
+            <classpath refid="library.path"/>
+            <classpath location="${product.class.dir}"/>
+        </javac>
+
+        <jar destfile="${test.jar.path}">
+            <fileset dir="${test.class.dir}"/>
+        </jar>
+    </target>
+
+    <target name="-unit-test" depends="compile" description="Compile code and run all unit testcases">
+        <mkdir dir="${test.output.dir}"/>
+
+        <junit printsummary="yes" failureproperty="test.failure" fork="true" forkmode="perBatch">
+            <classpath refid="unit-test.classpath"/>
+            <!--<jvmarg value="-Dwindowlicker.end-of-test-pause=0"/>-->
+            <jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}"/>
+            <formatter type="xml"/>
+            <batchtest todir="${test.output.dir}">
+                <fileset dir="${basedir}/unit-tests">
+                    <include name="**/${tests}Test.java"/>
+                    <exclude name="**/Abstract*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="unit-test" depends="-unit-test, junit-report">
+        <fail if="test.failure" message="There were test failures. Look at file://${test.report.dir}/index.html"/>
+    </target>
+
+    <target name="junit-report">
+        <mkdir dir="${test.report.dir}"/>
+        <junitreport todir="${test.report.dir}">
+            <fileset dir="${test.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${test.report.dir}"/>
+        </junitreport>
+    </target>
+</project>

@@ -1,0 +1,23 @@
+1. Ant/Cruise Build
+
+2. Some tests!
+
+3. Drivers (priority order)
+    JTextField
+    JTable
+    JButton
+    JLabel
+    JTextArea
+    JDialog
+    ...
+
+4. Configuration of gestures by Look-and-Feel.
+
+5. Website
+
+Other Stuff in no order:
+- Launch from JNLP file
+-
+
+
+
