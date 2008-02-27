@@ -197,13 +197,6 @@ public abstract class ComponentDriver<T extends Component> {
     }
 
     /**
-     * Dont use this unless you have to - should try to make everything asynchronous
-     */
-    public void waitUntilGesturesCompleted() {
-        // no-op
-    }
-
-    /**
      * @Deprecated use a Tracker instead
      */
     protected Rectangle screenBounds() {

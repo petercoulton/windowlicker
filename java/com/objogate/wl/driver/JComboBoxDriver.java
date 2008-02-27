@@ -47,7 +47,6 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
     public void selectItem(int index) {
         clickToOpenPopup();
 
-        waitUntilGesturesCompleted();
         ComboPopupComponentDriver comboPopupDriver = new ComboPopupComponentDriver(gesturePerformer);
 
         comboPopupDriver.selectItem(index);
@@ -56,7 +55,6 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
     public void selectItem(Object item) {
         clickToOpenPopup();
 
-        waitUntilGesturesCompleted();
         ComboPopupComponentDriver comboPopupDriver = new ComboPopupComponentDriver(gesturePerformer);
 
         comboPopupDriver.selectItem(item);
@@ -65,7 +63,6 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
     public void selectItem(Matcher<Component>  item) {
         clickToOpenPopup();
 
-        waitUntilGesturesCompleted();
         ComboPopupComponentDriver comboPopupDriver = new ComboPopupComponentDriver(gesturePerformer);
 
         comboPopupDriver.selectItem(item);
