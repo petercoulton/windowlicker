@@ -14,7 +14,7 @@ import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
 
-public class JListDriver extends ComponentDriver<JList> {
+public class JListDriver extends ComponentDriver<JList> implements ListDriver {
 
     public JListDriver(GesturePerformer gesturePerformer, JList component) {
         super(gesturePerformer, component);

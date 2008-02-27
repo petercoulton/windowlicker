@@ -66,25 +66,73 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
         assertEquals(1, returnValue);
     }
 
+    @Test
     public void testShowInputDialog() throws Exception {
         view(new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                returnValue = JOptionPane.showInputDialog("Please input a value");
+                returnValue = JOptionPane.showInputDialog(frame, "Please input a value");
             }
         });
 
         driver = new JOptionPaneDriver(frameDriver, JOptionPane.class);
 
-        driver.enterText("hello");
+        driver.typeText("hello");
+        driver.clickOK();
 
         driver.is("option pane should not be showing on screen", not(showingOnScreen()));
 
         assertEquals("hello", returnValue);
     }
 
+    @Test
+    public void testShowInputDialogWithMultipleAllowedValues() throws Exception {
+        final String wantedValue = "two";
+        view(new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                returnValue = JOptionPane.showInputDialog(frame, "Please input a value", "Title", JOptionPane.INFORMATION_MESSAGE, null,
+                        new String[] { "one", wantedValue, "three"}, "one");
+            }
+        });
+
+        driver = new JOptionPaneDriver(frameDriver, JOptionPane.class);
+
+        driver.selectValue(wantedValue);
+
+        driver.is("option pane should not be showing on screen", not(showingOnScreen()));
+
+        assertEquals(wantedValue, returnValue);
+    }
+
+    @Test
+    public void testShowInputDialogWithALargeNumberOfAllowedValues() throws Exception {
+
+        final String[] values = new String[50];
+        for ( int i = 0 ; i < values.length; i++ ) {
+            values[i] = String.valueOf(i);
+        }
+
+        view(new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                returnValue = JOptionPane.showInputDialog(frame, "Please input a value", "Title", JOptionPane.INFORMATION_MESSAGE, null,
+                        values, values[0]);
+            }
+        });
+
+        driver = new JOptionPaneDriver(frameDriver, JOptionPane.class);
+
+        String wantedValue = "25";
+
+        driver.selectValue(wantedValue);
+
+        driver.is("option pane should not be showing on screen", not(showingOnScreen()));
+
+        assertEquals(wantedValue, returnValue);
+    }
+
+
     private void view(AbstractAction action) {
         JButton button = new JButton(action);
-        button.setText("click me");
+        button.setText("click me to run test");
 
         view(button);
 

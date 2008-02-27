@@ -18,7 +18,7 @@ import com.objogate.wl.probe.RecursiveComponentFinder;
 import com.objogate.wl.probe.SingleComponentFinder;
 import com.objogate.wl.probe.TopLevelWindowFinder;
 
-public class JComboBoxDriver extends ComponentDriver<JComboBox> {
+public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListDriver {
 
     public JComboBoxDriver(GesturePerformer gesturePerformer, JComboBox component) {
         super(gesturePerformer, component);
