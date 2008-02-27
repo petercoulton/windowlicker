@@ -39,7 +39,7 @@ class ComponentScreenBoundsProbe implements Probe {
     }
 
     public void describeTo(Description description) {
-        description.appendText(" finding screen position of ");
+        description.appendText(" screen dimensions of ");
         description.appendDescriptionOf(componentSelector);
     }
 }

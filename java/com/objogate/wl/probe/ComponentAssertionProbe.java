@@ -32,12 +32,12 @@ public class ComponentAssertionProbe<T extends Component> implements ComponentFi
 
     public void describeTo(Description description) {
         description.appendDescriptionOf(selector)
-                   .appendText(" and is ")
-                   .appendDescriptionOf(assertion);
+                .appendText(", and is ")
+                .appendDescriptionOf(assertion);
 
         if (selector.isSatisfied() && !assertionMet) {
-            description.appendText("\nbut is not ")
-                       .appendDescriptionOf(assertion);
+            description.appendText(", but is not ")
+                    .appendDescriptionOf(assertion);
         }
     }
 }

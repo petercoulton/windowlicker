@@ -1,9 +1,8 @@
 package com.objogate.wl.matcher;
 
+import javax.swing.JButton;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
-
-import javax.swing.JButton;
 
 public class ButtonTextMatcher extends TypeSafeMatcher<JButton> {
     private final String expectedText;
@@ -12,8 +11,9 @@ public class ButtonTextMatcher extends TypeSafeMatcher<JButton> {
         this.expectedText = expectedText;
     }
 
+    /* Note that getText can seem to return null */
     public boolean matchesSafely(JButton jButton) {
-        return jButton.getText().equals(expectedText);
+        return expectedText.equals(jButton.getText());
     }
 
     public void describeTo(Description description) {

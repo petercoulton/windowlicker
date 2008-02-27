@@ -62,7 +62,6 @@ public class JTableDriver extends ComponentDriver<JTable> {
     public void selectCells(Cell... cells) {
         int keyCode = multiSelectKey();
         performGesture(Gestures.pressKey(keyCode));
-        waitUntilGesturesCompleted();
         for (Cell cell : cells) {
             selectCell(cell);
         }
@@ -72,13 +71,11 @@ public class JTableDriver extends ComponentDriver<JTable> {
     public void selectCell(final int row, final int col) {
         mouseOverCell(row, col);
         performGesture(Gestures.leftClickMouse());
-        waitUntilGesturesCompleted();
     }
 
     public Component editCell(int row, int col) {
         mouseOverCell(row, col);
         performGesture(Gestures.doubleClickMouse());
-        waitUntilGesturesCompleted();
 
         JTableCellManipulation manipulation = new JTableCellManipulation(row, col);
         perform("finding cell editor", manipulation);

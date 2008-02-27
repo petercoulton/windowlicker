@@ -34,7 +34,7 @@ public class ComponentIdentity<T extends Component> implements ComponentSelector
     }
 
     public void describeTo(Description description) {
-        description.appendText(" the " );
+        description.appendText(" the exact " );
         description.appendText(component.getClass().getSimpleName());
         description.appendText( " '" );
         description.appendValue(component.toString());

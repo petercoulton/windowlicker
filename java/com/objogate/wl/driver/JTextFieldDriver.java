@@ -53,7 +53,6 @@ public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
 
         moveMouseToOffset(x, y);
         performGesture(Gestures.doubleClickMouse());
-        waitUntilGesturesCompleted();
     }
 
     /**

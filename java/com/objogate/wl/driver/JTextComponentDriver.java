@@ -126,7 +126,6 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
         moveMouseToCenter();
         performGesture(Gestures.leftClickMouse());
 
-        waitUntilGesturesCompleted();
 
         TextSearch search = new TextSearch(textOccurence);
         perform("Text occurence", search);
@@ -138,7 +137,6 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
         performGesture(whileHoldingKey(KeyEvent.VK_SHIFT,
                 repeat(repetitions, typeKey(KeyEvent.VK_RIGHT))));
 
-        waitUntilGesturesCompleted();
     }
 
     public void moveCaretTo(int targetPosition) {
