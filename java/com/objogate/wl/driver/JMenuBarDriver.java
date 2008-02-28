@@ -1,9 +1,9 @@
 package com.objogate.wl.driver;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import java.awt.Component;
 import org.hamcrest.Matcher;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class JMenuBarDriver extends ComponentDriver<JMenuBar>{
 
@@ -11,7 +11,7 @@ public class JMenuBarDriver extends ComponentDriver<JMenuBar>{
         super(parentOrOwner, JMenuBar.class, matchers);
     }
 
-    public JMenuDriver menu(Matcher matching) {
+    public JMenuDriver menu(Matcher<? super JMenu> matching) {
         return new JMenuDriver(this, matching);
     }
 
