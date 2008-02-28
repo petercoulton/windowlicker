@@ -3,10 +3,7 @@ package com.objogate.wl.example.calculator.tests;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import static org.hamcrest.Matchers.equalTo;
-import com.objogate.wl.driver.AbstractButtonDriver;
-import com.objogate.wl.driver.JFrameDriver;
-import com.objogate.wl.driver.JTextComponentDriver;
-import com.objogate.wl.driver.JTextFieldDriver;
+import com.objogate.wl.driver.*;
 import static com.objogate.wl.example.calculator.Calculator.*;
 import com.objogate.wl.gesture.GesturePerformer;
 import static com.objogate.wl.matcher.ComponentMatchers.named;
@@ -58,9 +55,9 @@ public class CalculatorDriver extends JFrameDriver {
     }
 
     private void clickButton(String name) {
-        new AbstractButtonDriver<JButton>(this, JButton.class, named(name)).click();
+        new JButtonDriver(this, JButton.class, named(name)).click();
     }
-
+    
     public void displaysNumber(String expectedResult) {
         display().text(equalTo(expectedResult));
     }
