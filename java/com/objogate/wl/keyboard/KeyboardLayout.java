@@ -3,12 +3,12 @@ package com.objogate.wl.keyboard;
 import javax.swing.KeyStroke;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.im.InputContext;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import com.objogate.wl.Gesture;
 import com.objogate.wl.SystemProperties;
@@ -63,7 +63,7 @@ public class KeyboardLayout implements SystemProperties {
      * @return the default keyboard layout
      */
     public static KeyboardLayout getDefaultKeyboardLayout() {
-        String layoutName = System.getProperty(KEYBOARD_LAYOUT, Locale.getDefault().getCountry());
+        String layoutName = System.getProperty(KEYBOARD_LAYOUT, InputContext.getInstance().getLocale().getCountry());
         
         return getKeyboardLayout(layoutName);
     }
