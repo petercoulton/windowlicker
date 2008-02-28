@@ -389,15 +389,6 @@
       <JAVADOC />
       <SOURCES />
     </library>
-    <library name="examples">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/SwingSet2.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$PROJECT_DIR$/lib/SwingSet2.jar!/" />
-      </SOURCES>
-    </library>
   </component>
   <component name="uidesigner-configuration">
     <option name="INSTRUMENT_CLASSES" value="true" />
