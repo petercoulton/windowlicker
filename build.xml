@@ -11,7 +11,8 @@
 
     <property name="product.jar.path" location="${build.dir}/windowlicker-${build.number}.jar"/>
     <property name="test.jar.path" location="${build.dir}/windowlicker-tests-${build.number}.jar"/>
-
+    <property name="product.src.jar.path" location="${build.dir}/windowlicker-${build.number}.src.jar"/>
+    
     <property name="tests" value="*"/>
 
     <property name="keyboard.type" value="GB"/>
@@ -59,6 +60,11 @@
 
         <jar destfile="${product.jar.path}">
             <fileset dir="${product.class.dir}"/>
+        </jar>
+
+
+        <jar destfile="${product.src.jar.path}">
+            <fileset  dir="${basedir}/java"/>
         </jar>
 
         <javac  destdir="${test.class.dir}"

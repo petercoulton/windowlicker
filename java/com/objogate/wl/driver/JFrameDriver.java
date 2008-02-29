@@ -38,8 +38,8 @@ public class JFrameDriver extends ComponentDriver<JFrame> {
         super(parentOrOwner, componentType, matchers);
     }
 
-    public JFrameDriver(GesturePerformer gesturePerformer, Matcher<? super JFrame>... matchers) {
-        this(gesturePerformer, topLevelFrameSelector(matchers));
+    public JFrameDriver(GesturePerformer gesturePerformer, Matcher<? super JFrame>... withMatchers) {
+        this(gesturePerformer, topLevelFrame(withMatchers));
     }
 
     public JFrameDriver(ComponentDriver<? extends Component> ownerDriver, Matcher<? super JFrame>... matchers) {
@@ -49,7 +49,13 @@ public class JFrameDriver extends ComponentDriver<JFrame> {
                        ownerDriver.component())));
     }
     
-    private static ComponentSelector<JFrame> topLevelFrameSelector(Matcher<? super JFrame>... matchers) {
+    /**
+     * Creates a ComponentSelector that will find a top-level JFrame that conforms
+     * to the given matchers
+     * @param matchers The matchers to conform to
+     * @return A ComponentSelector
+     */
+    public static ComponentSelector<JFrame> topLevelFrame(Matcher<? super JFrame>... matchers) {
         return new SingleComponentFinder<JFrame>(
                   new RecursiveComponentFinder<JFrame>(JFrame.class, allOf(matchers),
                       new TopLevelWindowFinder()));
