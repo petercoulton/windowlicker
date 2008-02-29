@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="calculator-example/end-to-end-tests"/>
+	<classpathentry kind="src" path="calculator-example/src"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="unit-tests"/>
+	<classpathentry kind="lib" path="lib/hamcrest/hamcrest-all-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/jmock/jmock-2.3.0-RC2.jar"/>
+	<classpathentry kind="lib" path="lib/jmock/jmock-junit4-2.3.0-RC2.jar"/>
+	<classpathentry kind="lib" path="lib/junit/junit-4.4-src.jar"/>
+	<classpathentry kind="lib" path="lib/junit/junit-4.4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
