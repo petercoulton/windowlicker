@@ -32,7 +32,7 @@ public class SingleComponentFinder<T extends Component> implements ComponentSele
     }
 
     public void describeTo(Description description) {
-        description.appendText("one ")
+        description.appendText("single ")
                    .appendDescriptionOf(finder);
 
         if (!isSatisfied() && finder.isSatisfied()) {
