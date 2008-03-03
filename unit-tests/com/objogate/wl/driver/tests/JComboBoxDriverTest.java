@@ -21,7 +21,7 @@ public class JComboBoxDriverTest extends AbstractComponentDriverTest<JComboBoxDr
     }
 
     @Test
-    public void testSelectingItemsByIndex() throws InterruptedException {
+    public void testSelectingItemsByIndex() {
         driver.selectItem(0);
 
         driver.hasSelectedIndex(0);

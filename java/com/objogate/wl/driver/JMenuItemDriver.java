@@ -12,7 +12,8 @@ public class JMenuItemDriver extends AbstractButtonDriver<JMenuItem>{
         super(parentOrOwner, JMenuItem.class, matcher);
     }
 
-     public void leftClickOnComponent() {
+     @Override
+    public void leftClickOnComponent() {
         isShowingOnScreen();
         performGesture(new HorizontalThenVerticalMouseMoveGesture(centerOfComponent()), clickMouseButton(BUTTON1));
     }

@@ -1,8 +1,11 @@
 package com.objogate.wl.gesture;
 
+import java.awt.Component;
 import java.awt.Point;
+
 import org.hamcrest.Description;
 import org.hamcrest.SelfDescribing;
+
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 
@@ -10,7 +13,7 @@ public class ComponentCenterTracker implements Tracker, SelfDescribing {
     private final Prober prober;
     private final ComponentScreenBoundsProbe probe;
 
-    public ComponentCenterTracker(Prober prober, ComponentSelector componentSelector) {
+    public ComponentCenterTracker(Prober prober, ComponentSelector<? extends Component> componentSelector) {
         this.prober = prober;
         this.probe = new ComponentScreenBoundsProbe(componentSelector);
     }

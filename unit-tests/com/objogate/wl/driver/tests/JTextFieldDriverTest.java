@@ -83,7 +83,7 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
     }
 
     @Test
-    public void testMouseSelectionWithArbitaryFont() throws InterruptedException {
+    public void testMouseSelectionWithArbitaryFont() {
         String font = setRandomFont();
         pack();
         setText("testing selection with font " + font + " and some stuff after");

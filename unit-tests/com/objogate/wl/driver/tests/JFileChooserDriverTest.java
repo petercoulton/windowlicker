@@ -82,7 +82,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    public void testCanClickOnTheHomeButton() throws InterruptedException {
+    public void testCanClickOnTheHomeButton() {
         showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, null);
 
         driver.upOneFolder();

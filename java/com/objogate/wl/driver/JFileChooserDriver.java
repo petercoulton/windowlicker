@@ -1,26 +1,39 @@
 package com.objogate.wl.driver;
 
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicFileChooserUI;
+import static com.objogate.wl.matcher.ComponentMatchers.named;
+import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
+import static com.objogate.wl.matcher.ComponentMatchers.withFocus;
+import static org.hamcrest.Matchers.equalTo;
+
 import java.awt.Component;
 import java.awt.HeadlessException;
 import java.io.File;
-import com.sun.java.swing.plaf.motif.MotifFileChooserUI;
-import com.sun.java.swing.plaf.windows.WindowsFileChooserUI;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicFileChooserUI;
+import javax.swing.text.JTextComponent;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import static org.hamcrest.Matchers.equalTo;
+
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.Probe;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.matcher.ComponentMatchers;
-import static com.objogate.wl.matcher.ComponentMatchers.*;
 import com.objogate.wl.probe.ComponentIdentity;
 import com.objogate.wl.probe.ComponentManipulatorProbe;
 import com.objogate.wl.probe.NthComponentFinder;
 import com.objogate.wl.probe.RecursiveComponentFinder;
+import com.sun.java.swing.plaf.motif.MotifFileChooserUI;
+import com.sun.java.swing.plaf.windows.WindowsFileChooserUI;
 
 public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
@@ -78,7 +91,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
 
     public void enterManually(String someText) {
-        JTextComponentDriver textComponentDriver = chooserUI().textBox();
+        JTextComponentDriver<? extends JTextComponent> textComponentDriver = chooserUI().textBox();
         textComponentDriver.moveMouseToCenter();
         textComponentDriver.selectAll();
         textComponentDriver.typeText(someText);
@@ -158,14 +171,14 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         }
 
         public void cancel() {
-            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, named("SynthFileChooser.cancelButton")).click();
+            new JButtonDriver(JFileChooserDriver.this, JButton.class, named("SynthFileChooser.cancelButton")).click();
         }
-
+        
         public void ok() {
-            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, named("SynthFileChooser.approveButton")).click();
+            new JButtonDriver(JFileChooserDriver.this, JButton.class, named("SynthFileChooser.approveButton")).click();
         }
 
-        public JTextComponentDriver textBox() {
+        public JTextComponentDriver<? extends JTextComponent> textBox() {
             return new JTextFieldDriver(JFileChooserDriver.this, JTextField.class, named("GTKFileChooser.fileNameTextField"));
         }
 
@@ -192,7 +205,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
             new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText("Open")).click();
         }
 
-        public JTextComponentDriver textBox() {
+        public JTextFieldDriver textBox() {
             // only one textfield in this laf...
             return new JTextFieldDriver(JFileChooserDriver.this, JTextField.class, Matchers.anything());
         }
@@ -229,7 +242,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         void cancel();
 
         void ok();
-
-        JTextComponentDriver textBox();
+        
+        JTextComponentDriver<? extends JTextComponent> textBox();
     }
 }

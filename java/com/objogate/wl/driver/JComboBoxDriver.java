@@ -82,12 +82,13 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
 
     private static class ComboPopupComponentDriver extends ComponentDriver<JComponent> {
         public ComboPopupComponentDriver(GesturePerformer gesturePerformer) {
-            super(gesturePerformer, new SingleComponentFinder(new RecursiveComponentFinder<Component>(Component.class, thatImplementsComboPopup(), new TopLevelWindowFinder())));
+            super(gesturePerformer, new SingleComponentFinder<JComponent>(new RecursiveComponentFinder<JComponent>(JComponent.class, thatImplementsComboPopup(), new TopLevelWindowFinder())));
         }
 
-        private static TypeSafeMatcher<Component> thatImplementsComboPopup() {
-            return new TypeSafeMatcher<Component>() {
-                public boolean matchesSafely(Component component) {
+        private static TypeSafeMatcher<JComponent> thatImplementsComboPopup() {
+            return new TypeSafeMatcher<JComponent>() {
+                @Override
+                public boolean matchesSafely(JComponent component) {
                     return component instanceof ComboPopup;
                 }
 
@@ -96,7 +97,7 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
                 }
             };
         }
-
+        
         public void selectItem(final int index) {
             JListFinderManipulation listFinderManipulation = new JListFinderManipulation();
             perform("selecting index in combo popup", listFinderManipulation);

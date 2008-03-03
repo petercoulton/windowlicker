@@ -13,10 +13,7 @@ import com.objogate.wl.gesture.Gestures;
 import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.gesture.Tracker;
 
-@SuppressWarnings({"JavaDoc"})
 public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
-
-
     public JTextFieldDriver(GesturePerformer gesturePerformer, JTextField component) {
         super(gesturePerformer, component);
     }
@@ -102,6 +99,7 @@ public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
         return componentInsetsManipulation.getInsets();
     }
 
+    @Override
     public void moveCaretTo(final int position) {
         perform("moving caret", new ComponentManipulation<JTextField>() {
             public void manipulate(JTextField component) {

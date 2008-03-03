@@ -1,8 +1,11 @@
 package com.objogate.wl.driver;
 
-import javax.swing.JPasswordField;
 import java.awt.Component;
+
+import javax.swing.JPasswordField;
+
 import org.hamcrest.Matcher;
+
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
@@ -34,10 +37,12 @@ public class JPasswordFieldDriver extends JTextComponentDriver<JPasswordField> {
         super(parentOrOwner, componentType, matchers);
     }
 
+    @Override
     public void text(Matcher<String> textMatcher) {
         throw new Defect("getting text from a password field is not allowed");
     }
 
+    @Override
     public void selectText(TextOccurence textOccurence) {
         throw new Defect("selecting text from a password field is not allowed");
     }

@@ -39,8 +39,8 @@ class ReallyBigJList extends JList {
     }
 
     private static class FontModel extends AbstractListModel {
-        List fonts;
-
+        List<Font> fonts;
+        
         public FontModel() {
             ArrayList<Font> list = new BigListOfRandomlySizedFonts();
 
@@ -54,7 +54,6 @@ class ReallyBigJList extends JList {
         public Object getElementAt(int index) {
             return fonts.get(index);
         }
-
     }
 
 }

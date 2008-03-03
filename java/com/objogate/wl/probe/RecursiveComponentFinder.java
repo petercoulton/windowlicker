@@ -1,14 +1,17 @@
 package com.objogate.wl.probe;
 
-import javax.swing.MenuElement;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.MenuElement;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+
 import com.objogate.wl.ComponentFinder;
 import com.objogate.wl.internal.NoDuplicateList;
 
@@ -52,7 +55,7 @@ public class RecursiveComponentFinder<T extends Component> implements ComponentF
         searchWithin(list);
     }
 
-    private void searchWithin(List<? extends Component> components) {
+    private void searchWithin(Iterable<? extends Component> components) {
         for (Component component : components) {
             searchWithin(component);
         }

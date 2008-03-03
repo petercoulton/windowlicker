@@ -1,6 +1,8 @@
 package com.objogate.wl.gesture;
 
+import java.awt.Component;
 import java.awt.Point;
+
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 
@@ -14,7 +16,7 @@ public class ComponentOffsetTracker implements Tracker {
     private final ComponentScreenBoundsProbe probe;
     private final Point offset;
 
-    public ComponentOffsetTracker(Prober prober, ComponentSelector componentSelector, int offsetX, int offsetY) {
+    public ComponentOffsetTracker(Prober prober, ComponentSelector<? extends Component> componentSelector, int offsetX, int offsetY) {
         this.prober = prober;
         this.probe = new ComponentScreenBoundsProbe(componentSelector);
         this.offset = new Point(offsetX, offsetY);

@@ -1,5 +1,6 @@
 package com.objogate.wl.gesture;
 
+import java.awt.Component;
 import java.awt.Point;
 import org.hamcrest.Description;
 import org.hamcrest.SelfDescribing;
@@ -16,7 +17,7 @@ public class ComponentEdgeTracker implements Tracker, SelfDescribing {
         Left, Right, Top, Bottom
     }
 
-    public ComponentEdgeTracker(Prober prober, ComponentSelector componentSelector, Edge edge, int offset) {
+    public ComponentEdgeTracker(Prober prober, ComponentSelector<? extends Component> componentSelector, Edge edge, int offset) {
         this.prober = prober;
         this.edge = edge;
         this.offset = offset;

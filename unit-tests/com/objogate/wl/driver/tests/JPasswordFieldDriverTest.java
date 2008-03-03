@@ -49,7 +49,7 @@ public class JPasswordFieldDriverTest extends AbstractJTextComponentDriverTest<J
     }
 
     @Test
-    public void testCannotSelectText() throws InterruptedException {
+    public void testCannotSelectText() {
         setText("my passsword is secret");
 
         try {
@@ -62,7 +62,7 @@ public class JPasswordFieldDriverTest extends AbstractJTextComponentDriverTest<J
     }
 
     @Test
-    public void testReplaceTextUsingTextOccurence() throws InterruptedException {
+    public void testReplaceTextUsingTextOccurence() {
         setText("my passsword is secret");
 
         try {

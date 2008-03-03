@@ -62,7 +62,7 @@ public class CalculatorDriver extends JFrameDriver {
         display().text(equalTo(expectedResult));
     }
 
-    private JTextComponentDriver display() {
+    private JTextFieldDriver display() {
         return new JTextFieldDriver(this, JTextField.class, named(DISPLAY));
     }
 }

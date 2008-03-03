@@ -73,8 +73,8 @@ public class JLabelDriverTest extends AbstractComponentDriverTest<JLabelDriver> 
 
     private void setLabelText(final String text) {
         driver.perform("setting text", new ComponentManipulation<JLabel>() {
-            public void manipulate(JLabel label) {
-                label.setText(text);
+            public void manipulate(JLabel l) {
+                l.setText(text);
             }
         });
     }

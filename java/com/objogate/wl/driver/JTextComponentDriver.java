@@ -1,12 +1,20 @@
 package com.objogate.wl.driver;
 
-import javax.swing.text.BadLocationException;
-import javax.swing.text.JTextComponent;
+import static com.objogate.wl.gesture.Gestures.repeat;
+import static com.objogate.wl.gesture.Gestures.type;
+import static com.objogate.wl.gesture.Gestures.typeKey;
+import static com.objogate.wl.gesture.Gestures.whileHoldingKey;
+import static org.hamcrest.Matchers.equalTo;
+
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
+
 import org.hamcrest.Matcher;
-import static org.hamcrest.Matchers.equalTo;
+
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentQuery;
@@ -14,7 +22,6 @@ import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
-import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.internal.query.TextQuery;
 
 public class JTextComponentDriver<T extends JTextComponent> extends ComponentDriver<T> implements TextQuery {
@@ -213,8 +220,8 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
             return text;
         }
 
-        public JTextFieldDriver.TextOccurence of(final String text) {
-            this.text = text;
+        public TextOccurence of(String s) {
+            this.text = s;
             return this;
         }
     }

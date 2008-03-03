@@ -2,15 +2,16 @@ package com.objogate.wl.probe;
 
 import java.awt.Component;
 import java.awt.Rectangle;
+
 import org.hamcrest.Description;
+
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Probe;
 
 public class ComponentRelativePositionProbe implements Probe {
-
-    private final ComponentSelector selectorA;
-    private final ComponentSelector selectorB;
+    private final ComponentSelector<? extends Component> selectorA;
+    private final ComponentSelector<? extends Component> selectorB;
     private final RelativePosition relativePosition;
 
     private boolean satisfied = false;
@@ -19,7 +20,10 @@ public class ComponentRelativePositionProbe implements Probe {
         ABOVE, BELOW, LEFTOF, RIGHTOF
     }
 
-    public ComponentRelativePositionProbe(ComponentSelector selectorA, RelativePosition position, ComponentSelector selectorB) {
+    public ComponentRelativePositionProbe(ComponentSelector<? extends Component> selectorA, 
+                                          RelativePosition position, 
+                                          ComponentSelector<? extends Component> selectorB) 
+    {
         this.selectorA = selectorA;
         this.relativePosition = position;
         this.selectorB = selectorB;

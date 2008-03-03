@@ -1,18 +1,21 @@
 package com.objogate.wl.driver.tests;
 
+import static com.objogate.wl.driver.JTableDriver.cell;
+
+import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import java.awt.Color;
-import java.awt.Component;
+
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.driver.JTableDriver;
-import static com.objogate.wl.driver.JTableDriver.cell;
 import com.objogate.wl.driver.JTableHeaderDriver;
-import com.objogate.wl.driver.JTextComponentDriver;
 import com.objogate.wl.driver.JTextFieldDriver;
 import com.objogate.wl.matcher.ColorMatcher;
 
@@ -79,7 +82,7 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
 
         Component editorComponent = driver.editCell(0, 0);
 
-        JTextComponentDriver textFieldDriver = new JTextFieldDriver(gesturePerformer, (JTextField) editorComponent, prober);
+        JTextFieldDriver textFieldDriver = new JTextFieldDriver(gesturePerformer, (JTextField) editorComponent, prober);
         textFieldDriver.replaceAllText("hello");
 
         driver.cellRenderedWithText(0, 0, Matchers.containsString("hello"));

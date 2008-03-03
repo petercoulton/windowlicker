@@ -7,19 +7,19 @@ import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Probe;
 
 class ComponentScreenBoundsProbe implements Probe {
-    private final ComponentSelector componentSelector;
+    private final ComponentSelector<? extends Component> componentSelector;
 
     public Rectangle bounds;
 
 
-    public ComponentScreenBoundsProbe(ComponentSelector componentSelector) {
+    public ComponentScreenBoundsProbe(ComponentSelector<? extends Component> componentSelector) {
         this.componentSelector = componentSelector;
     }
 
     public void probe() {
         componentSelector.probe();
 
-        // if the component cant be found - probably not rendered yet
+        // if the component can't be found - probably not rendered yet
         if ( componentSelector.components().isEmpty() ) {
             bounds = null;
             return;
