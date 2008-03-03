@@ -23,7 +23,11 @@ public class JLabelDriver extends ComponentDriver<JLabel> implements TextQuery {
     }
 
     public void text(Matcher<String> textMatcher) {
-        has("text", text(), textMatcher);
+      hasText(textMatcher);
+    }
+    
+    public void hasText(Matcher<String> matcher) {
+        has("text", text(), matcher);
     }
 
     private static ComponentQuery<JLabel, String> text() {

@@ -127,7 +127,7 @@ public abstract class ComponentDriver<T extends Component> {
      * @param criteria    The criteria that the component must meet.
      */
     public void is(String description, Matcher<? super T> criteria) {
-        check(description, new ComponentAssertionProbe<T>(selector, criteria));
+        check("is " + description, new ComponentAssertionProbe<T>(selector, criteria));
     }
 
     /**
@@ -143,7 +143,7 @@ public abstract class ComponentDriver<T extends Component> {
      * @param criteria    The criteria that the component must meet.
      */
     public <P> void has(String description, ComponentQuery<T, P> query, Matcher<? super P> criteria) {
-        check(description, new ComponentPropertyAssertionProbe<T, P>(selector, query, criteria));
+        check("has " + description, new ComponentPropertyAssertionProbe<T, P>(selector, query, criteria));
     }
 
     /**
@@ -270,6 +270,7 @@ public abstract class ComponentDriver<T extends Component> {
     /**
      * @Deprecated use a Tracker instead
      */
+    @SuppressWarnings("hiding")
     private class ComponentBoundsManipulation<T extends Component> implements ComponentManipulation<T> {
         Rectangle bounds;
 
@@ -282,6 +283,7 @@ public abstract class ComponentDriver<T extends Component> {
         }
     }
 
+    @SuppressWarnings("hiding")
     private class ComponentLayoutManipulation<T extends Component> implements ComponentManipulation<T> {
         public void manipulate(T component) {
             component.getParent().doLayout();

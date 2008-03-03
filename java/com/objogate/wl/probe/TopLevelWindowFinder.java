@@ -27,13 +27,10 @@ public class TopLevelWindowFinder implements ComponentFinder<Window> {
         found = new ArrayList<Window>(topLevelWindows);
     }
     
-    private Window ownershipRoot(Window w) {
-        if (w.getOwner() == null) {
-            return w;
-        }
-        else {
-            return ownershipRoot(w.getOwner());
-        }
+    private static Window ownershipRoot(Window w) {
+      return w.getOwner() == null
+           ? w
+           : ownershipRoot(w.getOwner());
     }
     
     public void describeTo(Description description) {

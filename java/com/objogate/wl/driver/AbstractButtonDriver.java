@@ -1,11 +1,14 @@
 package com.objogate.wl.driver;
 
-import javax.swing.AbstractButton;
 import java.awt.Component;
+
+import javax.swing.AbstractButton;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import org.junit.matchers.TypeSafeMatcher;
+import org.hamcrest.TypeSafeMatcher;
+
 import com.objogate.wl.ComponentQuery;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
@@ -46,7 +49,11 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
     }
     
     public void text(Matcher<String> textMatcher) {
-        has("text", text(), textMatcher);
+      hasText(textMatcher);
+    }
+    
+    public void hasText(Matcher<String> matcher) {
+      has("text", text(), matcher);
     }
     
     private ComponentQuery<T,String> text() {
@@ -56,7 +63,7 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
             }
         };
     }
-
+    
     public void mnemonic(Matcher<Character> matcher) {
         has("mnemonic", mnemonic(), matcher);
     }
@@ -79,7 +86,7 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
 
     private TypeSafeMatcher<AbstractButton> selected() {
         return new TypeSafeMatcher<AbstractButton>() {
-            public boolean matchesSafely(AbstractButton item) {
+            @Override public boolean matchesSafely(AbstractButton item) {
                 return item.isSelected();
             }
 
@@ -88,5 +95,4 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
             }
         };
     }
-
 }

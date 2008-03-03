@@ -44,19 +44,19 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
     }
 
     public void text(Matcher<String> textMatcher) {
-        has("text", new ComponentQuery<T, String>() {
-            public String query(T component) {
-                return component.getText();
-            }
-        }, textMatcher);
+      hasText(textMatcher);
     }
-
+    
     public void hasText(String expectedText) {
         hasText(equalTo(expectedText));
     }
 
     public void hasText(Matcher<String> matcher) {
-        text(matcher);
+      has("text", 
+          new ComponentQuery<T, String>() {
+            public String query(T component) { return component.getText(); }
+          }, 
+          matcher);
     }
 
     public void hasSelectedText(String expected) {
@@ -100,18 +100,20 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
         performGesture(type(text));
     }
 
-    public void selectAll() {
+    @Override public void selectAll() {
         super.selectAll();
     }
 
-    public void cut() {
+    @Override public void cut() {
         super.cut();
     }
 
+    @Override
     public void copy() {
         super.copy();
     }
 
+    @Override
     public void paste() {
         super.paste();
     }
