@@ -74,7 +74,7 @@ public class AWTEventQueueProber implements Prober, SystemProperties {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             System.err.println("probe blew up:" + e.getMessage());
         }
     }
