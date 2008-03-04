@@ -10,5 +10,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jmock/jmock-2.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/jmock/jmock-junit4-2.4.0.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="classes"/>
 </classpath>
