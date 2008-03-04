@@ -35,8 +35,12 @@ public class SingleComponentFinder<T extends Component> implements ComponentSele
         description.appendText("exactly 1 ")
                    .appendDescriptionOf(finder);
 
-        if (finder.isSatisfied() && !isSingle()) {
+        if (finder.isSatisfied()) {
+          if (isSingle()) {
+            description.appendText("\nFound ").appendDescriptionOf(finder);
+          } else {
             description.appendText("\nbut found " + components().size());
+          }
         }
     }
 
