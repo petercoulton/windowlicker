@@ -42,7 +42,7 @@ public class JMenuDriver extends AbstractButtonDriver<JMenu> {
                 return label.isPopupMenuVisible();
             }
             public void describeTo(Description description) {
-              description.appendText("has visible popup menu");
+              description.appendText("popup menu visibility");
             }
         };
     }

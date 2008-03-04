@@ -247,7 +247,7 @@ public abstract class ComponentDriver<T extends Component> {
                 return component.getForeground();
             }
             public void describeTo(Description description) {
-              description.appendText("has foreground color");
+              description.appendText("foreground color");
             }
         }, color);
     }
@@ -263,7 +263,7 @@ public abstract class ComponentDriver<T extends Component> {
                 return component.getBackground();
             }
             public void describeTo(Description description) {
-              description.appendText("has background color");
+              description.appendText("background color");
             }
         }, color);
 
@@ -273,7 +273,7 @@ public abstract class ComponentDriver<T extends Component> {
                 return component.isOpaque();
             }
             public void describeTo(Description description) {
-              description.appendText("is opaque");
+              description.appendText("opacity");
             }
         }, Matchers.is(true));
     }

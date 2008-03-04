@@ -62,7 +62,7 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
                 return button.getText();
             }
             public void describeTo(Description description) {
-               description.appendText("has text");
+               description.appendText("text");
             }
         };
     }
@@ -77,7 +77,7 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
                 return (char) button.getMnemonic();
             }
             public void describeTo(Description description) {
-              description.appendText("has mnemonic");
+              description.appendText("mnemonic");
             }
         };
     }

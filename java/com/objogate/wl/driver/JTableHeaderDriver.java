@@ -142,7 +142,7 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
                 return manipulation.getIndex();
             }
             public void describeTo(Description description) {
-              description.appendText("has column index");
+              description.appendText("column index");
             }
         }, Matchers.equalTo(expectedIndex));
     }
@@ -159,7 +159,7 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
                 return tableColumn.getWidth();
             }
             public void describeTo(Description description) {
-              description.appendText("has column width");
+              description.appendText("column width");
             }
         }, Matchers.equalTo(expectedWidth));
     }

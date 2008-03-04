@@ -78,7 +78,7 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
                 return component.getSelectedIndex();
             }
             public void describeTo(Description description) {
-              description.appendText("has selected index");
+              description.appendText("selected index");
             }
         }, new IsEqual<Integer>(index));
     }

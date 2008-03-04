@@ -48,7 +48,7 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
                 return component.getSelectedIndex();
             }
             public void describeTo(Description description) {
-              description.appendText("has has selected index");
+              description.appendText("selected list index");
             }
         }, Matchers.equalTo(expectedIndex));
     }

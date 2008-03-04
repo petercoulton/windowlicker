@@ -50,7 +50,7 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
                 return component.getTabCount();
             }
             public void describeTo(Description description) {
-              description.appendText("has tab count");
+              description.appendText("tab count");
             }
         }, Matchers.equalTo(expectedCount));
     }
@@ -72,7 +72,7 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
                 return component.getSelectedIndex();
             }
             public void describeTo(Description description) {
-              description.appendText("has selected tab");
+              description.appendText("selected tab");
             }
         }, Matchers.equalTo(expectedIndex));
     }

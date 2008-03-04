@@ -133,7 +133,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
                 return JTableCellManipulation.cell(component, row, columnIdentifier).getBackground();
             }
             public void describeTo(Description description) {
-              description.appendText("has cell at " + row + " x " + columnIdentifier + " with background color");
+              description.appendText("background color in cell at " + row + "x" + columnIdentifier);
             }
         }, backgroundColor);
     }
@@ -144,7 +144,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
                 return JTableCellManipulation.cell(component, row, col).getBackground();
             }
             public void describeTo(Description description) {
-              description.appendText("has cell at " + row + " x " + col + " with background color");
+              description.appendText("background colour in cell at " + row + "x" + col);
             }
         }, backgroundColor);
     }
@@ -156,7 +156,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
                 return rendered.getForeground();
             }
             public void describeTo(Description description) {
-              description.appendText("has cell at " + row + " x " + columnIdentifier + " with foreground color");
+              description.appendText("foreground color in cell at " + row + "x" + columnIdentifier);
             }
         }, foregroundColor);
     }
@@ -167,7 +167,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
                 return JTableCellManipulation.cell(component, row, col).getForeground();
             }
             public void describeTo(Description description) {
-              description.appendText("has cell at " + row + " x " + col + " with foreground color");
+              description.appendText("foreground colour in cell at " + row + "x" + col);
             }
         }, foregroundColor);
     }
@@ -282,7 +282,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
             }
         }
         public void describeTo(Description description) {
-          description.appendText("has cell at " + row + " x " + col + " with text");
+          description.appendText("text in cell at " + row + " x " + col);
         }
     }
 }

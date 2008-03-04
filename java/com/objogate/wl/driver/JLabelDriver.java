@@ -38,7 +38,7 @@ public class JLabelDriver extends ComponentDriver<JLabel> implements TextQuery {
                 return label.getText();
             }
             public void describeTo(Description description) {
-              description.appendText("has text");
+              description.appendText("label text");
             }
         };
     }

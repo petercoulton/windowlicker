@@ -24,9 +24,9 @@ public class SingleComponentFinder<T extends Component> implements ComponentSele
     }
 
     public boolean isSatisfied() {
-        return finder.isSatisfied() && components().size() == 1;
+        return finder.isSatisfied() && isSingle();
     }
-    
+
     public void probe() {
         finder.probe();
     }
@@ -35,8 +35,12 @@ public class SingleComponentFinder<T extends Component> implements ComponentSele
         description.appendText("exactly 1 ")
                    .appendDescriptionOf(finder);
 
-        if (!isSatisfied() && finder.isSatisfied()) {
+        if (finder.isSatisfied() && !isSingle()) {
             description.appendText("\nbut found " + components().size());
         }
+    }
+
+    private boolean isSingle() {
+      return components().size() == 1;
     }
 }

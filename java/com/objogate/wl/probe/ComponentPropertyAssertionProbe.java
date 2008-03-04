@@ -32,14 +32,16 @@ public class ComponentPropertyAssertionProbe<C extends Component,P> implements P
     }
     
     public void describeTo(Description description) {
+        description
+        .appendDescriptionOf(propertyValueQuery)
+        .appendText(" matching ")
+        .appendDescriptionOf(propertyValueMatcher)
+        .appendText(" in ")
+        .appendDescriptionOf(selector);
+        
         if (selector.isSatisfied()) {
-            description.appendText("\nexpected: ")
-                       .appendDescriptionOf(propertyValueMatcher)
-                       .appendText("\nactual:   ")
-                       .appendValue(propertyValue);
-        }
-        else {
-            description.appendDescriptionOf(selector);
+          description.appendText("\n\tFound ")
+                     .appendValue(propertyValue);
         }
     }
 }

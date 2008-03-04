@@ -63,7 +63,7 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
       has("text", 
           new ComponentQuery<T, String>() {
             public String query(T component) { return component.getText(); }
-            public void describeTo(Description description) { description.appendText("has text"); }
+            public void describeTo(Description description) { description.appendText("text"); }
           }, 
           matcher);
     }
@@ -75,21 +75,21 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
     public void hasSelectedText(Matcher<String> matcher) {
         has("selected text", new ComponentQuery<T, String>() {
             public String query(T component) { return component.getSelectedText(); }
-            public void describeTo(Description description) { description.appendText("has selected text"); }
+            public void describeTo(Description description) { description.appendText("selected text"); }
         }, matcher);
     }
 
     public void selectionStartsAt(int index) {
         has("selected text start", new ComponentQuery<T, Integer>() {
             public Integer query(T component) {  return component.getSelectionStart(); }
-            public void describeTo(Description description) { description.appendText("has start of selected text"); }
+            public void describeTo(Description description) { description.appendText("start of selected text"); }
         }, equalTo(index));
     }
 
     public void selectionEndsAt(int index) {
         has("selected text end", new ComponentQuery<T, Integer>() {
             public Integer query(T component) { return component.getSelectionEnd(); }
-            public void describeTo(Description description) { description.appendText("has end of selected text"); }
+            public void describeTo(Description description) { description.appendText("end of selected text"); }
         }, equalTo(index));
     }
 
