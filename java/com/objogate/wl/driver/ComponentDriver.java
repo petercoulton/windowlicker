@@ -7,6 +7,8 @@ import java.awt.Component;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import static org.hamcrest.CoreMatchers.allOf;
+
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import com.objogate.wl.*;
@@ -244,6 +246,9 @@ public abstract class ComponentDriver<T extends Component> {
             public Color query(T component) {
                 return component.getForeground();
             }
+            public void describeTo(Description description) {
+              description.appendText("has foreground color");
+            }
         }, color);
     }
 
@@ -257,12 +262,18 @@ public abstract class ComponentDriver<T extends Component> {
             public Color query(T component) {
                 return component.getBackground();
             }
+            public void describeTo(Description description) {
+              description.appendText("has background color");
+            }
         }, color);
 
         //need to check opacity else the background color isn't visible
         has("opacity", new ComponentQuery<T, Boolean>() {
             public Boolean query(T component) {
                 return component.isOpaque();
+            }
+            public void describeTo(Description description) {
+              description.appendText("is opaque");
             }
         }, Matchers.is(true));
     }

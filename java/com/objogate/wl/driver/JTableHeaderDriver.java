@@ -6,6 +6,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.Component;
 import java.awt.Point;
+
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import com.objogate.wl.ComponentManipulation;
@@ -139,6 +141,9 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
                 manipulation.manipulate(component);
                 return manipulation.getIndex();
             }
+            public void describeTo(Description description) {
+              description.appendText("has column index");
+            }
         }, Matchers.equalTo(expectedIndex));
     }
 
@@ -152,6 +157,9 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
             public Integer query(JTableHeader component) {
                 TableColumn tableColumn = component.getColumnModel().getColumn(columnIndex);
                 return tableColumn.getWidth();
+            }
+            public void describeTo(Description description) {
+              description.appendText("has column width");
             }
         }, Matchers.equalTo(expectedWidth));
     }

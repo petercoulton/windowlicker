@@ -130,8 +130,10 @@ public class JTableDriver extends ComponentDriver<JTable> {
     public void cellHasBackgroundColor(final int row, final Object columnIdentifier, Matcher<Color> backgroundColor) {
         has("background color", new ComponentQuery<JTable, Color>() {
             public Color query(JTable component) {
-                Component rendered = JTableCellManipulation.cell(component, row, columnIdentifier);
-                return rendered.getBackground();
+                return JTableCellManipulation.cell(component, row, columnIdentifier).getBackground();
+            }
+            public void describeTo(Description description) {
+              description.appendText("has cell at " + row + " x " + columnIdentifier + " with background color");
             }
         }, backgroundColor);
     }
@@ -140,6 +142,9 @@ public class JTableDriver extends ComponentDriver<JTable> {
         has("background color", new ComponentQuery<JTable, Color>() {
             public Color query(JTable component) {
                 return JTableCellManipulation.cell(component, row, col).getBackground();
+            }
+            public void describeTo(Description description) {
+              description.appendText("has cell at " + row + " x " + col + " with background color");
             }
         }, backgroundColor);
     }
@@ -150,6 +155,9 @@ public class JTableDriver extends ComponentDriver<JTable> {
                 Component rendered = JTableCellManipulation.cell(component, row, columnIdentifier);
                 return rendered.getForeground();
             }
+            public void describeTo(Description description) {
+              description.appendText("has cell at " + row + " x " + columnIdentifier + " with foreground color");
+            }
         }, foregroundColor);
     }
 
@@ -157,6 +165,9 @@ public class JTableDriver extends ComponentDriver<JTable> {
         has("foreground color", new ComponentQuery<JTable, Color>() {
             public Color query(JTable component) {
                 return JTableCellManipulation.cell(component, row, col).getForeground();
+            }
+            public void describeTo(Description description) {
+              description.appendText("has cell at " + row + " x " + col + " with foreground color");
             }
         }, foregroundColor);
     }
@@ -269,6 +280,9 @@ public class JTableDriver extends ComponentDriver<JTable> {
             } else {
                 throw new Defect("Rendered component in cell " + row + "x" + col + " is not a JLabel but a " + component.getClass().getName());
             }
+        }
+        public void describeTo(Description description) {
+          description.appendText("has cell at " + row + " x " + col + " with text");
         }
     }
 }

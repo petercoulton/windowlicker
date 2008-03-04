@@ -5,6 +5,8 @@ import javax.swing.SwingConstants;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.Rectangle;
+
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import com.objogate.exception.Defect;
@@ -47,6 +49,9 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
             public Integer query(JTabbedPane component) {
                 return component.getTabCount();
             }
+            public void describeTo(Description description) {
+              description.appendText("has tab count");
+            }
         }, Matchers.equalTo(expectedCount));
     }
 
@@ -65,6 +70,9 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
         has("selected tab", new ComponentQuery<JTabbedPane, Integer>() {
             public Integer query(JTabbedPane component) {
                 return component.getSelectedIndex();
+            }
+            public void describeTo(Description description) {
+              description.appendText("has selected tab");
             }
         }, Matchers.equalTo(expectedIndex));
     }

@@ -4,6 +4,8 @@ import javax.swing.JList;
 import javax.swing.ListModel;
 import java.awt.Component;
 import java.awt.Rectangle;
+
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import com.objogate.exception.Defect;
@@ -44,6 +46,9 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
         has("selected index", new ComponentQuery<JList, Integer>() {
             public Integer query(JList component) {
                 return component.getSelectedIndex();
+            }
+            public void describeTo(Description description) {
+              description.appendText("has has selected index");
             }
         }, Matchers.equalTo(expectedIndex));
     }

@@ -2,6 +2,8 @@ package com.objogate.wl;
 
 import java.awt.*;
 
-public interface ComponentQuery<T extends Component,V> {
+import org.hamcrest.SelfDescribing;
+
+public interface ComponentQuery<T extends Component,V> extends SelfDescribing {
     V query(T component);
 }

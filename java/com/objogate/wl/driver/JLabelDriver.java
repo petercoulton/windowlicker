@@ -2,6 +2,8 @@ package com.objogate.wl.driver;
 
 import javax.swing.JLabel;
 import java.awt.Component;
+
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import com.objogate.wl.ComponentQuery;
 import com.objogate.wl.ComponentSelector;
@@ -34,6 +36,9 @@ public class JLabelDriver extends ComponentDriver<JLabel> implements TextQuery {
         return new ComponentQuery<JLabel, String>() {
             public String query(JLabel label) {
                 return label.getText();
+            }
+            public void describeTo(Description description) {
+              description.appendText("has text");
             }
         };
     }

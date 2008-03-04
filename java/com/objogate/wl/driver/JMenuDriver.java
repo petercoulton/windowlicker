@@ -4,6 +4,8 @@ import javax.swing.AbstractButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Component;
+
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import static org.hamcrest.Matchers.equalTo;
 import com.objogate.wl.ComponentQuery;
@@ -38,6 +40,9 @@ public class JMenuDriver extends AbstractButtonDriver<JMenu> {
         return new ComponentQuery<JMenu, Boolean>() {
             public Boolean query(JMenu label) {
                 return label.isPopupMenuVisible();
+            }
+            public void describeTo(Description description) {
+              description.appendText("has visible popup menu");
             }
         };
     }

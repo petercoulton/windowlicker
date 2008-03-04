@@ -61,6 +61,9 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
             public String query(T button) {
                 return button.getText();
             }
+            public void describeTo(Description description) {
+               description.appendText("has text");
+            }
         };
     }
     
@@ -72,6 +75,9 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
         return new ComponentQuery<T,Character>(){
             public Character query(T button) {
                 return (char) button.getMnemonic();
+            }
+            public void describeTo(Description description) {
+              description.appendText("has mnemonic");
             }
         };
     }
@@ -91,7 +97,7 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
             }
 
             public void describeTo(Description description) {
-                description.appendText("selected");
+                description.appendText("is selected");
             }
         };
     }
