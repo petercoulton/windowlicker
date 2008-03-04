@@ -182,6 +182,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
             this.col = col;
         }
 
+        @Override
         public String toString() {
             return row + "x" + col;
         }
@@ -195,6 +196,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
             this.cells = cells;
         }
 
+        @Override
         public boolean matchesSafely(JTable component) {
             int[] selectedRows = component.getSelectedRows();
             int[] selectedColumns = component.getColumnModel().getSelectedColumns();

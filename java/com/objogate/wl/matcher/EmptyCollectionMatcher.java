@@ -8,6 +8,7 @@ import org.hamcrest.TypeSafeMatcher;
 import java.util.Collection;
 
 public class EmptyCollectionMatcher<C extends Collection<?>> extends TypeSafeMatcher<C> {
+    @Override
     public boolean matchesSafely(C c) {
         return c.isEmpty();
     }

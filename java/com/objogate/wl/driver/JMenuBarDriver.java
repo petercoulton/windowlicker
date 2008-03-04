@@ -11,6 +11,7 @@ public class JMenuBarDriver extends ComponentDriver<JMenuBar>{
         super(parentOrOwner, JMenuBar.class, matchers);
     }
 
+    @SuppressWarnings("unchecked")
     public JMenuDriver menu(Matcher<? super JMenu> matching) {
         return new JMenuDriver(this, matching);
     }

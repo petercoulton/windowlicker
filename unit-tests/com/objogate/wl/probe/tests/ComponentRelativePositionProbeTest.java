@@ -23,6 +23,7 @@ import com.objogate.wl.probe.RecursiveComponentFinder;
 import com.objogate.wl.probe.SingleComponentFinder;
 import com.objogate.wl.probe.TopLevelWindowFinder;
 
+@SuppressWarnings("unchecked")
 public class ComponentRelativePositionProbeTest {
     private JPanel panel = new JPanel();
     private JButton buttonOne = new JButton("one") {{ setName("one");}};

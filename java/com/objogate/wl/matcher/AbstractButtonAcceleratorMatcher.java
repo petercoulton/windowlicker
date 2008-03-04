@@ -13,6 +13,7 @@ public class AbstractButtonAcceleratorMatcher<T extends AbstractButton> extends 
         this.keyCode = keyCode;
     }
 
+    @Override
     public boolean matchesSafely(T buttonAlike) {
         return buttonAlike.getMnemonic() == keyCode;
     }

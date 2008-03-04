@@ -15,7 +15,8 @@ public class NthComponentFinder<T extends Component> implements ComponentFinder<
         this.parentOrOwnerFinder = parentOrOwnerFinder;
         this.whichToChoose = whichToChoose;
     }
-
+    
+    @SuppressWarnings("unchecked")
     public List<T> components() {
         return Arrays.asList(parentOrOwnerFinder.components().get(whichToChoose));
     }

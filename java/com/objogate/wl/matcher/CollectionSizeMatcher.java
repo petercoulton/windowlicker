@@ -15,6 +15,7 @@ public class CollectionSizeMatcher<C extends Collection<?>> extends TypeSafeMatc
         this.sizeMatcher = sizeMatcher;
     }
 
+    @Override
     public boolean matchesSafely(C collection) {
         return sizeMatcher.matches(collection.size());
     }

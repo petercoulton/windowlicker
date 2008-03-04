@@ -35,6 +35,7 @@ public class KeyboardLayout implements SystemProperties {
         return name;
     }
 
+    @Override
     public String toString() {
         return name + " keyboard layout";
     }

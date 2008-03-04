@@ -11,8 +11,9 @@ public class ButtonTextMatcher extends TypeSafeMatcher<JButton> {
         this.expectedText = expectedText;
     }
 
-    /* Note that getText can seem to return null */
+    @Override
     public boolean matchesSafely(JButton jButton) {
+        // Note that getText can seem to return null
         return expectedText.equals(jButton.getText());
     }
 

@@ -10,6 +10,7 @@ public class DisplayableComponentMatcher extends TypeSafeMatcher<Component> {
         description.appendText("is displayable");
     }
 
+    @Override
     public boolean matchesSafely(Component component) {
         return component.isDisplayable();
     }

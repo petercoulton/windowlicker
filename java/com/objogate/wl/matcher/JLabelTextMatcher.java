@@ -14,8 +14,8 @@ public class JLabelTextMatcher extends TypeSafeMatcher<Component> {
         this.matcher = matcher;
     }
 
+    @Override
     public boolean matchesSafely(Component component) {
-
         if (component instanceof JLabel) {
             JLabel label = (JLabel) component;
             return matcher.matches(label.getText());

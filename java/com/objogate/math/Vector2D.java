@@ -28,12 +28,14 @@ public final class Vector2D {
         return y;
     }
 
+    @Override
     public int hashCode() {
         long bits = Double.doubleToLongBits(x);
         bits ^= Double.doubleToLongBits(y) * 31;
         return (((int) bits) ^ ((int) (bits >> 32)));
     }
 
+    @Override
     public boolean equals(Object o) {
         return o instanceof Vector2D
                 && this.equals((Vector2D) o);
@@ -117,6 +119,7 @@ public final class Vector2D {
         return cosAngle(v) == 0;
     }
 
+    @Override
     public String toString() {
         return "(" + x + "," + y + ")";
     }

@@ -36,6 +36,7 @@ public class JProgressBarDriver extends ComponentDriver<JProgressBar> {
 
     public void hasMinimum(final Matcher<Integer> matcher) {
         is("has minimum value", new TypeSafeMatcher<JProgressBar>() {
+            @Override
             public boolean matchesSafely(JProgressBar jProgressBar) {
                 return matcher.matches(jProgressBar.getMinimum());
             }
@@ -49,6 +50,7 @@ public class JProgressBarDriver extends ComponentDriver<JProgressBar> {
 
     public void hasMaximum(final Matcher<Integer> matcher) {
         is("has minimum value", new TypeSafeMatcher<JProgressBar>() {
+            @Override
             public boolean matchesSafely(JProgressBar jProgressBar) {
                 return matcher.matches(jProgressBar.getMaximum());
             }
@@ -62,6 +64,7 @@ public class JProgressBarDriver extends ComponentDriver<JProgressBar> {
 
     public void hasValue(final Matcher<Integer> matcher) {
         is("has minimum value", new TypeSafeMatcher<JProgressBar>() {
+            @Override
             public boolean matchesSafely(JProgressBar jProgressBar) {
                 return matcher.matches(jProgressBar.getValue());
             }
@@ -75,6 +78,7 @@ public class JProgressBarDriver extends ComponentDriver<JProgressBar> {
 
     public void hasString(final Matcher<String> matcher) {
         is("has minimum value", new TypeSafeMatcher<JProgressBar>() {
+            @Override
             public boolean matchesSafely(JProgressBar jProgressBar) {
                 return matcher.matches(jProgressBar.getString());
             }
@@ -88,6 +92,7 @@ public class JProgressBarDriver extends ComponentDriver<JProgressBar> {
 
     public void hasPercentComplete(final Matcher<Double> matcher) {
         is("has minimum value", new TypeSafeMatcher<JProgressBar>() {
+            @Override
             public boolean matchesSafely(JProgressBar jProgressBar) {
                 return matcher.matches(jProgressBar.getPercentComplete());
             }

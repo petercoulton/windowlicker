@@ -10,6 +10,7 @@ public class ForegroundColorMatcher extends ComponentColorMatcher {
         super(color);
     }
 
+    @Override
     protected Color colorOf(Component component) {
         return component.getForeground();
     }

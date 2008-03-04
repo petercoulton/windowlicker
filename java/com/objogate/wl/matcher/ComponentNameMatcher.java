@@ -11,12 +11,12 @@ public class ComponentNameMatcher extends TypeSafeMatcher<Component> {
     public ComponentNameMatcher(String name) {
         this.name = name;
     }
-
-    public boolean matchesSafely(Component c) {
-        String name = c.getName();
-        return name != null && name.equals(this.name);
+    
+    @Override
+    public boolean matchesSafely(Component other) {
+        return name.equals(other.getName());
     }
-
+    
     public void describeTo(Description description) {
         description.appendText("named ").appendValue(name);
     }

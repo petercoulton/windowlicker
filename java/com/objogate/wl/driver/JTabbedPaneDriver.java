@@ -96,8 +96,8 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
 
             if (tabPlacement == SwingConstants.LEFT || tabPlacement == SwingConstants.RIGHT) {
                 for (int y = 0; y < rectangle.getHeight(); y++) {
-                    int index = component.indexAtLocation(randomOffset, y);
-                    if (this.index == index) {
+                    int i = component.indexAtLocation(randomOffset, y);
+                    if (i == this.index) {
                         Point screen = component.getLocationOnScreen();
                         this.startLocation = screen;
                         screen.translate(randomOffset, y);
@@ -106,8 +106,8 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
                 }
             } else {
                 for (int x = 0; x < rectangle.getWidth(); x++) {
-                    int index = component.indexAtLocation(x, randomOffset);
-                    if (this.index == index) {
+                    int i = component.indexAtLocation(x, randomOffset);
+                    if (i == this.index) {
                         Point screen = component.getLocationOnScreen();
                         this.startLocation = screen;
                         screen.translate(x, randomOffset);

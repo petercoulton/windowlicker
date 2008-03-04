@@ -38,6 +38,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
         PLAIN, CHECK, RADIO
     }
 
+    @SuppressWarnings("unchecked")
     @Before
     public void setUp() {
         JPanel topPanel = new JPanel();

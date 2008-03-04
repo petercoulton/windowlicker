@@ -17,11 +17,17 @@ public class ActionListenerProbe implements ActionListener, Probe {
         // nothing to do but wait for the action
     }
 
-    public boolean isSatisfied() {
+    public synchronized boolean isSatisfied() {
         return hasBeenPerformed;
     }
 
     public void describeTo(Description description) {
-        description.appendText("click action has been performed");
+        description.appendText("click action should have been performed");
+        if (hasBeenPerformed) {
+            description.appendText(" and was performed");
+        }
+        else {
+            description.appendText(", but was not performed");
+        }
     }
 }

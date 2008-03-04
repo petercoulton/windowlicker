@@ -23,6 +23,7 @@ public class JScrollbarDriver extends ComponentDriver<JScrollBar> {
         super(containerDriver, JScrollBar.class, matchers);
     }
 
+    @SuppressWarnings("unchecked")
     public JScrollbarDriver(ComponentDriver<? extends Container> containerDriver, JScrollPane pane, int orientation) {
         this(containerDriver, new ScrollBarMatcher(pane, orientation));
     }

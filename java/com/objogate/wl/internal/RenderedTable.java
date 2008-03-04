@@ -25,23 +25,23 @@ public class RenderedTable {
     }
 
     public String getTextFromCell(int rowIndex, Object propertyId) {
-        return renderCell(table, rowIndex, indexOf(propertyId)).getText();
+        return renderCell(rowIndex, indexOf(propertyId)).getText();
     }
 
     public int getJustificationOfCell(int rowIndex, Object propertyId) {
-        return renderCell(table, rowIndex, indexOf(propertyId)).getHorizontalAlignment();
+        return renderCell(rowIndex, indexOf(propertyId)).getHorizontalAlignment();
     }
 
-    private JLabel renderCell(JTable table, int rowIndex, int columnIndex) {
+    private JLabel renderCell(int rowIndex, int columnIndex) {
         if (rowIndex == HEADER) {
-            return renderHeaderCell(table, rowIndex, columnIndex);
+            return renderHeaderCell(rowIndex, columnIndex);
         }
         else {
-            return renderTableCell(table, rowIndex, columnIndex);
+            return renderTableCell(rowIndex, columnIndex);
         }
     }
     
-    private JLabel renderTableCell(JTable table, int rowIndex, int columnIndex) {
+    private JLabel renderTableCell(int rowIndex, int columnIndex) {
         TableCellRenderer cellRenderer = table.getCellRenderer(rowIndex, columnIndex);
         Object cellValue = table.getValueAt(rowIndex, columnIndex);
         ListSelectionModel selectionModel = table.getSelectionModel();
@@ -49,7 +49,7 @@ public class RenderedTable {
         return (JLabel) cellRenderer.getTableCellRendererComponent(table, cellValue, selected, false, rowIndex, columnIndex);
     }
 
-    private JLabel renderHeaderCell(JTable table, int rowIndex, int columnIndex) {
+    private JLabel renderHeaderCell(int rowIndex, int columnIndex) {
         TableCellRenderer renderer = table.getTableHeader().getDefaultRenderer();
         int modelIndex = table.convertColumnIndexToModel(columnIndex);
         TableColumn tableColumn = table.getColumnModel().getColumn(modelIndex);
@@ -58,15 +58,15 @@ public class RenderedTable {
     }
 
     public Color getBackgroundColour(int rowIndex, int columnIndex) {
-        return renderCell(table, rowIndex, columnIndex).getBackground();
+        return renderCell(rowIndex, columnIndex).getBackground();
     }
 
     public Color getForegroundColour(int rowIndex, int columnIndex) {
-        return renderCell(table, rowIndex, columnIndex).getForeground();
+        return renderCell(rowIndex, columnIndex).getForeground();
     }
 
     public Font getFont(int rowIndex, int columnIndex) {
-        return renderCell(table, rowIndex, columnIndex).getFont();
+        return renderCell(rowIndex, columnIndex).getFont();
     }
 
     public void selectRow(int rowIndex) {

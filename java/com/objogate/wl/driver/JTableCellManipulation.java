@@ -35,14 +35,14 @@ public class JTableCellManipulation implements ComponentManipulation<JTable> {
         }
     }
 
-    private Component editor(JTable table, int row, Object columnIdentifier) {
-        int viewIndex = viewIndex(table, columnIdentifier);
-        return editor(table, row, viewIndex);
+    private Component editor(JTable table, int editorRow, Object editorColumnIdentifier) {
+        int viewIndex = viewIndex(table, editorColumnIdentifier);
+        return editor(table, editorRow, viewIndex);
     }
 
-    private Component editor(JTable table, int row, int col) {
-        TableCellEditor tableCellEditor = table.getCellEditor(row, col);
-        return tableCellEditor.getTableCellEditorComponent(table, table.getValueAt(row, col), false, row, col);
+    private Component editor(JTable table, int editorRow, int editorCol) {
+        TableCellEditor tableCellEditor = table.getCellEditor(editorRow, editorCol);
+        return tableCellEditor.getTableCellEditorComponent(table, table.getValueAt(editorRow, editorCol), false, editorRow, editorCol);
     }
 
     public static Component cell(JTable table, int row, Object columIdentifier) {

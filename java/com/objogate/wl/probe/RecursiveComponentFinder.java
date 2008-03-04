@@ -82,9 +82,13 @@ public class RecursiveComponentFinder<T extends Component> implements ComponentF
     
     public void describeTo(Description description) {
         description.appendText(componentType.getSimpleName())
-                   .appendText(" that is ")
+                   .appendText(" that ")
                    .appendDescriptionOf(criteria)
-                   .appendText(", within a ")
+                   .appendText("\n in ")
                    .appendDescriptionOf(parentOrOwnerFinder);
+        
+        if (!isSatisfied() && parentOrOwnerFinder.isSatisfied()) {
+            description.appendText("\nBut ");
+        }
     }
 }

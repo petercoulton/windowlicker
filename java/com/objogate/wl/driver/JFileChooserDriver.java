@@ -41,6 +41,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         super(gesturePerformer, chooser);
     }
 
+    @SuppressWarnings("unchecked")
     public JFileChooserDriver(ComponentDriver<? extends Component> parentOrOwner, Matcher<? super JFileChooser> matcher) {
         super(parentOrOwner, JFileChooser.class, matcher);
     }
@@ -156,6 +157,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
             folderEntry.clickOK();
         }
 
+        @SuppressWarnings("unchecked")
         public void upOneFolder() {
             JListDriver directoryList = new JListDriver(JFileChooserDriver.this, JList.class, named("GTKFileChooser.directoryList"));
             CurrentDirectoryManipulator directoryManipulator = new CurrentDirectoryManipulator();
@@ -170,14 +172,17 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
             ok();
         }
 
+        @SuppressWarnings("unchecked")
         public void cancel() {
             new JButtonDriver(JFileChooserDriver.this, JButton.class, named("SynthFileChooser.cancelButton")).click();
         }
         
+        @SuppressWarnings("unchecked")
         public void ok() {
             new JButtonDriver(JFileChooserDriver.this, JButton.class, named("SynthFileChooser.approveButton")).click();
         }
 
+        @SuppressWarnings("unchecked")
         public JTextComponentDriver<? extends JTextComponent> textBox() {
             return new JTextFieldDriver(JFileChooserDriver.this, JTextField.class, named("GTKFileChooser.fileNameTextField"));
         }
@@ -197,14 +202,17 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
     private class MetalFileChooserDriverUI implements FileChooserDriverUI {
 
+        @SuppressWarnings("unchecked")
         public void cancel() {
             new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText("Cancel")).click();
         }
 
+        @SuppressWarnings("unchecked")
         public void ok() {
             new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText("Open")).click();
         }
 
+        @SuppressWarnings("unchecked")
         public JTextFieldDriver textBox() {
             // only one textfield in this laf...
             return new JTextFieldDriver(JFileChooserDriver.this, JTextField.class, Matchers.anything());

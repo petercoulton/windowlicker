@@ -8,6 +8,7 @@ import static com.objogate.wl.gesture.Gestures.clickMouseButton;
 import com.objogate.wl.gesture.HorizontalThenVerticalMouseMoveGesture;
 
 public class JMenuItemDriver extends AbstractButtonDriver<JMenuItem>{
+    @SuppressWarnings("unchecked")
     public JMenuItemDriver(ComponentDriver<? extends Component> parentOrOwner, Matcher<? super JMenuItem> matcher) {
         super(parentOrOwner, JMenuItem.class, matcher);
     }

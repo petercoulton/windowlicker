@@ -10,6 +10,7 @@ import static com.objogate.wl.matcher.ComponentMatchers.named;
 import static com.objogate.wl.matcher.ComponentMatchers.showingOnScreen;
 
 public class CalculatorDriver extends JFrameDriver {
+    @SuppressWarnings("unchecked")
     public CalculatorDriver(GesturePerformer gesturePerformer) {
         super(gesturePerformer, named(MAIN_WINDOW), showingOnScreen());
     }
@@ -54,6 +55,7 @@ public class CalculatorDriver extends JFrameDriver {
         clickButton(EQUALS_BUTTON);
     }
 
+    @SuppressWarnings("unchecked")
     private void clickButton(String name) {
         new JButtonDriver(this, JButton.class, named(name)).click();
     }
@@ -62,6 +64,7 @@ public class CalculatorDriver extends JFrameDriver {
         display().text(equalTo(expectedResult));
     }
 
+    @SuppressWarnings("unchecked")
     private JTextFieldDriver display() {
         return new JTextFieldDriver(this, JTextField.class, named(DISPLAY));
     }

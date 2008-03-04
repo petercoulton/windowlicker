@@ -88,7 +88,7 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         driver.cellRenderedWithText(0, 0, Matchers.containsString("hello"));
     }
 
-    private void moveColumn(String columnIdentifier, int movement) throws InterruptedException {
+    private void moveColumn(String columnIdentifier, int movement) {
         new JTableHeaderDriver(gesturePerformer, table.getTableHeader(), prober).moveColumn(columnIdentifier, movement);
     }
 

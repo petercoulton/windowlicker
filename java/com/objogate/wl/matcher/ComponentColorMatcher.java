@@ -13,6 +13,7 @@ public abstract class ComponentColorMatcher extends TypeSafeMatcher<Component> {
         this.color = color;
     }
 
+    @Override
     public boolean matchesSafely(Component component) {
         return colorOf(component).equals(color);
     }

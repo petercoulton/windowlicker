@@ -12,6 +12,7 @@ public class ColorMatcher extends TypeSafeMatcher<Color> {
         this.expected = expected;
     }
 
+    @Override
     public boolean matchesSafely(Color item) {
         return expected.equals(item);
     }

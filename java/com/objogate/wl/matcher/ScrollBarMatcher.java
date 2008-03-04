@@ -15,6 +15,7 @@ public class ScrollBarMatcher extends TypeSafeMatcher<JScrollBar> {
         this.orientation = orientation;
     }
 
+    @Override
     public boolean matchesSafely(JScrollBar component) {
         return parent == component.getParent() && component.getOrientation() == orientation;
     }

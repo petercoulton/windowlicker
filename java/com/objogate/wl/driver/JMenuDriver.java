@@ -23,6 +23,7 @@ public class JMenuDriver extends AbstractButtonDriver<JMenu> {
         return this;
     }
 
+    @SuppressWarnings("unchecked")
     public JMenuDriver subMenu(Matcher<? super JMenu> matcher) {
         select();
         return new JMenuDriver(this, matcher);    
@@ -41,6 +42,7 @@ public class JMenuDriver extends AbstractButtonDriver<JMenu> {
         };
     }
 
+    @SuppressWarnings("unchecked")
     public AbstractButtonDriver<JMenuItem> menuItem(Matcher<AbstractButton> matcher) {
         return new AbstractButtonDriver<JMenuItem>(this, JMenuItem.class, matcher);
     }

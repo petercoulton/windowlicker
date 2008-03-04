@@ -12,6 +12,7 @@ public class AbstractButtonTextMatcher<T extends AbstractButton> extends TypeSaf
         this.text = text;
     }
 
+    @Override
     public boolean matchesSafely(T buttonAlike) {
         return text.equals(buttonAlike.getText());
     }

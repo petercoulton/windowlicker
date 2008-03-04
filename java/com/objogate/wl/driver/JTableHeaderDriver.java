@@ -46,7 +46,7 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
         super(parentOrOwner, componentType, matchers);
     }
 
-    public void moveColumn(final Object columnIdentifier, int movement) throws InterruptedException {
+    public void moveColumn(final Object columnIdentifier, int movement) {
         moveColumn(getIndexOfColumnIdentifiedBy(columnIdentifier), movement);
     }
 
@@ -56,7 +56,7 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
         return manipulation.getIndex();
     }
 
-    public void moveColumn(final int index, int movement) throws InterruptedException {
+    public void moveColumn(final int index, int movement) {
         scrollCellToVisible(-1, index);
 
         final int midpointOfSourceColumn = midpointOfColumn(index);
@@ -96,7 +96,7 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
         return manipulation.getMidPoint();
     }
 
-    public void scrollCellToVisible(final int row, final int col) throws InterruptedException {
+    public void scrollCellToVisible(final int row, final int col) {
         perform("scrolling cell", new ComponentManipulation<JTableHeader>() {
             public void manipulate(JTableHeader header) {
                 JTable table = header.getTable();

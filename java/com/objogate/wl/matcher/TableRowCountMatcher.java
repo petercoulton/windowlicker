@@ -17,6 +17,7 @@ public class TableRowCountMatcher extends TypeSafeMatcher<Component> {
         this.rowCountMatcher = rowCountMatcher;
     }
 
+    @Override
     public boolean matchesSafely(Component component) {
         return component instanceof JTable
             && matchesSafely((JTable)component);

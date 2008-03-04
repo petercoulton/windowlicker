@@ -80,15 +80,18 @@ class ReallyBigTable extends JTable {
         Set<Integer> editableColumns = new HashSet<Integer>();
         Map<String, Object> data = new HashMap<String, Object>();
 
+        @Override
         public Object getValueAt(int row, int col) {
             String key = key(row, col);
             return data.containsKey(key) ? data.get(key) : row + "x" + col;
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return editableColumns.contains(col);
         }
 
+        @Override
         public int getRowCount() {
             return 10000;
         }
@@ -97,6 +100,7 @@ class ReallyBigTable extends JTable {
             this.editableColumns.add(col);
         }
 
+        @Override
         public void setValueAt(Object object, int row, int col) {
             data.put(key(row, col), object);
             fireTableCellUpdated(row, col);
