@@ -84,7 +84,7 @@ public class RecursiveComponentFinder<T extends Component> implements ComponentF
         description.appendText(componentType.getSimpleName())
                    .appendText(" that ")
                    .appendDescriptionOf(criteria)
-                   .appendText("\n in ")
+                   .appendText("\n    in ")
                    .appendDescriptionOf(parentOrOwnerFinder);
         
         if (!isSatisfied() && parentOrOwnerFinder.isSatisfied()) {

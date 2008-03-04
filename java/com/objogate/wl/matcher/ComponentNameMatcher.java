@@ -18,6 +18,6 @@ public class ComponentNameMatcher extends TypeSafeMatcher<Component> {
     }
     
     public void describeTo(Description description) {
-        description.appendText("named ").appendValue(name);
+        description.appendText("is named ").appendValue(name);
     }
 }

@@ -26,13 +26,13 @@ public class SingleComponentFinder<T extends Component> implements ComponentSele
     public boolean isSatisfied() {
         return finder.isSatisfied() && components().size() == 1;
     }
-
+    
     public void probe() {
         finder.probe();
     }
-
+    
     public void describeTo(Description description) {
-        description.appendText("single ")
+        description.appendText("exactly 1 ")
                    .appendDescriptionOf(finder);
 
         if (!isSatisfied() && finder.isSatisfied()) {
