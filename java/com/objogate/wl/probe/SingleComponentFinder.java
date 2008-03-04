@@ -37,9 +37,9 @@ public class SingleComponentFinder<T extends Component> implements ComponentSele
 
         if (finder.isSatisfied()) {
           if (isSingle()) {
-            description.appendText("\nFound ").appendDescriptionOf(finder);
+            description.appendText("\nFound 1 ").appendDescriptionOf(finder);
           } else {
-            description.appendText("\nbut found " + components().size());
+            description.appendText("\nbut found " + components().size() + " instances");
           }
         }
     }
