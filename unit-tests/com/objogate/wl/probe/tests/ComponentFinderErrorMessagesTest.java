@@ -96,7 +96,6 @@ public class ComponentFinderErrorMessagesTest extends AbstractComponentDriverTes
             labelDriver.hasBackgroundColor(Color.BLACK);
         }
         catch (AssertionError e) {
-            System.out.println(e.getMessage());
             assertThat(e.getMessage(), containsInOrder(
                 "Tried to look for",
                 "exactly 1", "JLabel", "named \"label\"",
