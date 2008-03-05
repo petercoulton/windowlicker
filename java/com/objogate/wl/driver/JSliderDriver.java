@@ -42,7 +42,7 @@ public class JSliderDriver extends ComponentDriver<JSlider> {
     }
 
     public void hasValue(final Matcher<Integer> matcher) {
-        is("has value ", new TypeSafeMatcher<JSlider>() {
+        is(new TypeSafeMatcher<JSlider>() {
             @Override
             public boolean matchesSafely(JSlider jSlider) {
                 return !jSlider.getValueIsAdjusting() && matcher.matches(jSlider.getValue());
@@ -56,7 +56,7 @@ public class JSliderDriver extends ComponentDriver<JSlider> {
     }
 
     public void hasMaximum(final Matcher<Integer> matcher) {
-        is("has maximum ", new TypeSafeMatcher<JSlider>() {
+        is(new TypeSafeMatcher<JSlider>() {
             @Override
             public boolean matchesSafely(JSlider jSlider) {
                 return matcher.matches(jSlider.getMaximum());
@@ -70,7 +70,7 @@ public class JSliderDriver extends ComponentDriver<JSlider> {
     }
 
     public void hasMinimum(final Matcher<Integer> matcher) {
-        is("has minimum ", new TypeSafeMatcher<JSlider>() {
+        is(new TypeSafeMatcher<JSlider>() {
             @Override
             public boolean matchesSafely(JSlider jSlider) {
                 return matcher.matches(jSlider.getMinimum());

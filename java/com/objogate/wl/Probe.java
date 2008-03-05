@@ -1,5 +1,6 @@
 package com.objogate.wl;
 
+import org.hamcrest.Description;
 import org.hamcrest.SelfDescribing;
 
 /**
@@ -11,4 +12,6 @@ import org.hamcrest.SelfDescribing;
 public interface Probe extends SelfDescribing {
     void probe();
     boolean isSatisfied();
+    
+    void describeFailureTo(Description description);
 }

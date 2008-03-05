@@ -32,6 +32,9 @@ public class AWTEventQueueProberTest {
             
             public void describeTo(Description description) {
             }
+
+            public void describeFailureTo(Description description) {
+            }
         });
         
         assertTrue("should be satisfied within timeout", isSatisfied);
@@ -48,6 +51,9 @@ public class AWTEventQueueProberTest {
             }
             
             public void describeTo(Description description) {
+            }
+
+            public void describeFailureTo(Description description) {
             }
         });
         
@@ -67,6 +73,9 @@ public class AWTEventQueueProberTest {
                 
                 public void describeTo(Description description) {
                     description.appendText("error message");
+                }
+
+                public void describeFailureTo(Description description) {
                 }
             });
         }

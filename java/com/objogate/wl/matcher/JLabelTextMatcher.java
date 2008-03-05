@@ -1,13 +1,12 @@
 package com.objogate.wl.matcher;
 
+import javax.swing.JLabel;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import javax.swing.JLabel;
-import java.awt.Component;
-
-public class JLabelTextMatcher extends TypeSafeMatcher<Component> {
+public class JLabelTextMatcher extends TypeSafeMatcher<JLabel> {
     private final Matcher<String> matcher;
 
     public JLabelTextMatcher(Matcher<String> matcher) {
@@ -15,16 +14,12 @@ public class JLabelTextMatcher extends TypeSafeMatcher<Component> {
     }
 
     @Override
-    public boolean matchesSafely(Component component) {
-        if (component instanceof JLabel) {
-            JLabel label = (JLabel) component;
-            return matcher.matches(label.getText());
-        }
-
-        return false;
+    public boolean matchesSafely(JLabel label) {
+        return matcher.matches(label.getText());
     }
-
+    
     public void describeTo(Description description) {
-        description.appendText("JLabel with ").appendText(matcher.toString());
+        description.appendText("with text ")
+                   .appendDescriptionOf(matcher);
     }
 }

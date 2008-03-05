@@ -31,4 +31,8 @@ public class ComponentManipulatorProbe<T extends Component> implements Probe {
     public void describeTo(Description description) {
         finder.describeTo(description);
     }
+
+    public void describeFailureTo(Description description) {
+        finder.describeFailureTo(description);
+    }
 }

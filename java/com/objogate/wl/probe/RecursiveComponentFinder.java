@@ -86,9 +86,8 @@ public class RecursiveComponentFinder<T extends Component> implements ComponentF
                    .appendDescriptionOf(criteria)
                    .appendText("\n    in ")
                    .appendDescriptionOf(parentOrOwnerFinder);
-        
-        if (!isSatisfied() && parentOrOwnerFinder.isSatisfied()) {
-            description.appendText("\nBut ");
-        }
+    }
+    
+    public void describeFailureTo(Description description) {
     }
 }

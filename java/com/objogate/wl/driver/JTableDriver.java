@@ -5,7 +5,6 @@ import javax.swing.JTable;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.util.Arrays;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -106,7 +105,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public void hasSelectedCells(final Cell... cells) {
-        is("cells " + Arrays.asList(cells) + " are selected", new SelectedTableCellsMatcher(cells));
+        is(new SelectedTableCellsMatcher(cells));
     }
 
     public void scrollCellToVisible(final int row, final int col) {
@@ -128,7 +127,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public void cellHasBackgroundColor(final int row, final Object columnIdentifier, Matcher<Color> backgroundColor) {
-        has("background color", new ComponentQuery<JTable, Color>() {
+        has(new ComponentQuery<JTable, Color>() {
             public Color query(JTable component) {
                 return JTableCellManipulation.cell(component, row, columnIdentifier).getBackground();
             }
@@ -139,7 +138,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public void cellHasBackgroundColor(final int row, final int col, Matcher<Color> backgroundColor) {
-        has("background color", new ComponentQuery<JTable, Color>() {
+        has(new ComponentQuery<JTable, Color>() {
             public Color query(JTable component) {
                 return JTableCellManipulation.cell(component, row, col).getBackground();
             }
@@ -150,7 +149,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public void cellHasForegroundColor(final int row, final Object columnIdentifier, Matcher<Color> foregroundColor) {
-        has("foreground color", new ComponentQuery<JTable, Color>() {
+        has(new ComponentQuery<JTable, Color>() {
             public Color query(JTable component) {
                 Component rendered = JTableCellManipulation.cell(component, row, columnIdentifier);
                 return rendered.getForeground();
@@ -162,7 +161,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public void cellHasForegroundColor(final int row, final int col, TypeSafeMatcher<Color> foregroundColor) {
-        has("foreground color", new ComponentQuery<JTable, Color>() {
+        has(new ComponentQuery<JTable, Color>() {
             public Color query(JTable component) {
                 return JTableCellManipulation.cell(component, row, col).getForeground();
             }
@@ -177,11 +176,11 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public void cellRenderedWithText(final int row, final Object columnIdentifier, Matcher<String> expectedText) {
-        has("text", new CellTextQuery(row, columnIdentifier), expectedText);
+        has(new CellTextQuery(row, columnIdentifier), expectedText);
     }
 
     public void cellRenderedWithText(final int row, final int col, Matcher<String> expectedText) {
-        has("text", new CellTextQuery(row, col), expectedText);
+        has(new CellTextQuery(row, col), expectedText);
     }
 
     public static class Cell {

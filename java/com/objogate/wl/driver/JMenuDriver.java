@@ -17,7 +17,7 @@ public class JMenuDriver extends AbstractButtonDriver<JMenu> {
     }
 
     public void isShowing() {
-        has("showing", popupVisible(), equalTo(true));
+        has(popupVisible(), equalTo(true));
     }
 
     public JMenuDriver select() {

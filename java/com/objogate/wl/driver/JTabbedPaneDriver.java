@@ -45,7 +45,7 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
     }
 
     public void hasTabCount(int expectedCount) {
-        has("tab count", new ComponentQuery<JTabbedPane, Integer>() {
+        has(new ComponentQuery<JTabbedPane, Integer>() {
             public Integer query(JTabbedPane component) {
                 return component.getTabCount();
             }
@@ -67,7 +67,7 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
     }
 
     public void hasSelectedTab(int expectedIndex) {
-        has("selected tab", new ComponentQuery<JTabbedPane, Integer>() {
+        has(new ComponentQuery<JTabbedPane, Integer>() {
             public Integer query(JTabbedPane component) {
                 return component.getSelectedIndex();
             }

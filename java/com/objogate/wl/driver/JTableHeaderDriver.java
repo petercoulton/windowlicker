@@ -136,7 +136,7 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
     public void indexOfColumnIdentifiedBy(final Object columnIdentifier, final int expectedIndex) {
         final ColumnIndexManipulation manipulation = new ColumnIndexManipulation(columnIdentifier);
 
-        has("index of column", new ComponentQuery<JTableHeader, Integer>() {
+        has(new ComponentQuery<JTableHeader, Integer>() {
             public Integer query(JTableHeader component) {
                 manipulation.manipulate(component);
                 return manipulation.getIndex();
@@ -153,7 +153,7 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
     }
 
     public void widthOfColumn(final int columnIndex, int expectedWidth) {
-        has("column width", new ComponentQuery<JTableHeader, Integer>() {
+        has(new ComponentQuery<JTableHeader, Integer>() {
             public Integer query(JTableHeader component) {
                 TableColumn tableColumn = component.getColumnModel().getColumn(columnIndex);
                 return tableColumn.getWidth();

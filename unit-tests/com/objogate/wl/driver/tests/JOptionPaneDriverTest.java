@@ -26,7 +26,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
 
         driver.clickOK();
 
-        driver.is("option pane should not be showing on screen", not(showingOnScreen()));
+        driver.is(not(showingOnScreen()));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
 
         driver.clickYes();
 
-        driver.is("option pane should not be showing on screen", not(showingOnScreen()));
+        driver.is(not(showingOnScreen()));
 
         assertEquals(JOptionPane.YES_OPTION, returnValue);
     }
@@ -61,7 +61,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
 
         driver.clickButtonWithText("CANCEL");
 
-        driver.is("option pane should not be showing on screen", not(showingOnScreen()));
+        driver.is(not(showingOnScreen()));
 
         assertEquals(1, returnValue);
     }
@@ -79,7 +79,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
         driver.typeText("hello");
         driver.clickOK();
 
-        driver.is("option pane should not be showing on screen", not(showingOnScreen()));
+        driver.is(not(showingOnScreen()));
 
         assertEquals("hello", returnValue);
     }
@@ -98,7 +98,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
 
         driver.selectValue(wantedValue);
 
-        driver.is("option pane should not be showing on screen", not(showingOnScreen()));
+        driver.is(not(showingOnScreen()));
 
         assertEquals(wantedValue, returnValue);
     }
@@ -124,7 +124,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
 
         driver.selectValue(wantedValue);
 
-        driver.is("option pane should not be showing on screen", not(showingOnScreen()));
+        driver.is(not(showingOnScreen()));
 
         assertEquals(wantedValue, returnValue);
     }

@@ -36,4 +36,8 @@ public class TopLevelWindowFinder implements ComponentFinder<Window> {
     public void describeTo(Description description) {
         description.appendText("all top level windows");
     }
+
+    public void describeFailureTo(Description description) {
+        // It cannot fail
+    }
 }

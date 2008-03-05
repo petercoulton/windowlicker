@@ -43,7 +43,7 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
     }
 
     public void hasSelectedIndex(int expectedIndex) {
-        has("selected index", new ComponentQuery<JList, Integer>() {
+        has(new ComponentQuery<JList, Integer>() {
             public Integer query(JList component) {
                 return component.getSelectedIndex();
             }

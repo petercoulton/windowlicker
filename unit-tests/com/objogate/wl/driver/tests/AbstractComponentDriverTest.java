@@ -3,6 +3,9 @@ package com.objogate.wl.driver.tests;
 import javax.swing.JFrame;
 import java.awt.Color;
 import java.awt.Component;
+
+import static com.objogate.wl.driver.JFrameDriver.topLevelFrame;
+import static com.objogate.wl.matcher.ComponentMatchers.named;
 import static java.lang.Thread.sleep;
 import org.junit.After;
 import com.objogate.wl.AWTEventQueueProber;
@@ -24,14 +27,23 @@ public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? ex
     @After
     public void disposeOfFrame() throws Exception {
         pause(endOfTestPause); // just to give the view a chance to see the result of the test
-        if (frame != null) frame.dispose();
+        if (frame != null) {
+            frame.setName(null);
+            frame.dispose();
+        }
     }
 
+    @SuppressWarnings("unchecked")
     protected void view(Component c) {
         frame = ComponentViewer.view(c);
         frame.setTitle(getClass().getSimpleName());
+        frame.setName("componentViewer");
         frame.pack();
-        frameDriver = new JFrameDriver(gesturePerformer, frame, prober);
+        
+        frameDriver = new JFrameDriver(gesturePerformer, 
+                                       topLevelFrame(named("componentViewer")),
+                                       prober);
+        
         try {
             pause(500);
         } catch (InterruptedException e) {

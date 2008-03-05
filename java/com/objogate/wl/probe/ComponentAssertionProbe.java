@@ -29,15 +29,18 @@ public class ComponentAssertionProbe<T extends Component> implements ComponentFi
     public boolean isSatisfied() {
         return assertionMet;
     }
-
+    
     public void describeTo(Description description) {
         description.appendDescriptionOf(selector)
                 .appendText(", and is ")
                 .appendDescriptionOf(assertion);
-
+    
         if (selector.isSatisfied() && !assertionMet) {
-            description.appendText(", but is not ")
-                    .appendDescriptionOf(assertion);
         }
+    }
+    
+    public void describeFailureTo(Description description) {
+        description.appendText("it is not ")
+                   .appendDescriptionOf(assertion);
     }
 }

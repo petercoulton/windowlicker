@@ -33,15 +33,16 @@ public class ComponentPropertyAssertionProbe<C extends Component,P> implements P
     
     public void describeTo(Description description) {
         description
-        .appendDescriptionOf(propertyValueQuery)
-        .appendText(" matching ")
-        .appendDescriptionOf(propertyValueMatcher)
-        .appendText(" in ")
-        .appendDescriptionOf(selector);
-        
-        if (selector.isSatisfied()) {
-          description.appendText("\n\tFound ")
-                     .appendValue(propertyValue);
-        }
+            .appendDescriptionOf(propertyValueQuery)
+            .appendText(" ")
+            .appendDescriptionOf(propertyValueMatcher)
+            .appendText("\n    in ")
+            .appendDescriptionOf(selector);
+    }
+    
+    public void describeFailureTo(Description description) {
+        description.appendDescriptionOf(propertyValueQuery)
+                   .appendText(" was ")
+                   .appendValue(propertyValue);
     }
 }

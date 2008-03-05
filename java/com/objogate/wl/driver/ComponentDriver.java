@@ -86,8 +86,8 @@ public abstract class ComponentDriver<T extends Component> {
      * @see #check(String,com.objogate.wl.Probe)
      * @see #all(Class,org.hamcrest.Matcher)
      * @see #the(Class,org.hamcrest.Matcher)
-     * @see #is(String,org.hamcrest.Matcher)
-     * @see #has(String,com.objogate.wl.ComponentQuery,org.hamcrest.Matcher)
+     * @see #is(org.hamcrest.Matcher)
+     * @see #has(com.objogate.wl.ComponentQuery,org.hamcrest.Matcher)
      */
     public ComponentSelector<T> component() {
         return selector;
@@ -124,12 +124,10 @@ public abstract class ComponentDriver<T extends Component> {
      * This is a simpler hook for assertions, upon which more convenient methods can be
      * built.  It is exposed as a public method to act as an "escape route" so that
      * users can extend drivers through a stable extension point.
-     *
-     * @param description The description of what is being asserted by the criteria
      * @param criteria    The criteria that the component must meet.
      */
-    public void is(String description, Matcher<? super T> criteria) {
-        check("is " + description, new ComponentAssertionProbe<T>(selector, criteria));
+    public void is(Matcher<? super T> criteria) {
+        check("is", new ComponentAssertionProbe<T>(selector, criteria));
     }
 
     /**
@@ -139,13 +137,11 @@ public abstract class ComponentDriver<T extends Component> {
      * This is a simpler hook for assertions, upon which more convenient methods can be
      * built.  It is exposed as a public method to act as an "escape route" so that
      * users can extend drivers through a stable extension point.
-     *
-     * @param description The description of what is being asserted by the criteria
      * @param query       A query that returns the value of a property of the component
      * @param criteria    The criteria that the component must meet.
      */
-    public <P> void has(String description, ComponentQuery<T, P> query, Matcher<? super P> criteria) {
-        check("has " + description, new ComponentPropertyAssertionProbe<T, P>(selector, query, criteria));
+    public <P> void has(ComponentQuery<T, P> query, Matcher<? super P> criteria) {
+        check("has", new ComponentPropertyAssertionProbe<T, P>(selector, query, criteria));
     }
 
     /**
@@ -181,7 +177,7 @@ public abstract class ComponentDriver<T extends Component> {
     }
 
     protected void isShowingOnScreen() {
-        is("can only click on visible components", showingOnScreen());
+        is(showingOnScreen());
     }
 
     /**
@@ -242,7 +238,7 @@ public abstract class ComponentDriver<T extends Component> {
     }
 
     public void hasForegroundColor(Matcher<Color> color) {
-        has("foreground color", new ComponentQuery<T, Color>() {
+        has(new ComponentQuery<T, Color>() {
             public Color query(T component) {
                 return component.getForeground();
             }
@@ -258,7 +254,7 @@ public abstract class ComponentDriver<T extends Component> {
 
     // todo (nick): what a nice way of combining these to produce decent error messages?
     public void hasBackgroundColor(Matcher<Color> color) {
-        has("background color", new ComponentQuery<T, Color>() {
+        has(new ComponentQuery<T, Color>() {
             public Color query(T component) {
                 return component.getBackground();
             }
@@ -268,7 +264,7 @@ public abstract class ComponentDriver<T extends Component> {
         }, color);
 
         //need to check opacity else the background color isn't visible
-        has("opacity", new ComponentQuery<T, Boolean>() {
+        has(new ComponentQuery<T, Boolean>() {
             public Boolean query(T component) {
                 return component.isOpaque();
             }

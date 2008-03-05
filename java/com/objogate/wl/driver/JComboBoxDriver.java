@@ -1,14 +1,18 @@
 package com.objogate.wl.driver;
 
+import static org.hamcrest.Matchers.equalTo;
+
+import java.awt.Component;
+
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.plaf.basic.ComboPopup;
-import java.awt.Component;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsEqual;
+
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentQuery;
 import com.objogate.wl.ComponentSelector;
@@ -73,14 +77,14 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
     }
 
     public void hasSelectedIndex(int index) {
-        has("selected index", new ComponentQuery<JComboBox, Integer>() {
+        has(new ComponentQuery<JComboBox, Integer>() {
             public Integer query(JComboBox component) {
                 return component.getSelectedIndex();
             }
             public void describeTo(Description description) {
               description.appendText("selected index");
             }
-        }, new IsEqual<Integer>(index));
+        }, equalTo(index));
     }
 
     private static class ComboPopupComponentDriver extends ComponentDriver<JComponent> {

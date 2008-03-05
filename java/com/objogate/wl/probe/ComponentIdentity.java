@@ -40,4 +40,8 @@ public class ComponentIdentity<T extends Component> implements ComponentSelector
         description.appendValue(component.toString());
         description.appendText( "' " );
     }
+
+    public void describeFailureTo(Description description) {
+        // Cannot fail
+    }
 }

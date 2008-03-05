@@ -66,9 +66,12 @@ public class AWTEventQueueProber implements Prober, SystemProperties {
         try {
             if (!poll(probe)) {
                 StringDescription description = new StringDescription();
+                
                 description.appendText(context)
-                        .appendText("\nLooked for:\n    ")
-                        .appendDescriptionOf(probe);
+                           .appendText("\nLooked for:\n    ");
+                probe.describeTo(description);
+                description.appendText("\nBut:\n");
+                probe.describeFailureTo(description);
                 
                 throw new AssertionError(description.toString());
             }

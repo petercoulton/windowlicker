@@ -72,4 +72,8 @@ public class ComponentRelativePositionProbe implements Probe {
         description.appendText("\n");
         description.appendDescriptionOf(selectorB);
     }
+
+    public void describeFailureTo(Description description) {
+        description.appendText("was not in the expected relative position");
+    }
 }

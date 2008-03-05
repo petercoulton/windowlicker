@@ -7,7 +7,7 @@ import org.hamcrest.Description;
 import com.objogate.wl.ComponentFinder;
 import com.objogate.wl.ComponentSelector;
 
-public class NthComponentFinder<T extends Component> implements ComponentFinder<T>, ComponentSelector<T> {
+public class NthComponentFinder<T extends Component> implements ComponentSelector<T> {
     private ComponentFinder<T> parentOrOwnerFinder;
     private int whichToChoose;
 
@@ -34,9 +34,14 @@ public class NthComponentFinder<T extends Component> implements ComponentFinder<
     }
 
     public void describeTo(Description description) {
-        description.appendText("The " );
+        description.appendText("the " );
         description.appendValue(whichToChoose);
         description.appendText(" component from those matching ");
         description.appendDescriptionOf(parentOrOwnerFinder);
+    }
+
+    public void describeFailureTo(Description description) {
+        description.appendText("there were only ").appendValue(components().size());
+        
     }
 }

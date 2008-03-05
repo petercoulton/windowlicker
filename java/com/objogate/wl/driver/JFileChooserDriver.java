@@ -135,6 +135,11 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
                 description.appendText("current directory matches ");
                 description.appendDescriptionOf(matcher);
             }
+
+            public void describeFailureTo(Description description) {
+                description.appendText("current directory was ")
+                           .appendValue(currentDirectory);
+            }
         });
     }
 

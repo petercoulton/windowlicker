@@ -39,7 +39,11 @@ class ComponentScreenBoundsProbe implements Probe {
     }
 
     public void describeTo(Description description) {
-        description.appendText(" screen dimensions of ");
+        description.appendText("screen dimensions of ");
         description.appendDescriptionOf(componentSelector);
+    }
+
+    public void describeFailureTo(Description description) {
+        description.appendText("had no screen dimensions");
     }
 }

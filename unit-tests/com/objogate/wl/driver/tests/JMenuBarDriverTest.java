@@ -61,7 +61,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
 
     @Test
     public void canFindTheMenuBar() {
-        driver.is("is showing on screen", ComponentMatchers.showingOnScreen());
+        driver.is(ComponentMatchers.showingOnScreen());
     }
 
     @Test

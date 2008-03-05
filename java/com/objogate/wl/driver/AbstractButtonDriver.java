@@ -53,7 +53,7 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
     }
     
     public void hasText(Matcher<String> matcher) {
-      has("text", text(), matcher);
+      has(text(), matcher);
     }
     
     private ComponentQuery<T,String> text() {
@@ -68,7 +68,7 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
     }
     
     public void mnemonic(Matcher<Character> matcher) {
-        has("mnemonic", mnemonic(), matcher);
+        has(mnemonic(), matcher);
     }
 
     private ComponentQuery<T,Character> mnemonic() {
@@ -83,11 +83,11 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
     }
 
     public void isChecked() {
-        is("selecting", selected());
+        is(selected());
     }
 
     public void isNotChecked() {
-        is("selecting", Matchers.not(selected()));
+        is(Matchers.not(selected()));
     }
 
     private TypeSafeMatcher<AbstractButton> selected() {
