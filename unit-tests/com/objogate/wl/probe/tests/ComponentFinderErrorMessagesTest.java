@@ -7,6 +7,7 @@ import static com.objogate.wl.matcher.StringContainsInOrderMatcher.containsInOrd
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JFrame;
@@ -53,7 +54,6 @@ public class ComponentFinderErrorMessagesTest extends AbstractComponentDriverTes
         JLabel label = new JLabel("hello world");
         label.setName("label");
         panel.add(label);
-        
         view(panel);
         
         prober.setTimeout(100);
@@ -74,8 +74,41 @@ public class ComponentFinderErrorMessagesTest extends AbstractComponentDriverTes
                 "all top level windows",
                 "contained 1 JFrame", "named \"componentViewer\"",
                 "contained 0 JLabel", "named \"label\"", "with text \"HELLO\""));
-            
-            System.out.println(e.getMessage());
         }
     }
+    
+        @SuppressWarnings("unchecked")
+    @Test public void
+    reportsWhenComponentAssertionFails() {
+        JPanel panel = new JPanel();
+        panel.setName("panel");
+        JLabel label = new JLabel("hello world");
+        label.setName("label");
+        label.setBackground(Color.WHITE);
+        panel.add(label);
+        view(panel);
+        
+        prober.setTimeout(100);
+        
+        try {
+            JLabelDriver labelDriver = new JLabelDriver(frameDriver, named("label"));
+            
+            labelDriver.hasBackgroundColor(Color.BLACK);
+        }
+        catch (AssertionError e) {
+            System.out.println(e.getMessage());
+            assertThat(e.getMessage(), containsInOrder(
+                "Tried to look for",
+                "exactly 1", "JLabel", "named \"label\"",
+                "in exactly 1 JFrame", "named \"componentViewer\"",
+                "in all top level windows",
+                "and check", "background color", "<java.awt.Color[r=0,g=0,b=0]>",
+                "but",
+                "all top level windows",
+                "contained 1 JFrame", "named \"componentViewer\"",
+                "contained 1 JLabel", "named \"label\"",
+                "background color was", "<java.awt.Color[r=255,g=255,b=255]>"));
+        }
+    }
+
 }

@@ -253,6 +253,7 @@ public abstract class ComponentDriver<T extends Component> {
     }
 
     // todo (nick): what a nice way of combining these to produce decent error messages?
+    // todo (nat): make factory functions for backgroundColor, etc. so that they can be passed to the has(...) method
     public void hasBackgroundColor(Matcher<Color> color) {
         has(new ComponentQuery<T, Color>() {
             public Color query(T component) {

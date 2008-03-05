@@ -33,11 +33,11 @@ public class ComponentPropertyAssertionProbe<C extends Component,P> implements P
     
     public void describeTo(Description description) {
         description
+            .appendDescriptionOf(selector)
+            .appendText("\nand check that its ")
             .appendDescriptionOf(propertyValueQuery)
-            .appendText(" ")
-            .appendDescriptionOf(propertyValueMatcher)
-            .appendText("\n    in ")
-            .appendDescriptionOf(selector);
+            .appendText(" is ")
+            .appendDescriptionOf(propertyValueMatcher);
     }
     
     public boolean describeFailureTo(Description description) {
@@ -45,7 +45,8 @@ public class ComponentPropertyAssertionProbe<C extends Component,P> implements P
             return true;
         }
         
-        description.appendDescriptionOf(propertyValueQuery)
+        description.appendText("\n    ")
+                   .appendDescriptionOf(propertyValueQuery)
                    .appendText(" was ")
                    .appendValue(propertyValue);
         
