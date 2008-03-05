@@ -33,7 +33,8 @@ public class AWTEventQueueProberTest {
             public void describeTo(Description description) {
             }
 
-            public void describeFailureTo(Description description) {
+            public boolean describeFailureTo(Description description) {
+                return true;
             }
         });
         
@@ -53,7 +54,8 @@ public class AWTEventQueueProberTest {
             public void describeTo(Description description) {
             }
 
-            public void describeFailureTo(Description description) {
+            public boolean describeFailureTo(Description description) {
+                return true;
             }
         });
         
@@ -75,7 +77,8 @@ public class AWTEventQueueProberTest {
                     description.appendText("error message");
                 }
 
-                public void describeFailureTo(Description description) {
+                public boolean describeFailureTo(Description description) {
+                    return true;
                 }
             });
         }

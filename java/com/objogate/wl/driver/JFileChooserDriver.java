@@ -119,6 +119,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         fileEntry.leftClickOnComponent();
     }
 
+    //TODO: make the descriptions recursive
     public void currentDirectory(final Matcher<String> matcher) {
         check("current directory", new Probe() {
             File currentDirectory;
@@ -136,9 +137,10 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
                 description.appendDescriptionOf(matcher);
             }
 
-            public void describeFailureTo(Description description) {
+            public boolean describeFailureTo(Description description) {
                 description.appendText("current directory was ")
                            .appendValue(currentDirectory);
+                return !isSatisfied();
             }
         });
     }

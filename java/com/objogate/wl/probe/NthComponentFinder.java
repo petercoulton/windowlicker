@@ -40,8 +40,10 @@ public class NthComponentFinder<T extends Component> implements ComponentSelecto
         description.appendDescriptionOf(parentOrOwnerFinder);
     }
 
-    public void describeFailureTo(Description description) {
-        description.appendText("there were only ").appendValue(components().size());
-        
+    /**
+     * This expects the ComponentFinder it wraps to describe how many were actually found.
+     */
+    public boolean describeFailureTo(Description description) {
+        return parentOrOwnerFinder.describeFailureTo(description) && components().size() <= whichToChoose;
     }
 }

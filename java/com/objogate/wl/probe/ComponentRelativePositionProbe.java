@@ -9,6 +9,7 @@ import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Probe;
 
+//TODO: is this really useful?  It complicates the design and I'm a bit uncomfortable testing layout in end-to-end tests.
 public class ComponentRelativePositionProbe implements Probe {
     private final ComponentSelector<? extends Component> selectorA;
     private final ComponentSelector<? extends Component> selectorB;
@@ -73,7 +74,8 @@ public class ComponentRelativePositionProbe implements Probe {
         description.appendDescriptionOf(selectorB);
     }
 
-    public void describeFailureTo(Description description) {
+    public boolean describeFailureTo(Description description) {
         description.appendText("was not in the expected relative position");
+        return true;
     }
 }

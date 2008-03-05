@@ -81,13 +81,27 @@ public class RecursiveComponentFinder<T extends Component> implements ComponentF
     }
     
     public void describeTo(Description description) {
-        description.appendText(componentType.getSimpleName())
-                   .appendText(" that ")
-                   .appendDescriptionOf(criteria)
-                   .appendText("\n    in ")
+        describeBrieflyTo(description);
+        description.appendText("\n    in ")
                    .appendDescriptionOf(parentOrOwnerFinder);
     }
     
-    public void describeFailureTo(Description description) {
+    private void describeBrieflyTo(Description description) {
+        description.appendText(componentType.getSimpleName())
+                   .appendText(" ")
+                   .appendDescriptionOf(criteria);
+    }
+    
+    public boolean describeFailureTo(Description description) {
+        if (parentOrOwnerFinder.describeFailureTo(description)) {
+            return true;
+        }
+        
+        description.appendText("\n    contained ")
+                   .appendText(String.valueOf(found.size()))
+                   .appendText(" ");
+        describeBrieflyTo(description);
+        
+        return found.size() == 0;
     }
 }

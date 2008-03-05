@@ -34,14 +34,13 @@ public class SingleComponentFinder<T extends Component> implements ComponentSele
     public void describeTo(Description description) {
         description.appendText("exactly 1 ")
                    .appendDescriptionOf(finder);
-
-        if (finder.isSatisfied() && isSingle()) {
-            description.appendText("    found 1 ");
-        }
     }
-    
-    public void describeFailureTo(Description description) {
-        description.appendText("found ").appendText(String.valueOf(finder.components().size()));
+
+    /**
+     * This expects the ComponentFinder it wraps to describe how many were actually found.
+     */
+    public boolean describeFailureTo(Description description) {
+        return finder.describeFailureTo(description) && !isSingle();
     }
     
     private boolean isSingle() {

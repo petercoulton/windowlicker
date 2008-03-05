@@ -40,9 +40,15 @@ public class ComponentPropertyAssertionProbe<C extends Component,P> implements P
             .appendDescriptionOf(selector);
     }
     
-    public void describeFailureTo(Description description) {
+    public boolean describeFailureTo(Description description) {
+        if (selector.describeFailureTo(description)) {
+            return true;
+        }
+        
         description.appendDescriptionOf(propertyValueQuery)
                    .appendText(" was ")
                    .appendValue(propertyValue);
+        
+        return !propertyValueMatcher.matches(propertyValue);
     }
 }

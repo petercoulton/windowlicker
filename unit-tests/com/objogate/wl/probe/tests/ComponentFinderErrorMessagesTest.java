@@ -24,7 +24,7 @@ import com.objogate.wl.matcher.ComponentMatchers;
 
 public class ComponentFinderErrorMessagesTest extends AbstractComponentDriverTest<ComponentDriver<? extends Component>> {
     @SuppressWarnings("unchecked")
-//    @Test 
+    @Test 
     public void
     reportsWhenCannotFindTopLevelFrame() {
         prober.setTimeout(100);
@@ -34,15 +34,14 @@ public class ComponentFinderErrorMessagesTest extends AbstractComponentDriverTes
             prober.check("testing error messages", selector);
         }
         catch (AssertionError e) {
-            String message = e.getMessage();
-            assertThat(message, containsInOrder(
+            assertThat(e.getMessage(), containsInOrder(
                 "testing error messages",
-                "Looked for",
-                "exactly 1",
-                "JFrame",
-                "is named \"--no-such-frame--\"",
+                "Tried to look for",
+                "exactly 1", "JFrame", "named \"--no-such-frame--\"",
                 "in all top level windows",
-                "but found 0"));
+                "but",
+                "all top level windows",
+                "contained 0 JFrame", "named \"--no-such-frame--\""));
         }
     }
     
@@ -65,10 +64,18 @@ public class ComponentFinderErrorMessagesTest extends AbstractComponentDriverTes
             labelDriver.is(showingOnScreen());
         }
         catch (AssertionError e) {
-            String message = e.getMessage();
-            System.out.println(message);
-            assertThat(message, containsInOrder(
-                "TESTING"));
+            assertThat(e.getMessage(), containsInOrder(
+                "Tried to look for",
+                "exactly 1", "JLabel", "named \"label\"", "with text \"HELLO\"",
+                "in exactly 1 JFrame", "named \"componentViewer\"",
+                "in all top level windows",
+                "and check that it is showing on screen",
+                "but",
+                "all top level windows",
+                "contained 1 JFrame", "named \"componentViewer\"",
+                "contained 0 JLabel", "named \"label\"", "with text \"HELLO\""));
+            
+            System.out.println(e.getMessage());
         }
     }
 }

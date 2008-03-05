@@ -13,5 +13,16 @@ public interface Probe extends SelfDescribing {
     void probe();
     boolean isSatisfied();
     
-    void describeFailureTo(Description description);
+    /**
+     * Describe the reason that the Probe failed.
+     * If the Probe decorates another, it must only describe its own success or failure if 
+     * its delegate probe returns false.  This makes a chain of probes describe the root 
+     * cause of a failure and not confuse the reader with unnecessary output.
+     * 
+     * @param description
+     *      The Description to append to
+     * @return
+     *      true if the reason for the failure has been described, false otherwise.
+     */
+    boolean describeFailureTo(Description description);
 }
