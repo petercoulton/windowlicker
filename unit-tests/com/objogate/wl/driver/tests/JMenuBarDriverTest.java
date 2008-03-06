@@ -24,10 +24,10 @@ import org.junit.Test;
 
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.driver.AbstractButtonDriver;
+import com.objogate.wl.driver.ComponentDriver;
 import com.objogate.wl.driver.JFrameDriver;
 import com.objogate.wl.driver.JMenuBarDriver;
 import com.objogate.wl.driver.JMenuDriver;
-import com.objogate.wl.matcher.ComponentMatchers;
 import com.objogate.wl.probe.ActionListenerProbe;
 
 public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriver> {
@@ -61,7 +61,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
 
     @Test
     public void canFindTheMenuBar() {
-        driver.is(ComponentMatchers.showingOnScreen());
+        driver.is(ComponentDriver.showingOnScreen());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
         for (String menuText : menuTexts) {
             JMenuDriver menu = driver.menu(withButtonText(menuText));
             ComponentSelector<JMenu> selector = menu.component();
-            prober.check("can find menu by title", selector);
+            prober.check(selector);
             assertNotNull("Can find component", selector.component());
             menu.text(equalTo(menuText));
         }
@@ -80,7 +80,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
     public void canFindAMenuByMnemonic() {
         JMenuDriver menu = driver.menu(withMnemonicKey('E'));
         ComponentSelector<JMenu> selector = menu.component();
-        prober.check("can find menu by mnemonic", selector);
+        prober.check(selector);
         assertNotNull("Can find component", selector.component());
         menu.text(equalTo("Edit"));
         menu.mnemonic(equalTo('E'));
@@ -100,7 +100,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
         JMenuDriver menu = driver.menu(withButtonText("File"));
         menu.leftClickOnComponent();
         AbstractButtonDriver<JMenuItem> buttonDriver = menu.menuItem(withButtonText("New"));
-        prober.check("can find", buttonDriver.component());
+        prober.check(buttonDriver.component());
         buttonDriver.leftClickOnComponent();
     }
 
@@ -114,7 +114,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
                 .subItem(withButtonText("Display"))
                 .leftClickOnComponent();
 
-        prober.check("should have been clicked", probe);
+        prober.check(probe);
 
     }
 
@@ -129,7 +129,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
                 .subItem(withButtonText("Sheep"))
                 .leftClickOnComponent();
 
-        prober.check("should have been clicked", probe);
+        prober.check(probe);
 
     }
 

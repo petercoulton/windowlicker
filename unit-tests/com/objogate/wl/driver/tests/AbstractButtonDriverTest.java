@@ -40,7 +40,7 @@ public abstract class AbstractButtonDriverTest<B extends AbstractButton, U exten
 
         driver.click();
 
-        prober.check("should have been clicked", probe);
+        prober.check(probe);
     }
 
     private void setButtonText(final String text) {

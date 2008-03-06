@@ -1,15 +1,19 @@
 package com.objogate.wl.driver.tests;
 
+import static junit.framework.Assert.assertEquals;
+import static org.hamcrest.Matchers.not;
+
+import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import java.awt.event.ActionEvent;
-import static junit.framework.Assert.assertEquals;
-import static org.hamcrest.Matchers.not;
+
 import org.junit.Test;
+
 import com.objogate.wl.driver.AbstractButtonDriver;
+import com.objogate.wl.driver.ComponentDriver;
 import com.objogate.wl.driver.JOptionPaneDriver;
-import static com.objogate.wl.matcher.ComponentMatchers.showingOnScreen;
 
 public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPaneDriver> {
     private Object returnValue;
@@ -26,7 +30,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
 
         driver.clickOK();
 
-        driver.is(not(showingOnScreen()));
+        driver.is(not(ComponentDriver.showingOnScreen()));
     }
 
     @Test
@@ -41,7 +45,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
 
         driver.clickYes();
 
-        driver.is(not(showingOnScreen()));
+        driver.is(not(ComponentDriver.showingOnScreen()));
 
         assertEquals(JOptionPane.YES_OPTION, returnValue);
     }
@@ -61,7 +65,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
 
         driver.clickButtonWithText("CANCEL");
 
-        driver.is(not(showingOnScreen()));
+        driver.is(not(ComponentDriver.showingOnScreen()));
 
         assertEquals(1, returnValue);
     }
@@ -79,7 +83,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
         driver.typeText("hello");
         driver.clickOK();
 
-        driver.is(not(showingOnScreen()));
+        driver.is(not(ComponentDriver.showingOnScreen()));
 
         assertEquals("hello", returnValue);
     }
@@ -98,7 +102,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
 
         driver.selectValue(wantedValue);
 
-        driver.is(not(showingOnScreen()));
+        driver.is(not(ComponentDriver.showingOnScreen()));
 
         assertEquals(wantedValue, returnValue);
     }
@@ -124,7 +128,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
 
         driver.selectValue(wantedValue);
 
-        driver.is(not(showingOnScreen()));
+        driver.is(not(ComponentDriver.showingOnScreen()));
 
         assertEquals(wantedValue, returnValue);
     }

@@ -18,7 +18,7 @@ import org.hamcrest.Matcher;
 
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentQuery;
+import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
@@ -60,7 +60,7 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
     }
 
     public void hasText(Matcher<String> matcher) {
-      has(new ComponentQuery<T, String>() {
+      has(new Query<T, String>() {
         public String query(T component) { return component.getText(); }
         public void describeTo(Description description) { description.appendText("text"); }
       }, 
@@ -72,21 +72,21 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
     }
 
     public void hasSelectedText(Matcher<String> matcher) {
-        has(new ComponentQuery<T, String>() {
+        has(new Query<T, String>() {
             public String query(T component) { return component.getSelectedText(); }
             public void describeTo(Description description) { description.appendText("selected text"); }
         }, matcher);
     }
 
     public void selectionStartsAt(int index) {
-        has(new ComponentQuery<T, Integer>() {
+        has(new Query<T, Integer>() {
             public Integer query(T component) {  return component.getSelectionStart(); }
             public void describeTo(Description description) { description.appendText("start of selected text"); }
         }, equalTo(index));
     }
 
     public void selectionEndsAt(int index) {
-        has(new ComponentQuery<T, Integer>() {
+        has(new Query<T, Integer>() {
             public Integer query(T component) { return component.getSelectionEnd(); }
             public void describeTo(Description description) { description.appendText("end of selected text"); }
         }, equalTo(index));

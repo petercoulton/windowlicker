@@ -5,7 +5,7 @@ import java.awt.Component;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import com.objogate.wl.ComponentQuery;
+import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
@@ -32,8 +32,8 @@ public class JLabelDriver extends ComponentDriver<JLabel> implements TextQuery {
         has(text(), matcher);
     }
 
-    private static ComponentQuery<JLabel, String> text() {
-        return new ComponentQuery<JLabel, String>() {
+    private static Query<JLabel, String> text() {
+        return new Query<JLabel, String>() {
             public String query(JLabel label) {
                 return label.getText();
             }

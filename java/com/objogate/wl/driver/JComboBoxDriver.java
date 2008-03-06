@@ -14,7 +14,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentQuery;
+import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
@@ -77,7 +77,7 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
     }
 
     public void hasSelectedIndex(int index) {
-        has(new ComponentQuery<JComboBox, Integer>() {
+        has(new Query<JComboBox, Integer>() {
             public Integer query(JComboBox component) {
                 return component.getSelectedIndex();
             }

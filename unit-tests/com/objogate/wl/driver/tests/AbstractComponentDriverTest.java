@@ -1,13 +1,15 @@
 package com.objogate.wl.driver.tests;
 
-import javax.swing.JFrame;
+import static com.objogate.wl.driver.JFrameDriver.topLevelFrame;
+import static java.lang.Thread.sleep;
+
 import java.awt.Color;
 import java.awt.Component;
 
-import static com.objogate.wl.driver.JFrameDriver.topLevelFrame;
-import static com.objogate.wl.matcher.ComponentMatchers.named;
-import static java.lang.Thread.sleep;
+import javax.swing.JFrame;
+
 import org.junit.After;
+
 import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.driver.ComponentDriver;
@@ -41,7 +43,7 @@ public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? ex
         frame.pack();
         
         frameDriver = new JFrameDriver(gesturePerformer, 
-                                       topLevelFrame(named("componentViewer")),
+                                       topLevelFrame(ComponentDriver.named("componentViewer")),
                                        prober);
         
         try {

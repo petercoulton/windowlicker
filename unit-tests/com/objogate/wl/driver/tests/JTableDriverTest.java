@@ -1,6 +1,7 @@
 package com.objogate.wl.driver.tests;
 
 import static com.objogate.wl.driver.JTableDriver.cell;
+import static org.hamcrest.Matchers.equalTo;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -9,15 +10,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.objogate.wl.driver.JTableDriver;
 import com.objogate.wl.driver.JTableHeaderDriver;
 import com.objogate.wl.driver.JTextFieldDriver;
-import com.objogate.wl.matcher.ColorMatcher;
 
 public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> {
     private ReallyBigTable table = new ReallyBigTable();
@@ -92,7 +92,7 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         new JTableHeaderDriver(gesturePerformer, table.getTableHeader(), prober).moveColumn(columnIdentifier, movement);
     }
 
-    private TypeSafeMatcher<Color> matchingColor(final Color expected) {
-        return new ColorMatcher(expected);
+    private Matcher<Color> matchingColor(final Color expected) {
+        return equalTo(expected);
     }
 }

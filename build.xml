@@ -84,7 +84,6 @@
 
         <junit printsummary="yes" failureproperty="test.failure" fork="true" forkmode="perBatch">
             <classpath refid="unit-test.classpath"/>
-            <!--<jvmarg value="-Dwindowlicker.end-of-test-pause=0"/>-->
             <jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}"/>
             <formatter type="xml"/>
             <batchtest todir="${test.output.dir}">

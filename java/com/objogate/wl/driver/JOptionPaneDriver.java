@@ -1,17 +1,20 @@
 package com.objogate.wl.driver;
 
+import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
+import static org.hamcrest.Matchers.anyOf;
+
+import java.awt.Component;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import java.awt.Component;
+
 import org.hamcrest.Matcher;
-import static org.hamcrest.Matchers.anyOf;
+
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
-import static com.objogate.wl.matcher.ComponentMatchers.named;
-import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
 
 /**
  * Driver for a JOptionPane
@@ -58,14 +61,14 @@ public class JOptionPaneDriver extends ComponentDriver<JOptionPane> {
     }
 
     public void typeText(String text) {
-        JTextFieldDriver textField = new JTextFieldDriver(this, the(JTextField.class, named("OptionPane.textField")));
+        JTextFieldDriver textField = new JTextFieldDriver(this, the(JTextField.class, ComponentDriver.named("OptionPane.textField")));
         textField.moveMouseToCenter();
         textField.typeText(text);
     }
 
     @SuppressWarnings("unchecked")
     public void selectValue(Object value) {
-        GeneralListDriver driver = new GeneralListDriver(this, JComponent.class, anyOf(named("OptionPane.comboBox"), named("OptionPane.list")));
+        GeneralListDriver driver = new GeneralListDriver(this, JComponent.class, anyOf(ComponentDriver.named("OptionPane.comboBox"), ComponentDriver.named("OptionPane.list")));
         driver.selectItem(value);
         clickOK();
     }

@@ -6,14 +6,6 @@ import java.awt.Component;
 import org.hamcrest.Matcher;
 
 public class ComponentMatchers {
-    public static Matcher<Component> named(String name) {
-        return new ComponentNameMatcher(name);
-    }
-
-    public static Matcher<Component> showingOnScreen() {
-        return new ShowingOnScreenMatcher();
-    }
-
     public static <T extends AbstractButton> Matcher<T> withMnemonicKey(int keyCode) {
         return new AbstractButtonAcceleratorMatcher<T>(keyCode);
     }

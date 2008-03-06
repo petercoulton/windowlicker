@@ -9,10 +9,11 @@ import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 
-import com.objogate.wl.ComponentQuery;
+import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.internal.PropertyQuery;
 import com.objogate.wl.internal.query.MnemonicQuery;
 import com.objogate.wl.internal.query.TextQuery;
 
@@ -56,8 +57,8 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
       has(text(), matcher);
     }
     
-    private ComponentQuery<T,String> text() {
-        return new ComponentQuery<T,String>(){
+    private Query<T,String> text() {
+        return new Query<T,String>(){
             public String query(T button) {
                 return button.getText();
             }
@@ -70,18 +71,15 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
     public void mnemonic(Matcher<Character> matcher) {
         has(mnemonic(), matcher);
     }
-
-    private ComponentQuery<T,Character> mnemonic() {
-        return new ComponentQuery<T,Character>(){
-            public Character query(T button) {
+    
+    private static <B extends AbstractButton> Query<B,Character> mnemonic() {
+        return new PropertyQuery<B,Character>("mnemonic"){
+            public Character query(B button) {
                 return (char) button.getMnemonic();
-            }
-            public void describeTo(Description description) {
-              description.appendText("mnemonic");
             }
         };
     }
-
+    
     public void isChecked() {
         is(selected());
     }

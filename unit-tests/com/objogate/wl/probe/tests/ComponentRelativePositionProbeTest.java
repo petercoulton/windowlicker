@@ -1,24 +1,30 @@
 package com.objogate.wl.probe.tests;
 
+import static com.objogate.wl.probe.ComponentRelativePositionProbe.RelativePosition.ABOVE;
+import static com.objogate.wl.probe.ComponentRelativePositionProbe.RelativePosition.BELOW;
+import static com.objogate.wl.probe.ComponentRelativePositionProbe.RelativePosition.LEFTOF;
+import static com.objogate.wl.probe.ComponentRelativePositionProbe.RelativePosition.RIGHTOF;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import org.hamcrest.Description;
 import org.hamcrest.StringDescription;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Probe;
+import com.objogate.wl.driver.ComponentDriver;
 import com.objogate.wl.driver.JFrameDriver;
 import com.objogate.wl.driver.tests.ComponentViewer;
 import com.objogate.wl.gesture.GesturePerformer;
-import static com.objogate.wl.matcher.ComponentMatchers.named;
 import com.objogate.wl.probe.ComponentRelativePositionProbe;
-import static com.objogate.wl.probe.ComponentRelativePositionProbe.RelativePosition.*;
 import com.objogate.wl.probe.RecursiveComponentFinder;
 import com.objogate.wl.probe.SingleComponentFinder;
 import com.objogate.wl.probe.TopLevelWindowFinder;
@@ -32,16 +38,16 @@ public class ComponentRelativePositionProbeTest {
 
     private String name = this.getClass().getSimpleName();
     private GesturePerformer gesturePerformer;
-    private JFrameDriver frameDriver = new JFrameDriver(gesturePerformer, named(name));
+    private JFrameDriver frameDriver = new JFrameDriver(gesturePerformer, ComponentDriver.named(name));
 
     private SingleComponentFinder<JFrame> frameFinder = new SingleComponentFinder<JFrame>(
-            new RecursiveComponentFinder<JFrame>(JFrame.class, named(name), top)
+            new RecursiveComponentFinder<JFrame>(JFrame.class, ComponentDriver.named(name), top)
     );
 
     private ComponentSelector<JButton> buttonOneSelector = new SingleComponentFinder<JButton>(
-            new RecursiveComponentFinder<JButton>(JButton.class, named("one"), frameFinder));
+            new RecursiveComponentFinder<JButton>(JButton.class, ComponentDriver.named("one"), frameFinder));
     private ComponentSelector<JButton> buttonTwoSelector = new SingleComponentFinder<JButton>(
-            new RecursiveComponentFinder<JButton>(JButton.class, named("two"), frameFinder));
+            new RecursiveComponentFinder<JButton>(JButton.class, ComponentDriver.named("two"), frameFinder));
 
 
     @Before public void

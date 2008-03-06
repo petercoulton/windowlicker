@@ -8,7 +8,7 @@ import java.awt.Component;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import static org.hamcrest.Matchers.equalTo;
-import com.objogate.wl.ComponentQuery;
+import com.objogate.wl.Query;
 
 public class JMenuDriver extends AbstractButtonDriver<JMenu> {
 
@@ -36,8 +36,8 @@ public class JMenuDriver extends AbstractButtonDriver<JMenu> {
         return new JMenuItemDriver(this, matcher);
     }
 
-    private static ComponentQuery<JMenu, Boolean> popupVisible() {
-        return new ComponentQuery<JMenu, Boolean>() {
+    private static Query<JMenu, Boolean> popupVisible() {
+        return new Query<JMenu, Boolean>() {
             public Boolean query(JMenu label) {
                 return label.isPopupMenuVisible();
             }

@@ -65,7 +65,7 @@ public class AWTEventQueueProberTest {
     @Test public void
     assertsIfProbeIsSatisfiedWithinTimeout() {
         try {
-            prober.check("context", new Probe() {
+            prober.check(new Probe() {
                 public void probe() {
                 }
                 

@@ -1,18 +1,28 @@
 package com.objogate.wl.example.calculator.tests;
 
+import static com.objogate.wl.example.calculator.Calculator.ADD_BUTTON;
+import static com.objogate.wl.example.calculator.Calculator.DISPLAY;
+import static com.objogate.wl.example.calculator.Calculator.DIV_BUTTON;
+import static com.objogate.wl.example.calculator.Calculator.EQUALS_BUTTON;
+import static com.objogate.wl.example.calculator.Calculator.MAIN_WINDOW;
+import static com.objogate.wl.example.calculator.Calculator.MUL_BUTTON;
+import static com.objogate.wl.example.calculator.Calculator.SUB_BUTTON;
+import static com.objogate.wl.example.calculator.Calculator.digitButtonName;
+import static org.hamcrest.Matchers.equalTo;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import static org.hamcrest.Matchers.equalTo;
-import com.objogate.wl.driver.*;
-import static com.objogate.wl.example.calculator.Calculator.*;
+
+import com.objogate.wl.driver.ComponentDriver;
+import com.objogate.wl.driver.JButtonDriver;
+import com.objogate.wl.driver.JFrameDriver;
+import com.objogate.wl.driver.JTextFieldDriver;
 import com.objogate.wl.gesture.GesturePerformer;
-import static com.objogate.wl.matcher.ComponentMatchers.named;
-import static com.objogate.wl.matcher.ComponentMatchers.showingOnScreen;
 
 public class CalculatorDriver extends JFrameDriver {
     @SuppressWarnings("unchecked")
     public CalculatorDriver(GesturePerformer gesturePerformer) {
-        super(gesturePerformer, named(MAIN_WINDOW), showingOnScreen());
+        super(gesturePerformer, ComponentDriver.named(MAIN_WINDOW), ComponentDriver.showingOnScreen());
     }
 
     public void inputWithNumberButtons(String numberText) {
@@ -57,7 +67,7 @@ public class CalculatorDriver extends JFrameDriver {
 
     @SuppressWarnings("unchecked")
     private void clickButton(String name) {
-        new JButtonDriver(this, JButton.class, named(name)).click();
+        new JButtonDriver(this, JButton.class, ComponentDriver.named(name)).click();
     }
     
     public void displaysNumber(String expectedResult) {
@@ -66,6 +76,6 @@ public class CalculatorDriver extends JFrameDriver {
 
     @SuppressWarnings("unchecked")
     private JTextFieldDriver display() {
-        return new JTextFieldDriver(this, JTextField.class, named(DISPLAY));
+        return new JTextFieldDriver(this, JTextField.class, ComponentDriver.named(DISPLAY));
     }
 }

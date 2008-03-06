@@ -1,21 +1,46 @@
 package com.objogate.wl.driver;
 
-import javax.swing.LookAndFeel;
-import javax.swing.UIManager;
+import static com.objogate.wl.gesture.Gestures.BUTTON1;
+import static com.objogate.wl.gesture.Gestures.clickMouseButton;
+import static com.objogate.wl.gesture.Gestures.moveMouseTo;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import static org.hamcrest.CoreMatchers.allOf;
 
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+
+import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import com.objogate.wl.*;
-import com.objogate.wl.gesture.*;
-import static com.objogate.wl.gesture.Gestures.*;
-import static com.objogate.wl.matcher.ComponentMatchers.showingOnScreen;
-import com.objogate.wl.probe.*;
+
+import com.objogate.wl.AWTEventQueueProber;
+import com.objogate.wl.ComponentFinder;
+import com.objogate.wl.ComponentManipulation;
+import com.objogate.wl.ComponentSelector;
+import com.objogate.wl.Gesture;
+import com.objogate.wl.Probe;
+import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
+import com.objogate.wl.gesture.ComponentCenterTracker;
+import com.objogate.wl.gesture.ComponentOffsetTracker;
+import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.gesture.Gestures;
+import com.objogate.wl.gesture.Tracker;
+import com.objogate.wl.internal.PropertyQuery;
+import com.objogate.wl.matcher.ShowingOnScreenMatcher;
+import com.objogate.wl.probe.ComponentAssertionProbe;
+import com.objogate.wl.probe.ComponentFinders;
+import com.objogate.wl.probe.ComponentIdentity;
+import com.objogate.wl.probe.ComponentManipulatorProbe;
+import com.objogate.wl.probe.ComponentPropertyAssertionProbe;
+import com.objogate.wl.probe.RecursiveComponentFinder;
+import com.objogate.wl.probe.SingleComponentFinder;
 
 public abstract class ComponentDriver<T extends Component> {
     private final Prober prober;
@@ -70,12 +95,10 @@ public abstract class ComponentDriver<T extends Component> {
      * This is the fundamental hook for assertions and manipulations, upon which more convenient methods are
      * built.  It is exposed as a public method to act as an "escape route" so that
      * users can extend drivers through a stable extension point.
-     *
-     * @param description The description of what is being asserted by the criteria
      * @param probe       The probe to be run and checked.
      */
-    public void check(String description, Probe probe) {
-        prober.check(description, probe);
+    public void check(Probe probe) {
+        prober.check(probe);
     }
 
     /**
@@ -83,11 +106,11 @@ public abstract class ComponentDriver<T extends Component> {
      * about the component or search for subcomponents.
      *
      * @return a selector that identifies the component driven by this driver.
-     * @see #check(String,com.objogate.wl.Probe)
+     * @see #check(com.objogate.wl.Probe)
      * @see #all(Class,org.hamcrest.Matcher)
      * @see #the(Class,org.hamcrest.Matcher)
      * @see #is(org.hamcrest.Matcher)
-     * @see #has(com.objogate.wl.ComponentQuery,org.hamcrest.Matcher)
+     * @see #has(com.objogate.wl.Query,org.hamcrest.Matcher)
      */
     public ComponentSelector<T> component() {
         return selector;
@@ -127,7 +150,7 @@ public abstract class ComponentDriver<T extends Component> {
      * @param criteria    The criteria that the component must meet.
      */
     public void is(Matcher<? super T> criteria) {
-        check("is", new ComponentAssertionProbe<T>(selector, criteria));
+        check(new ComponentAssertionProbe<T>(selector, criteria));
     }
 
     /**
@@ -138,12 +161,12 @@ public abstract class ComponentDriver<T extends Component> {
      * built.  It is exposed as a public method to act as an "escape route" so that
      * users can extend drivers through a stable extension point.
      * @param query       A query that returns the value of a property of the component
-     * @param criteria    The criteria that the component must meet.
+     * @param criteria    The criteria that the property value must meet.
      */
-    public <P> void has(ComponentQuery<T, P> query, Matcher<? super P> criteria) {
-        check("has", new ComponentPropertyAssertionProbe<T, P>(selector, query, criteria));
+    public <P> void has(Query<? super T, P> query, Matcher<? super P> criteria) {
+        check(new ComponentPropertyAssertionProbe<T, P>(selector, query, criteria));
     }
-
+    
     /**
      * Manipulate the component through it's API, not through the input devices.  The manipulation
      * is performed on the AWT event dispatch thread.
@@ -156,7 +179,7 @@ public abstract class ComponentDriver<T extends Component> {
      * @param manipulation The manipulation to perform
      */
     public void perform(String description, ComponentManipulation<? super T> manipulation) {
-        check(description, new ComponentManipulatorProbe<T>(selector, manipulation));
+        check(new ComponentManipulatorProbe<T>(selector, manipulation));
     }
 
     public void performGesture(Gesture... gestures) {
@@ -177,7 +200,7 @@ public abstract class ComponentDriver<T extends Component> {
     }
 
     protected void isShowingOnScreen() {
-        is(showingOnScreen());
+        is(ComponentDriver.showingOnScreen());
     }
 
     /**
@@ -234,38 +257,24 @@ public abstract class ComponentDriver<T extends Component> {
     }
 
     public void hasForegroundColor(Color color) {
-        hasForegroundColor(Matchers.equalTo(color));
+        hasForegroundColor(equalTo(color));
     }
 
     public void hasForegroundColor(Matcher<Color> color) {
-        has(new ComponentQuery<T, Color>() {
-            public Color query(T component) {
-                return component.getForeground();
-            }
-            public void describeTo(Description description) {
-              description.appendText("foreground color");
-            }
-        }, color);
+        has(foregroundColor(), color);
     }
 
     public void hasBackgroundColor(Color color) {
-        hasBackgroundColor(Matchers.equalTo(color));
+        hasBackgroundColor(equalTo(color));
     }
 
     // todo (nick): what a nice way of combining these to produce decent error messages?
     // todo (nat): make factory functions for backgroundColor, etc. so that they can be passed to the has(...) method
     public void hasBackgroundColor(Matcher<Color> color) {
-        has(new ComponentQuery<T, Color>() {
-            public Color query(T component) {
-                return component.getBackground();
-            }
-            public void describeTo(Description description) {
-              description.appendText("background color");
-            }
-        }, color);
+        has(backgroundColor(), color);
 
         //need to check opacity else the background color isn't visible
-        has(new ComponentQuery<T, Boolean>() {
+        has(new Query<T, Boolean>() {
             public Boolean query(T component) {
                 return component.isOpaque();
             }
@@ -274,7 +283,70 @@ public abstract class ComponentDriver<T extends Component> {
             }
         }, Matchers.is(true));
     }
+    
+    public static <T extends Component, P> Matcher<T> with(Query<? super T, P> propertyQuery, 
+                                                           Matcher<? super P> valueMatcher)
+    {
+        return new QueryResultMatcher<T,P>(propertyQuery, valueMatcher);
+    }
+    
+    public static class QueryResultMatcher<C,P> extends BaseMatcher<C> {
+        private final Query<? super C,P> query;
+        private final Matcher<? super P> resultMatcher;
+        
+        public QueryResultMatcher(Query<? super C, P> query, Matcher<? super P> resultMatcher) {
+            this.query = query;
+            this.resultMatcher = resultMatcher;
+        }
+        
+        //TODO: any way to check the dynamic type of item?
+        @SuppressWarnings("unchecked")
+        public boolean matches(Object item) {
+            return item != null && resultMatcher.matches(query.query((C)item));
+        }
+        
+        public void describeTo(Description description) {
+            description
+                .appendText("with ")
+                .appendDescriptionOf(query)
+                .appendText(" ")
+                .appendDescriptionOf(resultMatcher);
+            
+        }
+    }
+    
+    public static Query<Component,String> name() {
+        return new PropertyQuery<Component, String>("name") {
+            public String query(Component component) {
+                return component.getName();
+            }
+        };
+    }
+    
+    public static Query<Component, Color> backgroundColor() {
+        return new PropertyQuery<Component, Color>("background color") {
+            public Color query(Component component) {
+                return component.getBackground();
+            }
+        };
+    }
+    
+    public static Matcher<Component> named(String nameValue) {
+        return with(name(), equalTo(nameValue));
+    }
 
+    public static Matcher<Component> showingOnScreen() {
+        return new ShowingOnScreenMatcher();
+    }
+
+    public static Query<Component, Color> foregroundColor() {
+        return new PropertyQuery<Component, Color>("foreground color") {
+            public Color query(Component component) {
+                return component.getForeground();
+            }
+        };
+    }
+    
     /**
      * @Deprecated use a Tracker instead
      */

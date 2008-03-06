@@ -121,7 +121,9 @@ class ReallyBigTable extends JTable {
             if ( column >= 0 ) {
                 setColumnSelectionInterval(column, column);
                 Action action = getActionMap().get("focusHeader");
-                action.actionPerformed(new ActionEvent(ReallyBigTable.this, 0, "focusHeader"));
+                if (action != null) {
+                    action.actionPerformed(new ActionEvent(ReallyBigTable.this, 0, "focusHeader"));
+                }
             }
         }
 

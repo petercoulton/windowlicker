@@ -23,7 +23,7 @@ public class ComponentOffsetTracker implements Tracker {
     }
 
     public Point target(Point currentLocation) {
-        prober.check("moving to component", probe);
+        prober.check(probe);
         return new Point(probe.bounds.x + offset.x, probe.bounds.y + offset.y);
     }
 }

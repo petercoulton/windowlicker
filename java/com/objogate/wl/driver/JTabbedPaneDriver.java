@@ -11,7 +11,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentQuery;
+import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
@@ -45,7 +45,7 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
     }
 
     public void hasTabCount(int expectedCount) {
-        has(new ComponentQuery<JTabbedPane, Integer>() {
+        has(new Query<JTabbedPane, Integer>() {
             public Integer query(JTabbedPane component) {
                 return component.getTabCount();
             }
@@ -67,7 +67,7 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
     }
 
     public void hasSelectedTab(int expectedIndex) {
-        has(new ComponentQuery<JTabbedPane, Integer>() {
+        has(new Query<JTabbedPane, Integer>() {
             public Integer query(JTabbedPane component) {
                 return component.getSelectedIndex();
             }

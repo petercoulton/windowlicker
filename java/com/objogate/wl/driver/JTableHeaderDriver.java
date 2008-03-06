@@ -11,7 +11,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentQuery;
+import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
@@ -136,7 +136,7 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
     public void indexOfColumnIdentifiedBy(final Object columnIdentifier, final int expectedIndex) {
         final ColumnIndexManipulation manipulation = new ColumnIndexManipulation(columnIdentifier);
 
-        has(new ComponentQuery<JTableHeader, Integer>() {
+        has(new Query<JTableHeader, Integer>() {
             public Integer query(JTableHeader component) {
                 manipulation.manipulate(component);
                 return manipulation.getIndex();
@@ -153,7 +153,7 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
     }
 
     public void widthOfColumn(final int columnIndex, int expectedWidth) {
-        has(new ComponentQuery<JTableHeader, Integer>() {
+        has(new Query<JTableHeader, Integer>() {
             public Integer query(JTableHeader component) {
                 TableColumn tableColumn = component.getColumnModel().getColumn(columnIndex);
                 return tableColumn.getWidth();

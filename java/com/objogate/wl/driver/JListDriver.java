@@ -10,7 +10,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentQuery;
+import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
@@ -43,7 +43,7 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
     }
 
     public void hasSelectedIndex(int expectedIndex) {
-        has(new ComponentQuery<JList, Integer>() {
+        has(new Query<JList, Integer>() {
             public Integer query(JList component) {
                 return component.getSelectedIndex();
             }

@@ -62,35 +62,28 @@ public class AWTEventQueueProber implements Prober, SystemProperties {
         }
     }
     
-    public void check(String context, Probe probe) {
-        try {
-            if (!poll(probe)) {
-                StringDescription description = new StringDescription();
-                
-                description.appendText(context)
-                           .appendText("\nTried to look for...\n    ");
-                probe.describeTo(description);
-                description.appendText("\nbut...\n    ");
-                probe.describeFailureTo(description);
-                
-                throw new AssertionError(description.toString());
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace(System.err);
-            System.err.println("probe blew up:" + e.getMessage());
+    public void check(Probe probe) {
+        if (!poll(probe)) {
+            StringDescription description = new StringDescription();
+            
+            description.appendText("\nTried to look for...\n    ");
+            probe.describeTo(description);
+            description.appendText("\nbut...\n    ");
+            probe.describeFailureTo(description);
+            
+            throw new AssertionError(description.toString());
         }
     }
     
-    private static int defaultPollDelay() {
-        return parseIntSystemProperty(POLL_DELAY, "100");
+    private static long defaultPollDelay() {
+        return parseIntSystemProperty(POLL_DELAY, DEFAULT_POLL_DELAY);
     }
     
-    private static int defaultTimeout() {
-        return parseIntSystemProperty(POLL_TIMEOUT, "5000");
+    private static long defaultTimeout() {
+        return parseIntSystemProperty(POLL_TIMEOUT, DEFAULT_POLL_TIMEOUT);
     }
     
-    private static int parseIntSystemProperty(final String propertyName, final String defaultValue) {
-        return Integer.parseInt(System.getProperty(propertyName, defaultValue));
+    private static long parseIntSystemProperty(String propertyName, long defaultValue) {
+        return Long.parseLong(System.getProperty(propertyName, String.valueOf(defaultValue)));
     }
 }

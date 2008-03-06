@@ -1,6 +1,5 @@
 package com.objogate.wl.driver;
 
-import static com.objogate.wl.matcher.ComponentMatchers.named;
 import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
 import static com.objogate.wl.matcher.ComponentMatchers.withFocus;
 import static org.hamcrest.Matchers.equalTo;
@@ -52,7 +51,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
         JFileChooser chooser = component().component();
         ComponentIdentity<JFileChooser> identity = new ComponentIdentity<JFileChooser>(chooser);
-        check("Find out the UI", new ComponentManipulatorProbe<JFileChooser>(identity, new ComponentManipulation<JFileChooser>() {
+        check(new ComponentManipulatorProbe<JFileChooser>(identity, new ComponentManipulation<JFileChooser>() {
             public void manipulate(JFileChooser component) {
                 uis[0] = component.getUI();
             }
@@ -121,7 +120,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
     //TODO: make the descriptions recursive
     public void currentDirectory(final Matcher<String> matcher) {
-        check("current directory", new Probe() {
+        check(new Probe() {
             File currentDirectory;
 
             public void probe() {
@@ -154,7 +153,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
     private class GTKFileChooserDriverUI implements FileChooserDriverUI {
         public void createNewFolder(String folderName) {
-            AbstractButtonDriver<JButton> newFolderButton = new AbstractButtonDriver<JButton>(JFileChooserDriver.this, the(JButton.class, named("GTKFileChooser.newFolderButton")));
+            AbstractButtonDriver<JButton> newFolderButton = new AbstractButtonDriver<JButton>(JFileChooserDriver.this, the(JButton.class, ComponentDriver.named("GTKFileChooser.newFolderButton")));
             newFolderButton.click();
 
             JFrameDriver jframe = new JFrameDriver(gesturePerformer, rootFrameFor(JFileChooserDriver.this.component().component()));
@@ -166,7 +165,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
         @SuppressWarnings("unchecked")
         public void upOneFolder() {
-            JListDriver directoryList = new JListDriver(JFileChooserDriver.this, JList.class, named("GTKFileChooser.directoryList"));
+            JListDriver directoryList = new JListDriver(JFileChooserDriver.this, JList.class, ComponentDriver.named("GTKFileChooser.directoryList"));
             CurrentDirectoryManipulator directoryManipulator = new CurrentDirectoryManipulator();
             perform("get current directory", directoryManipulator);
             File currentDirectory = directoryManipulator.getCurrentDirectory();
@@ -181,17 +180,17 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
         @SuppressWarnings("unchecked")
         public void cancel() {
-            new JButtonDriver(JFileChooserDriver.this, JButton.class, named("SynthFileChooser.cancelButton")).click();
+            new JButtonDriver(JFileChooserDriver.this, JButton.class, ComponentDriver.named("SynthFileChooser.cancelButton")).click();
         }
         
         @SuppressWarnings("unchecked")
         public void ok() {
-            new JButtonDriver(JFileChooserDriver.this, JButton.class, named("SynthFileChooser.approveButton")).click();
+            new JButtonDriver(JFileChooserDriver.this, JButton.class, ComponentDriver.named("SynthFileChooser.approveButton")).click();
         }
 
         @SuppressWarnings("unchecked")
         public JTextComponentDriver<? extends JTextComponent> textBox() {
-            return new JTextFieldDriver(JFileChooserDriver.this, JTextField.class, named("GTKFileChooser.fileNameTextField"));
+            return new JTextFieldDriver(JFileChooserDriver.this, JTextField.class, ComponentDriver.named("GTKFileChooser.fileNameTextField"));
         }
 
         private class CurrentDirectoryManipulator implements ComponentManipulation<JFileChooser> {

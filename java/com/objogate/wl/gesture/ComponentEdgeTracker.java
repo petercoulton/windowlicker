@@ -25,7 +25,7 @@ public class ComponentEdgeTracker implements Tracker, SelfDescribing {
     }
 
     public Point target(Point currentLocation) {
-        prober.check("moving to component", probe);
+        prober.check(probe);
 
         switch (edge) {
             case Left:

@@ -63,7 +63,7 @@ public class JFrameDriver extends ComponentDriver<JFrame> {
     
     /**
      * Disposes of the frame and also sets the frame's name to <code>null</code> so that it cannot be found
-     * by the {@link com.objogate.wl.matcher.ComponentMatchers#named(String)} named} matcher in a subsequent
+     * by the {@link com.objogate.wl.driver.ComponentDriver#named(String)} named} matcher in a subsequent
      * test while it is being garbage collected.
      */
     public void dispose() {

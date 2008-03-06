@@ -19,7 +19,7 @@ public class ComponentCenterTracker implements Tracker, SelfDescribing {
     }
 
     public Point target(Point currentLocation) {
-        prober.check("moving to component", probe);
+        prober.check(probe);
 
         return new Point((int) probe.bounds.getCenterX(), (int) probe.bounds.getCenterY());
     }
