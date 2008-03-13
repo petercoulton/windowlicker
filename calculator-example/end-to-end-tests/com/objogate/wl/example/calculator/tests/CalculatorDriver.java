@@ -21,12 +21,12 @@ import com.objogate.wl.gesture.GesturePerformer;
 
 public class CalculatorDriver extends JFrameDriver {
     @SuppressWarnings("unchecked")
-    public CalculatorDriver(GesturePerformer gesturePerformer) {
-        super(gesturePerformer, ComponentDriver.named(MAIN_WINDOW), ComponentDriver.showingOnScreen());
+    public CalculatorDriver() {
+        super(new GesturePerformer(), named(MAIN_WINDOW), showingOnScreen());
     }
 
     public void inputWithNumberButtons(String numberText) {
-        displaysNumber("");
+        displaysNumber("0");
 
         for (int i = 0; i < numberText.length(); i++) {
             int digit = numberText.charAt(i) - '0';
@@ -37,7 +37,7 @@ public class CalculatorDriver extends JFrameDriver {
         displaysNumber(numberText);
     }
 
-    private void pressDigitButton(int digit) {
+    public void pressDigitButton(int digit) {
         if (0 <= digit && digit <= 9) {
             clickButton(digitButtonName(digit));
         } else {

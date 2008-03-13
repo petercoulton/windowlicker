@@ -1,13 +1,20 @@
 package com.objogate.wl.example.calculator;
 
-import com.objogate.exception.Defect;
+import static java.awt.Font.BOLD;
 
-import javax.swing.*;
-import javax.swing.text.Document;
-import javax.swing.text.BadLocationException;
-import java.awt.event.ActionListener;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.*;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+
+import com.objogate.exception.Defect;
 
 public class Calculator extends JFrame {
     public static final String MAIN_WINDOW = "mainWindow";
@@ -53,9 +60,12 @@ public class Calculator extends JFrame {
     
     public Calculator() {
         super("Calculator");
-        display = new JTextField(32);
+        display = new JTextField(12);
         display.setName(DISPLAY);
         display.setEditable(false);
+        display.setHorizontalAlignment(JTextField.RIGHT);
+        display.setFont(display.getFont().deriveFont(32f).deriveFont(BOLD));
+        clearInput();
         
         JButton[] numberButtons = new JButton[10];
         for (int i = 0; i <= 9; i++) {
@@ -164,6 +174,15 @@ public class Calculator extends JFrame {
     }
 
     private void digitButtonClicked(int digit) {
+        if (display.getText().equals("0")) {
+            display.setText(String.valueOf(digit));
+        }
+        else {
+            appendDigit(digit);
+        }
+    }
+
+    private void appendDigit(int digit) {
         Document document = display.getDocument();
         try {
             document.insertString(document.getLength(), String.valueOf(digit), null);
@@ -185,7 +204,11 @@ public class Calculator extends JFrame {
     private void functionButtonClicked(Function function) {
         x = parseInput();
         func = function;
-        display.setText("");
+        clearInput();
+    }
+
+    private void clearInput() {
+        display.setText("0");
     }
 
     private int parseInput() {

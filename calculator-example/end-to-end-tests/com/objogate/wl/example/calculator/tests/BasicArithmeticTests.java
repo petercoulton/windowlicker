@@ -1,25 +1,9 @@
 package com.objogate.wl.example.calculator.tests;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import com.objogate.wl.example.calculator.Calculator;
-import com.objogate.wl.gesture.GesturePerformer;
 
-public class BasicArithmeticTests {
-    CalculatorDriver calculatorUI;
-    
-    @Before public void
-    runTheApplication() {
-        Calculator.main();
-        calculatorUI = new CalculatorDriver(new GesturePerformer());
-    }
 
-    @After public void
-    stopTheApplication() {
-        calculatorUI.dispose();
-    }
-
+public class BasicArithmeticTests extends CalculatorTestCase {
     @Test
     public void
     canAddTwoNumbers() {
