@@ -17,7 +17,6 @@ import javax.swing.UIManager;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 
 import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.ComponentFinder;
@@ -33,6 +32,9 @@ import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.gesture.Tracker;
 import com.objogate.wl.internal.PropertyQuery;
+import com.objogate.wl.matcher.ComponentEnabledMatcher;
+import com.objogate.wl.matcher.ComponentOpaqueMatcher;
+import com.objogate.wl.matcher.DisplayableComponentMatcher;
 import com.objogate.wl.matcher.ShowingOnScreenMatcher;
 import com.objogate.wl.probe.ComponentAssertionProbe;
 import com.objogate.wl.probe.ComponentFinders;
@@ -268,20 +270,13 @@ public abstract class ComponentDriver<T extends Component> {
         hasBackgroundColor(equalTo(color));
     }
 
-    // todo (nick): what a nice way of combining these to produce decent error messages?
-    // todo (nat): make factory functions for backgroundColor, etc. so that they can be passed to the has(...) method
+    //TODO (nick): what is a nice way of combining these to produce decent error messages?
     public void hasBackgroundColor(Matcher<Color> color) {
         has(backgroundColor(), color);
-
+        
         //need to check opacity else the background color isn't visible
-        has(new Query<T, Boolean>() {
-            public Boolean query(T component) {
-                return component.isOpaque();
-            }
-            public void describeTo(Description description) {
-              description.appendText("opacity");
-            }
-        }, Matchers.is(true));
+        // -- nat: not necessarily true, depends on component type
+        is(opaque());
     }
     
     public static <T extends Component, P> Matcher<T> with(Query<? super T, P> propertyQuery, 
@@ -338,7 +333,19 @@ public abstract class ComponentDriver<T extends Component> {
     public static Matcher<Component> showingOnScreen() {
         return new ShowingOnScreenMatcher();
     }
-
+    
+    public static Matcher<Component> displayable() {
+        return new DisplayableComponentMatcher();
+    }
+    
+    public static Matcher<Component> opaque() {
+        return new ComponentOpaqueMatcher();
+    }
+    
+    public static Matcher<Component> enabled() {
+        return new ComponentEnabledMatcher();
+    }
+    
     public static Query<Component, Color> foregroundColor() {
         return new PropertyQuery<Component, Color>("foreground color") {
             public Color query(Component component) {

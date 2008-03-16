@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import java.awt.Component;
 import org.hamcrest.Matcher;
 
+//TODO (nat): move these to the appropriate component driver classes
 public class ComponentMatchers {
     public static <T extends AbstractButton> Matcher<T> withMnemonicKey(int keyCode) {
         return new AbstractButtonAcceleratorMatcher<T>(keyCode);

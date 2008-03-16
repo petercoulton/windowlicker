@@ -3,7 +3,7 @@ package com.objogate.wl.example.calculator.tests;
 import static com.objogate.wl.example.calculator.Calculator.ADD_BUTTON;
 import static com.objogate.wl.example.calculator.Calculator.DISPLAY;
 import static com.objogate.wl.example.calculator.Calculator.DIV_BUTTON;
-import static com.objogate.wl.example.calculator.Calculator.EQUALS_BUTTON;
+import static com.objogate.wl.example.calculator.Calculator.CALCULATE_BUTTON;
 import static com.objogate.wl.example.calculator.Calculator.MAIN_WINDOW;
 import static com.objogate.wl.example.calculator.Calculator.MUL_BUTTON;
 import static com.objogate.wl.example.calculator.Calculator.SUB_BUTTON;
@@ -31,51 +31,56 @@ public class CalculatorDriver extends JFrameDriver {
         for (int i = 0; i < numberText.length(); i++) {
             int digit = numberText.charAt(i) - '0';
 
-            pressDigitButton(digit);
+            clickDigitButton(digit);
         }
 
         displaysNumber(numberText);
     }
 
-    public void pressDigitButton(int digit) {
+    public void clickDigitButton(int digit) {
         if (0 <= digit && digit <= 9) {
-            clickButton(digitButtonName(digit));
+            button(digitButtonName(digit)).click();
         } else {
             throw new IllegalArgumentException("invalid character in number: " + digit);
         }
     }
 
     public void clickAddButton() {
-        clickButton(ADD_BUTTON);
+        button(ADD_BUTTON).click();
     }
 
     public void clickSubtractButton() {
-        clickButton(SUB_BUTTON);
+        button(SUB_BUTTON).click();
     }
 
     public void clickMultiplyButton() {
-        clickButton(MUL_BUTTON);
+        button(MUL_BUTTON).click();
     }
 
     public void clickDivideButton() {
-        clickButton(DIV_BUTTON);
+        button(DIV_BUTTON).click();
     }
-
-    public void clickEqualsButton() {
-        clickButton(EQUALS_BUTTON);
+    
+    public void performCalculation() {
+        calculate().click();
     }
-
-    @SuppressWarnings("unchecked")
-    private void clickButton(String name) {
-        new JButtonDriver(this, JButton.class, ComponentDriver.named(name)).click();
+    
+    public JButtonDriver calculate() {
+        return button(CALCULATE_BUTTON);
     }
     
     public void displaysNumber(String expectedResult) {
         display().text(equalTo(expectedResult));
     }
-
+    
     @SuppressWarnings("unchecked")
     private JTextFieldDriver display() {
         return new JTextFieldDriver(this, JTextField.class, ComponentDriver.named(DISPLAY));
     }
+
+    @SuppressWarnings("unchecked")
+    private JButtonDriver button(String name) {
+        return new JButtonDriver(this, JButton.class, ComponentDriver.named(name));
+    }
+
 }

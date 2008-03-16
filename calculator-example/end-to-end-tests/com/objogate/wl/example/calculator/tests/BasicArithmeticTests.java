@@ -10,7 +10,7 @@ public class BasicArithmeticTests extends CalculatorTestCase {
         calculatorUI.inputWithNumberButtons("5");
         calculatorUI.clickAddButton();
         calculatorUI.inputWithNumberButtons("2");
-        calculatorUI.clickEqualsButton();
+        calculatorUI.performCalculation();
 
         calculatorUI.displaysNumber("7");
     }
@@ -21,7 +21,7 @@ public class BasicArithmeticTests extends CalculatorTestCase {
         calculatorUI.inputWithNumberButtons("5");
         calculatorUI.clickSubtractButton();
         calculatorUI.inputWithNumberButtons("2");
-        calculatorUI.clickEqualsButton();
+        calculatorUI.performCalculation();
 
         calculatorUI.displaysNumber("3");
     }
@@ -32,7 +32,7 @@ public class BasicArithmeticTests extends CalculatorTestCase {
         calculatorUI.inputWithNumberButtons("5");
         calculatorUI.clickMultiplyButton();
         calculatorUI.inputWithNumberButtons("2");
-        calculatorUI.clickEqualsButton();
+        calculatorUI.performCalculation();
 
         calculatorUI.displaysNumber("10");
     }
@@ -43,7 +43,7 @@ public class BasicArithmeticTests extends CalculatorTestCase {
         calculatorUI.inputWithNumberButtons("10");
         calculatorUI.clickDivideButton();
         calculatorUI.inputWithNumberButtons("2");
-        calculatorUI.clickEqualsButton();
+        calculatorUI.performCalculation();
 
         calculatorUI.displaysNumber("5");
     }

@@ -21,7 +21,7 @@ public class Calculator extends JFrame {
     public static final String DISPLAY = "display";
     public static final String DIV_BUTTON = "div";
     public static final String MUL_BUTTON = "mul";
-    public static final String EQUALS_BUTTON = "equals";
+    public static final String CALCULATE_BUTTON = "calculate";
     public static final String SUB_BUTTON = "sub";
     public static final String ADD_BUTTON = "add";
 
@@ -56,6 +56,8 @@ public class Calculator extends JFrame {
     private final JTextField display;
     private int x;
     private Function func;
+    
+    private final JButton calculateButton;
 
     
     public Calculator() {
@@ -143,13 +145,14 @@ public class Calculator extends JFrame {
             fill = BOTH;
         }});
 
-        JButton equalsButton = button("=", EQUALS_BUTTON);
-        equalsButton.addActionListener(new ActionListener() {
+        calculateButton = button("=", CALCULATE_BUTTON);
+        calculateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 equalsButtonClicked();
             }
         });
-        add(equalsButton, new GridBagConstraints() {{
+        updateCalculateButton();
+        add(calculateButton, new GridBagConstraints() {{
             gridx = 3;
             gridy = 3;
             gridwidth=2;
@@ -161,6 +164,10 @@ public class Calculator extends JFrame {
         }});
         
         pack();
+    }
+
+    private void updateCalculateButton() {
+        calculateButton.setEnabled(func != null);
     }
 
     private JButton digitButton(final int digit) {
@@ -205,6 +212,7 @@ public class Calculator extends JFrame {
         x = parseInput();
         func = function;
         clearInput();
+        updateCalculateButton();
     }
 
     private void clearInput() {
