@@ -12,7 +12,7 @@ public class ExampleWhenNothingHappensTests extends CalculatorTestCase {
         calculatorUI.pressDigitButton(0);
         calculatorUI.pressDigitButton(0);
         
-        // Cannot verify that the displayed number is "0" not "00", 
+        // Cannot verify that the displayed number is "0" not "000", 
         // because it has not changed.  Have to enter another digit
         // and verify that the displayed number does not have leading
         // zeros.
