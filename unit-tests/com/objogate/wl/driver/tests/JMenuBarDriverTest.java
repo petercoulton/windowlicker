@@ -2,10 +2,6 @@ package com.objogate.wl.driver.tests;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashSet;
-import java.util.Set;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertNotNull;
@@ -27,7 +23,6 @@ import com.objogate.wl.probe.ActionListenerProbe;
 public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriver> {
     private JMenuItem displayItem;
     private JMenuItem sheep;
-    private final Set<String> clicked = new HashSet<String>();
 
     enum Type {
         PLAIN, CHECK, RADIO
@@ -206,12 +201,6 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
         }
 
         menu.add(item);
-
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                clicked.add(sText);
-            }
-        });
 
         return item;
     }
