@@ -61,8 +61,7 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
             public void describeTo(Description description) {
                 description.appendText("text");
             }
-        },
-                matcher);
+        }, matcher);
     }
 
     public void hasSelectedText(String expected) {

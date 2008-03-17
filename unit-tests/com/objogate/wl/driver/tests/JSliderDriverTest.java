@@ -19,6 +19,7 @@ public class JSliderDriverTest extends AbstractComponentDriverTest<JSliderDriver
     private JSliderDriver verticalSnapToDriver;
 
     @Test
+    @Ignore
     public void testCanSetTheValueOfAHorizontalSlider() {
         horizontalDriver.hasValue(equalTo(50));
         horizontalDriver.makeValue(78);
@@ -28,6 +29,7 @@ public class JSliderDriverTest extends AbstractComponentDriverTest<JSliderDriver
     }
 
     @Test
+    @Ignore
     public void testCanSetTheValueOfAnInvertedHorizontalSlider() {
         invertedHorizontalDriver.hasValue(equalTo(50));
         invertedHorizontalDriver.makeValue(78);
@@ -37,6 +39,7 @@ public class JSliderDriverTest extends AbstractComponentDriverTest<JSliderDriver
     }
 
     @Test
+    @Ignore
     public void testCanSetTheValueOfAVerticalSlider() {
         verticalDriver.hasValue(equalTo(50));
         verticalDriver.makeValue(78);
@@ -46,6 +49,7 @@ public class JSliderDriverTest extends AbstractComponentDriverTest<JSliderDriver
     }
 
     @Test
+    @Ignore
     public void testCanSetTheValueOfAnInvertedVerticalSlider() {
         invertedVerticalDriver.hasValue(equalTo(50));
         invertedVerticalDriver.makeValue(78);
