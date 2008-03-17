@@ -28,7 +28,7 @@ public class ComponentManipulatorProbeTest {
     ComponentType componentB = new ComponentType("B");
 
     ComponentManipulatorProbe<ComponentType> manipulatorProbe =
-            new ComponentManipulatorProbe<ComponentType>(finder, manipulation);
+            new ComponentManipulatorProbe<ComponentType>(finder, manipulation); 
 
 
     @Test public void
