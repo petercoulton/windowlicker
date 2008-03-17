@@ -12,10 +12,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="junit" level="project" />
-    <orderEntry type="library" name="hamcrest" level="project" />
-    <orderEntry type="library" name="jmock" level="project" />
-    <orderEntry type="library" name="examples" level="project" />
+    <orderEntry type="library" exported="" name="junit" level="project" />
+    <orderEntry type="library" exported="" name="hamcrest" level="project" />
+    <orderEntry type="library" exported="" name="jmock" level="project" />
     <orderEntryProperties />
   </component>
 </module>
