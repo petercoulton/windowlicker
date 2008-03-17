@@ -12,11 +12,6 @@ public class JFrameDriverTest extends AbstractComponentDriverTest<JFrameDriver> 
     }
 
     @Test
-    public void assertsIsDecorated() {
-        frameDriver.hasDecoration();
-    }
-
-    @Test
     public void assertsTitleText() {
         frameDriver.hasTitle("JFrameDriverTest");
     }
