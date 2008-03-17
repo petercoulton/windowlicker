@@ -21,6 +21,7 @@ import static com.objogate.wl.driver.tests.JMenuBarDriverTest.Type.PLAIN;
 import static com.objogate.wl.driver.tests.JMenuBarDriverTest.Type.RADIO;
 import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
 import static com.objogate.wl.matcher.ComponentMatchers.withMnemonicKey;
+import com.objogate.wl.matcher.JMenuTextMatcher;
 import com.objogate.wl.probe.ActionListenerProbe;
 
 public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriver> {
@@ -56,6 +57,11 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
     @Test
     public void canFindTheMenuBar() {
         driver.is(ComponentDriver.showingOnScreen());
+    }
+
+    @Test
+    public void hasMenu() {
+        driver.has(new JMenuTextMatcher("File"));
     }
 
     @Test
