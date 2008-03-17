@@ -1,17 +1,14 @@
 package com.objogate.wl.driver;
 
-import java.awt.Component;
-
 import javax.swing.AbstractButton;
-
+import java.awt.Component;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
-
-import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.internal.PropertyQuery;
 import com.objogate.wl.internal.query.MnemonicQuery;
@@ -48,38 +45,39 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
     public void click() {
         leftClickOnComponent();
     }
-    
+
     public void text(Matcher<String> textMatcher) {
-      hasText(textMatcher);
+        hasText(textMatcher);
     }
-    
+
     public void hasText(Matcher<String> matcher) {
-      has(text(), matcher);
+        has(text(), matcher);
     }
-    
-    private Query<T,String> text() {
-        return new Query<T,String>(){
+
+    private Query<T, String> text() {
+        return new Query<T, String>() {
             public String query(T button) {
                 return button.getText();
             }
+
             public void describeTo(Description description) {
-               description.appendText("text");
+                description.appendText("text");
             }
         };
     }
-    
+
     public void mnemonic(Matcher<Character> matcher) {
         has(mnemonic(), matcher);
     }
-    
-    private static <B extends AbstractButton> Query<B,Character> mnemonic() {
-        return new PropertyQuery<B,Character>("mnemonic"){
+
+    private static <B extends AbstractButton> Query<B, Character> mnemonic() {
+        return new PropertyQuery<B, Character>("mnemonic") {
             public Character query(B button) {
                 return (char) button.getMnemonic();
             }
         };
     }
-    
+
     public void isChecked() {
         is(selected());
     }
@@ -90,7 +88,8 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
 
     private TypeSafeMatcher<AbstractButton> selected() {
         return new TypeSafeMatcher<AbstractButton>() {
-            @Override public boolean matchesSafely(AbstractButton item) {
+            @Override
+            public boolean matchesSafely(AbstractButton item) {
                 return item.isSelected();
             }
 

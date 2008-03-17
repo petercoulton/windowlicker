@@ -21,9 +21,9 @@ public class GesturePerformer {
         if (SwingUtilities.isEventDispatchThread()) {
             throw new Defect("attempted to perform gestures on the Swing event dispatch thread");
         }
-        
+
         for (Gesture gesture : gestures) {
             gesture.performGesture(automaton);
         }
-    }    
+    }
 }

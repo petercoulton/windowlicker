@@ -3,10 +3,13 @@ package com.objogate.wl.driver;
 import javax.swing.JFrame;
 import java.awt.Component;
 import static org.hamcrest.CoreMatchers.allOf;
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import static org.hamcrest.Matchers.equalTo;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.probe.RecursiveComponentFinder;
 import com.objogate.wl.probe.SingleComponentFinder;
@@ -45,22 +48,23 @@ public class JFrameDriver extends ComponentDriver<JFrame> {
     public JFrameDriver(ComponentDriver<? extends Component> ownerDriver, Matcher<? super JFrame>... matchers) {
         super(ownerDriver,
                 new SingleComponentFinder<JFrame>(
-                    new RecursiveComponentFinder<JFrame>(JFrame.class, allOf(matchers),
-                       ownerDriver.component())));
+                        new RecursiveComponentFinder<JFrame>(JFrame.class, allOf(matchers),
+                                ownerDriver.component())));
     }
-    
+
     /**
      * Creates a ComponentSelector that will find a top-level JFrame that conforms
      * to the given matchers
+     *
      * @param matchers The matchers to conform to
      * @return A ComponentSelector
      */
     public static ComponentSelector<JFrame> topLevelFrame(Matcher<? super JFrame>... matchers) {
         return new SingleComponentFinder<JFrame>(
-                  new RecursiveComponentFinder<JFrame>(JFrame.class, allOf(matchers),
-                      new TopLevelWindowFinder()));
+                new RecursiveComponentFinder<JFrame>(JFrame.class, allOf(matchers),
+                        new TopLevelWindowFinder()));
     }
-    
+
     /**
      * Disposes of the frame and also sets the frame's name to <code>null</code> so that it cannot be found
      * by the {@link com.objogate.wl.driver.ComponentDriver#named(String)} named} matcher in a subsequent
@@ -73,5 +77,25 @@ public class JFrameDriver extends ComponentDriver<JFrame> {
                 component.setName(null);
             }
         });
+    }
+
+    public void hasTitle(String title) {
+        hasTitle(equalTo(title));
+    }
+
+    public void hasTitle(Matcher<String> matcher) {
+        has(title(), matcher);
+    }
+
+    private static Query<JFrame, String> title() {
+        return new Query<JFrame, String>() {
+            public String query(JFrame label) {
+                return label.getTitle();
+            }
+
+            public void describeTo(Description description) {
+                description.appendText("frame title");
+            }
+        };
     }
 }

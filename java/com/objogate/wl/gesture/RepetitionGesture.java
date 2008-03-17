@@ -14,7 +14,7 @@ public class RepetitionGesture implements Gesture {
     }
 
     public void performGesture(Automaton automaton) {
-        for ( int i = 0; i < repetitions; i++ ) {
+        for (int i = 0; i < repetitions; i++) {
             gesture.performGesture(automaton);
         }
     }

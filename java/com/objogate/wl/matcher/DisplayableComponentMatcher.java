@@ -1,7 +1,6 @@
 package com.objogate.wl.matcher;
 
 import java.awt.Component;
-
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 

@@ -105,7 +105,4 @@ public class JProgressBarDriver extends ComponentDriver<JProgressBar> {
     }
 
 
-
-
-
 }

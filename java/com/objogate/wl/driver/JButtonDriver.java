@@ -3,9 +3,9 @@ package com.objogate.wl.driver;
 import javax.swing.JButton;
 import java.awt.Component;
 import org.hamcrest.Matcher;
-import com.objogate.wl.gesture.GesturePerformer;
-import com.objogate.wl.Prober;
 import com.objogate.wl.ComponentSelector;
+import com.objogate.wl.Prober;
+import com.objogate.wl.gesture.GesturePerformer;
 
 public class JButtonDriver extends AbstractButtonDriver<JButton> {
     public JButtonDriver(GesturePerformer gesturePerformer, JButton component) {

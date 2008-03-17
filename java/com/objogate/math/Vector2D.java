@@ -4,7 +4,7 @@ import java.awt.Point;
 
 public final class Vector2D {
     private final double x, y;
-    
+
     public Vector2D() {
         this.x = 0.0;
         this.y = 0.0;
@@ -123,7 +123,7 @@ public final class Vector2D {
     public String toString() {
         return "(" + x + "," + y + ")";
     }
-    
+
     public Point floor() {
         return new Point((int) Math.floor(x), (int) Math.floor(y));
     }

@@ -1,22 +1,18 @@
 package com.objogate.wl.driver;
 
-import static org.hamcrest.Matchers.equalTo;
-
-import java.awt.Component;
-
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.plaf.basic.ComboPopup;
-
+import java.awt.Component;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import static org.hamcrest.Matchers.equalTo;
 import org.hamcrest.TypeSafeMatcher;
-
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.probe.RecursiveComponentFinder;
 import com.objogate.wl.probe.SingleComponentFinder;
@@ -64,7 +60,7 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
         comboPopupDriver.selectItem(item);
     }
 
-    public void selectItem(Matcher<Component>  item) {
+    public void selectItem(Matcher<Component> item) {
         clickToOpenPopup();
 
         ComboPopupComponentDriver comboPopupDriver = new ComboPopupComponentDriver(gesturePerformer);
@@ -81,8 +77,9 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
             public Integer query(JComboBox component) {
                 return component.getSelectedIndex();
             }
+
             public void describeTo(Description description) {
-              description.appendText("selected index");
+                description.appendText("selected index");
             }
         }, equalTo(index));
     }
@@ -104,7 +101,7 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
                 }
             };
         }
-        
+
         public void selectItem(final int index) {
             JListFinderManipulation listFinderManipulation = new JListFinderManipulation();
             perform("selecting index in combo popup", listFinderManipulation);
@@ -119,7 +116,7 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
             listDriver.selectItem(item);
         }
 
-        public void selectItem(Matcher<Component>  matcher) {
+        public void selectItem(Matcher<Component> matcher) {
             JListFinderManipulation listFinderManipulation = new JListFinderManipulation();
             perform("selecting item in combo popup", listFinderManipulation);
             JListDriver listDriver = new JListDriver(gesturePerformer, listFinderManipulation.list);

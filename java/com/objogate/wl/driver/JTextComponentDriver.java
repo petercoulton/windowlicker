@@ -1,28 +1,21 @@
 package com.objogate.wl.driver;
 
-import static com.objogate.wl.gesture.Gestures.repeat;
-import static com.objogate.wl.gesture.Gestures.type;
-import static com.objogate.wl.gesture.Gestures.typeKey;
-import static com.objogate.wl.gesture.Gestures.whileHoldingKey;
-import static org.hamcrest.Matchers.equalTo;
-
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
-
-import javax.swing.text.BadLocationException;
-import javax.swing.text.JTextComponent;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-
+import static org.hamcrest.Matchers.equalTo;
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
+import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.internal.query.TextQuery;
 
 public class JTextComponentDriver<T extends JTextComponent> extends ComponentDriver<T> implements TextQuery {
@@ -52,19 +45,24 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
     }
 
     public void text(Matcher<String> textMatcher) {
-      hasText(textMatcher);
+        hasText(textMatcher);
     }
-    
+
     public void hasText(String expectedText) {
         hasText(equalTo(expectedText));
     }
 
     public void hasText(Matcher<String> matcher) {
-      has(new Query<T, String>() {
-        public String query(T component) { return component.getText(); }
-        public void describeTo(Description description) { description.appendText("text"); }
-      }, 
-          matcher);
+        has(new Query<T, String>() {
+            public String query(T component) {
+                return component.getText();
+            }
+
+            public void describeTo(Description description) {
+                description.appendText("text");
+            }
+        },
+                matcher);
     }
 
     public void hasSelectedText(String expected) {
@@ -73,22 +71,37 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
 
     public void hasSelectedText(Matcher<String> matcher) {
         has(new Query<T, String>() {
-            public String query(T component) { return component.getSelectedText(); }
-            public void describeTo(Description description) { description.appendText("selected text"); }
+            public String query(T component) {
+                return component.getSelectedText();
+            }
+
+            public void describeTo(Description description) {
+                description.appendText("selected text");
+            }
         }, matcher);
     }
 
     public void selectionStartsAt(int index) {
         has(new Query<T, Integer>() {
-            public Integer query(T component) {  return component.getSelectionStart(); }
-            public void describeTo(Description description) { description.appendText("start of selected text"); }
+            public Integer query(T component) {
+                return component.getSelectionStart();
+            }
+
+            public void describeTo(Description description) {
+                description.appendText("start of selected text");
+            }
         }, equalTo(index));
     }
 
     public void selectionEndsAt(int index) {
         has(new Query<T, Integer>() {
-            public Integer query(T component) { return component.getSelectionEnd(); }
-            public void describeTo(Description description) { description.appendText("end of selected text"); }
+            public Integer query(T component) {
+                return component.getSelectionEnd();
+            }
+
+            public void describeTo(Description description) {
+                description.appendText("end of selected text");
+            }
         }, equalTo(index));
     }
 
@@ -105,11 +118,13 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
         performGesture(type(text));
     }
 
-    @Override public void selectAll() {
+    @Override
+    public void selectAll() {
         super.selectAll();
     }
 
-    @Override public void cut() {
+    @Override
+    public void cut() {
         super.cut();
     }
 
@@ -191,7 +206,7 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
             int lastIndex = 0;
             for (int i = 0; i < occurence; i++) {
                 int index = s.indexOf(text, lastIndex);
-                if(i == occurence -1)
+                if (i == occurence - 1)
                     lastIndex = index;
                 else
                     lastIndex = index + text.length();

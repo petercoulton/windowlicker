@@ -1,11 +1,10 @@
 package com.objogate.wl.matcher;
 
+import java.util.Collection;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-
-import java.util.Collection;
 
 public class EmptyCollectionMatcher<C extends Collection<?>> extends TypeSafeMatcher<C> {
     @Override

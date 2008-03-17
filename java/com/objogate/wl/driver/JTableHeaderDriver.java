@@ -6,14 +6,13 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.Component;
 import java.awt.Point;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
 import static com.objogate.wl.gesture.Gestures.moveMouseTo;
@@ -141,8 +140,9 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
                 manipulation.manipulate(component);
                 return manipulation.getIndex();
             }
+
             public void describeTo(Description description) {
-              description.appendText("column index");
+                description.appendText("column index");
             }
         }, Matchers.equalTo(expectedIndex));
     }
@@ -158,8 +158,9 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
                 TableColumn tableColumn = component.getColumnModel().getColumn(columnIndex);
                 return tableColumn.getWidth();
             }
+
             public void describeTo(Description description) {
-              description.appendText("column width");
+                description.appendText("column width");
             }
         }, Matchers.equalTo(expectedWidth));
     }

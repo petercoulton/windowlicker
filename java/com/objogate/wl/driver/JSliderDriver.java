@@ -89,11 +89,10 @@ public class JSliderDriver extends ComponentDriver<JSlider> {
 
         int currentValue = currentValue();
         int count = 0;
-        while ( count++ < 100 && currentValue != value ) {
-            if ( currentValue < value ) {
+        while (count++ < 100 && currentValue != value) {
+            if (currentValue < value) {
                 increment();
-            }
-            else {
+            } else {
                 decrement();
             }
             currentValue = currentValue();
@@ -122,23 +121,21 @@ public class JSliderDriver extends ComponentDriver<JSlider> {
     public void increment() {
         if (inverted()) {
             clickBottomOrLeft();
-        }
-        else {
+        } else {
             clickTopOrRight();
         }
     }
 
     public void decrement() {
-        if ( inverted() ) {
+        if (inverted()) {
             clickTopOrRight();
-        }
-        else {
+        } else {
             clickBottomOrLeft();
         }
     }
 
     private void clickTopOrRight() {
-        switch(orientation()) {
+        switch (orientation()) {
             case SwingConstants.HORIZONTAL:
                 performGesture(moveMouseTo(new ComponentEdgeTracker(prober(), component(), Right, -1)));
                 break;
@@ -152,7 +149,7 @@ public class JSliderDriver extends ComponentDriver<JSlider> {
     }
 
     private void clickBottomOrLeft() {
-        switch(orientation()) {
+        switch (orientation()) {
             case SwingConstants.HORIZONTAL:
                 performGesture(moveMouseTo(new ComponentEdgeTracker(prober(), component(), Left, 1)));
                 break;

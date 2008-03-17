@@ -7,7 +7,7 @@ import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
 
-public class JCheckBoxDriver extends AbstractButtonDriver<JCheckBox>{
+public class JCheckBoxDriver extends AbstractButtonDriver<JCheckBox> {
 
     public JCheckBoxDriver(GesturePerformer gesturePerformer, JCheckBox component) {
         super(gesturePerformer, component);

@@ -1,20 +1,16 @@
 package com.objogate.wl.driver;
 
-import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
-import static org.hamcrest.Matchers.anyOf;
-
-import java.awt.Component;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
+import java.awt.Component;
 import org.hamcrest.Matcher;
-
+import static org.hamcrest.Matchers.anyOf;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
+import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
 
 /**
  * Driver for a JOptionPane

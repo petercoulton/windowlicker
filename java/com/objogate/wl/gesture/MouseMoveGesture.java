@@ -15,9 +15,9 @@ import com.objogate.wl.robot.Automaton;
 public class MouseMoveGesture implements Gesture {
     private static final double ANIMATE_STEP = 0.02;
     private int animationDelayMs = 25;
-    
+
     private final Tracker tracker;
-    
+
     public MouseMoveGesture(Tracker tracker) {
         this.tracker = tracker;
     }
@@ -29,7 +29,7 @@ public class MouseMoveGesture implements Gesture {
             Point trackerDestination;
 
             try {
-                    trackerDestination = tracker.target(currentLocation);
+                trackerDestination = tracker.target(currentLocation);
             }
             // todo special exception for this?
             catch (AssertionError e) {
@@ -38,11 +38,11 @@ public class MouseMoveGesture implements Gesture {
                 continue;
             }
 
-            if ( trackerDestination == null ) {
+            if (trackerDestination == null) {
                 throw new Defect(tracker + " returned null");
             }
 
-            if ( currentLocation.equals(trackerDestination)) {
+            if (currentLocation.equals(trackerDestination)) {
                 return;
             }
 
@@ -51,10 +51,10 @@ public class MouseMoveGesture implements Gesture {
             Vector2D start = new Vector2D(automaton.getPointerLocation());
             Vector2D movement = destination.sub(start);
 
-            if ( movement.magnitude() < 2.0 ) {
+            if (movement.magnitude() < 2.0) {
                 break;
             }
-            
+
             Vector2D controlA = start.add(movement.mul(0.7));
             Vector2D controlB = start.add(movement.mul(0.8));
             CubicBezierCurve2D animation = new CubicBezierCurve2D(start, controlA, controlB, destination);
@@ -67,10 +67,10 @@ public class MouseMoveGesture implements Gesture {
 
         automaton.delay(200);
     }
-    
+
     private Point clipToScreen(Point p) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        return new Point(clip(p.x, screenSize.width - 1), clip(p.y, screenSize.height-1));
+        return new Point(clip(p.x, screenSize.width - 1), clip(p.y, screenSize.height - 1));
     }
 
     private int clip(int n, int maxN) {

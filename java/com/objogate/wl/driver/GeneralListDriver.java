@@ -12,10 +12,10 @@ import com.objogate.wl.gesture.GesturePerformer;
 
 /**
  * Simple wrapper for list operations on either JComboBox or JList.
- *
+ * <p/>
  * Some UI components (notably JOptionPane) dynamically choose whether to use a JList or
  * JComboBox at runtime.
- *
+ * <p/>
  * This is a wrapper so simple operations on these components can be generalised.
  */
 public class GeneralListDriver extends ComponentDriver<JComponent> implements ListDriver {
@@ -62,13 +62,11 @@ public class GeneralListDriver extends ComponentDriver<JComponent> implements Li
     public ListDriver getDriver() {
         isShowingOnScreen();
         JComponent component = component().component();
-        if ( component instanceof JList) {
+        if (component instanceof JList) {
             return new JListDriver(this, JList.class);
-        }
-        else if ( component instanceof JComboBox) {
+        } else if (component instanceof JComboBox) {
             return new JComboBoxDriver(this, JComboBox.class);
-        }
-        else {
+        } else {
             throw new Defect("Only support JList & JComboBox, not " + component.getClass().getName());
         }
     }

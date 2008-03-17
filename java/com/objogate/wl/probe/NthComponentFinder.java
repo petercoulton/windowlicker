@@ -15,7 +15,7 @@ public class NthComponentFinder<T extends Component> implements ComponentSelecto
         this.parentOrOwnerFinder = parentOrOwnerFinder;
         this.whichToChoose = whichToChoose;
     }
-    
+
     @SuppressWarnings("unchecked")
     public List<T> components() {
         return Arrays.asList(parentOrOwnerFinder.components().get(whichToChoose));
@@ -34,7 +34,7 @@ public class NthComponentFinder<T extends Component> implements ComponentSelecto
     }
 
     public void describeTo(Description description) {
-        description.appendText("the " );
+        description.appendText("the ");
         description.appendValue(whichToChoose);
         description.appendText(" component from those matching ");
         description.appendDescriptionOf(parentOrOwnerFinder);

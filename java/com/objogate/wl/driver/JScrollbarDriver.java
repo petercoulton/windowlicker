@@ -66,7 +66,7 @@ public class JScrollbarDriver extends ComponentDriver<JScrollBar> {
         } else {
             performGesture(new MouseMoveAbsoluteGesture(Adjustable.HORIZONTAL, movement));
         }
-        
+
         performGesture(new MouseReleaseGesture(InputEvent.BUTTON1_MASK));
     }
 

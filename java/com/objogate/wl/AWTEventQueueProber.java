@@ -14,12 +14,12 @@ public class AWTEventQueueProber implements Prober, SystemProperties {
     public AWTEventQueueProber() {
         this(defaultTimeout(), defaultPollDelay());
     }
-    
+
     public AWTEventQueueProber(long timeoutMillis, long pollDelayMillis) {
         this.timeoutMillis = timeoutMillis;
         this.pollDelayMillis = pollDelayMillis;
     }
-    
+
     public long getTimeout() {
         return timeoutMillis;
     }
@@ -39,17 +39,15 @@ public class AWTEventQueueProber implements Prober, SystemProperties {
     public boolean poll(Probe probe) {
         ProbeRunner probeRunner = new ProbeRunner(probe);
         Timeout timeout = new Timeout(timeoutMillis);
-        
-        for(;;) {
+
+        for (; ;) {
             try {
                 EventQueue.invokeAndWait(probeRunner);
                 if (probe.isSatisfied()) {
                     return true;
-                }
-                else if (timeout.hasTimedOut()) {
+                } else if (timeout.hasTimedOut()) {
                     return false;
-                }
-                else {
+                } else {
                     Thread.sleep(pollDelayMillis);
                 }
             }
@@ -61,28 +59,28 @@ public class AWTEventQueueProber implements Prober, SystemProperties {
             }
         }
     }
-    
+
     public void check(Probe probe) {
         if (!poll(probe)) {
             StringDescription description = new StringDescription();
-            
+
             description.appendText("\nTried to look for...\n    ");
             probe.describeTo(description);
             description.appendText("\nbut...\n    ");
             probe.describeFailureTo(description);
-            
+
             throw new AssertionError(description.toString());
         }
     }
-    
+
     private static long defaultPollDelay() {
         return parseIntSystemProperty(POLL_DELAY, DEFAULT_POLL_DELAY);
     }
-    
+
     private static long defaultTimeout() {
         return parseIntSystemProperty(POLL_TIMEOUT, DEFAULT_POLL_TIMEOUT);
     }
-    
+
     private static long parseIntSystemProperty(String propertyName, long defaultValue) {
         return Long.parseLong(System.getProperty(propertyName, String.valueOf(defaultValue)));
     }

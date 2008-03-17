@@ -32,10 +32,10 @@ public class HorizontalThenVerticalMouseMoveGesture implements Gesture {
     }
 
     public class VerticalOnlyTracker implements Tracker {
-         public Point target(Point currentLocation) {
+        public Point target(Point currentLocation) {
             Point target = tracker.target(currentLocation);
 
-             return new Point(currentLocation.x, target.y);
+            return new Point(currentLocation.x, target.y);
         }
     }
 }

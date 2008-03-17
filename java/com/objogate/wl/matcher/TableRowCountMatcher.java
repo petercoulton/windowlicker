@@ -1,18 +1,15 @@
 package com.objogate.wl.matcher;
 
-import static org.hamcrest.Matchers.equalTo;
-
-import java.awt.Component;
-
 import javax.swing.JTable;
-
+import java.awt.Component;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import static org.hamcrest.Matchers.equalTo;
 import org.hamcrest.TypeSafeMatcher;
 
 public class TableRowCountMatcher extends TypeSafeMatcher<Component> {
     private final Matcher<Integer> rowCountMatcher;
-    
+
     public TableRowCountMatcher(Matcher<Integer> rowCountMatcher) {
         this.rowCountMatcher = rowCountMatcher;
     }
@@ -20,9 +17,9 @@ public class TableRowCountMatcher extends TypeSafeMatcher<Component> {
     @Override
     public boolean matchesSafely(Component component) {
         return component instanceof JTable
-            && matchesSafely((JTable)component);
+                && matchesSafely((JTable) component);
     }
-    
+
     public boolean matchesSafely(JTable table) {
         return rowCountMatcher.matches(table.getRowCount());
     }

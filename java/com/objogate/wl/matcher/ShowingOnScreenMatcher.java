@@ -1,12 +1,12 @@
 package com.objogate.wl.matcher;
 
+import java.awt.Component;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
-import java.awt.Component;
-
 public class ShowingOnScreenMatcher extends TypeSafeMatcher<Component> {
-    @Override public boolean matchesSafely(Component component) {
+    @Override
+    public boolean matchesSafely(Component component) {
         return component.isShowing();
     }
 

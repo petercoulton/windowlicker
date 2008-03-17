@@ -1,38 +1,28 @@
 package com.objogate.wl.driver;
 
-import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
-import static com.objogate.wl.matcher.ComponentMatchers.withFocus;
-import static org.hamcrest.Matchers.equalTo;
-
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicFileChooserUI;
+import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.HeadlessException;
 import java.io.File;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.plaf.basic.BasicFileChooserUI;
-import javax.swing.text.JTextComponent;
-
+import com.sun.java.swing.plaf.motif.MotifFileChooserUI;
+import com.sun.java.swing.plaf.windows.WindowsFileChooserUI;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-
+import static org.hamcrest.Matchers.equalTo;
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.Probe;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.matcher.ComponentMatchers;
+import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
+import static com.objogate.wl.matcher.ComponentMatchers.withFocus;
 import com.objogate.wl.probe.ComponentIdentity;
 import com.objogate.wl.probe.ComponentManipulatorProbe;
 import com.objogate.wl.probe.NthComponentFinder;
 import com.objogate.wl.probe.RecursiveComponentFinder;
-import com.sun.java.swing.plaf.motif.MotifFileChooserUI;
-import com.sun.java.swing.plaf.windows.WindowsFileChooserUI;
 
 public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
@@ -73,7 +63,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
             throw new UnsupportedOperationException("not supported yet " + name);
         } else if (ui instanceof WindowsFileChooserUI) {
             throw new UnsupportedOperationException("not supported yet " + name);
-        } else if (ui.getClass().getName().equals("com.sun.java.swing.plaf.gtk.GTKFileChooserUI") ) {
+        } else if (ui.getClass().getName().equals("com.sun.java.swing.plaf.gtk.GTKFileChooserUI")) {
             return new GTKFileChooserDriverUI();
         } else if (ui instanceof BasicFileChooserUI) {
             throw new UnsupportedOperationException("not supported yet " + name);
@@ -138,16 +128,16 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
             public boolean describeFailureTo(Description description) {
                 description.appendText("current directory was ")
-                           .appendValue(currentDirectory);
+                        .appendValue(currentDirectory);
                 return !isSatisfied();
             }
         });
     }
 
     public static JFrame rootFrameFor(Component parentComponent)
-        throws HeadlessException {
+            throws HeadlessException {
         if (parentComponent == null) throw new IllegalArgumentException("Dialog needs a parent");
-        if (parentComponent instanceof JFrame) return (JFrame)parentComponent;
+        if (parentComponent instanceof JFrame) return (JFrame) parentComponent;
         return rootFrameFor(parentComponent.getParent());
     }
 
@@ -182,7 +172,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         public void cancel() {
             new JButtonDriver(JFileChooserDriver.this, JButton.class, ComponentDriver.named("SynthFileChooser.cancelButton")).click();
         }
-        
+
         @SuppressWarnings("unchecked")
         public void ok() {
             new JButtonDriver(JFileChooserDriver.this, JButton.class, ComponentDriver.named("SynthFileChooser.approveButton")).click();
@@ -256,7 +246,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         void cancel();
 
         void ok();
-        
+
         JTextComponentDriver<? extends JTextComponent> textBox();
     }
 }

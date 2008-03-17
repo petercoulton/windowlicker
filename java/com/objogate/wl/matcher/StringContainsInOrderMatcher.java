@@ -1,7 +1,6 @@
 package com.objogate.wl.matcher;
 
 import java.util.Arrays;
-
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
@@ -19,7 +18,7 @@ public class StringContainsInOrderMatcher extends TypeSafeMatcher<String> {
     public boolean matchesSafely(String s) {
         int fromIndex = 0;
 
-        for (String substring: substrings) {
+        for (String substring : substrings) {
             fromIndex = s.indexOf(substring, fromIndex);
             if (fromIndex == -1) {
                 return false;
@@ -31,7 +30,7 @@ public class StringContainsInOrderMatcher extends TypeSafeMatcher<String> {
 
     public void describeTo(Description description) {
         description.appendText("a string containing ")
-            .appendValueList("", ", ", "", substrings).appendText(" in order");
+                .appendValueList("", ", ", "", substrings).appendText(" in order");
     }
 
     @Factory

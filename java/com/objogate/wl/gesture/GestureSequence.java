@@ -18,6 +18,6 @@ public class GestureSequence implements Gesture {
     }
 
     public void describeTo(Description description) {
-        description.appendList("[",", ","]", gestures);
+        description.appendList("[", ", ", "]", gestures);
     }
 }

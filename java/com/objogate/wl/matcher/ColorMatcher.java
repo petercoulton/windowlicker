@@ -1,9 +1,8 @@
 package com.objogate.wl.matcher;
 
+import java.awt.Color;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
-
-import java.awt.Color;
 
 public class ColorMatcher extends TypeSafeMatcher<Color> {
     private final Color expected;

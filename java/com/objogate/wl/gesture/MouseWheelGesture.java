@@ -17,7 +17,7 @@ public class MouseWheelGesture implements Gesture {
 
 
     public void describeTo(Description description) {
-        description.appendText("scroll mouse wheel by " );
+        description.appendText("scroll mouse wheel by ");
         description.appendValue(amount);
     }
 }

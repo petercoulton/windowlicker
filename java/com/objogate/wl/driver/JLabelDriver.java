@@ -2,12 +2,11 @@ package com.objogate.wl.driver;
 
 import javax.swing.JLabel;
 import java.awt.Component;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.internal.query.TextQuery;
 
@@ -25,9 +24,9 @@ public class JLabelDriver extends ComponentDriver<JLabel> implements TextQuery {
     }
 
     public void text(Matcher<String> textMatcher) {
-      hasText(textMatcher);
+        hasText(textMatcher);
     }
-    
+
     public void hasText(Matcher<String> matcher) {
         has(text(), matcher);
     }
@@ -37,8 +36,9 @@ public class JLabelDriver extends ComponentDriver<JLabel> implements TextQuery {
             public String query(JLabel label) {
                 return label.getText();
             }
+
             public void describeTo(Description description) {
-              description.appendText("label text");
+                description.appendText("label text");
             }
         };
     }

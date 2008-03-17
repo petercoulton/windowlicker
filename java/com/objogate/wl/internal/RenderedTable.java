@@ -1,20 +1,19 @@
 package com.objogate.wl.internal;
 
-import java.awt.Color;
-import java.awt.Font;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
  * Maps a table to the rendered cells visible in that table.
- *
+ * <p/>
  * This is not inherently thread-safe.  The test that uses this object is responsible for
  * ensuring thread safety.  Basically, all calls to this object must be made on the Swing
- * thread. 
+ * thread.
  */
 public class RenderedTable {
     private final JTable table;
@@ -35,12 +34,11 @@ public class RenderedTable {
     private JLabel renderCell(int rowIndex, int columnIndex) {
         if (rowIndex == HEADER) {
             return renderHeaderCell(rowIndex, columnIndex);
-        }
-        else {
+        } else {
             return renderTableCell(rowIndex, columnIndex);
         }
     }
-    
+
     private JLabel renderTableCell(int rowIndex, int columnIndex) {
         TableCellRenderer cellRenderer = table.getCellRenderer(rowIndex, columnIndex);
         Object cellValue = table.getValueAt(rowIndex, columnIndex);

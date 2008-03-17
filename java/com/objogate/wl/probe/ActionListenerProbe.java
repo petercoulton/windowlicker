@@ -1,10 +1,9 @@
 package com.objogate.wl.probe;
 
-import com.objogate.wl.Probe;
-import org.hamcrest.Description;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import org.hamcrest.Description;
+import com.objogate.wl.Probe;
 
 public class ActionListenerProbe implements ActionListener, Probe {
     private boolean hasBeenPerformed = false;
@@ -27,9 +26,9 @@ public class ActionListenerProbe implements ActionListener, Probe {
 
     public boolean describeFailureTo(Description description) {
         description.appendText("the action was ")
-                   .appendText(hasBeenPerformed ? "" : "not ")
-                   .appendText("performed");
-        
+                .appendText(hasBeenPerformed ? "" : "not ")
+                .appendText("performed");
+
         return !hasBeenPerformed;
     }
 }

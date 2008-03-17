@@ -29,20 +29,20 @@ public class ComponentEdgeTracker implements Tracker, SelfDescribing {
 
         switch (edge) {
             case Left:
-                return new Point((int)probe.bounds.getMinX() + offset, (int)probe.bounds.getCenterY());
+                return new Point((int) probe.bounds.getMinX() + offset, (int) probe.bounds.getCenterY());
             case Right:
-                return new Point((int)probe.bounds.getMaxX() + offset, (int)probe.bounds.getCenterY());
+                return new Point((int) probe.bounds.getMaxX() + offset, (int) probe.bounds.getCenterY());
             case Top:
-                return new Point((int)probe.bounds.getCenterX(), (int)probe.bounds.getMinY() + offset);
+                return new Point((int) probe.bounds.getCenterX(), (int) probe.bounds.getMinY() + offset);
             case Bottom:
-                return new Point((int)probe.bounds.getCenterX(), (int)probe.bounds.getMaxY() + offset);
+                return new Point((int) probe.bounds.getCenterX(), (int) probe.bounds.getMaxY() + offset);
             default:
                 throw new UnsupportedOperationException("do not support that edge yet");
         }
     }
 
     public void describeTo(Description description) {
-        description.appendText("center of " );
+        description.appendText("center of ");
         description.appendDescriptionOf(probe);
     }
 }

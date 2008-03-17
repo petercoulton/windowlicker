@@ -5,7 +5,7 @@ import javax.swing.JMenuBar;
 import java.awt.Component;
 import org.hamcrest.Matcher;
 
-public class JMenuBarDriver extends ComponentDriver<JMenuBar>{
+public class JMenuBarDriver extends ComponentDriver<JMenuBar> {
 
     public JMenuBarDriver(ComponentDriver<? extends Component> parentOrOwner, Matcher<? super JMenuBar>... matchers) {
         super(parentOrOwner, JMenuBar.class, matchers);

@@ -7,7 +7,7 @@ import com.objogate.wl.ComponentSelector;
 
 /**
  * A ComponentFinder that always find a given component.
- *
+ * <p/>
  * This is useful for unit-testing a component.
  */
 public class ComponentIdentity<T extends Component> implements ComponentSelector<T> {
@@ -20,7 +20,7 @@ public class ComponentIdentity<T extends Component> implements ComponentSelector
     public T component() {
         return component;
     }
-    
+
     public java.util.List<T> components() {
         return Collections.singletonList(component);
     }
@@ -34,11 +34,11 @@ public class ComponentIdentity<T extends Component> implements ComponentSelector
     }
 
     public void describeTo(Description description) {
-        description.appendText(" the exact " );
+        description.appendText(" the exact ");
         description.appendText(component.getClass().getSimpleName());
-        description.appendText( " '" );
+        description.appendText(" '");
         description.appendValue(component.toString());
-        description.appendText( "' " );
+        description.appendText("' ");
     }
 
     public boolean describeFailureTo(Description description) {

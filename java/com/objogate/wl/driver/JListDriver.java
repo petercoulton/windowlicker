@@ -4,15 +4,14 @@ import javax.swing.JList;
 import javax.swing.ListModel;
 import java.awt.Component;
 import java.awt.Rectangle;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
 
@@ -47,8 +46,9 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
             public Integer query(JList component) {
                 return component.getSelectedIndex();
             }
+
             public void describeTo(Description description) {
-              description.appendText("selected list index");
+                description.appendText("selected list index");
             }
         }, Matchers.equalTo(expectedIndex));
     }
@@ -168,7 +168,7 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
             ListModel model = component.getModel();
             for (int i = 0; i < model.getSize(); i++) {
                 Component rendered = renderedCell(component, i, false, false);
-                if(matcher.matches(rendered)) {
+                if (matcher.matches(rendered)) {
                     index = i;
                     return;
                 }

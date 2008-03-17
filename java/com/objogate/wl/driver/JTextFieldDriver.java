@@ -83,8 +83,8 @@ public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
                         System.out.println("numberOfCharactersToMove = " + numberOfCharactersToMove);
                         int amount = Math.abs(numberOfCharactersToMove) > 2 ? 5 : 1;
 
-                        if ( numberOfCharactersToMove != 0 ) {
-                            desiredLocation.translate(direction * amount,0);
+                        if (numberOfCharactersToMove != 0) {
+                            desiredLocation.translate(direction * amount, 0);
                             return desiredLocation;
                         }
                         return currentLocation;
@@ -129,7 +129,7 @@ public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
     public void focusWithMouse() {
         performGesture(moveMouseTo(centerOfComponent()), clickMouseButton(BUTTON1));
     }
-    
+
     private static class ComponentInsetsManipulation implements ComponentManipulation<JTextField> {
         private Insets insets;
 

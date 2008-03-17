@@ -7,15 +7,19 @@ import java.awt.Point;
  */
 public interface Automaton {
     Point getPointerLocation();
-    
+
     void mouseMove(int x, int y);
+
     void mousePress(int buttons);
+
     void mouseRelease(int buttons);
+
     void mouseWheel(int amount);
 
     void keyPress(int keycode);
+
     void keyRelease(int keycode);
-    
+
     void typeCharacter(char ch);
 
     void delay(int ms);

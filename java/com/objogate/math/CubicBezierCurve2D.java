@@ -27,9 +27,9 @@ public class CubicBezierCurve2D {
                               Vector2D ctl2,
                               Vector2D p2) {
         this(p1.x(), p1.y(),
-             ctl1.x(), ctl1.y(),
-             ctl2.x(), ctl2.y(),
-             p2.x(), p2.y());
+                ctl1.x(), ctl1.y(),
+                ctl2.x(), ctl2.y(),
+                p2.x(), p2.y());
     }
 
     /**

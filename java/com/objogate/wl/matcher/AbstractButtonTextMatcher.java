@@ -1,9 +1,8 @@
 package com.objogate.wl.matcher;
 
+import javax.swing.AbstractButton;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
-
-import javax.swing.*;
 
 public class AbstractButtonTextMatcher<T extends AbstractButton> extends TypeSafeMatcher<T> {
     private String text;

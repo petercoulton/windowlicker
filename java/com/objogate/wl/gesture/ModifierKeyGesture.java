@@ -21,10 +21,10 @@ public class ModifierKeyGesture implements Gesture {
 
 
     public void describeTo(Description description) {
-        description.appendText("Press modifier " );
+        description.appendText("Press modifier ");
         description.appendValue(modifierKeyCode);
-        description.appendText(" then " );
+        description.appendText(" then ");
         description.appendDescriptionOf(modifiedGesture);
-        
+
     }
 }

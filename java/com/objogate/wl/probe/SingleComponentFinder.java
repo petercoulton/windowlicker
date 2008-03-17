@@ -30,10 +30,10 @@ public class SingleComponentFinder<T extends Component> implements ComponentSele
     public void probe() {
         finder.probe();
     }
-    
+
     public void describeTo(Description description) {
         description.appendText("exactly 1 ")
-                   .appendDescriptionOf(finder);
+                .appendDescriptionOf(finder);
     }
 
     /**
@@ -42,8 +42,8 @@ public class SingleComponentFinder<T extends Component> implements ComponentSele
     public boolean describeFailureTo(Description description) {
         return finder.describeFailureTo(description) && !isSingle();
     }
-    
+
     private boolean isSingle() {
-      return components().size() == 1;
+        return components().size() == 1;
     }
 }

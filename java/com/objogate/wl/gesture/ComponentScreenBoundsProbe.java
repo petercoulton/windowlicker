@@ -20,7 +20,7 @@ class ComponentScreenBoundsProbe implements Probe {
         componentSelector.probe();
 
         // if the component can't be found - probably not rendered yet
-        if ( componentSelector.components().isEmpty() ) {
+        if (componentSelector.components().isEmpty()) {
             bounds = null;
             return;
         }
@@ -28,16 +28,15 @@ class ComponentScreenBoundsProbe implements Probe {
         Component component = componentSelector.component();
         if (component.isShowing()) {
             bounds = new Rectangle(component.getLocationOnScreen(), component.getSize());
-        }
-        else {
+        } else {
             bounds = null;
         }
     }
-    
+
     public boolean isSatisfied() {
         return bounds != null && bounds.getWidth() > 0 && bounds.getHeight() > 0;
     }
-    
+
     public void describeTo(Description description) {
         description.appendText("screen dimensions of ");
         description.appendDescriptionOf(componentSelector);
@@ -47,7 +46,7 @@ class ComponentScreenBoundsProbe implements Probe {
         if (componentSelector.describeFailureTo(description)) {
             return true;
         }
-        
+
         description.appendText("\n    which had no screen dimensions");
         return true;
     }

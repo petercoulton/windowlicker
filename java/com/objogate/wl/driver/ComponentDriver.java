@@ -1,48 +1,25 @@
 package com.objogate.wl.driver;
 
-import static com.objogate.wl.gesture.Gestures.BUTTON1;
-import static com.objogate.wl.gesture.Gestures.clickMouseButton;
-import static com.objogate.wl.gesture.Gestures.moveMouseTo;
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-
-import javax.swing.LookAndFeel;
-import javax.swing.UIManager;
-
 import org.hamcrest.BaseMatcher;
+import static org.hamcrest.CoreMatchers.allOf;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-
-import com.objogate.wl.AWTEventQueueProber;
-import com.objogate.wl.ComponentFinder;
-import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentSelector;
-import com.objogate.wl.Gesture;
-import com.objogate.wl.Probe;
-import com.objogate.wl.Prober;
-import com.objogate.wl.Query;
-import com.objogate.wl.gesture.ComponentCenterTracker;
-import com.objogate.wl.gesture.ComponentOffsetTracker;
-import com.objogate.wl.gesture.GesturePerformer;
-import com.objogate.wl.gesture.Gestures;
-import com.objogate.wl.gesture.Tracker;
+import static org.hamcrest.Matchers.equalTo;
+import com.objogate.wl.*;
+import com.objogate.wl.gesture.*;
+import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.internal.PropertyQuery;
 import com.objogate.wl.matcher.ComponentEnabledMatcher;
 import com.objogate.wl.matcher.ComponentOpaqueMatcher;
 import com.objogate.wl.matcher.DisplayableComponentMatcher;
 import com.objogate.wl.matcher.ShowingOnScreenMatcher;
-import com.objogate.wl.probe.ComponentAssertionProbe;
-import com.objogate.wl.probe.ComponentFinders;
-import com.objogate.wl.probe.ComponentIdentity;
-import com.objogate.wl.probe.ComponentManipulatorProbe;
-import com.objogate.wl.probe.ComponentPropertyAssertionProbe;
-import com.objogate.wl.probe.RecursiveComponentFinder;
-import com.objogate.wl.probe.SingleComponentFinder;
+import com.objogate.wl.probe.*;
 
 public abstract class ComponentDriver<T extends Component> {
     private final Prober prober;
@@ -54,7 +31,7 @@ public abstract class ComponentDriver<T extends Component> {
      * Used to unit-test a component
      *
      * @param gesturePerformer
-     * @param component The component to test.
+     * @param component        The component to test.
      */
     public ComponentDriver(GesturePerformer gesturePerformer, T component) {
         this(gesturePerformer, new ComponentIdentity<T>(component));
@@ -64,8 +41,8 @@ public abstract class ComponentDriver<T extends Component> {
      * Used to unit-test a component with timeouts specified by the given prober.
      *
      * @param gesturePerformer
-     * @param component The component to test.
-     * @param prober    The prober used to probe the component under test with specific timeouts
+     * @param component        The component to test.
+     * @param prober           The prober used to probe the component under test with specific timeouts
      */
     public ComponentDriver(GesturePerformer gesturePerformer, T component, Prober prober) {
         this(gesturePerformer, new ComponentIdentity<T>(component), prober);
@@ -97,7 +74,8 @@ public abstract class ComponentDriver<T extends Component> {
      * This is the fundamental hook for assertions and manipulations, upon which more convenient methods are
      * built.  It is exposed as a public method to act as an "escape route" so that
      * users can extend drivers through a stable extension point.
-     * @param probe       The probe to be run and checked.
+     *
+     * @param probe The probe to be run and checked.
      */
     public void check(Probe probe) {
         prober.check(probe);
@@ -149,7 +127,8 @@ public abstract class ComponentDriver<T extends Component> {
      * This is a simpler hook for assertions, upon which more convenient methods can be
      * built.  It is exposed as a public method to act as an "escape route" so that
      * users can extend drivers through a stable extension point.
-     * @param criteria    The criteria that the component must meet.
+     *
+     * @param criteria The criteria that the component must meet.
      */
     public void is(Matcher<? super T> criteria) {
         check(new ComponentAssertionProbe<T>(selector, criteria));
@@ -162,13 +141,14 @@ public abstract class ComponentDriver<T extends Component> {
      * This is a simpler hook for assertions, upon which more convenient methods can be
      * built.  It is exposed as a public method to act as an "escape route" so that
      * users can extend drivers through a stable extension point.
-     * @param query       A query that returns the value of a property of the component
-     * @param criteria    The criteria that the property value must meet.
+     *
+     * @param query    A query that returns the value of a property of the component
+     * @param criteria The criteria that the property value must meet.
      */
     public <P> void has(Query<? super T, P> query, Matcher<? super P> criteria) {
         check(new ComponentPropertyAssertionProbe<T, P>(selector, query, criteria));
     }
-    
+
     /**
      * Manipulate the component through it's API, not through the input devices.  The manipulation
      * is performed on the AWT event dispatch thread.
@@ -195,7 +175,7 @@ public abstract class ComponentDriver<T extends Component> {
     protected Prober prober() {
         return prober;
     }
-    
+
     public void leftClickOnComponent() {
         isShowingOnScreen();
         performGesture(moveMouseTo(centerOfComponent()), clickMouseButton(BUTTON1));
@@ -245,11 +225,11 @@ public abstract class ComponentDriver<T extends Component> {
     protected void cut() {
         performGesture(Gestures.cut());
     }
-    
+
     protected void copy() {
         performGesture(Gestures.copy());
     }
-    
+
     protected void paste() {
         performGesture(Gestures.paste());
     }
@@ -273,51 +253,50 @@ public abstract class ComponentDriver<T extends Component> {
     //TODO (nick): what is a nice way of combining these to produce decent error messages?
     public void hasBackgroundColor(Matcher<Color> color) {
         has(backgroundColor(), color);
-        
+
         //need to check opacity else the background color isn't visible
         // -- nat: not necessarily true, depends on component type
         is(opaque());
     }
-    
-    public static <T extends Component, P> Matcher<T> with(Query<? super T, P> propertyQuery, 
-                                                           Matcher<? super P> valueMatcher)
-    {
-        return new QueryResultMatcher<T,P>(propertyQuery, valueMatcher);
+
+    public static <T extends Component, P> Matcher<T> with(Query<? super T, P> propertyQuery,
+                                                           Matcher<? super P> valueMatcher) {
+        return new QueryResultMatcher<T, P>(propertyQuery, valueMatcher);
     }
-    
-    public static class QueryResultMatcher<C,P> extends BaseMatcher<C> {
-        private final Query<? super C,P> query;
+
+    public static class QueryResultMatcher<C, P> extends BaseMatcher<C> {
+        private final Query<? super C, P> query;
         private final Matcher<? super P> resultMatcher;
-        
+
         public QueryResultMatcher(Query<? super C, P> query, Matcher<? super P> resultMatcher) {
             this.query = query;
             this.resultMatcher = resultMatcher;
         }
-        
+
         //TODO: any way to check the dynamic type of item?
         @SuppressWarnings("unchecked")
         public boolean matches(Object item) {
-            return item != null && resultMatcher.matches(query.query((C)item));
+            return item != null && resultMatcher.matches(query.query((C) item));
         }
-        
+
         public void describeTo(Description description) {
             description
-                .appendText("with ")
-                .appendDescriptionOf(query)
-                .appendText(" ")
-                .appendDescriptionOf(resultMatcher);
-            
+                    .appendText("with ")
+                    .appendDescriptionOf(query)
+                    .appendText(" ")
+                    .appendDescriptionOf(resultMatcher);
+
         }
     }
-    
-    public static Query<Component,String> name() {
+
+    public static Query<Component, String> name() {
         return new PropertyQuery<Component, String>("name") {
             public String query(Component component) {
                 return component.getName();
             }
         };
     }
-    
+
     public static Query<Component, Color> backgroundColor() {
         return new PropertyQuery<Component, Color>("background color") {
             public Color query(Component component) {
@@ -325,7 +304,7 @@ public abstract class ComponentDriver<T extends Component> {
             }
         };
     }
-    
+
     public static Matcher<Component> named(String nameValue) {
         return with(name(), equalTo(nameValue));
     }
@@ -333,19 +312,19 @@ public abstract class ComponentDriver<T extends Component> {
     public static Matcher<Component> showingOnScreen() {
         return new ShowingOnScreenMatcher();
     }
-    
+
     public static Matcher<Component> displayable() {
         return new DisplayableComponentMatcher();
     }
-    
+
     public static Matcher<Component> opaque() {
         return new ComponentOpaqueMatcher();
     }
-    
+
     public static Matcher<Component> enabled() {
         return new ComponentEnabledMatcher();
     }
-    
+
     public static Query<Component, Color> foregroundColor() {
         return new PropertyQuery<Component, Color>("foreground color") {
             public Color query(Component component) {
@@ -353,7 +332,7 @@ public abstract class ComponentDriver<T extends Component> {
             }
         };
     }
-    
+
     /**
      * @Deprecated use a Tracker instead
      */

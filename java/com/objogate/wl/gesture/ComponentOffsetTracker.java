@@ -2,14 +2,12 @@ package com.objogate.wl.gesture;
 
 import java.awt.Component;
 import java.awt.Point;
-
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 
 /**
  * @Deprecated introduced temporarily as refactoring code to use Trackers, but should be replaced
- *             by a table cell tracker, list element tracker, etc. as appropriate
- *
+ * by a table cell tracker, list element tracker, etc. as appropriate
  */
 public class ComponentOffsetTracker implements Tracker {
     private final Prober prober;

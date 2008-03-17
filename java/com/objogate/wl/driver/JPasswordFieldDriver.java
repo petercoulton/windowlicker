@@ -1,11 +1,8 @@
 package com.objogate.wl.driver;
 
-import java.awt.Component;
-
 import javax.swing.JPasswordField;
-
+import java.awt.Component;
 import org.hamcrest.Matcher;
-
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;

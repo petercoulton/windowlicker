@@ -17,11 +17,11 @@ public class MouseTranslateGesture implements Gesture {
     }
 
     public void performGesture(Automaton automaton) {
-        for (;;) {
+        for (; ;) {
             Point currentLocation = automaton.getPointerLocation();
             Point trackerDestination = tracker.target(currentLocation);
 
-            if ( currentLocation.equals(trackerDestination)) {
+            if (currentLocation.equals(trackerDestination)) {
                 return;
             }
 
@@ -33,7 +33,7 @@ public class MouseTranslateGesture implements Gesture {
 
     private Point clipToScreen(Point p) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        return new Point(clip(p.x, screenSize.width - 1), clip(p.y, screenSize.height-1));
+        return new Point(clip(p.x, screenSize.width - 1), clip(p.y, screenSize.height - 1));
     }
 
     private int clip(int n, int maxN) {

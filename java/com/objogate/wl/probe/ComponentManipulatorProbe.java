@@ -14,7 +14,7 @@ public class ComponentManipulatorProbe<T extends Component> implements Probe {
         this.finder = finder;
         this.manipulation = manipulation;
     }
-    
+
     public void probe() {
         finder.probe();
         if (finder.isSatisfied()) {
@@ -23,11 +23,11 @@ public class ComponentManipulatorProbe<T extends Component> implements Probe {
             }
         }
     }
-    
+
     public boolean isSatisfied() {
         return finder.isSatisfied();
     }
-    
+
     public void describeTo(Description description) {
         finder.describeTo(description);
     }

@@ -17,12 +17,12 @@ import static com.objogate.wl.gesture.Gestures.withModifierMask;
 
 /**
  * Represents how characters are input by key strokes.
- *
+ * <p/>
  * More information about keyboard layouts is available at
  * <a href="http://en.wikipedia.org/wiki/Keyboard_layout">http://en.wikipedia.org/wiki/Keyboard_layout</a>.
  */
 public class KeyboardLayout implements SystemProperties {
-    private final Map<Character,KeyStroke> keyStrokes = new HashMap<Character, KeyStroke>();
+    private final Map<Character, KeyStroke> keyStrokes = new HashMap<Character, KeyStroke>();
     private final String name;
 
     private KeyboardLayout(String name, URL resource) throws IOException {
@@ -42,33 +42,32 @@ public class KeyboardLayout implements SystemProperties {
 
     public Gesture gestureForTyping(char ch) {
         KeyStroke keyStroke = keyStrokeFor(ch);
-        
+
         return withModifierMask(keyStroke.getModifiers(), typeKey(keyStroke.getKeyCode()));
     }
-    
+
     private KeyStroke keyStrokeFor(char ch) {
         KeyStroke keyStroke = keyStrokes.get(ch);
         if (keyStroke != null) {
             return keyStroke;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("no stroke available for character '" + ch + "'");
         }
     }
-    
+
     /**
      * Returns the default keyboard layout.  The name of the layout is specified by the
      * com.objogate.wl.keyboard system property.  If that is not set, the name of the default
      * {@link java.util.Locale Locale} is used.
-     * 
+     *
      * @return the default keyboard layout
      */
     public static KeyboardLayout getDefaultKeyboardLayout() {
         String layoutName = System.getProperty(KEYBOARD_LAYOUT, InputContext.getInstance().getLocale().getCountry());
-        
+
         return getKeyboardLayout(layoutName);
     }
-    
+
     public static KeyboardLayout getKeyboardLayout(String layoutName) {
         URL configURL = KeyboardLayout.class.getResource(layoutName + ".keyboard");
         if (configURL == null) {

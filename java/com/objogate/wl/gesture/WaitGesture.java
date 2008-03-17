@@ -10,7 +10,7 @@ public class WaitGesture implements Gesture {
     public WaitGesture(int waitMs) {
         this.waitMs = waitMs;
     }
-    
+
     public void performGesture(Automaton automaton) {
         automaton.delay(waitMs);
     }

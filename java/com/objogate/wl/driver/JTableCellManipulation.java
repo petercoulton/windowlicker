@@ -1,11 +1,10 @@
 package com.objogate.wl.driver;
 
-import com.objogate.wl.ComponentManipulation;
-
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import java.awt.Component;
+import com.objogate.wl.ComponentManipulation;
 
 public class JTableCellManipulation implements ComponentManipulation<JTable> {
     private final int row;
@@ -26,7 +25,7 @@ public class JTableCellManipulation implements ComponentManipulation<JTable> {
     }
 
     public void manipulate(JTable table) {
-        if(columnIdentifier != null) {
+        if (columnIdentifier != null) {
             cell = cell(table, row, columnIdentifier);
             editorComponent = editor(table, row, columnIdentifier);
         } else {

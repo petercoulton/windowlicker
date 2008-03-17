@@ -22,7 +22,7 @@ public class Gestures {
     public static int ALT_GRAPH = InputEvent.ALT_GRAPH_MASK;
     public static int META = InputEvent.META_MASK;
 
-    public static Gesture sequence(Gesture ... gestures) {
+    public static Gesture sequence(Gesture... gestures) {
         return new GestureSequence(asList(gestures));
     }
 
@@ -38,30 +38,30 @@ public class Gestures {
      * Creates a gesture that presses one or more mouse buttons.  The mouse buttons should
      * be released using the <code>mouseRelease</code> gesture.
      *
-     * @param buttons	the button mask; a combination of one or more
-     * of these flags:
-     * <ul>
-     * <li><code>BUTTON1</code>
-     * <li><code>BUTTON2</code>
-     * <li><code>BUTTON3</code>
-     * </ul>
+     * @param buttons the button mask; a combination of one or more
+     *                of these flags:
+     *                <ul>
+     *                <li><code>BUTTON1</code>
+     *                <li><code>BUTTON2</code>
+     *                <li><code>BUTTON3</code>
+     *                </ul>
      * @return a gesture that presses the mouse buttons
      * @see #releaseMouse(int)
      */
     public static Gesture pressMouse(int buttons) {
         return new MousePressGesture(buttons);
     }
-    
+
     /**
      * Creates a gesture that releases one or more mouse buttons.
      *
-     * @param buttons	the button mask; a combination of one or more
-     * of these flags:
-     * <ul>
-     * <li><code>BUTTON1</code>
-     * <li><code>BUTTON2</code>
-     * <li><code>BUTTON3</code>
-     * </ul>
+     * @param buttons the button mask; a combination of one or more
+     *                of these flags:
+     *                <ul>
+     *                <li><code>BUTTON1</code>
+     *                <li><code>BUTTON2</code>
+     *                <li><code>BUTTON3</code>
+     *                </ul>
      * @return a gesture that releases the mouse buttons
      * @see #pressMouse(int)
      */
@@ -72,7 +72,7 @@ public class Gestures {
     public static Gesture moveMouseWheel(int amount) {
         return new MouseWheelGesture(amount);
     }
-    
+
     public static Gesture clickMouseButton(int buttons) {
         return sequence(pressMouse(buttons), wait(100), releaseMouse(buttons));
     }
@@ -87,7 +87,7 @@ public class Gestures {
 
     public static Gesture doubleClickMouse() {
         Gesture leftClick = clickMouseButton(BUTTON1);
-        
+
         return sequence(leftClick, wait(30), leftClick);
     }
 
@@ -110,7 +110,7 @@ public class Gestures {
     public static Gesture typeKey(int keyCode) {
         return sequence(pressKey(keyCode), wait(50), releaseKey(keyCode));
     }
-    
+
     public static Gesture type(String text) {
         return new TypeTextGesture(text);
     }

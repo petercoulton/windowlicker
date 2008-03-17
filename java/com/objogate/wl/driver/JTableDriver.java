@@ -10,9 +10,9 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
 
@@ -131,8 +131,9 @@ public class JTableDriver extends ComponentDriver<JTable> {
             public Color query(JTable component) {
                 return JTableCellManipulation.cell(component, row, columnIdentifier).getBackground();
             }
+
             public void describeTo(Description description) {
-              description.appendText("background color in cell at " + row + "x" + columnIdentifier);
+                description.appendText("background color in cell at " + row + "x" + columnIdentifier);
             }
         }, backgroundColor);
     }
@@ -142,8 +143,9 @@ public class JTableDriver extends ComponentDriver<JTable> {
             public Color query(JTable component) {
                 return JTableCellManipulation.cell(component, row, col).getBackground();
             }
+
             public void describeTo(Description description) {
-              description.appendText("background colour in cell at " + row + "x" + col);
+                description.appendText("background colour in cell at " + row + "x" + col);
             }
         }, backgroundColor);
     }
@@ -154,8 +156,9 @@ public class JTableDriver extends ComponentDriver<JTable> {
                 Component rendered = JTableCellManipulation.cell(component, row, columnIdentifier);
                 return rendered.getForeground();
             }
+
             public void describeTo(Description description) {
-              description.appendText("foreground color in cell at " + row + "x" + columnIdentifier);
+                description.appendText("foreground color in cell at " + row + "x" + columnIdentifier);
             }
         }, foregroundColor);
     }
@@ -165,8 +168,9 @@ public class JTableDriver extends ComponentDriver<JTable> {
             public Color query(JTable component) {
                 return JTableCellManipulation.cell(component, row, col).getForeground();
             }
+
             public void describeTo(Description description) {
-              description.appendText("foreground colour in cell at " + row + "x" + col);
+                description.appendText("foreground colour in cell at " + row + "x" + col);
             }
         }, foregroundColor);
     }
@@ -280,8 +284,9 @@ public class JTableDriver extends ComponentDriver<JTable> {
                 throw new Defect("Rendered component in cell " + row + "x" + col + " is not a JLabel but a " + component.getClass().getName());
             }
         }
+
         public void describeTo(Description description) {
-          description.appendText("text in cell at " + row + " x " + col);
+            description.appendText("text in cell at " + row + " x " + col);
         }
     }
 }

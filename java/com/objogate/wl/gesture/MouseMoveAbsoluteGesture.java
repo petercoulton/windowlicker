@@ -22,10 +22,10 @@ public class MouseMoveAbsoluteGesture implements Gesture {
 
         switch (direction) {
             case Adjustable.HORIZONTAL:
-                automaton.mouseMove((int)(location.getX()) + pixels, (int)location.getY());
+                automaton.mouseMove((int) (location.getX()) + pixels, (int) location.getY());
                 break;
             case Adjustable.VERTICAL:
-                automaton.mouseMove((int)location.getX(), (int)location.getY() + pixels);
+                automaton.mouseMove((int) location.getX(), (int) location.getY() + pixels);
                 break;
             default:
                 throw new Defect("Only allowed Adjustable.HORIZONTAL and Adjustable.VERTICAL");

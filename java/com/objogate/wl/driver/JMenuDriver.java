@@ -4,7 +4,6 @@ import javax.swing.AbstractButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Component;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import static org.hamcrest.Matchers.equalTo;
@@ -28,7 +27,7 @@ public class JMenuDriver extends AbstractButtonDriver<JMenu> {
     @SuppressWarnings("unchecked")
     public JMenuDriver subMenu(Matcher<? super JMenu> matcher) {
         select();
-        return new JMenuDriver(this, matcher);    
+        return new JMenuDriver(this, matcher);
     }
 
     public JMenuItemDriver subItem(Matcher<? super JMenuItem> matcher) {
@@ -41,8 +40,9 @@ public class JMenuDriver extends AbstractButtonDriver<JMenu> {
             public Boolean query(JMenu label) {
                 return label.isPopupMenuVisible();
             }
+
             public void describeTo(Description description) {
-              description.appendText("popup menu visibility");
+                description.appendText("popup menu visibility");
             }
         };
     }

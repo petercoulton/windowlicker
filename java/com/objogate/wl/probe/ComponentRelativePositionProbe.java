@@ -2,9 +2,7 @@ package com.objogate.wl.probe;
 
 import java.awt.Component;
 import java.awt.Rectangle;
-
 import org.hamcrest.Description;
-
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Probe;
@@ -21,10 +19,9 @@ public class ComponentRelativePositionProbe implements Probe {
         ABOVE, BELOW, LEFTOF, RIGHTOF
     }
 
-    public ComponentRelativePositionProbe(ComponentSelector<? extends Component> selectorA, 
-                                          RelativePosition position, 
-                                          ComponentSelector<? extends Component> selectorB) 
-    {
+    public ComponentRelativePositionProbe(ComponentSelector<? extends Component> selectorA,
+                                          RelativePosition position,
+                                          ComponentSelector<? extends Component> selectorB) {
         this.selectorA = selectorA;
         this.relativePosition = position;
         this.selectorB = selectorB;
@@ -39,7 +36,7 @@ public class ComponentRelativePositionProbe implements Probe {
             Rectangle boundsA = getBoundsFor(selectorA.component());
             Rectangle boundsB = getBoundsFor(selectorB.component());
 
-            switch(relativePosition) {
+            switch (relativePosition) {
                 case ABOVE:
                     satisfied = boundsA.getMaxY() <= boundsB.getMinY();
                     break;

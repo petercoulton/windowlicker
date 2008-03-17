@@ -19,11 +19,11 @@ public class RoboticAutomaton implements Automaton {
     public RoboticAutomaton(KeyboardLayout keyboard) {
         this(createRobot(), keyboard);
     }
-    
+
     public RoboticAutomaton() {
         this(createRobot(), KeyboardLayout.getDefaultKeyboardLayout());
     }
-    
+
     private static Robot createRobot() {
         Robot robot;
         try {

@@ -5,15 +5,14 @@ import javax.swing.SwingConstants;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.Rectangle;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.Query;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.gesture.Tracker;
@@ -49,8 +48,9 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
             public Integer query(JTabbedPane component) {
                 return component.getTabCount();
             }
+
             public void describeTo(Description description) {
-              description.appendText("tab count");
+                description.appendText("tab count");
             }
         }, Matchers.equalTo(expectedCount));
     }
@@ -71,8 +71,9 @@ public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
             public Integer query(JTabbedPane component) {
                 return component.getSelectedIndex();
             }
+
             public void describeTo(Description description) {
-              description.appendText("selected tab");
+                description.appendText("selected tab");
             }
         }, Matchers.equalTo(expectedIndex));
     }
