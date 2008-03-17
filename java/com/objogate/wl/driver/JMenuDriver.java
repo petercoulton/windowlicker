@@ -1,6 +1,5 @@
 package com.objogate.wl.driver;
 
-import javax.swing.AbstractButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Component;
@@ -8,6 +7,9 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import static org.hamcrest.Matchers.equalTo;
 import com.objogate.wl.Query;
+import static com.objogate.wl.gesture.Gestures.BUTTON1;
+import static com.objogate.wl.gesture.Gestures.clickMouseButton;
+import static com.objogate.wl.gesture.RightAngleMouseMoveGesture.createVerticalThenHorizontalMouseMoveGesture;
 
 public class JMenuDriver extends AbstractButtonDriver<JMenu> {
 
@@ -19,19 +21,23 @@ public class JMenuDriver extends AbstractButtonDriver<JMenu> {
         has(popupVisible(), equalTo(true));
     }
 
-    public JMenuDriver select() {
-        leftClickOnComponent();
-        return this;
+    public JMenuDriver selectSubMenu(Matcher<? super JMenu> matcher) {
+        JMenuDriver menuDriver = subMenu(matcher);
+        menuDriver.click();
+        return menuDriver;
     }
 
-    @SuppressWarnings("unchecked")
     public JMenuDriver subMenu(Matcher<? super JMenu> matcher) {
-        select();
         return new JMenuDriver(this, matcher);
     }
 
-    public JMenuItemDriver subItem(Matcher<? super JMenuItem> matcher) {
-        select();
+    public JMenuItemDriver selectMenuItem(Matcher<? super JMenuItem> matcher) {
+        JMenuItemDriver itemDriver = menuItem(matcher);
+        itemDriver.click();
+        return itemDriver;
+    }
+
+    public JMenuItemDriver menuItem(Matcher<? super JMenuItem> matcher) {
         return new JMenuItemDriver(this, matcher);
     }
 
@@ -47,8 +53,11 @@ public class JMenuDriver extends AbstractButtonDriver<JMenu> {
         };
     }
 
-    @SuppressWarnings("unchecked")
-    public AbstractButtonDriver<JMenuItem> menuItem(Matcher<AbstractButton> matcher) {
-        return new AbstractButtonDriver<JMenuItem>(this, JMenuItem.class, matcher);
+    public void leftClickOn(Matcher<? super JMenuItem> matcher) {
+        JMenuItemDriver buttonDriver = menuItem(matcher);
+        prober().check(buttonDriver.component());
+        buttonDriver.isShowingOnScreen();
+        buttonDriver.performGesture(
+                createVerticalThenHorizontalMouseMoveGesture(buttonDriver.centerOfComponent()), clickMouseButton(BUTTON1));
     }
 }

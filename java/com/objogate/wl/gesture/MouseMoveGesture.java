@@ -26,21 +26,7 @@ public class MouseMoveGesture implements Gesture {
         Vector2D destination = null;
         for (double t = 0.0; t < 1.0; t += ANIMATE_STEP) {
             Point currentLocation = automaton.getPointerLocation();
-            Point trackerDestination;
-
-            try {
-                trackerDestination = tracker.target(currentLocation);
-            }
-            // todo special exception for this?
-            catch (AssertionError e) {
-                // can't find component
-                automaton.delay(50);
-                continue;
-            }
-
-            if (trackerDestination == null) {
-                throw new Defect(tracker + " returned null");
-            }
+            Point trackerDestination = getDestination(currentLocation);
 
             if (currentLocation.equals(trackerDestination)) {
                 return;
@@ -66,6 +52,15 @@ public class MouseMoveGesture implements Gesture {
         moveMouse(automaton, destination);
 
         automaton.delay(200);
+    }
+
+    private Point getDestination(Point currentLocation) {
+        try {
+            return tracker.target(currentLocation);
+        } catch (AssertionError e) {
+            // todo special exception for this?
+            throw new Defect(tracker + " returned null", e);
+        }
     }
 
     private Point clipToScreen(Point p) {

@@ -5,7 +5,7 @@ import java.awt.Component;
 import org.hamcrest.Matcher;
 import static com.objogate.wl.gesture.Gestures.BUTTON1;
 import static com.objogate.wl.gesture.Gestures.clickMouseButton;
-import com.objogate.wl.gesture.HorizontalThenVerticalMouseMoveGesture;
+import com.objogate.wl.gesture.RightAngleMouseMoveGesture;
 
 public class JMenuItemDriver extends AbstractButtonDriver<JMenuItem> {
     @SuppressWarnings("unchecked")
@@ -16,6 +16,6 @@ public class JMenuItemDriver extends AbstractButtonDriver<JMenuItem> {
     @Override
     public void leftClickOnComponent() {
         isShowingOnScreen();
-        performGesture(new HorizontalThenVerticalMouseMoveGesture(centerOfComponent()), clickMouseButton(BUTTON1));
+        performGesture(RightAngleMouseMoveGesture.createHorizontalThenVerticalMouseMoveGesture(centerOfComponent()), clickMouseButton(BUTTON1));
     }
 }

@@ -1,38 +1,32 @@
 package com.objogate.wl.driver.tests;
 
-import static com.objogate.wl.driver.tests.JMenuBarDriverTest.Type.PLAIN;
-import static com.objogate.wl.driver.tests.JMenuBarDriverTest.Type.RADIO;
-import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
-import static com.objogate.wl.matcher.ComponentMatchers.withMnemonicKey;
+import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Set;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import java.awt.BorderLayout;
-
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import com.objogate.wl.ComponentSelector;
-import com.objogate.wl.driver.AbstractButtonDriver;
 import com.objogate.wl.driver.ComponentDriver;
 import com.objogate.wl.driver.JFrameDriver;
 import com.objogate.wl.driver.JMenuBarDriver;
 import com.objogate.wl.driver.JMenuDriver;
+import static com.objogate.wl.driver.tests.JMenuBarDriverTest.Type.PLAIN;
+import static com.objogate.wl.driver.tests.JMenuBarDriverTest.Type.RADIO;
+import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
+import static com.objogate.wl.matcher.ComponentMatchers.withMnemonicKey;
 import com.objogate.wl.probe.ActionListenerProbe;
 
 public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriver> {
     private JMenuItem displayItem;
     private JMenuItem sheep;
+    private final Set<String> clicked = new HashSet<String>();
 
     enum Type {
         PLAIN, CHECK, RADIO
@@ -96,26 +90,24 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
     }
 
     @Test
-    public void canClickOnAMenuItemWithGivenText() {
-        JMenuDriver menu = driver.menu(withButtonText("File"));
-        menu.leftClickOnComponent();
-        AbstractButtonDriver<JMenuItem> buttonDriver = menu.menuItem(withButtonText("New"));
-        prober.check(buttonDriver.component());
-        buttonDriver.leftClickOnComponent();
+    public void canClickOnAMenuItemWithGivenText() throws Exception {
+        JMenuDriver menuDriver = driver.menu(withButtonText("File"));
+        menuDriver.leftClickOnComponent();
+        menuDriver.leftClickOn(withButtonText("New"));
     }
 
     @Test
-    public void canFindSubMenusAndItems() {
+    public void canFindSubMenusAndItems() throws Exception {
         ActionListenerProbe probe = new ActionListenerProbe();
         displayItem.addActionListener(probe);
 
-        driver.menu(withButtonText("File"))
-                .subMenu(withButtonText("Properties"))
-                .subItem(withButtonText("Display"))
-                .leftClickOnComponent();
+        JMenuDriver menuDriver = driver.menu(withButtonText("File"));
+        menuDriver.leftClickOnComponent();
+        menuDriver
+                .selectSubMenu(withButtonText("Properties"))
+                .selectMenuItem(withButtonText("Display"));
 
         prober.check(probe);
-
     }
 
     @Test
@@ -123,14 +115,14 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
         ActionListenerProbe probe = new ActionListenerProbe();
         sheep.addActionListener(probe);
 
-        driver.menu(withButtonText("File"))
-                .subMenu(withButtonText("Properties"))
-                .subMenu(withButtonText("System"))
-                .subItem(withButtonText("Sheep"))
-                .leftClickOnComponent();
+        JMenuDriver menuDriver = driver.menu(withButtonText("File"));
+        menuDriver.leftClickOnComponent();
+        menuDriver
+                .selectSubMenu(withButtonText("Properties"))
+                .selectSubMenu(withButtonText("System"))
+                .selectMenuItem(withButtonText("Sheep"));
 
         prober.check(probe);
-
     }
 
     private JMenu createEditMenu() {
@@ -144,7 +136,6 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
     }
 
     private JMenu createFileMenu() {
-
         JMenu menu = new JMenu("File");
         menu.setMnemonic('F');
 
@@ -177,7 +168,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
         return menu;
     }
 
-    public JMenuItem addItem(JMenu menu, Type type, String sText,
+    public JMenuItem addItem(JMenu menu, Type type, final String sText,
                              ImageIcon image, int mnemonic,
                              String sToolTip) {
         JMenuItem item;
@@ -209,6 +200,12 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
         }
 
         menu.add(item);
+
+        item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                clicked.add(sText);
+            }
+        });
 
         return item;
     }

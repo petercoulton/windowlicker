@@ -98,4 +98,8 @@ public class JFrameDriver extends ComponentDriver<JFrame> {
             }
         };
     }
+
+    public JMenuBarDriver menuBar() {
+        return new JMenuBarDriver(this);
+    }
 }

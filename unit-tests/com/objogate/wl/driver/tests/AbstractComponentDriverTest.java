@@ -1,19 +1,15 @@
 package com.objogate.wl.driver.tests;
 
-import static com.objogate.wl.driver.JFrameDriver.topLevelFrame;
-import static java.lang.Thread.sleep;
-
+import javax.swing.JFrame;
 import java.awt.Color;
 import java.awt.Component;
-
-import javax.swing.JFrame;
-
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
-
 import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.driver.ComponentDriver;
 import com.objogate.wl.driver.JFrameDriver;
+import static com.objogate.wl.driver.JFrameDriver.topLevelFrame;
 import com.objogate.wl.gesture.GesturePerformer;
 
 public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? extends Component>> {
@@ -57,8 +53,13 @@ public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? ex
         pause(10000);
     }
 
-    protected void pause(long i) throws InterruptedException {
-        sleep(i);
+    protected void pause(long sleep) throws InterruptedException {
+        TimeUnit.MILLISECONDS.sleep(sleep);
+    }
+
+    //had to add this as i just love the method name
+    protected void pauseForSecs(long sleep) throws InterruptedException {
+        TimeUnit.SECONDS.sleep(sleep);
     }
 
     protected void setColors(final Color foreground, final Color background) {
