@@ -31,7 +31,6 @@ public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? ex
         }
     }
 
-    @SuppressWarnings("unchecked")
     protected void view(Component c) {
         frame = ComponentViewer.view(c);
         frame.setTitle(getClass().getSimpleName());

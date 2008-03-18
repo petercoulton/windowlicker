@@ -22,6 +22,7 @@ class ReallyBigTable extends JTable {
     MutableTableModel tableModel = new MutableTableModel();
 
     public ReallyBigTable() {
+//        setPreferredSize(new Dimension(700, 500));
         setName(ReallyBigTable.class.getName());
         for (char c = 'a'; c < 'z'; c++) {
             tableModel.addColumn(c);

@@ -1,21 +1,18 @@
 package com.objogate.wl.driver.tests;
 
-import static com.objogate.wl.driver.JTableDriver.cell;
-import static org.hamcrest.Matchers.equalTo;
-
-import java.awt.Color;
-import java.awt.Component;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import static org.hamcrest.Matchers.equalTo;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.objogate.wl.driver.JTableDriver;
+import static com.objogate.wl.driver.JTableDriver.cell;
 import com.objogate.wl.driver.JTableHeaderDriver;
 import com.objogate.wl.driver.JTextFieldDriver;
 
@@ -24,7 +21,9 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
 
     @Before
     public void setUp() throws Exception {
-        view(new JScrollPane(table));
+        JScrollPane pane = new JScrollPane(table);
+        pane.setPreferredSize(new Dimension(800, 600));
+        view(pane);
 
         driver = new JTableDriver(gesturePerformer, table, prober);
     }
@@ -48,10 +47,24 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         driver.cellHasForegroundColor(1, "b", matchingColor(black));
     }
 
+    //todo: test other selection modes, cell highlighting, other cell editors (as well as custom components)
     @Test
     public void testCellSelection() throws Exception {
-        driver.selectCell(200, 2);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//        table.setRowSelectionAllowed(false);
+//        table.setColumnSelectionAllowed(true);
 
+        driver.selectCell(2, 3);
+        //nick - bad error message when this fails
+        driver.hasSelectedCells(cell(2, 3));
+
+        driver.selectCell(2, 4);
+        driver.hasSelectedCells(cell(2, 4));
+
+        driver.selectCell(3, 4);
+        driver.hasSelectedCells(cell(3, 4));
+
+        driver.selectCell(200, 2);
         driver.hasSelectedCells(cell(200, 2));
     }
 
@@ -84,6 +97,7 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
 
         JTextFieldDriver textFieldDriver = new JTextFieldDriver(gesturePerformer, (JTextField) editorComponent, prober);
         textFieldDriver.replaceAllText("hello");
+        textFieldDriver.typeText("\n");
 
         driver.cellRenderedWithText(0, 0, Matchers.containsString("hello"));
     }

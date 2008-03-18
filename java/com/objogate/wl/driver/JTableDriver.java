@@ -215,7 +215,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
             int[] selectedRows = component.getSelectedRows();
             int[] selectedColumns = component.getColumnModel().getSelectedColumns();
             for (Cell cell : cells) {
-                if (!arrayContains(selectedRows, cell.row) && arrayContains(selectedColumns, cell.col)) {
+                if (!(arrayContains(selectedRows, cell.row) && arrayContains(selectedColumns, cell.col))) {
                     this.unselectedCell = cell;
                     return false;
                 }

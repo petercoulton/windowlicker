@@ -110,7 +110,6 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
         selectAll();
 
         typeText(text);
-        typeText("\n");
     }
 
     public void typeText(String text) {
