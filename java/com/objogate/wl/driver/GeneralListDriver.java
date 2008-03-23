@@ -51,7 +51,7 @@ public class GeneralListDriver extends ComponentDriver<JComponent> implements Li
         getDriver().selectItem(item);
     }
 
-    public void selectItem(Matcher<Component> item) {
+    public void selectItem(Matcher<? extends Component> item) {
         getDriver().selectItem(item);
     }
 

@@ -53,7 +53,7 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
         }, Matchers.equalTo(expectedIndex));
     }
 
-    public void selectItem(Matcher<Component> matcher) {
+    public void selectItem(Matcher<? extends Component> matcher) {
         selectItem(firstItemMatching(matcher));
     }
 
@@ -66,7 +66,7 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
         performGesture(Gestures.leftClickMouse());
     }
 
-    private int firstItemMatching(final Matcher<Component> matcher) {
+    private int firstItemMatching(final Matcher<? extends Component> matcher) {
         RenderedElementFinderManipulation elementFinderManipulation = new RenderedElementFinderManipulation(matcher);
         perform("serch for element", elementFinderManipulation);
         return elementFinderManipulation.getIndex();
@@ -158,9 +158,9 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
 
     private class RenderedElementFinderManipulation implements ComponentManipulation<JList> {
         private int index;
-        private final Matcher<Component> matcher;
+        private final Matcher<? extends Component> matcher;
 
-        public RenderedElementFinderManipulation(Matcher<Component> matcher) {
+        public RenderedElementFinderManipulation(Matcher<? extends Component> matcher) {
             this.matcher = matcher;
         }
 

@@ -60,7 +60,7 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
         comboPopupDriver.selectItem(item);
     }
 
-    public void selectItem(Matcher<Component> item) {
+    public void selectItem(Matcher<? extends Component> item) {
         clickToOpenPopup();
 
         ComboPopupComponentDriver comboPopupDriver = new ComboPopupComponentDriver(gesturePerformer);

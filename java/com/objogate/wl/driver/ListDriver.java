@@ -8,7 +8,7 @@ public interface ListDriver {
 
     void selectItem(Object item);
 
-    void selectItem(Matcher<Component> item);
+    void selectItem(Matcher<? extends Component> item);
 
     void hasSelectedIndex(int index);
 }
