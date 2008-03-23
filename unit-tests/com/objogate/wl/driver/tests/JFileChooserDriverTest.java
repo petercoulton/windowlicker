@@ -11,6 +11,8 @@ import junit.framework.Assert;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import com.objogate.wl.driver.JFileChooserDriver;
@@ -19,12 +21,19 @@ import com.objogate.wl.probe.RecursiveComponentFinder;
 
 public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileChooserDriver> {
     private JFileChooser chooser;
+    private File testFolder = new File(System.getProperty("user.home"), "testfolder");
 
     @Before
     public void setUp() throws Exception {
         view(new JLabel("some label"));
         chooser = new JFileChooser();
         driver = new JFileChooserDriver(gesturePerformer, chooser);
+        testFolder.delete();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        testFolder.delete();
     }
 
     public void testPrintOutSubComponents() throws InterruptedException {
@@ -82,43 +91,37 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    public void testCanClickOnTheHomeButton() {
+    public void testCanClickOnTheHomeButton() throws InterruptedException {
         showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, null);
 
         driver.upOneFolder();
         driver.upOneFolder();
 
-        driver.currentDirectory(Matchers.not(Matchers.equalTo(System.getProperty("user.home"))));
+        pauseForSecs(10);
+
+        driver.currentDirectory(not(Matchers.equalTo(System.getProperty("user.home"))));
         driver.home();
         driver.currentDirectory(Matchers.equalTo(System.getProperty("user.home")));
     }
 
     @Test
     public void testCanCreateNewFolder() throws InterruptedException {
-        String folderName = "testfolder";
-        File fileForFolder = new File(System.getProperty("user.home"), folderName);
+        final int[] results = new int[]{-999};
+        final CountDownLatch latch = showChooserInAnotherThreadBecauseItsModal(results, null);
 
-        try {
-            final int[] results = new int[]{-999};
-            final CountDownLatch latch = showChooserInAnotherThreadBecauseItsModal(results, null);
+        driver.home();
+        driver.createNewFolder(testFolder.getName());
 
-            driver.home();
-            driver.createNewFolder(folderName);
+        latch.await(5, TimeUnit.SECONDS);
 
-            latch.await(5, TimeUnit.SECONDS);
-
-            Assert.assertTrue("Folder " + fileForFolder.getAbsolutePath() + " exists", fileForFolder.exists());
-        }
-        finally {
-            fileForFolder.delete();
-        }
+        Assert.assertTrue("Folder " + testFolder.getAbsolutePath() + " exists", testFolder.exists());
     }
 
     public void testCanSelectAFile() throws InterruptedException, IOException {
         String fileName = "testFile1234567890";
         File file = new File(System.getProperty("user.home"), fileName);
 
-       file.createNewFile();
+        file.createNewFile();
 
         try {
             final int[] results = new int[]{-999};

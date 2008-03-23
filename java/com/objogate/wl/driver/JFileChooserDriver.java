@@ -12,7 +12,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.equalTo;
-import com.objogate.exception.Defect;
+import org.hamcrest.TypeSafeMatcher;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.Probe;
 import com.objogate.wl.gesture.GesturePerformer;
@@ -55,11 +55,6 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         if (ui instanceof javax.swing.plaf.metal.MetalFileChooserUI) {
             return new MetalFileChooserDriverUI();
         } else if (ui instanceof MotifFileChooserUI) {
-            try {
-                Thread.sleep(100000);
-            } catch (InterruptedException e) {
-                throw new Defect("programmer didn't handle", e);
-            }
             throw new UnsupportedOperationException("not supported yet " + name);
         } else if (ui instanceof WindowsFileChooserUI) {
             throw new UnsupportedOperationException("not supported yet " + name);
@@ -67,6 +62,8 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
             return new GTKFileChooserDriverUI();
         } else if (ui instanceof BasicFileChooserUI) {
             throw new UnsupportedOperationException("not supported yet " + name);
+        } else if (name.equals("apple.laf.AquaFileChooserUI")) {
+            return new AquaFileChooserUIDriver();
         }
         throw new UnsupportedOperationException("not known about or supported yet " + name);
     }
@@ -248,5 +245,64 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         void ok();
 
         JTextComponentDriver<? extends JTextComponent> textBox();
+    }
+
+    private class AquaFileChooserUIDriver implements FileChooserDriverUI {
+
+        public void createNewFolder(String folderName) {
+            throw new UnsupportedOperationException("Aqua file chooser has not create folder function");
+        }
+
+        public void upOneFolder() {
+            JComboBoxDriver boxDriver = new JComboBoxDriver(JFileChooserDriver.this, JComboBox.class,
+                    new MacComboBoxModelTypeMatcher(), new ComboBoxModelMinSizeMatcher(2));
+            boxDriver.selectItem(1);
+        }
+
+        public void home() {
+            throw new UnsupportedOperationException("Aqua file chooser has no 'home' button");
+        }
+
+        public void cancel() {
+            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText("Cancel")).click();
+        }
+
+        public void ok() {
+            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText("OK")).click();
+        }
+
+        public JTextComponentDriver<? extends JTextComponent> textBox() {
+            throw new UnsupportedOperationException("Aqua file chooser has no text field");
+        }
+
+        private class MacComboBoxModelTypeMatcher extends TypeSafeMatcher<JComboBox> {
+            private static final String TYPE = "apple.laf.AquaFileChooserUI$DirectoryComboBoxModel";
+
+            public boolean matchesSafely(JComboBox jComboBox) {
+                ComboBoxModel comboBoxModel = jComboBox.getModel();
+                return comboBoxModel.getClass().getName().equals(TYPE);
+            }
+
+            public void describeTo(Description description) {
+                description.appendText("JComboBox with model of type " + TYPE);
+            }
+        }
+
+        private class ComboBoxModelMinSizeMatcher extends TypeSafeMatcher<JComboBox> {
+            private final int minSize;
+
+            public ComboBoxModelMinSizeMatcher(int minSize) {
+                this.minSize = minSize;
+            }
+
+            public boolean matchesSafely(JComboBox jComboBox) {
+                ComboBoxModel comboBoxModel = jComboBox.getModel();
+                return comboBoxModel.getSize() >= minSize;
+            }
+
+            public void describeTo(Description description) {
+                description.appendText("JComboBox with model with at least on entry");
+            }
+        }
     }
 }

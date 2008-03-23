@@ -4,7 +4,9 @@ import javax.swing.JTextField;
 import java.awt.Component;
 import java.awt.Insets;
 import java.awt.Point;
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.junit.matchers.TypeSafeMatcher;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
@@ -80,7 +82,6 @@ public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
                         int direction = selectionManipulation.selectionEnd > end ? -1 : 1;
 
                         int numberOfCharactersToMove = selectionManipulation.selectionEnd - end;
-                        System.out.println("numberOfCharactersToMove = " + numberOfCharactersToMove);
                         int amount = Math.abs(numberOfCharactersToMove) > 2 ? 5 : 1;
 
                         if (numberOfCharactersToMove != 0) {
@@ -128,6 +129,18 @@ public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
 
     public void focusWithMouse() {
         performGesture(moveMouseTo(centerOfComponent()), clickMouseButton(BUTTON1));
+    }
+
+    public void caretPositionIs(final int caretPosition) {
+        is(new TypeSafeMatcher<JTextField>() {
+            public boolean matchesSafely(JTextField item) {
+                return item.getCaretPosition() == caretPosition;
+            }
+
+            public void describeTo(Description description) {
+                description.appendText("caret position");
+            }
+        });
     }
 
     private static class ComponentInsetsManipulation implements ComponentManipulation<JTextField> {

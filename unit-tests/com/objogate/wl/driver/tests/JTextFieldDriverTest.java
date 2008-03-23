@@ -22,11 +22,15 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
     }
 
     @Test
-    public void foo() {
+    //todo really bad error message when this does wrong
+    public void assertCaretposition() {
         setText("this is a test");
-        driver.moveCaretTo(0);
-        driver.moveCaretTo(6);
 
+        driver.moveCaretTo(0);
+        driver.caretPositionIs(0);
+
+        driver.moveCaretTo(6);
+        driver.caretPositionIs(6);
     }
 
     @Test
@@ -39,7 +43,7 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
     @Test
     public void canTypeSymbolsIntoTextField() {
         setText("");
-        driver.replaceAllText("#@"); // these symbols are in different places on US and UK keyboards
+        driver.replaceAllText("#@"); // these symbols are in different places on US and UK keyboards - and so does not work on my mac (nick)
         driver.text(equalTo("#@"));
     }
 
