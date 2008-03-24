@@ -22,6 +22,8 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
 
     @Before
     public void setUp() throws Exception {
+        table.pad();
+        table.setRowHeight(table.getRowHeight() + 10);
         JScrollPane pane = new JScrollPane(table);
         pane.setPreferredSize(new Dimension(800, 600));
         view(pane);
@@ -53,23 +55,20 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         driver.cellHasForegroundColor(1, "b", matchingColor(black));
     }
 
-    //todo: test other selection modes, cell highlighting, other cell editors (as well as custom components)
-
     @Test
     public void testSingleCellSelection() throws Exception {
+        table.setRowSelectionAllowed(true);
+        table.setColumnSelectionAllowed(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//        table.setRowSelectionAllowed(false);
-//        table.setColumnSelectionAllowed(true);
 
-        driver.selectCell(2, 3);
-        //nick - bad error message when this fails
-        driver.hasSelectedCells(cell(2, 3));
+        driver.selectCell(1, 1);
+        driver.hasSelectedCells(cell(1, 1));
 
-        driver.selectCell(2, 4);
-        driver.hasSelectedCells(cell(2, 4));
+        driver.selectCell(2, 2);
+        driver.hasSelectedCells(cell(2, 2));
 
-        driver.selectCell(3, 4);
-        driver.hasSelectedCells(cell(3, 4));
+        driver.selectCell(3, 3);
+        driver.hasSelectedCells(cell(3, 3));
     }
 
     @Test
@@ -77,9 +76,9 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         table.setCellSelectionEnabled(true);
         table.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        driver.selectCells(cell(1, 1), cell(4, 4), cell(8, 8));
+        driver.selectCells(cell(1, 1), cell(3, 3), cell(6, 5));
 
-        driver.hasSelectedCells(cell(1, 1), cell(4, 4), cell(8, 8));
+        driver.hasSelectedCells(cell(1, 1), cell(3, 3), cell(6, 5));
     }
 
     @Test
@@ -160,13 +159,17 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
     public void testEditingCells() throws Exception {
         table.addJTextFieldEditorToColumn(0);
 
-        Component editorComponent = driver.editCell(0, 0);
-
-        JTextFieldDriver textFieldDriver = new JTextFieldDriver(gesturePerformer, (JTextField) editorComponent, prober);
-        textFieldDriver.replaceAllText("hello");
-        textFieldDriver.typeText("\n");
-
+        enterText(driver.editCell(0, 0), "hello");
         driver.cellRenderedWithText(0, 0, Matchers.containsString("hello"));
+
+        enterText(driver.editCell(2, 2), "world!");
+        driver.cellRenderedWithText(2, 2, Matchers.containsString("world!"));
+    }
+
+    private void enterText(Component editorComponent, String text) {
+        JTextFieldDriver textFieldDriver = new JTextFieldDriver(gesturePerformer, (JTextField) editorComponent, prober);
+        textFieldDriver.replaceAllText(text);
+        textFieldDriver.typeText("\n");
     }
 
     private void moveColumn(String columnIdentifier, int movement) {

@@ -10,14 +10,10 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import com.objogate.exception.Defect;
-import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentSelector;
-import com.objogate.wl.Prober;
-import com.objogate.wl.Query;
+import com.objogate.wl.*;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
-import static com.objogate.wl.gesture.Gestures.moveMouseTo;
-import static com.objogate.wl.gesture.Gestures.whileHoldingMouseButton;
+import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.gesture.Tracker;
 
 public class JTableDriver extends ComponentDriver<JTable> {
@@ -58,22 +54,23 @@ public class JTableDriver extends ComponentDriver<JTable> {
         return false;
     }
 
-    public void selectCell(Cell cell) {
-        selectCell(cell.row, cell.col);
-    }
-
     public void selectCells(Cell... cells) {
         int keyCode = multiSelectKey();
-        performGesture(Gestures.pressKey(keyCode));
-        for (Cell cell : cells) {
-            selectCell(cell);
+
+        Gesture[] gestures = new Gesture[cells.length];
+        for (int i = 0; i < cells.length; i++) {
+           gestures[i] = sequence(
+                   moveMouseTo(pointIn(cells[i])),
+                   leftClickMouse()
+           );
         }
-        performGesture(Gestures.releaseKey(keyCode));
+
+        performGesture(whileHoldingKey(keyCode,
+                sequence(gestures)));
     }
 
     public void selectCell(final int row, final int col) {
-        mouseOverCell(row, col);
-        performGesture(Gestures.leftClickMouse());
+        selectCells(cell(row, col));
     }
 
     public void selectCell(final Matcher<? extends JComponent> matcher) {
@@ -82,11 +79,17 @@ public class JTableDriver extends ComponentDriver<JTable> {
         if (cell == null)
             throw new Defect("Cannot find cell");
 
-        selectCell(cell);
+        Cell[] cells = new Cell[]{cell};
+        Gesture[] gestures = new Gesture[cells.length * 2];
+        for (int i = 0; i < gestures.length; i++) {
+           gestures[i] = moveMouseTo(pointIn(cells[i]));
+           gestures[i+1] = leftClickMouse();
+        }
+        sequence(gestures);
     }
 
     public void dragMouseOver(Cell start, Cell end) {
-        scrollCellToVisible(start);//todo (nick): this should be a gesture
+        scrollCellToVisible(start);
 
         performGesture(
                 moveMouseTo(pointIn(start)),
@@ -176,6 +179,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
         scrollCellToVisible(cell.row, cell.col);
     }
 
+    //todo (nick): this should be a gesture
     public void scrollCellToVisible(final int row, final int col) {
         perform("table scrolling", new ComponentManipulation<JTable>() {
             public void manipulate(JTable table) {

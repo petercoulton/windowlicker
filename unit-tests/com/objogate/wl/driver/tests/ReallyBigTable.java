@@ -1,9 +1,8 @@
 package com.objogate.wl.driver.tests;
 
-import javax.swing.Action;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -14,15 +13,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 class ReallyBigTable extends JTable {
     MutableTableModel tableModel = new MutableTableModel();
 
     public ReallyBigTable() {
-//        setPreferredSize(new Dimension(700, 500));
         setName(ReallyBigTable.class.getName());
         for (char c = 'a'; c < 'z'; c++) {
             tableModel.addColumn(c);
@@ -38,16 +34,34 @@ class ReallyBigTable extends JTable {
         getTableHeader().addMouseListener(new WorkaroundMouseListener());
     }
 
-    public void stripe(final Color evenRowBackgroundColor, final Color oddRowBackgroundColor, Color textColor) {
+    private interface TableColumnVisitor {
+        void visit(TableColumn column, TableCellRenderer cellRenderer);
+    }
+
+    public void stripe(final Color evenRowBackgroundColor, final Color oddRowBackgroundColor, final Color textColor) {
+        foreachTableColumn(new TableColumnVisitor() {
+            public void visit(TableColumn column, TableCellRenderer cellRenderer) {
+                column.setCellRenderer(stripe(cellRenderer, oddRowBackgroundColor, evenRowBackgroundColor, textColor));
+            }
+        });
+    }
+
+    public void pad() {
+        foreachTableColumn(new TableColumnVisitor() {
+            public void visit(TableColumn column, TableCellRenderer cellRenderer) {
+                column.setCellRenderer(pad(cellRenderer));
+            }
+        });
+    }
+
+    private void foreachTableColumn(TableColumnVisitor tableColumnVisitor) {
         for (int i = 0; i < getColumnCount(); i++) {
             TableColumn tableColumn = getColumnModel().getColumn(i);
             TableCellRenderer cellRenderer = tableColumn.getCellRenderer();
             if (cellRenderer == null) {
                 cellRenderer = new DefaultTableCellRenderer();
             }
-
-            TableCellRenderer striped = stripe(cellRenderer, oddRowBackgroundColor, evenRowBackgroundColor, textColor);
-            tableColumn.setCellRenderer(striped);
+            tableColumnVisitor.visit(tableColumn, cellRenderer);
         }
     }
 
@@ -71,14 +85,25 @@ class ReallyBigTable extends JTable {
 
     }
 
+    private TableCellRenderer pad(final TableCellRenderer underlyingRenderer) {
+        return new TableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable jTable, Object object, boolean checked, boolean isSelected, int row, int col) {
+                Component compnent = underlyingRenderer.getTableCellRendererComponent(jTable, object, checked, checked, row, row);
+                if (compnent instanceof JLabel) {
+                    JLabel jLabel = (JLabel) compnent;
+                    jLabel.setBorder(new CompoundBorder(jLabel.getBorder(), new EmptyBorder(0, 8, 0, 8)));
+                }
+                return compnent;
+            }
+        };
+
+    }
 
     public void addJTextFieldEditorToColumn(int col) {
-        tableModel.addEditableColumn(col);
         getColumnModel().getColumn(col).setCellEditor(new DefaultCellEditor(new JTextField()));
     }
 
     private static class MutableTableModel extends DefaultTableModel {
-        Set<Integer> editableColumns = new HashSet<Integer>();
         Map<String, Object> data = new HashMap<String, Object>();
 
         @Override
@@ -89,16 +114,12 @@ class ReallyBigTable extends JTable {
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            return editableColumns.contains(col);
+            return true;
         }
 
         @Override
         public int getRowCount() {
             return 10000;
-        }
-
-        public void addEditableColumn(int col) {
-            this.editableColumns.add(col);
         }
 
         @Override
