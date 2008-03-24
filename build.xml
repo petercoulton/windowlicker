@@ -82,7 +82,7 @@
     <target name="-unit-test" depends="compile" description="Compile code and run all unit testcases">
         <mkdir dir="${test.output.dir}"/>
 
-        <junit printsummary="yes" failureproperty="test.failure" fork="true" forkmode="perBatch">
+        <junit printsummary="yes" errorproperty="test.failure" failureproperty="test.failure">
             <classpath refid="unit-test.classpath"/>
             <jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}"/>
             <formatter type="xml"/>
