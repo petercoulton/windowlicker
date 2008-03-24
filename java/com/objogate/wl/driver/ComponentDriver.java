@@ -160,7 +160,7 @@ public abstract class ComponentDriver<T extends Component> {
      * @param description  A description of the manipulation, reported if the component selector fails.
      * @param manipulation The manipulation to perform
      */
-    public void perform(String description, ComponentManipulation<? super T>... manipulation) {
+    public void perform(String description, ComponentManipulation<? super T> manipulation) {
         check(new ComponentManipulatorProbe<T>(selector, manipulation));
     }
 
