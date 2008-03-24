@@ -307,7 +307,9 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
             textDriver.typeText(folderName);
 
             //hack (nick): can't get hold of the 'Create' button!  so use the keyboard to navigate to it 
-            textDriver.typeText("\t\t ");
+            textDriver.typeText("\t");//move focus to 'Cancel' button
+            textDriver.typeText("\t");//move focus to 'Create' button
+            textDriver.typeText(" ");//select 'Create' button
         }
 
         public void upOneFolder() {
