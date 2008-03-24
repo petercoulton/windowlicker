@@ -13,7 +13,7 @@ $ shift 4
 - MINUS
 _ shift MINUS
 = EQUALS
-+ shift PLUS
++ shift EQUALS
 [ OPEN_BRACKET
 { shift OPEN_BRACKET
 ] CLOSE_BRACKET
@@ -30,3 +30,4 @@ _ shift MINUS
 > shift PERIOD
 / SLASH
 ? shift SLASH
+# alt 3

@@ -20,10 +20,18 @@ import static com.objogate.wl.gesture.Gestures.withModifierMask;
  * <p/>
  * More information about keyboard layouts is available at
  * <a href="http://en.wikipedia.org/wiki/Keyboard_layout">http://en.wikipedia.org/wiki/Keyboard_layout</a>.
+ *
+ * @see com.objogate.wl.SystemProperties
  */
 public class KeyboardLayout implements SystemProperties {
     private final Map<Character, KeyStroke> keyStrokes = new HashMap<Character, KeyStroke>();
     private final String name;
+
+    static {
+        if(System.getProperty(KEYBOARD_LAYOUT) == null && System.getProperty("os.name").equals("Mac OS X")) {
+            System.setProperty(KEYBOARD_LAYOUT, "US");
+        }
+    }
 
     private KeyboardLayout(String name, URL resource) throws IOException {
         this.name = name;

@@ -6,8 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import com.objogate.wl.driver.JTextFieldDriver;
 import com.objogate.wl.driver.tests.AbstractJTextComponentDriverTest;
-import com.objogate.wl.driver.tests.Platform;
-import com.objogate.wl.driver.tests.Problematic;
 
 public class TypeTextGestureTest extends AbstractJTextComponentDriverTest<JTextFieldDriver> {
     @Before
@@ -41,9 +39,6 @@ public class TypeTextGestureTest extends AbstractJTextComponentDriverTest<JTextF
     }
 
     @Test
-    @Problematic(platform = Platform.Mac, why = "see below")//easier to show in a comment to avoid escaping
-    //text was       '!@$^&*()-_=+[{]};:'\",<.>/`\'
-    //text should be '!\"$^&*()-_=+[{]};:'@#~,<.>/`\'
     public void canTypePunctuationAndSymbols() {
         assertCanType("!\"$^&*()-_=+[{]};:'@#~,<.>/`\\");
     }
