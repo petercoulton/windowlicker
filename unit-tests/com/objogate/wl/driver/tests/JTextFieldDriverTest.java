@@ -41,6 +41,9 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
     }
 
     @Test
+    @Problematic(platform = Platform.Mac, why = "see below")//easier to show in comments
+    //text was just '"', not '#@'
+    //also the error message is incorrect, it reads text was "\"" but there is no backslash in the GUI
     public void canTypeSymbolsIntoTextField() {
         setText("");
         driver.replaceAllText("#@"); // these symbols are in different places on US and UK keyboards - and so does not work on my mac (nick)

@@ -30,18 +30,6 @@ public class JListDriverTest extends AbstractComponentDriverTest<JListDriver> {
     }
 
     @Test
-    @Problematic(why="fails randomly on gnome", platform = Platform.Linux)
-    public void testSelectingItemsByObject() {
-        driver.selectItem(list.getModel().getElementAt(2));
-
-        driver.hasSelectedIndex(2);
-
-        driver.selectItem(list.getModel().getElementAt(20));
-
-        driver.hasSelectedIndex(20);
-    }
-
-    @Test
     public void testSelectingItemByRenderedValue() {
         int lastIndex = list.getModel().getSize() - 1;
         final String name = ((Font) list.getModel().getElementAt(lastIndex)).getName();

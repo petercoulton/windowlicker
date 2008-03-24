@@ -4,8 +4,10 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicFileChooserUI;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.HeadlessException;
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 import com.sun.java.swing.plaf.motif.MotifFileChooserUI;
 import com.sun.java.swing.plaf.windows.WindowsFileChooserUI;
 import org.hamcrest.Description;
@@ -16,9 +18,11 @@ import org.hamcrest.TypeSafeMatcher;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.Probe;
 import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.matcher.ComponentMatchers;
 import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
 import static com.objogate.wl.matcher.ComponentMatchers.withFocus;
+import com.objogate.wl.matcher.JLabelTextMatcher;
 import com.objogate.wl.probe.ComponentIdentity;
 import com.objogate.wl.probe.ComponentManipulatorProbe;
 import com.objogate.wl.probe.NthComponentFinder;
@@ -72,8 +76,8 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         chooserUI().cancel();
     }
 
-    public void ok() {
-        chooserUI().ok();
+    public void approve() {
+        chooserUI().approve();
     }
 
 
@@ -101,8 +105,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
     }
 
     public void selectFile(String fileName) {
-        JLabelDriver fileEntry = new JLabelDriver(this, the(JLabel.class, ComponentMatchers.withLabelText(equalTo(fileName))));
-        fileEntry.leftClickOnComponent();
+        chooserUI().selectFile(fileName);
     }
 
     //TODO: make the descriptions recursive
@@ -139,6 +142,12 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
     }
 
     private class GTKFileChooserDriverUI implements FileChooserDriverUI {
+
+        public void selectFile(String fileName) {
+            JLabelDriver fileEntry = new JLabelDriver(JFileChooserDriver.this, the(JLabel.class, ComponentMatchers.withLabelText(equalTo(fileName))));
+            fileEntry.leftClickOnComponent();
+        }
+
         public void createNewFolder(String folderName) {
             AbstractButtonDriver<JButton> newFolderButton = new AbstractButtonDriver<JButton>(JFileChooserDriver.this, the(JButton.class, ComponentDriver.named("GTKFileChooser.newFolderButton")));
             newFolderButton.click();
@@ -155,14 +164,18 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
             JListDriver directoryList = new JListDriver(JFileChooserDriver.this, JList.class, ComponentDriver.named("GTKFileChooser.directoryList"));
             CurrentDirectoryManipulator directoryManipulator = new CurrentDirectoryManipulator();
             perform("get current directory", directoryManipulator);
-            File currentDirectory = directoryManipulator.getCurrentDirectory();
-            directoryList.selectItem(new File(currentDirectory, ".."));
+
+//            File currentDirectory = directoryManipulator.getCurrentDirectory();
+//            directoryList.selectItem(new File(currentDirectory, ".."));
+
+            //todo (nick): i changed this but was unable to test it - sorry if i broke it!
+            directoryList.selectItem(new JLabelTextMatcher(equalTo("..")));
         }
 
         public void home() {
             textBox().selectAll();
             textBox().typeText(System.getProperty("user.home"));
-            ok();
+            approve();
         }
 
         @SuppressWarnings("unchecked")
@@ -171,7 +184,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         }
 
         @SuppressWarnings("unchecked")
-        public void ok() {
+        public void approve() {
             new JButtonDriver(JFileChooserDriver.this, JButton.class, ComponentDriver.named("SynthFileChooser.approveButton")).click();
         }
 
@@ -195,17 +208,25 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
     private class MetalFileChooserDriverUI implements FileChooserDriverUI {
 
-        @SuppressWarnings("unchecked")
+        public void selectFile(String fileName) {
+            JLabelDriver fileEntry = new JLabelDriver(JFileChooserDriver.this, the(JLabel.class, ComponentMatchers.withLabelText(equalTo(fileName))));
+            fileEntry.leftClickOnComponent();
+        }
+
         public void cancel() {
             new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText("Cancel")).click();
         }
 
-        @SuppressWarnings("unchecked")
-        public void ok() {
-            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText("Open")).click();
+        public void approve() {
+            final String[] approveButtonText = new String[1];
+            perform("finding the approve button text", new ComponentManipulation<JFileChooser>() {
+                public void manipulate(JFileChooser component) {
+                    approveButtonText[0] = component.getApproveButtonText();
+                }
+            });
+            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText(approveButtonText[0])).click();
         }
 
-        @SuppressWarnings("unchecked")
         public JTextFieldDriver textBox() {
             // only one textfield in this laf...
             return new JTextFieldDriver(JFileChooserDriver.this, JTextField.class, Matchers.anything());
@@ -231,6 +252,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
             NthComponentFinder<JButton> finder = new NthComponentFinder<JButton>(new RecursiveComponentFinder<JButton>(JButton.class, Matchers.anything(), component()), toChoose);
             return new AbstractButtonDriver<JButton>(JFileChooserDriver.this, finder);
         }
+
     }
 
     private interface FileChooserDriverUI {
@@ -242,15 +264,48 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
         void cancel();
 
-        void ok();
+        void approve();
 
         JTextComponentDriver<? extends JTextComponent> textBox();
+
+        void selectFile(String fileName);
     }
 
-    private class AquaFileChooserUIDriver implements FileChooserDriverUI {
+    private class AquaFileChooserUIDriver extends MetalFileChooserDriverUI {
+
+        public void selectFile(String fileName) {
+            JTableDriver fileEntry = new JTableDriver(JFileChooserDriver.this, JTable.class);
+            fileEntry.selectCell(new JLabelTextMatcher(Matchers.equalTo(fileName)));
+
+            //there seems to be a bug in the chooser, the first selection is always lost so we reselect it
+            try {
+                TimeUnit.MILLISECONDS.sleep(Gestures.MIN_TIME_TO_WAIT_TO_AVOID_DOUBLE_CLICK);
+            } catch (InterruptedException e) {
+                return;
+            }
+            fileEntry.selectCell(new JLabelTextMatcher(Matchers.equalTo(fileName)));
+        }
 
         public void createNewFolder(String folderName) {
-            throw new UnsupportedOperationException("Aqua file chooser has not create folder function");
+            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText("New Folder")).click();
+            new JTextFieldDriver(JFileChooserDriver.this, JTextField.class, new TypeSafeMatcher<JTextField>() {
+                public boolean matchesSafely(JTextField jTextField) {
+                    Container container = jTextField.getParent();
+                    Component component = container.getComponent(0);
+                    if (component instanceof JLabel) {
+                        JLabel jLabel = (JLabel) component;
+                        return jLabel.getText().equals("File:");
+                    }
+
+                    return false;
+                }
+
+                public void describeTo(Description description) {
+                    description.appendText("JTextField with JLabel sibling containing text 'File'");
+                }
+            }).typeText(folderName);
+
+            throw new UnsupportedOperationException("Looks like we can't do this in a sensible way without using some specific mac classes");
         }
 
         public void upOneFolder() {
@@ -261,18 +316,6 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
         public void home() {
             throw new UnsupportedOperationException("Aqua file chooser has no 'home' button");
-        }
-
-        public void cancel() {
-            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText("Cancel")).click();
-        }
-
-        public void ok() {
-            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText("OK")).click();
-        }
-
-        public JTextComponentDriver<? extends JTextComponent> textBox() {
-            throw new UnsupportedOperationException("Aqua file chooser has no text field");
         }
 
         private class MacComboBoxModelTypeMatcher extends TypeSafeMatcher<JComboBox> {

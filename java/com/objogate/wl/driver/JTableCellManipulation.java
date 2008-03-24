@@ -26,10 +26,10 @@ public class JTableCellManipulation implements ComponentManipulation<JTable> {
 
     public void manipulate(JTable table) {
         if (columnIdentifier != null) {
-            cell = cell(table, row, columnIdentifier);
+            cell = render(table, row, columnIdentifier);
             editorComponent = editor(table, row, columnIdentifier);
         } else {
-            cell = cell(table, row, col);
+            cell = render(table, row, col);
             editorComponent = editor(table, row, col);
         }
     }
@@ -44,9 +44,9 @@ public class JTableCellManipulation implements ComponentManipulation<JTable> {
         return tableCellEditor.getTableCellEditorComponent(table, table.getValueAt(editorRow, editorCol), false, editorRow, editorCol);
     }
 
-    public static Component cell(JTable table, int row, Object columIdentifier) {
+    public static Component render(JTable table, int row, Object columIdentifier) {
         int viewIndex = viewIndex(table, columIdentifier);
-        return cell(table, row, viewIndex);
+        return render(table, row, viewIndex);
     }
 
     private static int viewIndex(JTable table, Object columIdentifier) {
@@ -54,7 +54,7 @@ public class JTableCellManipulation implements ComponentManipulation<JTable> {
         return table.convertColumnIndexToView(modelIndex);
     }
 
-    public static Component cell(JTable table, int row, int col) {
+    public static Component render(JTable table, int row, int col) {
         TableCellRenderer cellRenderer = table.getCellRenderer(row, col);
         Object valueToRender = table.getValueAt(row, col);
         boolean isSelected = JTableDriver.arrayContains(table.getSelectedRows(), row);

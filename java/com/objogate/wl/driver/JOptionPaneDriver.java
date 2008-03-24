@@ -7,10 +7,12 @@ import javax.swing.JTextField;
 import java.awt.Component;
 import org.hamcrest.Matcher;
 import static org.hamcrest.Matchers.anyOf;
+import org.hamcrest.core.IsEqual;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
 import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
+import com.objogate.wl.matcher.JLabelTextMatcher;
 
 /**
  * Driver for a JOptionPane
@@ -62,10 +64,9 @@ public class JOptionPaneDriver extends ComponentDriver<JOptionPane> {
         textField.typeText(text);
     }
 
-    @SuppressWarnings("unchecked")
-    public void selectValue(Object value) {
+    public void selectValue(String value) {
         GeneralListDriver driver = new GeneralListDriver(this, JComponent.class, anyOf(ComponentDriver.named("OptionPane.comboBox"), ComponentDriver.named("OptionPane.list")));
-        driver.selectItem(value);
+        driver.selectItem(new JLabelTextMatcher(new IsEqual<String>(value)));
         clickOK();
     }
 }

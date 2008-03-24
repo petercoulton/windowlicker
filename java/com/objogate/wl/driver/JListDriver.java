@@ -57,10 +57,6 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
         selectItem(firstItemMatching(matcher));
     }
 
-    public void selectItem(Object o) {
-        selectItem(indexOf(o));
-    }
-
     public void selectItem(int index) {
         mouseOverCell(index);
         performGesture(Gestures.leftClickMouse());

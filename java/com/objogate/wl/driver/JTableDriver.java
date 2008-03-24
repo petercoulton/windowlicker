@@ -1,5 +1,6 @@
 package com.objogate.wl.driver;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import java.awt.Color;
@@ -72,6 +73,31 @@ public class JTableDriver extends ComponentDriver<JTable> {
         performGesture(Gestures.leftClickMouse());
     }
 
+    // todo (nick): this is wrong but can't figure out another way - need to keep looking for a cell until its found
+    public void selectCell(final Matcher<? extends JComponent> matcher) {
+        final Cell[] cell = new Cell[1];
+        perform("finding cell", new ComponentManipulation<JTable>() {
+            public void manipulate(JTable component) {
+                int rowCount = component.getRowCount();
+                int columnCount = component.getColumnCount();
+
+                for(int row = 0; row < rowCount; row++) {
+                    for(int col = 0; col < columnCount; col++) {
+                        Component renderedCell = JTableCellManipulation.render(component, row, col);
+                        if(matcher.matches(renderedCell)) {
+                            cell[0] = new Cell(row, col);
+                        }
+                    }
+                }
+            }
+        });
+
+        if(cell[0] == null)
+            throw new Defect("Cannot find cell");
+
+        selectCell(cell[0]);
+    }
+
     public Component editCell(int row, int col) {
         mouseOverCell(row, col);
         performGesture(Gestures.doubleClickMouse());
@@ -129,7 +155,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
     public void cellHasBackgroundColor(final int row, final Object columnIdentifier, Matcher<Color> backgroundColor) {
         has(new Query<JTable, Color>() {
             public Color query(JTable component) {
-                return JTableCellManipulation.cell(component, row, columnIdentifier).getBackground();
+                return JTableCellManipulation.render(component, row, columnIdentifier).getBackground();
             }
 
             public void describeTo(Description description) {
@@ -141,7 +167,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
     public void cellHasBackgroundColor(final int row, final int col, Matcher<Color> backgroundColor) {
         has(new Query<JTable, Color>() {
             public Color query(JTable component) {
-                return JTableCellManipulation.cell(component, row, col).getBackground();
+                return JTableCellManipulation.render(component, row, col).getBackground();
             }
 
             public void describeTo(Description description) {
@@ -153,7 +179,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
     public void cellHasForegroundColor(final int row, final Object columnIdentifier, Matcher<Color> foregroundColor) {
         has(new Query<JTable, Color>() {
             public Color query(JTable component) {
-                Component rendered = JTableCellManipulation.cell(component, row, columnIdentifier);
+                Component rendered = JTableCellManipulation.render(component, row, columnIdentifier);
                 return rendered.getForeground();
             }
 
@@ -166,7 +192,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
     public void cellHasForegroundColor(final int row, final int col, Matcher<Color> foregroundColor) {
         has(new Query<JTable, Color>() {
             public Color query(JTable component) {
-                return JTableCellManipulation.cell(component, row, col).getForeground();
+                return JTableCellManipulation.render(component, row, col).getForeground();
             }
 
             public void describeTo(Description description) {
@@ -274,8 +300,8 @@ public class JTableDriver extends ComponentDriver<JTable> {
 
         public String query(JTable component) {
             Component cell = columnIdentifier == null ?
-                    JTableCellManipulation.cell(component, row, col) :
-                    JTableCellManipulation.cell(component, row, columnIdentifier);
+                    JTableCellManipulation.render(component, row, col) :
+                    JTableCellManipulation.render(component, row, columnIdentifier);
 
             if (cell instanceof JLabel) {
                 JLabel label = (JLabel) cell;

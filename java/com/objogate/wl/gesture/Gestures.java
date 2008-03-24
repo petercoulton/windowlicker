@@ -21,12 +21,16 @@ public class Gestures {
     public static int ALT = InputEvent.ALT_MASK;
     public static int ALT_GRAPH = InputEvent.ALT_GRAPH_MASK;
     public static int META = InputEvent.META_MASK;
+    private static final int MID_KEY_PRESS_DELAY = 50;
+    private static final int MID_MOUSE_CLICK_DELAY = 100;
+    private static final int MID_DOUBLE_CLICK_DELAY = 30;
+    public static final int MIN_TIME_TO_WAIT_TO_AVOID_DOUBLE_CLICK = 1000;//does it really matter that this is very long? probably not.
 
     public static Gesture sequence(Gesture... gestures) {
         return new GestureSequence(asList(gestures));
     }
 
-    public static Gesture wait(int waitMs) {
+    public static Gesture pause(int waitMs) {
         return new WaitGesture(waitMs);
     }
 
@@ -74,7 +78,7 @@ public class Gestures {
     }
 
     public static Gesture clickMouseButton(int buttons) {
-        return sequence(pressMouse(buttons), wait(100), releaseMouse(buttons));
+        return sequence(pressMouse(buttons), pause(MID_MOUSE_CLICK_DELAY), releaseMouse(buttons));
     }
 
     public static Gesture leftClickMouse() {
@@ -88,7 +92,7 @@ public class Gestures {
     public static Gesture doubleClickMouse() {
         Gesture leftClick = clickMouseButton(BUTTON1);
 
-        return sequence(leftClick, wait(30), leftClick);
+        return sequence(leftClick, pause(MID_DOUBLE_CLICK_DELAY), leftClick);
     }
 
     public static Gesture moveMouseTo(Tracker tracker) {
@@ -108,7 +112,7 @@ public class Gestures {
     }
 
     public static Gesture typeKey(int keyCode) {
-        return sequence(pressKey(keyCode), wait(50), releaseKey(keyCode));
+        return sequence(pressKey(keyCode), pause(MID_KEY_PRESS_DELAY), releaseKey(keyCode));
     }
 
     public static Gesture type(String text) {
@@ -120,7 +124,7 @@ public class Gestures {
     }
 
     public static Gesture whileHoldingMouseButton(int buttons, Gesture gesture) {
-        return sequence(pressMouse(buttons), gesture, wait(100), releaseMouse(buttons));
+        return sequence(pressMouse(buttons), gesture, pause(MID_MOUSE_CLICK_DELAY), releaseMouse(buttons));
     }
 
     public static Gesture withModifierKey(int modifierKeyCode, Gesture modifiedGesture) {

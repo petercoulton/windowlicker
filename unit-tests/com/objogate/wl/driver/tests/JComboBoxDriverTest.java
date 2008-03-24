@@ -33,17 +33,6 @@ public class JComboBoxDriverTest extends AbstractComponentDriverTest<JComboBoxDr
     }
 
     @Test
-    public void testSelectingItemsByObject() {
-        driver.selectItem(data.get(0));
-
-        driver.hasSelectedIndex(0);
-
-        driver.selectItem(data.get(lastItemIndex));
-
-        driver.hasSelectedIndex(lastItemIndex);
-    }
-
-    @Test
     public void testSelectingItemByMatchingRenderedValue() {
         comboBox.setRenderer(applyFontRenderer(comboBox.getRenderer()));
 

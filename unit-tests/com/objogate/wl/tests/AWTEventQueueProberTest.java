@@ -1,11 +1,10 @@
 package com.objogate.wl.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.hamcrest.Description;
+import org.hamcrest.MatcherAssert;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-
 import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.Probe;
 
@@ -83,7 +82,7 @@ public class AWTEventQueueProberTest {
             });
         }
         catch (AssertionError e) {
-            assertEquals("context: error message", e.getMessage());
+            MatcherAssert.assertThat(e.getMessage(), containsString("error message"));
         }
     }
 }
