@@ -21,9 +21,9 @@ public class JListDriverTest extends AbstractComponentDriverTest<JListDriver> {
 
     @Test
     public void testSelectingItemsByIndex() {
-        driver.selectItem(25);
+        driver.selectItem(20);
 
-        driver.hasSelectedIndex(25);
+        driver.hasSelectedIndex(20);
 
         driver.selectItem(3);
 

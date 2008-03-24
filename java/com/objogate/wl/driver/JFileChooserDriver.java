@@ -57,13 +57,13 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         String name = ui.getClass().getName();
 
         if (ui instanceof javax.swing.plaf.metal.MetalFileChooserUI) {
-            return new MetalFileChooserDriverUI();
+            return new MetalFileChooserUIDriver();
         } else if (ui instanceof MotifFileChooserUI) {
             throw new UnsupportedOperationException("not supported yet " + name);
         } else if (ui instanceof WindowsFileChooserUI) {
-            throw new UnsupportedOperationException("not supported yet " + name);
+            return new WindowsFileChooserUIDriver();
         } else if (ui.getClass().getName().equals("com.sun.java.swing.plaf.gtk.GTKFileChooserUI")) {
-            return new GTKFileChooserDriverUI();
+            return new GTKFileChooserUIDriver();
         } else if (ui instanceof BasicFileChooserUI) {
             throw new UnsupportedOperationException("not supported yet " + name);
         } else if (name.equals("apple.laf.AquaFileChooserUI")) {
@@ -94,6 +94,10 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
     public void desktop() {
         chooserUI().desktop();
+    }
+
+    public void documents() {
+        chooserUI().documents();
     }
 
     public void home() {
@@ -145,7 +149,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         return rootFrameFor(parentComponent.getParent());
     }
 
-     private interface FileChooserDriverUI {
+    private interface FileChooserDriverUI {
         void createNewFolder(String folderName);
 
         void upOneFolder();
@@ -153,6 +157,8 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         void home();
 
         void desktop();
+
+        void documents();
 
         void cancel();
 
@@ -163,7 +169,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         void selectFile(String fileName);
     }
 
-    private class GTKFileChooserDriverUI implements FileChooserDriverUI {
+    private class GTKFileChooserUIDriver implements FileChooserDriverUI {
 
         public void selectFile(String fileName) {
             JLabelDriver fileEntry = new JLabelDriver(JFileChooserDriver.this, the(JLabel.class, ComponentMatchers.withLabelText(equalTo(fileName))));
@@ -196,7 +202,11 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
 
         public void desktop() {
-            throw new UnsupportedOperationException("There is no desktop button in the GTK L&F");
+            throw new UnsupportedOperationException("There is no 'Desktop' button in the GTK L&F");
+        }
+
+        public void documents() {
+            throw new UnsupportedOperationException("There is no 'My Documents' button in the GTK L&F");
         }
 
         public void home() {
@@ -233,7 +243,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         }
     }
 
-    private class MetalFileChooserDriverUI implements FileChooserDriverUI {
+    private class MetalFileChooserUIDriver implements FileChooserDriverUI {
 
         public void selectFile(String fileName) {
             JListDriver jListDriver = new JListDriver(JFileChooserDriver.this, JList.class);
@@ -261,7 +271,11 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         }
 
         public void home() {
-            throw new UnsupportedOperationException("There is no home button in the Metal L&F");
+            throw new UnsupportedOperationException("There is no 'Home' button in the Metal L&F");
+        }
+
+        public void documents() {
+            throw new UnsupportedOperationException("There is no 'My Documents' button in the Metal L&F");
         }
 
         public void desktop() {
@@ -287,7 +301,46 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
     }
 
-    private class AquaFileChooserUIDriver extends MetalFileChooserDriverUI {
+    private class WindowsFileChooserUIDriver extends MetalFileChooserUIDriver {
+        private static final String DESKTOP_BUTTON_TEXT = "Desktop";
+        private static final String HOME_BUTTON_TEXT = "My Documents";
+
+        public void desktop() {
+            new AbstractButtonDriver<JToggleButton>(JFileChooserDriver.this, JToggleButton.class,
+                    new HtmlToggleButtonMatcher(DESKTOP_BUTTON_TEXT)).click();
+        }
+
+        public void home() {
+            throw new UnsupportedOperationException("There is no 'Home' button in the Windows L&F");            
+        }
+
+        public void documents() {
+            new AbstractButtonDriver<JToggleButton>(JFileChooserDriver.this, JToggleButton.class,
+                    new HtmlToggleButtonMatcher(HOME_BUTTON_TEXT)).click();
+        }
+
+        private class HtmlToggleButtonMatcher extends TypeSafeMatcher<JToggleButton> {
+            private String desktopButtonText;
+
+            public HtmlToggleButtonMatcher(String desktopButtonText) {
+                this.desktopButtonText = desktopButtonText;
+            }
+
+            public boolean matchesSafely(JToggleButton jButton) {
+                return jButton.getText().equals(wrapInWindowsHtml(desktopButtonText));
+            }
+
+            public void describeTo(Description description) {
+                description.appendText("Button with text '" + wrapInWindowsHtml(desktopButtonText) + "'");
+            }
+
+            private String wrapInWindowsHtml(String buttonText) {
+                return "<html><center>" + buttonText + "</center></html>";
+            }
+        }
+    }
+
+    private class AquaFileChooserUIDriver extends MetalFileChooserUIDriver {
 
         public void selectFile(String fileName) {
             JTableDriver fileEntry = new JTableDriver(JFileChooserDriver.this, JTable.class);
@@ -300,10 +353,6 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
                 return;
             }
             fileEntry.selectCell(new JLabelTextMatcher(Matchers.equalTo(fileName)));
-        }
-
-        public void desktop() {
-            throw new UnsupportedOperationException("todo");
         }
 
         public void createNewFolder(String folderName) {
@@ -339,7 +388,11 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         }
 
         public void home() {
-            throw new UnsupportedOperationException("Aqua file chooser has no 'home' button");
+            throw new UnsupportedOperationException("There is no 'Home' button in the Aqua L&F");
+        }
+
+        public void desktop() {
+            throw new UnsupportedOperationException("There is no 'Desktop' button in the Aqua L&F");
         }
 
         private class MacComboBoxModelTypeMatcher extends TypeSafeMatcher<JComboBox> {

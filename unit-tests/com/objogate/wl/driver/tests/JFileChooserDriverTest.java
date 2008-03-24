@@ -24,7 +24,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
 
     @Before
     public void setUp() throws Exception {
-        view(new JLabel(""));
+        view(new JLabel(getClass().getName()));
         File dir = testFile.getParentFile();
         delete(dir);
         dir.mkdirs();
@@ -123,7 +123,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
         driver.approve();
 
         latch.await(5, TimeUnit.SECONDS);
-
+        
         assertThat(chooser.getSelectedFile().getName(), equalTo("somethingorother"));
         assertThat(results[0], equalTo(JFileChooser.APPROVE_OPTION));
     }
@@ -153,13 +153,25 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     @Test
     @Problematic(platform = {Platform.Mac}, why = "there is no dektop button on a aqua file chooser UI")
     public void testCanClickOnTheDesktopButton() throws InterruptedException {
-        showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, null);
+        showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, "Go");
 
         driver.currentDirectory(not(desktop()));
 
         driver.desktop();
 
         driver.currentDirectory(desktop());
+    }
+
+    @Test
+    @Problematic(platform = {Platform.Mac}, why = "there is no dektop button on a aqua file chooser UI")
+    public void testCanClickOnTheDocumentsButton() throws InterruptedException {
+        showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, "Go");
+
+        driver.currentDirectory(not(documents()));
+
+        driver.documents();
+
+        driver.currentDirectory(documents());
     }
 
     @Test
@@ -193,5 +205,9 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
 
     private Matcher<String> desktop() {
         return Matchers.equalTo(System.getProperty("user.home") + File.separatorChar + "Desktop");
+    }
+
+    private Matcher<String> documents() {
+        return Matchers.equalTo(System.getProperty("user.home") + File.separatorChar + "My Documents");
     }
 }

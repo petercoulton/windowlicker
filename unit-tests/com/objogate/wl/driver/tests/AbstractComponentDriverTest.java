@@ -1,10 +1,12 @@
 package com.objogate.wl.driver.tests;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
+import com.objogate.exception.Defect;
 import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.driver.ComponentDriver;
@@ -13,6 +15,24 @@ import static com.objogate.wl.driver.JFrameDriver.topLevelFrame;
 import com.objogate.wl.gesture.GesturePerformer;
 
 public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? extends Component>> {
+
+    static {
+        setLookAndFeel();
+    }
+
+    private static void setLookAndFeel() {
+        try {
+            String lnfName = System.getProperty("swing.defaultlaf", null);
+            if (lnfName == null) {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } else {
+                UIManager.setLookAndFeel(lnfName);
+            }
+        } catch (Exception e) {
+            throw new Defect("Does this happen?", e);
+        }
+    }
+    
     public static final String WINDOWLICKER_END_OF_TEST_PAUSE = "windowlicker.end-of-test-pause";
     
     protected final GesturePerformer gesturePerformer = new GesturePerformer();
