@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
+import org.hamcrest.Matcher;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.equalTo;
@@ -23,7 +24,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
 
     @Before
     public void setUp() throws Exception {
-        view(new JLabel("some label"));
+        view(new JLabel(""));
         File dir = testFile.getParentFile();
         delete(dir);
         dir.mkdirs();
@@ -138,16 +139,27 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    @Problematic(platform = Platform.Mac, why = "there is no home button on a mac file chooser UI")
+    @Problematic(platform = {Platform.Mac, Platform.Windows}, why = "there is no home button on a aqua or metal file chooser UI")
     public void testCanClickOnTheHomeButton() throws InterruptedException {
         showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, null);
 
-        driver.upOneFolder();
-        driver.upOneFolder();
+        driver.currentDirectory(not(userHome()));
 
-        driver.currentDirectory(not(Matchers.equalTo(System.getProperty("user.home"))));
         driver.home();
-        driver.currentDirectory(Matchers.equalTo(System.getProperty("user.home")));
+
+        driver.currentDirectory(userHome());
+    }
+
+    @Test
+    @Problematic(platform = {Platform.Mac}, why = "there is no dektop button on a aqua file chooser UI")
+    public void testCanClickOnTheDesktopButton() throws InterruptedException {
+        showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, null);
+
+        driver.currentDirectory(not(desktop()));
+
+        driver.desktop();
+
+        driver.currentDirectory(desktop());
     }
 
     @Test
@@ -173,5 +185,13 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
             }
         }).start();
         return latch;
+    }
+
+    private Matcher<String> userHome() {
+        return Matchers.equalTo(System.getProperty("user.home"));
+    }
+
+    private Matcher<String> desktop() {
+        return Matchers.equalTo(System.getProperty("user.home") + File.separatorChar + "Desktop");
     }
 }

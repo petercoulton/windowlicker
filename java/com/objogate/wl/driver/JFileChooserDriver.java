@@ -92,6 +92,10 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         return getRelevantComponentGetter(findOutWhichUiWeAreUsing());
     }
 
+    public void desktop() {
+        chooserUI().desktop();
+    }
+
     public void home() {
         chooserUI().home();
     }
@@ -141,6 +145,24 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         return rootFrameFor(parentComponent.getParent());
     }
 
+     private interface FileChooserDriverUI {
+        void createNewFolder(String folderName);
+
+        void upOneFolder();
+
+        void home();
+
+        void desktop();
+
+        void cancel();
+
+        void approve();
+
+        JTextComponentDriver<? extends JTextComponent> textBox();
+
+        void selectFile(String fileName);
+    }
+
     private class GTKFileChooserDriverUI implements FileChooserDriverUI {
 
         public void selectFile(String fileName) {
@@ -170,6 +192,11 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
             //todo (nick): i changed this but was unable to test it - sorry if i broke it!
             directoryList.selectItem(new JLabelTextMatcher(equalTo("..")));
+        }
+
+
+        public void desktop() {
+            throw new UnsupportedOperationException("There is no desktop button in the GTK L&F");
         }
 
         public void home() {
@@ -234,6 +261,10 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         }
 
         public void home() {
+            throw new UnsupportedOperationException("There is no home button in the Metal L&F");
+        }
+
+        public void desktop() {
             movementIconNumber(1).click();
         }
 
@@ -256,22 +287,6 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
     }
 
-    private interface FileChooserDriverUI {
-        void createNewFolder(String folderName);
-
-        void upOneFolder();
-
-        void home();
-
-        void cancel();
-
-        void approve();
-
-        JTextComponentDriver<? extends JTextComponent> textBox();
-
-        void selectFile(String fileName);
-    }
-
     private class AquaFileChooserUIDriver extends MetalFileChooserDriverUI {
 
         public void selectFile(String fileName) {
@@ -285,6 +300,10 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
                 return;
             }
             fileEntry.selectCell(new JLabelTextMatcher(Matchers.equalTo(fileName)));
+        }
+
+        public void desktop() {
+            throw new UnsupportedOperationException("todo");
         }
 
         public void createNewFolder(String folderName) {
