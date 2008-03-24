@@ -15,6 +15,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.equalTo;
 import org.hamcrest.TypeSafeMatcher;
+import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.Probe;
 import com.objogate.wl.gesture.GesturePerformer;
@@ -262,7 +263,15 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
                 }
             });
             String text = approveButtonText[0] == null ? "Open" : approveButtonText[0];
-            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText(text)).click();
+            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText(text), new TypeSafeMatcher<JButton>() {
+                public boolean matchesSafely(JButton jButton) {
+                    return jButton.isVisible();
+                }
+
+                public void describeTo(Description description) {
+                    description.appendText("visible button");
+                }
+            }).click();
         }
 
         public JTextFieldDriver textBox() {
@@ -349,10 +358,10 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
             //there seems to be a bug in the chooser, the first selection is always lost so we reselect it
             try {
                 TimeUnit.MILLISECONDS.sleep(Gestures.MIN_TIME_TO_WAIT_TO_AVOID_DOUBLE_CLICK);
+                fileEntry.selectCell(new JLabelTextMatcher(Matchers.equalTo(fileName)));
             } catch (InterruptedException e) {
-                return;
+                throw new Defect("Unable to select file", e);
             }
-            fileEntry.selectCell(new JLabelTextMatcher(Matchers.equalTo(fileName)));
         }
 
         public void createNewFolder(String folderName) {
@@ -385,6 +394,10 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
             JComboBoxDriver boxDriver = new JComboBoxDriver(JFileChooserDriver.this, JComboBox.class,
                     new MacComboBoxModelTypeMatcher(), new ComboBoxModelMinSizeMatcher(2));
             boxDriver.selectItem(1);
+        }
+
+        public void documents() {
+            throw new UnsupportedOperationException("There is no 'Documents' button in the Aqua L&F");
         }
 
         public void home() {

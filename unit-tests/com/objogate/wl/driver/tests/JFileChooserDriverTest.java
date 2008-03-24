@@ -74,12 +74,12 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    @Problematic(platform = Platform.Mac, why = "The OK button isn't enabled without selecting a file")
     public void testCanClickDefaultApproveButton() throws InterruptedException {
         final int[] results = new int[]{-999};
         final CountDownLatch latch = showChooserInAnotherThreadBecauseItsModal(results, null);
 
-        driver.enterManually("whatever");
+        //The OK button isn't enabled without selecting a file on Auqa / Mac
+        driver.selectFile(testFile.getName());
         driver.approve();
 
         latch.await(5, TimeUnit.SECONDS);
