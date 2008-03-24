@@ -55,6 +55,8 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public void selectCells(Cell... cells) {
+        scrollCellToVisible(cells[0]);
+        
         int keyCode = multiSelectKey();
 
         Gesture[] gestures = new Gesture[cells.length];

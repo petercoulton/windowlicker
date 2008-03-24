@@ -69,6 +69,9 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
 
         driver.selectCell(3, 3);
         driver.hasSelectedCells(cell(3, 3));
+
+        driver.selectCell(table.getRowCount() - 1, 3);
+        driver.hasSelectedCells(cell(table.getRowCount() - 1, 3));
     }
 
     @Test
