@@ -168,6 +168,10 @@ public abstract class ComponentDriver<T extends Component> {
         gesturePerformer.perform(gestures);
     }
 
+    protected Tracker offset(int offsetX, int offsetY) {
+        return new ComponentOffsetTracker(prober, selector, offsetX, offsetY);
+    }
+
     protected Tracker centerOfComponent() {
         return new ComponentCenterTracker(prober, selector);
     }
@@ -192,15 +196,12 @@ public abstract class ComponentDriver<T extends Component> {
         performGesture(moveMouseTo(centerOfComponent()));
     }
 
-    /**
-     * @Deprecated should be replaced by some kind of Tracker and the moveMouseTo Gesture.
-     */
     public void moveMouseToOffset(int offsetX, int offsetY) {
-        performGesture(moveMouseTo(new ComponentOffsetTracker(prober, selector, offsetX, offsetY)));
+        performGesture(moveMouseTo(offset(offsetX, offsetY)));
     }
 
     /**
-     * @Deprecated use a Tracker instead
+     * @deprecated use a Tracker instead
      */
     protected Rectangle screenBounds() {
         isShowingOnScreen();

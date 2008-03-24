@@ -16,6 +16,9 @@ import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
+import static com.objogate.wl.gesture.Gestures.moveMouseTo;
+import static com.objogate.wl.gesture.Gestures.whileHoldingMouseButton;
+import com.objogate.wl.gesture.Tracker;
 
 public class JTableDriver extends ComponentDriver<JTable> {
 
@@ -76,10 +79,24 @@ public class JTableDriver extends ComponentDriver<JTable> {
     public void selectCell(final Matcher<? extends JComponent> matcher) {
         final Cell cell = hasCell(matcher);
 
-        if(cell == null)
+        if (cell == null)
             throw new Defect("Cannot find cell");
 
         selectCell(cell);
+    }
+
+    public void dragMouseOver(Cell start, Cell end) {
+        scrollCellToVisible(start);//todo (nick): this should be a gesture
+
+        performGesture(
+                moveMouseTo(pointIn(start)),
+                whileHoldingMouseButton(Gestures.BUTTON1,
+                        moveMouseTo(pointIn(end)))
+        );
+    }
+
+    private Tracker pointIn(Cell start) {
+        return offset(relativeMidpointOfColumn(start.col), rowOffset(start.row));
     }
 
     public Cell hasCell(final Matcher<? extends JComponent> matcher) {
@@ -90,10 +107,10 @@ public class JTableDriver extends ComponentDriver<JTable> {
                 int rowCount = component.getRowCount();
                 int columnCount = component.getColumnCount();
 
-                for(int row = 0; row < rowCount; row++) {
-                    for(int col = 0; col < columnCount; col++) {
+                for (int row = 0; row < rowCount; row++) {
+                    for (int col = 0; col < columnCount; col++) {
                         Component renderedCell = JTableCellManipulation.render(component, row, col);
-                        if(matcher.matches(renderedCell)) {
+                        if (matcher.matches(renderedCell)) {
                             cell[0] = new Cell(row, col);
                             return true;
                         }
@@ -121,14 +138,22 @@ public class JTableDriver extends ComponentDriver<JTable> {
         return manipulation.getEditorComponent();
     }
 
+    public void mouseOverCell(Cell cell) {
+        mouseOverCell(cell.row, cell.col);
+    }
+
     public void mouseOverCell(int row, int col) {
         scrollCellToVisible(row, col);
 
-        int rowHeight = rowHeight();
-        int y = (rowHeight * row) + (rowHeight / 2);
+        int y = rowOffset(row);
         int x = relativeMidpointOfColumn(col);
 
         moveMouseToOffset(x, y);
+    }
+
+    private int rowOffset(int row) {
+        int rowHeight = rowHeight();
+        return (rowHeight * row) + (rowHeight / 2);
     }
 
     private int relativeMidpointOfColumn(final int col) {
@@ -144,7 +169,11 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public void hasSelectedCells(final Cell... cells) {
-        is(new SelectedTableCellsMatcher(cells));
+        is(new SelectedCellsMatcher(cells));
+    }
+
+    public void scrollCellToVisible(Cell cell) {
+        scrollCellToVisible(cell.row, cell.col);
     }
 
     public void scrollCellToVisible(final int row, final int col) {
@@ -237,24 +266,22 @@ public class JTableDriver extends ComponentDriver<JTable> {
 
         @Override
         public String toString() {
-            return row + "x" + col;
+            return "r" + row + " x " + "c" + col;
         }
     }
 
-    private class SelectedTableCellsMatcher extends TypeSafeMatcher<JTable> {
+    private class SelectedCellsMatcher extends TypeSafeMatcher<JTable> {
         public Cell unselectedCell;
         private final Cell[] cells;
 
-        public SelectedTableCellsMatcher(Cell... cells) {
+        public SelectedCellsMatcher(Cell... cells) {
             this.cells = cells;
         }
 
         @Override
         public boolean matchesSafely(JTable component) {
-            int[] selectedRows = component.getSelectedRows();
-            int[] selectedColumns = component.getColumnModel().getSelectedColumns();
             for (Cell cell : cells) {
-                if (!(arrayContains(selectedRows, cell.row) && arrayContains(selectedColumns, cell.col))) {
+                if (!component.isCellSelected(cell.row, cell.col)) {
                     this.unselectedCell = cell;
                     return false;
                 }

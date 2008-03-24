@@ -54,8 +54,9 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
     }
 
     //todo: test other selection modes, cell highlighting, other cell editors (as well as custom components)
+
     @Test
-    public void testCellSelection() throws Exception {
+    public void testSingleCellSelection() throws Exception {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 //        table.setRowSelectionAllowed(false);
 //        table.setColumnSelectionAllowed(true);
@@ -69,9 +70,6 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
 
         driver.selectCell(3, 4);
         driver.hasSelectedCells(cell(3, 4));
-
-        driver.selectCell(200, 2);
-        driver.hasSelectedCells(cell(200, 2));
     }
 
     @Test
@@ -82,6 +80,69 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         driver.selectCells(cell(1, 1), cell(4, 4), cell(8, 8));
 
         driver.hasSelectedCells(cell(1, 1), cell(4, 4), cell(8, 8));
+    }
+
+    @Test
+    public void testSelectingMultipleRows() throws Exception {
+        table.setRowSelectionAllowed(true);
+        table.setColumnSelectionAllowed(false);
+
+        driver.selectCells(cell(1, 1), cell(2, 1), cell(3, 1));
+
+        driver.hasSelectedCells(
+                cell(1, 0), cell(1, 4),
+                cell(2, 0), cell(2, 4),
+                cell(3, 0), cell(3, 4)
+        );
+    }
+
+    @Test
+    public void testSelectingMultipleColumns() throws Exception {
+        table.setRowSelectionAllowed(false);
+        table.setColumnSelectionAllowed(true);
+
+        driver.selectCells(cell(1, 1), cell(2, 2), cell(3, 3));
+
+        driver.hasSelectedCells(
+                cell(1, 1), cell(1, 2), cell(1, 3),
+                cell(9, 1), cell(9, 2), cell(9, 3)
+        );
+    }
+
+    @Test
+    public void testBlockSelectionWithKeyboard() throws Exception {
+        table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        table.setRowSelectionAllowed(true);
+        table.setColumnSelectionAllowed(true);
+
+        driver.selectCells(cell(1, 1), cell(2, 2), cell(3, 3));
+
+        driver.hasSelectedCells(
+                cell(1, 1), cell(1, 2), cell(1, 3),
+                cell(2, 1), cell(2, 2), cell(2, 3),
+                cell(3, 1), cell(3, 2), cell(3, 3)
+        );
+    }
+
+    @Test
+    public void testBlockSelectionWithMouse() throws Exception {
+        table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        table.setRowSelectionAllowed(true);
+        table.setColumnSelectionAllowed(true);
+
+        driver.dragMouseOver(cell(1, 1), cell(3, 3));
+        driver.hasSelectedCells(
+                cell(1, 1), cell(1, 2), cell(1, 3),
+                cell(2, 1), cell(2, 2), cell(2, 3),
+                cell(3, 1), cell(3, 2), cell(3, 3)
+        );
+
+        driver.dragMouseOver(cell(4, 3), cell(1, 1));
+        driver.hasSelectedCells(
+                cell(1, 1), cell(2, 2), cell(3, 3), cell(4, 3)
+        );
     }
 
     @Test
