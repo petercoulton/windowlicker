@@ -53,7 +53,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         return uis[0];
     }
 
-    private FileChooserDriverUI getRelevantComponentGetter(javax.swing.plaf.FileChooserUI ui) {
+    private FileChooserUIDriver getRelevantComponentGetter(javax.swing.plaf.FileChooserUI ui) {
         String name = ui.getClass().getName();
 
         if (ui instanceof javax.swing.plaf.metal.MetalFileChooserUI) {
@@ -88,7 +88,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         textComponentDriver.typeText(someText);
     }
 
-    private FileChooserDriverUI chooserUI() {
+    private FileChooserUIDriver chooserUI() {
         return getRelevantComponentGetter(findOutWhichUiWeAreUsing());
     }
 
@@ -149,7 +149,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         return rootFrameFor(parentComponent.getParent());
     }
 
-    private interface FileChooserDriverUI {
+    private interface FileChooserUIDriver {
         void createNewFolder(String folderName);
 
         void upOneFolder();
@@ -169,7 +169,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         void selectFile(String fileName);
     }
 
-    private class GTKFileChooserUIDriver implements FileChooserDriverUI {
+    private class GTKFileChooserUIDriver implements FileChooserUIDriver {
 
         public void selectFile(String fileName) {
             JLabelDriver fileEntry = new JLabelDriver(JFileChooserDriver.this, the(JLabel.class, ComponentMatchers.withLabelText(equalTo(fileName))));
@@ -243,7 +243,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         }
     }
 
-    private class MetalFileChooserUIDriver implements FileChooserDriverUI {
+    private class MetalFileChooserUIDriver implements FileChooserUIDriver {
 
         public void selectFile(String fileName) {
             JListDriver jListDriver = new JListDriver(JFileChooserDriver.this, JList.class);
