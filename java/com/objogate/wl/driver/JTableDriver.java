@@ -73,11 +73,20 @@ public class JTableDriver extends ComponentDriver<JTable> {
         performGesture(Gestures.leftClickMouse());
     }
 
-    // todo (nick): this is wrong but can't figure out another way - need to keep looking for a cell until its found
     public void selectCell(final Matcher<? extends JComponent> matcher) {
+        final Cell cell = hasCell(matcher);
+
+        if(cell == null)
+            throw new Defect("Cannot find cell");
+
+        selectCell(cell);
+    }
+
+    public Cell hasCell(final Matcher<? extends JComponent> matcher) {
         final Cell[] cell = new Cell[1];
-        perform("finding cell", new ComponentManipulation<JTable>() {
-            public void manipulate(JTable component) {
+
+        is(new TypeSafeMatcher<JTable>() {
+            public boolean matchesSafely(JTable component) {
                 int rowCount = component.getRowCount();
                 int columnCount = component.getColumnCount();
 
@@ -86,16 +95,20 @@ public class JTableDriver extends ComponentDriver<JTable> {
                         Component renderedCell = JTableCellManipulation.render(component, row, col);
                         if(matcher.matches(renderedCell)) {
                             cell[0] = new Cell(row, col);
+                            return true;
                         }
                     }
                 }
+
+                return false;
+            }
+
+            public void describeTo(Description description) {
+                description.appendDescriptionOf(matcher);
             }
         });
 
-        if(cell[0] == null)
-            throw new Defect("Cannot find cell");
-
-        selectCell(cell[0]);
+        return cell[0];
     }
 
     public Component editCell(int row, int col) {

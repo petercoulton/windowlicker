@@ -15,6 +15,7 @@ import com.objogate.wl.driver.JTableDriver;
 import static com.objogate.wl.driver.JTableDriver.cell;
 import com.objogate.wl.driver.JTableHeaderDriver;
 import com.objogate.wl.driver.JTextFieldDriver;
+import com.objogate.wl.matcher.JLabelTextMatcher;
 
 public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> {
     private ReallyBigTable table = new ReallyBigTable();
@@ -26,6 +27,11 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         view(pane);
 
         driver = new JTableDriver(gesturePerformer, table, prober);
+    }
+
+    @Test
+    public void testHasCellMatching() {
+        driver.hasCell(new JLabelTextMatcher(Matchers.equalTo("1x1")));
     }
 
     @Test

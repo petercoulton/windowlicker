@@ -150,6 +150,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
+    @Problematic(platform = Platform.Mac, why = "Don't seem to be able to get access to some of the buttons, might be solved using some specific mac classes??")
     public void testCanCreateNewFolder() throws InterruptedException {
         File testFolder = new File(testFile.getParentFile(), "testfolder");
         final int[] results = new int[]{-999};

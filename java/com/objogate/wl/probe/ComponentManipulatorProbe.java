@@ -8,18 +8,20 @@ import com.objogate.wl.Probe;
 
 public class ComponentManipulatorProbe<T extends Component> implements Probe {
     private final ComponentFinder<T> finder;
-    private final ComponentManipulation<? super T> manipulation;
+    private final ComponentManipulation<? super T>[] manipulations;
 
-    public ComponentManipulatorProbe(ComponentFinder<T> finder, ComponentManipulation<? super T> manipulation) {
+    public ComponentManipulatorProbe(ComponentFinder<T> finder, ComponentManipulation<? super T>... manipulations) {
         this.finder = finder;
-        this.manipulation = manipulation;
+        this.manipulations = manipulations;
     }
 
     public void probe() {
         finder.probe();
         if (finder.isSatisfied()) {
             for (T component : finder.components()) {
-                manipulation.manipulate(component);
+                for (ComponentManipulation<? super T> manipulation : manipulations) {
+                    manipulation.manipulate(component);
+                }
             }
         }
     }
