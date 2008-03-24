@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import com.objogate.exception.Defect;
+import org.hamcrest.TypeSafeMatcher;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
@@ -63,15 +63,26 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
     }
 
     private int firstItemMatching(final Matcher<? extends Component> matcher) {
-        RenderedElementFinderManipulation elementFinderManipulation = new RenderedElementFinderManipulation(matcher);
-        perform("serch for element", elementFinderManipulation);
-        return elementFinderManipulation.getIndex();
-    }
+        final int[] index = new int[1];
+        is(new TypeSafeMatcher<JList>() {
+            public boolean matchesSafely(JList component) {
+                ListModel model = component.getModel();
+                for (int i = 0; i < model.getSize(); i++) {
+                    Component rendered = renderedCell(component, i, false, false);
+                    if (matcher.matches(rendered)) {
+                        index[0] = i;
+                        return true;
+                    }
+                }
+                return false;
+            }
 
-    private int indexOf(final Object o) {
-        ElementIndexManipulation elementIndexManipulation = new ElementIndexManipulation(o);
-        perform("search for element", elementIndexManipulation);
-        return elementIndexManipulation.getIndex();
+            public void describeTo(Description description) {
+                description.appendDescriptionOf(matcher);
+            }
+        });
+
+        return index[0];
     }
 
     private void mouseOverCell(final int index) {
@@ -123,58 +134,6 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
             }
 
             y += renderedCell(component, index, false, false).getPreferredSize().height / 2;
-        }
-    }
-
-    private static class ElementIndexManipulation implements ComponentManipulation<JList> {
-        private int index;
-        private final Object o;
-
-        public ElementIndexManipulation(Object o) {
-            this.o = o;
-        }
-
-        public void manipulate(JList component) {
-            ListModel model = component.getModel();
-            for (int i = 0; i < model.getSize(); i++) {
-                Object element = model.getElementAt(i);
-                if (element == o || element.equals(o)) {
-                    index = i;
-                    return;
-                }
-            }
-
-            throw new Defect("Cannot find element " + o);
-        }
-
-        public int getIndex() {
-            return index;
-        }
-    }
-
-    private class RenderedElementFinderManipulation implements ComponentManipulation<JList> {
-        private int index;
-        private final Matcher<? extends Component> matcher;
-
-        public RenderedElementFinderManipulation(Matcher<? extends Component> matcher) {
-            this.matcher = matcher;
-        }
-
-        public void manipulate(JList component) {
-            ListModel model = component.getModel();
-            for (int i = 0; i < model.getSize(); i++) {
-                Component rendered = renderedCell(component, i, false, false);
-                if (matcher.matches(rendered)) {
-                    index = i;
-                    return;
-                }
-            }
-
-            throw new Defect("Cannot find component matching " + matcher);
-        }
-
-        public int getIndex() {
-            return index;
         }
     }
 }

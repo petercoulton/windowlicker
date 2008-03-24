@@ -152,7 +152,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
 
     @Test
     public void testCanCreateNewFolder() throws InterruptedException {
-        File testFolder = new File(testFile.getParentFile(), "testfolder");
+        File testFolder = new File(testFile.getParentFile(), "test.folder");
         final int[] results = new int[]{-999};
         final CountDownLatch latch = showChooserInAnotherThreadBecauseItsModal(results, "Go");
 

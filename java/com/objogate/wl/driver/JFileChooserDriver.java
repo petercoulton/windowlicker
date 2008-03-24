@@ -209,8 +209,8 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
     private class MetalFileChooserDriverUI implements FileChooserDriverUI {
 
         public void selectFile(String fileName) {
-            JLabelDriver fileEntry = new JLabelDriver(JFileChooserDriver.this, the(JLabel.class, ComponentMatchers.withLabelText(equalTo(fileName))));
-            fileEntry.leftClickOnComponent();
+            JListDriver jListDriver = new JListDriver(JFileChooserDriver.this, JList.class);
+            jListDriver.selectItem(ComponentMatchers.withLabelText(equalTo(fileName)));
         }
 
         public void cancel() {
