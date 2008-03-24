@@ -32,3 +32,4 @@ _ shift MINUS
 > shift PERIOD
 / SLASH
 ? shift SLASH
+€ ctrl alt 4
