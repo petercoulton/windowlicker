@@ -116,6 +116,10 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
         performGesture(type(text));
     }
 
+    public void pressReturn() {
+        typeText("\n");
+    }
+
     @Override
     public void selectAll() {
         super.selectAll();

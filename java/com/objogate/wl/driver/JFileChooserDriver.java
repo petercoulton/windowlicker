@@ -288,7 +288,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
         public void createNewFolder(String folderName) {
             new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText("New Folder")).click();
-            new JTextFieldDriver(JFileChooserDriver.this, JTextField.class, new TypeSafeMatcher<JTextField>() {
+            JTextFieldDriver textDriver = new JTextFieldDriver(JFileChooserDriver.this, JTextField.class, new TypeSafeMatcher<JTextField>() {
                 public boolean matchesSafely(JTextField jTextField) {
                     Container container = jTextField.getParent();
                     Component component = container.getComponent(0);
@@ -303,9 +303,11 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
                 public void describeTo(Description description) {
                     description.appendText("JTextField with JLabel sibling containing text 'File'");
                 }
-            }).typeText(folderName);
+            });
+            textDriver.typeText(folderName);
 
-            throw new UnsupportedOperationException("Looks like we can't do this in a sensible way without using some specific mac classes");
+            //hack (nick): can't get hold of the 'Create' button!  so use the keyboard to navigate to it 
+            textDriver.typeText("\t\t ");
         }
 
         public void upOneFolder() {
