@@ -2,6 +2,7 @@ package com.objogate.wl.driver.tests;
 
 import javax.swing.JScrollPane;
 import java.awt.Font;
+import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.containsString;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +28,16 @@ public class JListDriverTest extends AbstractComponentDriverTest<JListDriver> {
         driver.selectItem(3);
 
         driver.hasSelectedIndex(3);
+    }
+
+    @Test
+    public void testHasItem() {
+        final String name = ((Font) list.getModel().getElementAt(0)).getName();
+
+        list.applyFontRenderer();
+
+        driver.hasItem(Matchers.containsString(name));        
+        driver.hasRenderedItem(labelWithTextMatching(name));
     }
 
     @Test

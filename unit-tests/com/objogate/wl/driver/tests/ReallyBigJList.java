@@ -6,12 +6,11 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import java.awt.Component;
 import java.awt.Font;
-import java.util.ArrayList;
 import java.util.List;
 
 class ReallyBigJList extends JList {
     public ReallyBigJList() {
-        super(new FontModel());
+        super(new FontModel(25));
     }
 
     public void applyFontRenderer() {
@@ -41,10 +40,8 @@ class ReallyBigJList extends JList {
     private static class FontModel extends AbstractListModel {
         List<Font> fonts;
         
-        public FontModel() {
-            ArrayList<Font> list = new BigListOfRandomlySizedFonts();
-
-            this.fonts = list;
+        public FontModel(int maxSize) {
+            this.fonts = new BigListOfRandomlySizedFonts().subList(0, maxSize);
         }
 
         public int getSize() {

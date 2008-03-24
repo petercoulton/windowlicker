@@ -14,6 +14,7 @@ import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
+import com.objogate.wl.matcher.JLabelTextMatcher;
 
 public class JListDriver extends ComponentDriver<JList> implements ListDriver {
 
@@ -54,7 +55,7 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
     }
 
     public void selectItem(Matcher<? extends Component> matcher) {
-        selectItem(firstItemMatching(matcher));
+        selectItem(indexOfFirstItemMatching(matcher));
     }
 
     public void selectItem(int index) {
@@ -62,27 +63,18 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
         performGesture(Gestures.leftClickMouse());
     }
 
-    private int firstItemMatching(final Matcher<? extends Component> matcher) {
-        final int[] index = new int[1];
-        is(new TypeSafeMatcher<JList>() {
-            public boolean matchesSafely(JList component) {
-                ListModel model = component.getModel();
-                for (int i = 0; i < model.getSize(); i++) {
-                    Component rendered = renderedCell(component, i, false, false);
-                    if (matcher.matches(rendered)) {
-                        index[0] = i;
-                        return true;
-                    }
-                }
-                return false;
-            }
+    public void hasItem(Matcher<String> matcher) {
+        hasRenderedItem(new JLabelTextMatcher(matcher));
+    }
+    
+    public void hasRenderedItem(Matcher<? extends Component> matcher) {
+        is(new RenderedItemMatcher(matcher));
+    }
 
-            public void describeTo(Description description) {
-                description.appendDescriptionOf(matcher);
-            }
-        });
-
-        return index[0];
+    private int indexOfFirstItemMatching(final Matcher<? extends Component> matcher) {
+        RenderedItemMatcher criteria = new RenderedItemMatcher(matcher);
+        is(criteria);
+        return criteria.indexOfMatchedItem();
     }
 
     private void mouseOverCell(final int index) {
@@ -134,6 +126,35 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
             }
 
             y += renderedCell(component, index, false, false).getPreferredSize().height / 2;
+        }
+    }
+
+    private class RenderedItemMatcher extends TypeSafeMatcher<JList> {
+        private final Matcher<? extends Component> matcher;
+        private int index = -1;
+
+        public RenderedItemMatcher(Matcher<? extends Component> matcher) {
+            this.matcher = matcher;
+        }
+
+        public int indexOfMatchedItem() {
+            return index;
+        }
+
+        public boolean matchesSafely(JList component) {
+            ListModel model = component.getModel();
+            for (int i = 0; i < model.getSize(); i++) {
+                Component rendered = renderedCell(component, i, false, false);
+                if (matcher.matches(rendered)) {
+                    index = i;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void describeTo(Description description) {
+            description.appendDescriptionOf(matcher);
         }
     }
 }
