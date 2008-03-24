@@ -82,6 +82,14 @@ public class JTabbedPaneDriverTest extends AbstractComponentDriverTest<JTabbedPa
         driver.selectTab(3);
 
         driver.hasSelectedTab(3);
+
+        driver.selectTab(1);
+
+        driver.hasSelectedTab(1);
+
+        driver.selectTab(2);
+
+        driver.hasSelectedTab(2);
     }
 
     private JLabel component(String s) {
