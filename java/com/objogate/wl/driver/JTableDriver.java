@@ -81,13 +81,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
         if (cell == null)
             throw new Defect("Cannot find cell");
 
-        Cell[] cells = new Cell[]{cell};
-        Gesture[] gestures = new Gesture[cells.length * 2];
-        for (int i = 0; i < gestures.length; i++) {
-           gestures[i] = moveMouseTo(pointIn(cells[i]));
-           gestures[i+1] = leftClickMouse();
-        }
-        sequence(gestures);
+        selectCells(cell);
     }
 
     public void dragMouseOver(Cell start, Cell end) {
