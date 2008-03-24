@@ -36,12 +36,13 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
 
     private void delete(File dir) {
         File[] files = dir.listFiles();
-        for (File file : files) {
-            if(file.isDirectory())
-                delete(file);
+        if (files != null)
+            for (File file : files) {
+                if (file.isDirectory())
+                    delete(file);
 
-            file.delete();
-        }
+                file.delete();
+            }
     }
 
     public void testPrintOutSubComponents() throws InterruptedException {

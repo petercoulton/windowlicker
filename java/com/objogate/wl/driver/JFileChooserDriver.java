@@ -224,7 +224,8 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
                     approveButtonText[0] = component.getApproveButtonText();
                 }
             });
-            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText(approveButtonText[0])).click();
+            String text = approveButtonText[0] == null ? "Open" : approveButtonText[0];
+            new AbstractButtonDriver<JButton>(JFileChooserDriver.this, JButton.class, withButtonText(text)).click();
         }
 
         public JTextFieldDriver textBox() {
