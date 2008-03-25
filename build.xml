@@ -38,10 +38,11 @@
     </path>
     
     <target name="clean">
+        <delete dir="classes"/>
         <delete dir="${build.dir}"/>
     </target>
 
-    <target name="build" depends="unit-test"/>
+    <target name="build" depends="clean, unit-test"/>
 
     <target name="compile" description="Compile all code and create product and test jar files">
         <mkdir dir="${build.dir}"/>
