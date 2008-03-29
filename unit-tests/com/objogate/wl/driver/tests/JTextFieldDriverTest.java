@@ -6,7 +6,6 @@ import java.awt.GraphicsEnvironment;
 import static org.hamcrest.Matchers.equalTo;
 import org.junit.Before;
 import org.junit.Test;
-import com.objogate.wl.Platform;
 import com.objogate.wl.driver.JTextFieldDriver;
 
 public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JTextFieldDriver> {
@@ -42,12 +41,9 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
     }
 
     @Test
-    @Problematic(platform = Platform.Mac, why = "see below")//easier to show in comments
-    //text was just '"', not '#@'
-    //also the error message is incorrect, it reads text was "\"" but there is no backslash in the GUI
     public void canTypeSymbolsIntoTextField() {
         setText("");
-        driver.replaceAllText("#@"); // these symbols are in different places on US and UK keyboards - and so does not work on my mac (nick)
+        driver.replaceAllText("#@"); // these symbols are in different places on US, UK (and mac!) keyboards
         driver.text(equalTo("#@"));
     }
 

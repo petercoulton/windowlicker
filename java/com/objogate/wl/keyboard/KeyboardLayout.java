@@ -73,7 +73,7 @@ public class KeyboardLayout implements SystemProperties {
      */
     public static KeyboardLayout getDefaultKeyboardLayout() {
         String layoutName = System.getProperty(KEYBOARD_LAYOUT, InputContext.getInstance().getLocale().getCountry());
-
+        System.out.println("KeyboardLayout.getDefaultKeyboardLayout " + layoutName);
         return getKeyboardLayout(layoutName);
     }
 
