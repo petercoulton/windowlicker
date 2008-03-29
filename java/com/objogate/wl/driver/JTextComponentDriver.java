@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import static org.hamcrest.Matchers.equalTo;
+import org.hamcrest.TypeSafeMatcher;
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
@@ -151,8 +152,8 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
         performGesture(Gestures.leftClickMouse());
 
 
-        TextSearch search = new TextSearch(textOccurence);
-        perform("Text occurence", search);
+        TextSearchMatcher search = new TextSearchMatcher(textOccurence);
+        is(search);
         int start = search.getStart();
 
         moveCaretTo(start);
@@ -182,41 +183,6 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
 
     public static TextOccurence occurence(int count) {
         return new TextOccurence(count);
-    }
-
-    protected static class TextSearch implements ComponentManipulation<JTextComponent> {
-        private final int occurence;
-        private final String text;
-        private int start;
-        private int end;
-
-        public TextSearch(JTextFieldDriver.TextOccurence textOccurence) {
-            occurence = textOccurence.getCount();
-            text = textOccurence.getText();
-        }
-
-        public int getStart() {
-            return start;
-        }
-
-        public int getEnd() {
-            return end;
-        }
-
-        public void manipulate(JTextComponent component) {
-            String s = component.getText();
-            int lastIndex = 0;
-            for (int i = 0; i < occurence; i++) {
-                int index = s.indexOf(text, lastIndex);
-                if (i == occurence - 1)
-                    lastIndex = index;
-                else
-                    lastIndex = index + text.length();
-            }
-
-            this.start = lastIndex;
-            this.end = start + text.length();
-        }
     }
 
     public static class TextOccurence {
@@ -275,6 +241,52 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
 
         public int getPosition() {
             return position;
+        }
+    }
+
+    public static class TextSearchMatcher extends TypeSafeMatcher<JTextComponent> {
+        private final int occurence;
+        private final String text;
+        private int start;
+        private int end;
+
+
+        public TextSearchMatcher(JTextFieldDriver.TextOccurence textOccurence) {
+            occurence = textOccurence.getCount();
+            text = textOccurence.getText();
+        }
+
+        public int getStart() {
+            return start;
+        }
+
+        public int getEnd() {
+            return end;
+        }
+
+        public boolean matchesSafely(JTextComponent component) {
+            String s = component.getText();
+            int lastIndex = 0;
+            for (int i = 0; i < occurence; i++) {
+                int index = s.indexOf(text, lastIndex);
+
+                if(index == -1)
+                    return false;
+
+                if (i == occurence - 1)
+                    lastIndex = index;
+                else
+                    lastIndex = index + text.length();
+            }
+
+            this.start = lastIndex;
+            this.end = start + text.length();
+
+            return true;
+        }
+
+        public void describeTo(Description description) {
+            description.appendText("occurence " + occurence + " of " + text);
         }
     }
 }

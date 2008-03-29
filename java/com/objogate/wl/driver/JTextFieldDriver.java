@@ -41,8 +41,8 @@ public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
     }
 
     public void doubleClickText(TextOccurence textOccurence) {
-        TextSearch search = new TextSearch(textOccurence);
-        perform("Text occurence", search);
+        TextSearchMatcher search = new TextSearchMatcher(textOccurence);
+        is(search);
         int end = search.getEnd();
 
         int scrollOffset = scrollPositionIntoView(end);
@@ -58,8 +58,8 @@ public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
      * not yet working if selecting involves scrolling the text field
      */
     public void selectWithMouse(TextOccurence textOccurence) {
-        TextSearch search = new TextSearch(textOccurence);
-        perform("Text occurence", search);
+        TextSearchMatcher search = new TextSearchMatcher(textOccurence);
+        is(search);
         final int start = search.getStart();
         final int end = search.getEnd();
 
