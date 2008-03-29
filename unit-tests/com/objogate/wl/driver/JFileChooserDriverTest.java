@@ -1,4 +1,4 @@
-package com.objogate.wl.driver.tests;
+package com.objogate.wl.driver;
 
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -14,8 +14,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import org.junit.Before;
 import org.junit.Test;
-import com.objogate.wl.Platform;
-import com.objogate.wl.driver.JFileChooserDriver;
+import com.objogate.wl.UI;
+import com.objogate.wl.driver.tests.AbstractComponentDriverTest;
 import com.objogate.wl.probe.ComponentIdentity;
 import com.objogate.wl.probe.RecursiveComponentFinder;
 
@@ -124,7 +124,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
         driver.approve();
 
         latch.await(5, TimeUnit.SECONDS);
-        
+
         assertThat(chooser.getSelectedFile().getName(), equalTo("somethingorother"));
         assertThat(results[0], equalTo(JFileChooser.APPROVE_OPTION));
     }
@@ -140,8 +140,10 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    @Problematic(platform = {Platform.Mac, Platform.Windows}, why = "there is no home button on a aqua or metal file chooser UI")
     public void testCanClickOnTheHomeButton() throws InterruptedException {
+        if(UI.is(UI.AQUA) || UI.is(UI.WINDOWS) || UI.is(UI.METAL))
+            return;
+
         showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, null);
 
         driver.currentDirectory(not(userHome()));
@@ -152,8 +154,10 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    @Problematic(platform = {Platform.Mac}, why = "there is no dektop button on a aqua file chooser UI")
     public void testCanClickOnTheDesktopButton() throws InterruptedException {
+        if(UI.is(UI.AQUA))
+            return;
+
         showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, "Go");
 
         driver.currentDirectory(not(desktop()));
@@ -164,8 +168,10 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    @Problematic(platform = {Platform.Mac}, why = "there is no dektop button on a aqua file chooser UI")
     public void testCanClickOnTheDocumentsButton() throws InterruptedException {
+        if(UI.is(UI.AQUA) || UI.is(UI.METAL))
+            return;
+
         showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, "Go");
 
         driver.currentDirectory(not(documents()));
