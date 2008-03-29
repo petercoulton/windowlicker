@@ -11,6 +11,7 @@ import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.equalTo;
 import org.junit.Before;
 import org.junit.Test;
+import com.objogate.wl.Platform;
 import com.objogate.wl.driver.JTableDriver;
 import static com.objogate.wl.driver.JTableDriver.cell;
 import com.objogate.wl.driver.JTableHeaderDriver;

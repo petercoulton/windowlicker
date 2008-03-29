@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import org.junit.Before;
 import org.junit.Test;
+import com.objogate.wl.Platform;
 import com.objogate.wl.driver.JFileChooserDriver;
 import com.objogate.wl.probe.ComponentIdentity;
 import com.objogate.wl.probe.RecursiveComponentFinder;

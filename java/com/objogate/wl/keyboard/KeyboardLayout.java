@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import com.objogate.wl.Gesture;
+import com.objogate.wl.Platform;
 import com.objogate.wl.SystemProperties;
 import static com.objogate.wl.gesture.Gestures.typeKey;
 import static com.objogate.wl.gesture.Gestures.withModifierMask;
@@ -28,8 +29,9 @@ public class KeyboardLayout implements SystemProperties {
     private final String name;
 
     static {
-        if(System.getProperty(KEYBOARD_LAYOUT) == null && System.getProperty("os.name").equals("Mac OS X")) {
-            System.setProperty(KEYBOARD_LAYOUT, "US");
+        Platform.is(Platform.Linux);//just testing
+        if(System.getProperty(KEYBOARD_LAYOUT) == null && Platform.is(Platform.Mac)) {
+            System.setProperty(KEYBOARD_LAYOUT, "MAC.GB");
         }
     }
 

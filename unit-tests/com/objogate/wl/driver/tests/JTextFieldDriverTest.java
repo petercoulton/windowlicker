@@ -6,6 +6,7 @@ import java.awt.GraphicsEnvironment;
 import static org.hamcrest.Matchers.equalTo;
 import org.junit.Before;
 import org.junit.Test;
+import com.objogate.wl.Platform;
 import com.objogate.wl.driver.JTextFieldDriver;
 
 public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JTextFieldDriver> {

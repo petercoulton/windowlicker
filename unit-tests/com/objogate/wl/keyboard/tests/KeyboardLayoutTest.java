@@ -2,7 +2,7 @@ package com.objogate.wl.keyboard.tests;
 
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-import com.objogate.wl.driver.tests.Platform;
+import com.objogate.wl.Platform;
 import com.objogate.wl.driver.tests.Problematic;
 import com.objogate.wl.keyboard.KeyboardLayout;
 import static com.objogate.wl.keyboard.KeyboardLayout.getKeyboardLayout;
