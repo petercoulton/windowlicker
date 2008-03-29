@@ -29,7 +29,6 @@ public class KeyboardLayout implements SystemProperties {
     private final String name;
 
     static {
-        Platform.is(Platform.Linux);//just testing
         if(System.getProperty(KEYBOARD_LAYOUT) == null && Platform.is(Platform.Mac)) {
             System.setProperty(KEYBOARD_LAYOUT, "MAC.GB");
         }
