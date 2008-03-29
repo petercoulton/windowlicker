@@ -12,8 +12,7 @@ public enum Platform {
             case Windows:
                 return System.getProperty("os.name").toLowerCase().contains("windows");
             case Linux:
-                System.out.println("Platform.is " + System.getProperty("os.name"));
-                return false;
+                return System.getProperty("os.name").toLowerCase().contains("Linux");
         }
 
         throw new Defect("Need to handle " + platform);
