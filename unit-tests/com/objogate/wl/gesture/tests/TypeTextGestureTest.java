@@ -40,7 +40,7 @@ public class TypeTextGestureTest extends AbstractJTextComponentDriverTest<JTextF
 
     @Test
     public void canTypePunctuationAndSymbols() {
-        assertCanType("!\"$^&*()-_=+[{]};:'@#~,<.>/`\\Û");
+        assertCanType("!\"$^&*()-_=+[{]};:'@#~,<.>/`\\");
     }
     
     private void assertCanType(String text) {
