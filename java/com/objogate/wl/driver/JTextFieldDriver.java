@@ -60,31 +60,31 @@ public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
     public void selectWithMouse(TextOccurence textOccurence) {
         TextSearchMatcher search = new TextSearchMatcher(textOccurence);
         is(search);
-        final int start = search.getStart();
-        final int end = search.getEnd();
+        final int textStartIndex = search.getStart();
+        final int textEndIndex = search.getEnd();
 
-        int scrollOffset = scrollPositionIntoView(start + 1);
+        int scrollOffset = scrollPositionIntoView(textStartIndex + 1);
 
-        final int x = getTextWidth(0, start) + getInsets().left - scrollOffset;
+        final int x = getTextWidth(0, textStartIndex) + getInsets().left - scrollOffset;
         final int y = ((int) screenBounds().getHeight() / 2);
 
         moveMouseToOffset(x, y);
 
         performGesture(whileHoldingMouseButton(Gestures.BUTTON1,
-                Gestures.translateMouseTo(new Tracker() {
+                translateMouseTo(new Tracker() {
                     public Point target(Point currentLocation) {
                         SelectionManipulation selectionManipulation = new SelectionManipulation();
                         perform("selection", selectionManipulation);
 
+                        int direction = selectionManipulation.selectionEnd > textEndIndex ? -1 : 1;
 
-                        Point desiredLocation = new Point(currentLocation);
+                        int numberOfCharactersToMove = selectionManipulation.selectionEnd - textEndIndex;
 
-                        int direction = selectionManipulation.selectionEnd > end ? -1 : 1;
-
-                        int numberOfCharactersToMove = selectionManipulation.selectionEnd - end;
+                        //if we're more than 2 characters away move quickly (5 at a time), else move slowly
                         int amount = Math.abs(numberOfCharactersToMove) > 2 ? 5 : 1;
 
                         if (numberOfCharactersToMove != 0) {
+                            Point desiredLocation = new Point(currentLocation);
                             desiredLocation.translate(direction * amount, 0);
                             return desiredLocation;
                         }
