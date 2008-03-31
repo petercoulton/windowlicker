@@ -47,7 +47,7 @@ public class JLabelDriverTest extends AbstractComponentDriverTest<JLabelDriver> 
         setColors(color("GREEN"), color("PINK"));
 
         driver.hasForegroundColor(color("GREEN"));
-        driver.hasBackgroundColor(color("PINK"));
+        driver.hasBackgroundColor(color("GREEN"));
     }
 
     @Test

@@ -15,7 +15,8 @@ import com.objogate.wl.Platform;
 
 public class RecordingFormatter implements JUnitResultFormatter {
     private static final File FAILED_TEST_RECORDINGS = new File("build/artifacts/reports/tests/recordings");
-    private final RecordMyDesktopWrapper desktopRecorder = new RecordMyDesktopWrapper("build/tests/recordings");
+    private static final String RECORDINGS = "build/tests/recordings";
+    private final RecordMyDesktopWrapper desktopRecorder = new RecordMyDesktopWrapper(RECORDINGS);
     private final List<File> failures = new ArrayList<File>();
     private File currentRecording;
     private String currentSuit;
@@ -34,24 +35,36 @@ public class RecordingFormatter implements JUnitResultFormatter {
     }
 
     public void startTestSuite(JUnitTest suite) throws BuildException {
-        currentSuit = suite.getName();
-        failures.clear();
+        try {
+            currentSuit = suite.getName();
+            failures.clear();
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     public void endTestSuite(JUnitTest suite) throws BuildException {
-        for (File failure : failures) {
-            try {
-                copyFile(failure, new File(FAILED_TEST_RECORDINGS, failure.getName()));
-            } catch (IOException e) {
-                throw new BuildException("Cannot copy " + failure);
+        try {
+            for (File failure : failures) {
+                try {
+                    copyFile(failure, new File(FAILED_TEST_RECORDINGS, failure.getName()));
+                } catch (IOException e) {
+                    throw new BuildException("Cannot copy " + failure);
+                }
             }
+        } catch (BuildException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
 
     public void startTest(Test test) {
-        JUnit4TestCaseFacade facade = (JUnit4TestCaseFacade) test;
-        String testName = testName(facade);
-        currentRecording = startRecording(currentSuit + "." + testName);
+        try {
+            JUnit4TestCaseFacade facade = (JUnit4TestCaseFacade) test;
+            String testName = testName(facade);
+            currentRecording = startRecording(currentSuit + "." + testName);
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     private String testName(JUnit4TestCaseFacade facade) {
@@ -60,30 +73,50 @@ public class RecordingFormatter implements JUnitResultFormatter {
     }
 
     public void addError(Test test, Throwable throwable) {
-        if (currentRecording != null) {
-            failures.add(currentRecording);
+        try {
+            if (currentRecording != null) {
+                failures.add(currentRecording);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
 
     public void addFailure(Test test, AssertionFailedError assertionFailedError) {
-        if (currentRecording != null) {
-            failures.add(currentRecording);
+        try {
+            if (currentRecording != null) {
+                failures.add(currentRecording);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
 
     public void endTest(Test test) {
-        desktopRecorder.stop();
+        try {
+            desktopRecorder.stop();
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     private File startRecording(String name) {
         if (Platform.is(Platform.Linux)) {
             return desktopRecorder.start(name + ".ogg");
         } else {
-            return null;
+            File file = new File(RECORDINGS, name + ".ogg");
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            return file;
         }
     }
 
     private static void copyFile(File sourceFile, File destFile) throws IOException {
+        System.out.println(sourceFile.getAbsolutePath());
+        System.out.println(destFile.getAbsolutePath());
         FileChannel source = new FileInputStream(sourceFile).getChannel();
         try {
             FileChannel destination = new FileOutputStream(destFile).getChannel();
