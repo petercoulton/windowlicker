@@ -33,7 +33,6 @@ public class RecordMyDesktopWrapper {
             if(process == null)
                 return;
 //        Signal.raise(new Signal("INT"))
-
             process.destroy();
 //            process.waitFor();
 //        } catch (InterruptedException e) {
