@@ -29,15 +29,15 @@ public class RecordMyDesktopWrapper {
     }
 
     public void stop() {
-        try {
+//        try {
             if(process == null)
                 return;
 
             process.destroy();
-            process.waitFor();
-        } catch (InterruptedException e) {
-            throw new Defect("Not supposed to happen!", e);
-        }
+//            process.waitFor();
+//        } catch (InterruptedException e) {
+//            throw new Defect("Not supposed to happen!", e);
+//        }
     }
 
     public static void main(String[] args) throws Exception {
