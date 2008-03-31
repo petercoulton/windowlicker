@@ -1,19 +1,17 @@
 <project name="windowlicker" default="build">
- 
+
     <property name="build.number" value="DEVELOPER-BUILD"/>
 
     <property name="build.dir" location="${basedir}/build"/>
     <property name="product.class.dir" location="${build.dir}/product-classes"/>
     <property name="test.class.dir" location="${build.dir}/test-classes"/>
 
-    <property name="test.report.dir" location="${build.dir}/test/reports"/>
-    <property name="test.output.dir" location="${build.dir}/test/output"/>
+    <property name="test.report.dir" location="${build.dir}/artifacts/reports/tests"/>
+    <property name="test.output.dir" location="${build.dir}/tests/output"/>
 
-    <property name="product.jar.path" location="${build.dir}/windowlicker-${build.number}.jar"/>
-    <property name="test.jar.path" location="${build.dir}/windowlicker-tests-${build.number}.jar"/>
-    <property name="product.src.jar.path" location="${build.dir}/windowlicker-${build.number}.src.jar"/>
-    
-    <property name="tests" value="*"/>
+    <property name="product.jar.path" location="${build.dir}/artifacts/windowlicker-${build.number}.jar"/>
+    <property name="test.jar.path" location="${build.dir}/artifacts/windowlicker-tests-${build.number}.jar"/>
+    <property name="product.src.jar.path" location="${build.dir}/artifacts/windowlicker-${build.number}.src.jar"/>
 
     <property name="keyboard.type" value="GB"/>
 
@@ -33,10 +31,15 @@
         <pathelement location="${basedir}/unit-tests"/>
     </path>
 
+    <path id="unit-test-source.path">
+        <pathelement location="${basedir}/unit-tests"/>
+        <pathelement location="${basedir}/tools/src/"/>
+    </path>
+
     <path id="product-source.path">
         <pathelement location="${basedir}/java"/>
     </path>
-    
+
     <target name="clean">
         <delete dir="classes"/>
         <delete dir="${build.dir}"/>
@@ -49,8 +52,7 @@
         <mkdir dir="${product.class.dir}"/>
         <mkdir dir="${test.class.dir}"/>
 
-        <javac  destdir="${product.class.dir}"
-                debug="true" source="1.5" target="1.5" fork="true">
+        <javac destdir="${product.class.dir}" debug="true" source="1.5" target="1.5" fork="true">
             <src refid="product-source.path"/>
             <classpath refid="library.path"/>
         </javac>
@@ -63,13 +65,12 @@
             <fileset dir="${product.class.dir}"/>
         </jar>
 
-
         <jar destfile="${product.src.jar.path}">
-            <fileset  dir="${basedir}/java"/>
+            <fileset dir="${basedir}/java"/>
         </jar>
 
-        <javac  destdir="${test.class.dir}"
-                debug="true" source="1.5" target="1.5" fork="true">
+        <javac destdir="${test.class.dir}"
+               debug="true" source="1.5" target="1.5" fork="true">
             <src refid="unit-test-source.path"/>
             <classpath refid="library.path"/>
             <classpath location="${product.class.dir}"/>
@@ -84,13 +85,17 @@
         <mkdir dir="${test.output.dir}"/>
 
         <!--600000 = 10 minutes-->
-        <junit timeout="600000" fork="true" printsummary="yes" errorproperty="test.failure" failureproperty="test.failure">
+        <junit timeout="600000" fork="true" printsummary="yes" errorproperty="test.failure"
+               failureproperty="test.failure">
             <classpath refid="unit-test.classpath"/>
             <jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}"/>
+
+            <formatter classname="com.objogate.wl.build.RecordingFormatter"/>
             <formatter type="xml"/>
+
             <batchtest todir="${test.output.dir}">
                 <fileset dir="${basedir}/unit-tests">
-                    <include name="**/${tests}Test.java"/>
+                    <include name="**/*Test.java"/>
                     <exclude name="**/Abstract*Test.java"/>
                 </fileset>
             </batchtest>

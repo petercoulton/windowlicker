@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/calculator-example/end-to-end-tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/calculator-example/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tools/src/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/unit-tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
