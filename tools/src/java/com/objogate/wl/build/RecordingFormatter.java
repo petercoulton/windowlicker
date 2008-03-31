@@ -104,7 +104,7 @@ public class RecordingFormatter implements JUnitResultFormatter {
         if (Platform.is(Platform.Linux)) {
             return desktopRecorder.start(name + ".ogg");
         } else {
-            File file = new File(RECORDINGS, name + ".ogg");
+            File file = new File(RECORDINGS, name + ".crap");
             try {
                 file.createNewFile();
             } catch (IOException e) {
