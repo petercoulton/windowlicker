@@ -8,8 +8,9 @@
 
     <property name="test.report.dir" location="${build.dir}/artifacts/reports/tests"/>
     <property name="test.output.dir" location="${build.dir}/tests/output"/>
+    <property name="artifacts.dir" location="${build.dir}/artifacts"/>
 
-    <property name="product.jar.path" location="${build.dir}/artifacts/windowlicker-${build.number}.jar"/>
+    <property name="product.jar.path" location="${artifacts.dir}/windowlicker-${build.number}.jar"/>
     <property name="test.jar.path" location="${build.dir}/artifacts/windowlicker-tests-${build.number}.jar"/>
     <property name="product.src.jar.path" location="${build.dir}/artifacts/windowlicker-${build.number}.src.jar"/>
 
@@ -49,6 +50,7 @@
 
     <target name="compile" description="Compile all code and create product and test jar files">
         <mkdir dir="${build.dir}"/>
+        <mkdir dir="${artifacts.dir}"/>
         <mkdir dir="${product.class.dir}"/>
         <mkdir dir="${test.class.dir}"/>
 
