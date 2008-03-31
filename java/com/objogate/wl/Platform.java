@@ -7,6 +7,7 @@ public enum Platform {
 
     public static boolean is(Platform platform) {
         String osName = System.getProperty("os.name");
+        System.out.println("osName = " + osName);
         switch (platform) {
             case Mac:
                 return osName.equals("Mac OS X");
@@ -17,5 +18,9 @@ public enum Platform {
         }
 
         throw new Defect("Need to handle " + platform);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Platform.is(Mac));
     }
 }
