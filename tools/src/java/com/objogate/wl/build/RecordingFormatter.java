@@ -93,6 +93,7 @@ public class RecordingFormatter implements JUnitResultFormatter {
     }
 
     public void endTest(Test test) {
+        System.out.println("RecordingFormatter.endTest " + test);
         try {
             desktopRecorder.stop();
         } catch (Exception e) {

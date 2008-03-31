@@ -22,5 +22,7 @@ public enum Platform {
 
     public static void main(String[] args) {
         System.out.println(Platform.is(Mac));
+        System.setProperty("os.name", "Linux");
+        System.out.println(Platform.is(Linux));
     }
 }
