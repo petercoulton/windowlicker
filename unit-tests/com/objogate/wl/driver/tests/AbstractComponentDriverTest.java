@@ -29,10 +29,6 @@ public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? ex
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(UIManager.getSystemLookAndFeelClassName());
-    }
-
     protected void setLookAndFeel(UI ui) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         setLookAndFeel(ui, frame);
     }
