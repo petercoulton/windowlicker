@@ -23,7 +23,7 @@ public class Gestures {
     public static int META = InputEvent.META_MASK;
     private static final int MID_KEY_PRESS_DELAY = 50;
     private static final int MID_MOUSE_CLICK_DELAY = 100;
-    private static final int MID_DOUBLE_CLICK_DELAY = 30;
+    private static final int MID_DOUBLE_CLICK_DELAY = 5;
     public static final int MIN_TIME_TO_WAIT_TO_AVOID_DOUBLE_CLICK = 1000;//does it really matter that this is very long? probably not.
 
     public static Gesture sequence(Gesture... gestures) {
