@@ -90,7 +90,7 @@
         <junit timeout="600000" fork="true" printsummary="yes" errorproperty="test.failure"
                failureproperty="test.failure">
             <classpath refid="unit-test.classpath"/>
-            <jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}"/>
+            <!--<jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}"/>-->
 
             <formatter classname="com.objogate.wl.build.RecordingFormatter"/>
             <formatter type="xml"/>
