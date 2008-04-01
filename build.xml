@@ -14,7 +14,7 @@
     <property name="test.jar.path" location="${build.dir}/artifacts/windowlicker-tests-${build.number}.jar"/>
     <property name="product.src.jar.path" location="${build.dir}/artifacts/windowlicker-${build.number}.src.jar"/>
 
-    <property name="keyboard.type" value="GB"/>
+    <property name="keyboard.type" value="US"/>
 
     <path id="library.path">
         <fileset dir="${basedir}/lib">
@@ -90,7 +90,7 @@
         <junit timeout="600000" fork="true" printsummary="yes" errorproperty="test.failure"
                failureproperty="test.failure">
             <classpath refid="unit-test.classpath"/>
-            <!--<jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}"/>-->
+            <jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}"/>
 
             <formatter classname="com.objogate.wl.build.RecordingFormatter"/>
             <formatter type="xml"/>
