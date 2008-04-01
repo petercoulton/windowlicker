@@ -51,8 +51,6 @@ public class KeyboardLayout implements SystemProperties {
 
     public Gesture gestureForTyping(char ch) {
         KeyStroke keyStroke = keyStrokeFor(ch);
-        System.out.println("keyStroke = " + keyStroke + " " + ch);
-
         return withModifierMask(keyStroke.getModifiers(), typeKey(keyStroke.getKeyCode()));
     }
 
