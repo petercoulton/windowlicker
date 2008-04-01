@@ -1,7 +1,5 @@
 package com.objogate.wl.driver;
 
-import javax.swing.LookAndFeel;
-import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Rectangle;
@@ -215,8 +213,7 @@ public abstract class ComponentDriver<T extends Component> {
 
     //TODO: make this work with gestures
     protected int multiSelectKey() {
-        LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
-        if (lookAndFeel.getClass().getName().equals("apple.laf.AquaLookAndFeel")) {
+        if (Platform.is(Platform.Mac)) {
             return KeyEvent.VK_META;
         } else {
             return KeyEvent.VK_CONTROL;

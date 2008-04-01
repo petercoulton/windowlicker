@@ -1,14 +1,18 @@
 package com.objogate.wl.driver.tests;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.Color;
 import java.awt.Component;
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import com.objogate.exception.Defect;
 import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.ComponentManipulation;
+import com.objogate.wl.UI;
 import com.objogate.wl.driver.ComponentDriver;
 import com.objogate.wl.driver.JFrameDriver;
 import static com.objogate.wl.driver.JFrameDriver.topLevelFrame;
@@ -17,31 +21,46 @@ import com.objogate.wl.gesture.GesturePerformer;
 public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? extends Component>> {
 
     static {
-        setLookAndFeel();
-    }
-
-    private static void setLookAndFeel() {
         try {
-            String lnfName = System.getProperty("swing.defaultlaf", null);
-            if (lnfName == null) {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } else {
-                UIManager.setLookAndFeel(lnfName);
-            }
+            String lnfName = System.getProperty("swing.defaultlaf", UIManager.getSystemLookAndFeelClassName());
+            setLookAndFeel(lnfName);
         } catch (Exception e) {
             throw new Defect("Does this happen?", e);
         }
     }
-    
+
+    public static void main(String[] args) {
+        System.out.println(UIManager.getSystemLookAndFeelClassName());
+    }
+
+    protected static void setLookAndFeel(UI lnfName, final Component c) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        setLookAndFeel(lnfName.classOfLookAnfFeel);
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                public void run() {
+                    SwingUtilities.updateComponentTreeUI(c);
+                }
+            });
+        } catch (InterruptedException e) {
+            throw new Defect("Should never happen", e);
+        } catch (InvocationTargetException e) {
+            throw new Defect("Should never happen", e);
+        }
+    }
+
+    private static void setLookAndFeel(String lnfName) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        UIManager.setLookAndFeel(lnfName);
+    }
+
     public static final String WINDOWLICKER_END_OF_TEST_PAUSE = "windowlicker.end-of-test-pause";
-    
+
     protected final GesturePerformer gesturePerformer = new GesturePerformer();
     protected final AWTEventQueueProber prober = new AWTEventQueueProber();
     protected int endOfTestPause = Integer.valueOf(System.getProperty(AbstractComponentDriverTest.WINDOWLICKER_END_OF_TEST_PAUSE, "0"));
     protected JFrame frame;
     protected JFrameDriver frameDriver;
     protected T driver;
-    
+
     @After
     public void disposeOfFrame() throws Exception {
         pause(endOfTestPause); // just to give the view a chance to see the result of the test
@@ -56,11 +75,11 @@ public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? ex
         frame.setTitle(getClass().getSimpleName());
         frame.setName("componentViewer");
         frame.pack();
-        
-        frameDriver = new JFrameDriver(gesturePerformer, 
-                                       topLevelFrame(ComponentDriver.named("componentViewer")),
-                                       prober);
-        
+
+        frameDriver = new JFrameDriver(gesturePerformer,
+                topLevelFrame(ComponentDriver.named("componentViewer")),
+                prober);
+
         try {
             pause(500);
         } catch (InterruptedException e) {
