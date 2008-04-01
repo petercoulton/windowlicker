@@ -1,4 +1,4 @@
-package com.objogate.wl.driver;
+package com.objogate.wl.driver.tests;
 
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.not;
 import org.junit.Before;
 import org.junit.Test;
 import com.objogate.wl.UI;
-import com.objogate.wl.driver.tests.AbstractComponentDriverTest;
+import com.objogate.wl.driver.JFileChooserDriver;
 import com.objogate.wl.probe.ComponentIdentity;
 import com.objogate.wl.probe.RecursiveComponentFinder;
 
