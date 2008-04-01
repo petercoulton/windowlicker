@@ -78,21 +78,31 @@ public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
 
                         int direction = selectionManipulation.selectionEnd > textEndIndex ? -1 : 1;
 
+                        if(!screenBounds().contains(currentLocation)) {///oops, we're off the edge... this should get handled below but for some reason it doesn't quite work
+                            return translateHorizontally(currentLocation, direction, 10);
+                        }
+
                         int numberOfCharactersToMove = selectionManipulation.selectionEnd - textEndIndex;
 
                         //if we're more than 2 characters away move quickly (5 at a time), else move slowly
                         int amount = Math.abs(numberOfCharactersToMove) > 2 ? 5 : 1;
 
                         if (numberOfCharactersToMove != 0) {
-                            Point desiredLocation = new Point(currentLocation);
-                            desiredLocation.translate(direction * amount, 0);
-                            return desiredLocation;
+                            return translateHorizontally(currentLocation, direction, amount);
                         }
                         return currentLocation;
                     }
+
+                    private Point translateHorizontally(Point currentLocation, int direction, int amount) {
+                        Point desiredLocation = new Point(currentLocation);
+                        desiredLocation.translate(direction * amount, 0);
+                        return desiredLocation;
+                    }
+
                 })
         ));
     }
+
 
     public Insets getInsets() {
         ComponentInsetsManipulation componentInsetsManipulation = new ComponentInsetsManipulation();
