@@ -76,7 +76,7 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
     }
 
     @Test
-    public void testSelectingMultipleCells() throws Exception {
+    public void testSelectingMultipleNonContiguousCells() throws Exception {
         table.setCellSelectionEnabled(true);
         table.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 

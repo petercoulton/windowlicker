@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import static java.util.Arrays.asList;
 import java.util.List;
 import com.objogate.wl.Gesture;
+import com.objogate.wl.Platform;
+import com.objogate.wl.UI;
 
 /**
  * Convenient factory functions for gestures that can be combined to act as a gesture "DSL".
@@ -152,9 +154,30 @@ public class Gestures {
         return result;
     }
 
+    /**
+     * Does not work on OS X with the metal l&f, only allows selection of single cells for some reason
+     */
+    public static Gesture whileHoldingMultiSelect(Gesture gesture) {
+        int menuShortcutKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 
-    public static Gesture shortcut(Gesture shortcutKeyGesture) {
-        return withModifierMask(Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), shortcutKeyGesture);
+        // there is a bug in the Metal L&F, for multi-select this should be 'commnd'
+        if(UI.is(UI.METAL) && Platform.is(Platform.Mac))
+            menuShortcutKeyMask = META;
+
+        return withModifierMask(menuShortcutKeyMask, gesture);
+    }
+
+    /**
+     * Do stuff while holding ctrl (or command on OS X)
+     */
+    public static Gesture shortcut(Gesture gesture) {
+        int menuShortcutKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+
+        // there is a bug in the Metal L&F on OS X, for instead of 'command' this needs to use control
+        if(UI.is(UI.METAL) && Platform.is(Platform.Mac))
+            menuShortcutKeyMask = CONTROL;
+
+        return withModifierMask(menuShortcutKeyMask, gesture);
     }
 
     public static Gesture shortcut(int keyCode) {

@@ -8,10 +8,10 @@ import org.junit.Test;
 import com.objogate.wl.driver.JTextComponentDriver;
 
 public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<JTextComponentDriver<JTextComponent>> {
+    JTextField textField = new JTextField("");
 
     @Before
     public void setUp() throws Exception {
-        JTextField textField = new JTextField("");
         textField.setColumns(30);
 
         view(textField);
@@ -29,7 +29,7 @@ public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<J
     }
 
     @Test
-    public void testSelectAll() {
+    public void testSelectAll() throws Exception {
         setText("select all");
 
         driver.leftClickOnComponent();

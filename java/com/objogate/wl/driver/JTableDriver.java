@@ -57,8 +57,6 @@ public class JTableDriver extends ComponentDriver<JTable> {
     public void selectCells(Cell... cells) {
         scrollCellToVisible(cells[0]);
         
-        int keyCode = multiSelectKey();
-
         Gesture[] gestures = new Gesture[cells.length];
         for (int i = 0; i < cells.length; i++) {
            gestures[i] = sequence(
@@ -67,8 +65,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
            );
         }
 
-        performGesture(whileHoldingKey(keyCode,
-                sequence(gestures)));
+        performGesture(whileHoldingMultiSelect(sequence(gestures)));
     }
 
     public void selectCell(final int row, final int col) {

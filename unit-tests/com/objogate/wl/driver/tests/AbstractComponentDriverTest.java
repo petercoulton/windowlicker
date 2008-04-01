@@ -33,8 +33,12 @@ public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? ex
         System.out.println(UIManager.getSystemLookAndFeelClassName());
     }
 
-    protected static void setLookAndFeel(UI lnfName, final Component c) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-        setLookAndFeel(lnfName.classOfLookAnfFeel);
+    protected void setLookAndFeel(UI ui) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        setLookAndFeel(ui, frame);
+    }
+
+    protected void setLookAndFeel(UI ui, final Component c) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        setLookAndFeel(ui.classOfLookAnfFeel);
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
                 public void run() {

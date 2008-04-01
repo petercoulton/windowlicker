@@ -3,7 +3,6 @@ package com.objogate.wl.driver;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 import org.hamcrest.BaseMatcher;
 import static org.hamcrest.CoreMatchers.allOf;
 import org.hamcrest.Description;
@@ -211,14 +210,6 @@ public abstract class ComponentDriver<T extends Component> {
         return manipulation.getBounds();
     }
 
-    //TODO: make this work with gestures
-    protected int multiSelectKey() {
-        if (Platform.is(Platform.Mac)) {
-            return KeyEvent.VK_META;
-        } else {
-            return KeyEvent.VK_CONTROL;
-        }
-    }
 
     protected void cut() {
         performGesture(Gestures.cut());
