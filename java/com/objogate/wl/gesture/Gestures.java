@@ -160,7 +160,6 @@ public class Gestures {
     public static Gesture whileHoldingMultiSelect(Gesture gesture) {
         int menuShortcutKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 
-        // there is a bug in the Metal L&F, for multi-select this should be 'commnd'
         if(UI.is(UI.METAL) && Platform.is(Platform.Mac))
             menuShortcutKeyMask = META;
 
