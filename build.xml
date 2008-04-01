@@ -91,6 +91,8 @@
                failureproperty="test.failure">
             <classpath refid="unit-test.classpath"/>
             <jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}"/>
+            <!--<jvmarg value="-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"/>-->
+            <jvmarg value="-Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel"/>
 
             <formatter classname="com.objogate.wl.build.RecordingFormatter"/>
             <formatter type="xml"/>

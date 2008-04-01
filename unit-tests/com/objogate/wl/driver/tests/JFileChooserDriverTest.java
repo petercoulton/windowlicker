@@ -2,6 +2,7 @@ package com.objogate.wl.driver.tests;
 
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.UIManager;
 import java.awt.Component;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
@@ -141,7 +142,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
 
     @Test
     public void testCanClickOnTheHomeButton() throws InterruptedException {
-        if(UI.is(UI.AQUA) || UI.is(UI.WINDOWS) || UI.is(UI.METAL))
+        if(UI.is(UI.AQUA) || UI.is(UI.WINDOWS))
             return;
 
         showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, null);
@@ -155,7 +156,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
 
     @Test
     public void testCanClickOnTheDesktopButton() throws InterruptedException {
-        if(UI.is(UI.AQUA))
+        if(UI.is(UI.AQUA) || UI.is(UI.METAL))
             return;
 
         showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, "Go");
@@ -166,6 +167,10 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
 
         driver.currentDirectory(desktop());
     }
+
+    public static void main(String[] args) {
+        System.out.println(UIManager.getCrossPlatformLookAndFeelClassName());
+   }
 
     @Test
     public void testCanClickOnTheDocumentsButton() throws InterruptedException {

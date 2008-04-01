@@ -8,7 +8,6 @@ public enum UI {
 
     public static boolean is(UI l) {
         String name = UIManager.getLookAndFeel().getName();
-        System.out.println("name = " + name);
         switch (l) {
             case AQUA:
                 return name.toLowerCase().contains("aqua");

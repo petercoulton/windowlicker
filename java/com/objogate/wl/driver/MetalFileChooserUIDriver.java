@@ -53,7 +53,7 @@ class MetalFileChooserUIDriver implements FileChooserUIDriver {
     }
 
     public void home() {
-        throw new UnsupportedOperationException("There is no 'Home' button in the Metal L&F");
+        movementIconNumber(1).click();
     }
 
     public void documents() {
@@ -61,7 +61,7 @@ class MetalFileChooserUIDriver implements FileChooserUIDriver {
     }
 
     public void desktop() {
-        movementIconNumber(1).click();
+        throw new UnsupportedOperationException("There is no 'Desktop' button in the Metal L&F");
     }
 
     public void createNewFolder(String folderName) {
