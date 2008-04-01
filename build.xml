@@ -97,7 +97,7 @@
 
             <batchtest todir="${test.output.dir}">
                 <fileset dir="${basedir}/unit-tests">
-                    <include name="**/JTextFieldDriverTest.java"/>
+                    <include name="**/*Test.java"/>
                     <exclude name="**/Abstract*Test.java"/>
                 </fileset>
             </batchtest>
