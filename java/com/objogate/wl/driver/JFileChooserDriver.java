@@ -53,6 +53,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
     }
 
     private FileChooserUIDriver chooserUI() {
+        isShowingOnScreen();
         return getRelevantComponentDriver();
     }
 
