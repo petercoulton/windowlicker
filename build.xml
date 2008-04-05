@@ -90,6 +90,7 @@
         <junit timeout="600000" fork="true" printsummary="yes" errorproperty="test.failure"
                failureproperty="test.failure">
             <classpath refid="unit-test.classpath"/>
+            <jvmarg value="-Dcom.objogate.wl.timeout=10000"/>
             <jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}"/>
             <!--<jvmarg value="-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"/>-->
             <jvmarg value="-Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel"/>
