@@ -130,15 +130,15 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     public void testCanNavigateUpTheDirectoryTree() throws InterruptedException {
         modalDialogShower.showInAnotherThread("Go");
 
-        driver.currentDirectory(equalTo(testFile.getParentFile()));
+        driver.currentDirectory(testFile.getParentFile());
 
         driver.upOneFolder();
 
-        driver.currentDirectory(equalTo(testFile.getParentFile().getParentFile()));
+        driver.currentDirectory(testFile.getParentFile().getParentFile());
 
         driver.upOneFolder();
 
-        driver.currentDirectory(equalTo(testFile.getParentFile().getParentFile().getParentFile()));
+        driver.currentDirectory(testFile.getParentFile().getParentFile().getParentFile());
     }
 
     @Test
