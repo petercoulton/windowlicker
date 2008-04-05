@@ -2,7 +2,6 @@ package com.objogate.wl.driver.tests;
 
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.UIManager;
 import java.awt.Component;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
@@ -23,6 +22,7 @@ import com.objogate.wl.probe.RecursiveComponentFinder;
 public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileChooserDriver> {
     private JFileChooser chooser;
     private File testFile = new File("build/parent.dir/child.dir/", "test.file");
+    private ModalDialogShower modalDialogShower;
 
     @Before
     public void setUp() throws Exception {
@@ -35,6 +35,8 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
         chooser = new JFileChooser(dir);
         chooser.setControlButtonsAreShown(true);
         driver = new JFileChooserDriver(gesturePerformer, chooser);
+
+        modalDialogShower = new ModalDialogShower(chooser);
     }
 
     private void delete(File dir) {
@@ -49,8 +51,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     public void testPrintOutSubComponents() throws InterruptedException {
-        final int[] results = new int[]{-999};
-        final CountDownLatch latch = showChooserInAnotherThreadBecauseItsModal(results, "Go");
+        modalDialogShower.showInAnotherThread("Go");
 
         ComponentIdentity<Component> parentOrOwnerFinder = new ComponentIdentity<Component>(chooser);
         RecursiveComponentFinder<Component> finder = new RecursiveComponentFinder<Component>(Component.class, Matchers.anything(), parentOrOwnerFinder);
@@ -60,79 +61,74 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
         }
         driver.cancel();
 
-        latch.await(5, TimeUnit.SECONDS);
+        modalDialogShower.waitForModalDialogToReturn();
     }
 
     @Test
     public void testCanClickCancelButton() throws InterruptedException {
-        final int[] results = new int[]{-999};
-        final CountDownLatch latch = showChooserInAnotherThreadBecauseItsModal(results, "Go");
+        modalDialogShower.showInAnotherThread("Go");
 
         driver.cancel();
 
-        latch.await(5, TimeUnit.SECONDS);
+        int result = modalDialogShower.waitForModalDialogToReturn();
 
-        assertThat(results[0], equalTo(JFileChooser.CANCEL_OPTION));
+        assertThat(result, equalTo(JFileChooser.CANCEL_OPTION));
     }
 
     @Test
     public void testCanClickDefaultApproveButton() throws InterruptedException {
-        final int[] results = new int[]{-999};
-        final CountDownLatch latch = showChooserInAnotherThreadBecauseItsModal(results, null);
+        modalDialogShower.showInAnotherThread(null);
 
         //The OK button isn't enabled without selecting a file on Auqa / Mac
         driver.selectFile(testFile.getName());
         driver.approve();
 
-        latch.await(5, TimeUnit.SECONDS);
+        int result = modalDialogShower.waitForModalDialogToReturn();
 
-        assertThat(results[0], equalTo(JFileChooser.APPROVE_OPTION));
+        assertThat(result, equalTo(JFileChooser.APPROVE_OPTION));
     }
 
     @Test
     public void testCanClickNamedApproveButton() throws InterruptedException {
-        final int[] results = new int[]{-999};
-        final CountDownLatch latch = showChooserInAnotherThreadBecauseItsModal(results, "Go");
+        modalDialogShower.showInAnotherThread("Go");
 
         driver.enterManually("whatever");
         driver.approve();
 
-        latch.await(5, TimeUnit.SECONDS);
+        int result = modalDialogShower.waitForModalDialogToReturn();
 
-        assertThat(results[0], equalTo(JFileChooser.APPROVE_OPTION));
+        assertThat(result, equalTo(JFileChooser.APPROVE_OPTION));
     }
 
     @Test
     public void testCanSelectFile() throws Exception {
-        final int[] results = new int[]{-999};
-        final CountDownLatch latch = showChooserInAnotherThreadBecauseItsModal(results, "Go");
+        modalDialogShower.showInAnotherThread("Go");
 
         driver.selectFile(testFile.getName());
         driver.approve();
 
-        latch.await(5, TimeUnit.SECONDS);
+        int result = modalDialogShower.waitForModalDialogToReturn();
 
-        assertThat(results[0], equalTo(JFileChooser.APPROVE_OPTION));
+        assertThat(result, equalTo(JFileChooser.APPROVE_OPTION));
         assertThat(chooser.getSelectedFile().getName(), equalTo(testFile.getName()));
     }
 
     @Test
     public void testWillTypeGivenTextIntoTextbox() throws InterruptedException {
-        final int[] results = new int[]{-999};
-        final CountDownLatch latch = showChooserInAnotherThreadBecauseItsModal(results, "Go");
+        modalDialogShower.showInAnotherThread("Go");
 
         driver.enterManually("somethingorother");
         driver.approve();
 
-        latch.await(5, TimeUnit.SECONDS);
+        int result = modalDialogShower.waitForModalDialogToReturn();
 
         assertThat(chooser.getSelectedFile().getName(), equalTo("somethingorother"));
-        assertThat(results[0], equalTo(JFileChooser.APPROVE_OPTION));
+        assertThat(result, equalTo(JFileChooser.APPROVE_OPTION));
     }
 
     @Test
     public void testCanNavigateDirectories() throws InterruptedException {
-        showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, "Go");
+        modalDialogShower.showInAnotherThread("Go");
 
         driver.upOneFolder();
         driver.upOneFolder();
@@ -142,10 +138,10 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
 
     @Test
     public void testCanClickOnTheHomeButton() throws InterruptedException {
-        if(UI.is(UI.AQUA) || UI.is(UI.WINDOWS))
+        if (UI.is(UI.AQUA) || UI.is(UI.WINDOWS))
             return;
 
-        showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, null);
+        modalDialogShower.showInAnotherThread(null);
 
         driver.currentDirectory(not(userHome()));
 
@@ -156,10 +152,10 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
 
     @Test
     public void testCanClickOnTheDesktopButton() throws InterruptedException {
-        if(UI.is(UI.AQUA) || UI.is(UI.METAL))
+        if (UI.is(UI.AQUA) || UI.is(UI.METAL))
             return;
 
-        showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, "Go");
+        modalDialogShower.showInAnotherThread("Go");
 
         driver.currentDirectory(not(desktop()));
 
@@ -168,16 +164,12 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
         driver.currentDirectory(desktop());
     }
 
-    public static void main(String[] args) {
-        System.out.println(UIManager.getCrossPlatformLookAndFeelClassName());
-   }
-
     @Test
     public void testCanClickOnTheDocumentsButton() throws InterruptedException {
-        if(UI.is(UI.AQUA) || UI.is(UI.METAL))
+        if (UI.is(UI.AQUA) || UI.is(UI.METAL))
             return;
 
-        showChooserInAnotherThreadBecauseItsModal(new int[]{-999}, "Go");
+        modalDialogShower.showInAnotherThread("Go");
 
         driver.currentDirectory(not(documents()));
 
@@ -189,26 +181,39 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     @Test
     public void testCanCreateNewFolder() throws InterruptedException {
         File testFolder = new File(testFile.getParentFile(), "test.folder");
-        final int[] results = new int[]{-999};
-        final CountDownLatch latch = showChooserInAnotherThreadBecauseItsModal(results, "Go");
+
+        modalDialogShower.showInAnotherThread("Go");
 
         driver.createNewFolder(testFolder.getName());
 
-        latch.await(5, TimeUnit.SECONDS);
+        modalDialogShower.waitForModalDialogToReturn();
 
         Assert.assertTrue("Folder " + testFolder.getAbsolutePath() + " exists", testFolder.exists());
     }
 
-    private CountDownLatch showChooserInAnotherThreadBecauseItsModal(final int[] results, final String approveButtonText) {
-        final CountDownLatch latch = new CountDownLatch(1);
+    class ModalDialogShower {
+        private final JFileChooser chooser;
+        private final CountDownLatch latch = new CountDownLatch(1);
+        private int[] results = new int[]{-999};
 
-        new Thread(new Runnable() {
-            public void run() {
-                results[0] = chooser.showDialog(frame, approveButtonText);
-                latch.countDown();
-            }
-        }).start();
-        return latch;
+        public ModalDialogShower(JFileChooser chooser) {
+            this.chooser = chooser;
+        }
+
+        public void showInAnotherThread(final String approveButtonText) {
+
+            new Thread(new Runnable() {
+                public void run() {
+                    results[0] = chooser.showDialog(frame, approveButtonText);
+                    latch.countDown();
+                }
+            }).start();
+        }
+
+        public int waitForModalDialogToReturn() throws InterruptedException {
+            latch.await(5, TimeUnit.SECONDS);
+            return results[0];
+        }
     }
 
     private Matcher<String> userHome() {
