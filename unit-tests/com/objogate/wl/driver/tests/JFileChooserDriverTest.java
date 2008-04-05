@@ -21,7 +21,7 @@ import com.objogate.wl.probe.RecursiveComponentFinder;
 
 public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileChooserDriver> {
     private JFileChooser chooser;
-    private File testFile = new File("build/parent.dir/child.dir/", "test.file");
+    private File testFile = new File("build/grandparent.dir/parent.dir/child.dir/", "test.file");
     private ModalDialogShower modalDialogShower;
 
     @Before
@@ -127,13 +127,30 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    public void testCanNavigateDirectories() throws InterruptedException {
+    public void testCanNavigateUpTheDirectoryTree() throws InterruptedException {
         modalDialogShower.showInAnotherThread("Go");
 
-        driver.upOneFolder();
+        driver.currentDirectory(equalTo(testFile.getParentFile()));
+
         driver.upOneFolder();
 
-        driver.currentDirectory(not(Matchers.equalTo(testFile.getParentFile().getParentFile().getParentFile().getName())));
+        driver.currentDirectory(equalTo(testFile.getParentFile().getParentFile()));
+
+        driver.upOneFolder();
+
+        driver.currentDirectory(equalTo(testFile.getParentFile().getParentFile().getParentFile()));
+    }
+
+    @Test
+    public void testCanNavigateUpAndDownTheDirectoryTree() throws InterruptedException {
+        modalDialogShower.showInAnotherThread("Go");
+
+        driver.currentDirectory(testFile.getParentFile());
+
+        driver.upOneFolder();
+        driver.intoDir(testFile.getParentFile().getName());
+
+        driver.currentDirectory(testFile.getParentFile());
     }
 
     @Test
@@ -215,16 +232,17 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
             return results[0];
         }
     }
-
-    private Matcher<String> userHome() {
-        return Matchers.equalTo(System.getProperty("user.home"));
+    
+//todo these need to be moved into Platform
+    private Matcher<File> userHome() {
+        return Matchers.equalTo(new File(System.getProperty("user.home")));
     }
 
-    private Matcher<String> desktop() {
-        return Matchers.equalTo(System.getProperty("user.home") + File.separatorChar + "Desktop");
+    private Matcher<File> desktop() {
+        return Matchers.equalTo(new File(System.getProperty("user.home") + File.separatorChar + "Desktop"));
     }
 
-    private Matcher<String> documents() {
-        return Matchers.equalTo(System.getProperty("user.home") + File.separatorChar + "My Documents");
+    private Matcher<File> documents() {
+        return Matchers.equalTo(new File(System.getProperty("user.home") + File.separatorChar + "My Documents"));
     }
 }

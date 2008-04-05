@@ -6,8 +6,11 @@ import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.HeadlessException;
 import java.io.File;
+import java.io.IOException;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+import com.objogate.exception.Defect;
 import com.objogate.wl.Probe;
 import com.objogate.wl.UI;
 import com.objogate.wl.gesture.GesturePerformer;
@@ -73,6 +76,10 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         chooserUI().upOneFolder();
     }
 
+    public void intoDir(String name) {
+        chooserUI().intoDir(name);
+    }
+
     public void createNewFolder(String folderName) {
         chooserUI().createNewFolder(folderName);
     }
@@ -81,8 +88,27 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         chooserUI().selectFile(fileName);
     }
 
-    //TODO: make the descriptions recursive
-    public void currentDirectory(final Matcher<String> matcher) {
+    public void currentDirectory(final File expectedDir) {
+        currentDirectory(new TypeSafeMatcher<File>() {
+            public boolean matchesSafely(File file) {
+                try {
+                    return file.getCanonicalPath().equals(expectedDir.getCanonicalPath());
+                } catch (IOException e) {
+                    throw new Defect("Cannot get path of directory " + expectedDir);
+                }
+            }
+
+            public void describeTo(Description description) {
+                try {
+                    description.appendText(expectedDir.getCanonicalPath());
+                } catch (IOException e) {
+                    throw new Defect("Cannot get path of directory " + expectedDir);
+                }
+            }
+        });
+    }
+
+    public void currentDirectory(final Matcher<File> matcher) {
         check(new Probe() {
             File currentDirectory;
 
@@ -91,12 +117,12 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
             }
 
             public boolean isSatisfied() {
-                return matcher.matches(currentDirectory.getAbsolutePath());
+                return matcher.matches(currentDirectory);
             }
 
             public void describeTo(Description description) {
-                description.appendText("current directory matches ");
-                description.appendDescriptionOf(matcher);
+                description.appendText("current directory matches ").
+                        appendDescriptionOf(matcher);
             }
 
             public boolean describeFailureTo(Description description) {
@@ -113,4 +139,5 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
         if (parentComponent instanceof JFrame) return (JFrame) parentComponent;
         return rootFrameFor(parentComponent.getParent());
     }
+
 }

@@ -30,6 +30,11 @@ class AquaFileChooserUIDriver extends MetalFileChooserUIDriver {
         }
     }
 
+    public void intoDir(String directoryName) {
+        selectFile(directoryName);
+        parentOrOwner.performGesture(Gestures.doubleClickMouse());
+    }
+
     public void createNewFolder(String folderName) {
         new AbstractButtonDriver<JButton>(parentOrOwner, JButton.class, ComponentMatchers.withButtonText("New Folder")).click();
         JTextFieldDriver textDriver = new JTextFieldDriver(parentOrOwner, JTextField.class, new TypeSafeMatcher<JTextField>() {

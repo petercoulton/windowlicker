@@ -20,4 +20,6 @@ public interface FileChooserUIDriver {
     JTextComponentDriver<? extends JTextComponent> textBox();
 
     void selectFile(String fileName);
+
+    void intoDir(String directoryName);
 }

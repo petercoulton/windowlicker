@@ -5,6 +5,7 @@ import javax.swing.text.JTextComponent;
 import java.io.File;
 import org.hamcrest.Matchers;
 import com.objogate.wl.ComponentManipulation;
+import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.matcher.ComponentMatchers;
 import com.objogate.wl.matcher.JLabelTextMatcher;
 
@@ -18,6 +19,11 @@ class GTKFileChooserUIDriver implements FileChooserUIDriver {
     public void selectFile(String fileName) {
         JLabelDriver fileEntry = new JLabelDriver(parentOrOwner, parentOrOwner.the(JLabel.class, ComponentMatchers.withLabelText(Matchers.equalTo(fileName))));
         fileEntry.leftClickOnComponent();
+    }
+
+    public void intoDir(String directoryName) {
+        selectFile(directoryName);
+        parentOrOwner.performGesture(Gestures.doubleClickMouse());
     }
 
     public void createNewFolder(String folderName) {
@@ -36,11 +42,6 @@ class GTKFileChooserUIDriver implements FileChooserUIDriver {
         JListDriver directoryList = new JListDriver(parentOrOwner, JList.class, ComponentDriver.named("GTKFileChooser.directoryList"));
         CurrentDirectoryManipulator directoryManipulator = new CurrentDirectoryManipulator();
         parentOrOwner.perform("get current directory", directoryManipulator);
-
-//            File currentDirectory = directoryManipulator.getCurrentDirectory();
-//            directoryList.selectItem(new File(currentDirectory, ".."));
-
-        //todo (nick): i changed this but was unable to test it - sorry if i broke it!
         directoryList.selectItem(new JLabelTextMatcher(Matchers.equalTo("..")));
     }
 
