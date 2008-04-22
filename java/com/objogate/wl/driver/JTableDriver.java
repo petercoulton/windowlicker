@@ -96,32 +96,11 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public Cell hasCell(final Matcher<? extends JComponent> matcher) {
-        final Cell[] cell = new Cell[1];
+        WithCellMatcher withCellMatching = new WithCellMatcher(matcher);
+        
+        is(withCellMatching);
 
-        is(new TypeSafeMatcher<JTable>() {
-            public boolean matchesSafely(JTable component) {
-                int rowCount = component.getRowCount();
-                int columnCount = component.getColumnCount();
-
-                for (int row = 0; row < rowCount; row++) {
-                    for (int col = 0; col < columnCount; col++) {
-                        Component renderedCell = JTableCellManipulation.render(component, row, col);
-                        if (matcher.matches(renderedCell)) {
-                            cell[0] = new Cell(row, col);
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            }
-
-            public void describeTo(Description description) {
-                description.appendDescriptionOf(matcher);
-            }
-        });
-
-        return cell[0];
+        return withCellMatching.foundCell;
     }
 
     public Component editCell(int row, int col) {
@@ -289,6 +268,36 @@ public class JTableDriver extends ComponentDriver<JTable> {
         public void describeTo(Description description) {
             description.appendText("cell " + unselectedCell + " is not selected");
         }
+    }
+    
+    private static final class WithCellMatcher extends TypeSafeMatcher<JTable> {
+      private final Matcher<? extends JComponent> matcher;
+      Cell foundCell;
+
+      WithCellMatcher(Matcher<? extends JComponent> matcher) {
+        this.matcher = matcher;
+      }
+
+      @Override public boolean matchesSafely(JTable table) {
+          int rowCount = table.getRowCount();
+          int columnCount = table.getColumnCount();
+
+          for (int row = 0; row < rowCount; row++) {
+              for (int col = 0; col < columnCount; col++) {
+                  Component renderedCell = JTableCellManipulation.render(table, row, col);
+                  if (matcher.matches(renderedCell)) {
+                      foundCell = new Cell(row, col);
+                      return true;
+                  }
+              }
+          }
+          return false;
+      }
+
+      public void describeTo(Description description) {
+          description.appendText("with cell ")
+                     .appendDescriptionOf(matcher);
+      }
     }
 
     private static class JTableRowHeightManipulation implements ComponentManipulation<JTable> {

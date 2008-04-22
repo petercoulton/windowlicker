@@ -1,22 +1,26 @@
 package com.objogate.wl.driver.tests;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
+import static com.objogate.wl.driver.JTableDriver.cell;
+import static com.objogate.wl.matcher.ComponentMatchers.withLabelText;
+import static org.hamcrest.Matchers.equalTo;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import static org.hamcrest.Matchers.equalTo;
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.Platform;
 import com.objogate.wl.driver.JTableDriver;
-import static com.objogate.wl.driver.JTableDriver.cell;
 import com.objogate.wl.driver.JTableHeaderDriver;
 import com.objogate.wl.driver.JTextFieldDriver;
-import com.objogate.wl.matcher.JLabelTextMatcher;
 
 public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> {
     private ReallyBigTable table = new ReallyBigTable();
@@ -34,7 +38,7 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
 
     @Test
     public void testHasCellMatching() {
-        driver.hasCell(new JLabelTextMatcher(Matchers.equalTo("1x1")));
+        driver.hasCell(withLabelText(equalTo("1x1")));
     }
 
     @Test

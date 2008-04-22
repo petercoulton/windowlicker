@@ -1,14 +1,18 @@
 package com.objogate.wl.probe;
 
-import javax.swing.MenuElement;
+import static java.util.Arrays.asList;
+
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Window;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.MenuElement;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+
 import com.objogate.wl.ComponentFinder;
 import com.objogate.wl.internal.NoDuplicateList;
 
@@ -40,18 +44,25 @@ public class RecursiveComponentFinder<T extends Component> implements ComponentF
         searchWithin(parentOrOwnerFinder.components());
     }
 
-    private void searchWithin(Component[] components) {
-        searchWithin(Arrays.asList(components));
+    public void describeTo(Description description) {
+      describeBrieflyTo(description);
+      description.appendText("\n    in ")
+              .appendDescriptionOf(parentOrOwnerFinder);
     }
 
-    private void searchWithin(MenuElement[] elements) {
-        List<Component> list = new ArrayList<Component>();
-        for (MenuElement element : elements) {
-            list.add(element.getComponent());
-        }
-        searchWithin(list);
-    }
+    public boolean describeFailureTo(Description description) {
+      if (parentOrOwnerFinder.describeFailureTo(description)) {
+          return true;
+      }
 
+      description.appendText("\n    contained ")
+              .appendText(String.valueOf(found.size()))
+              .appendText(" ");
+      describeBrieflyTo(description);
+
+      return found.size() == 0;
+    }
+    
     private void searchWithin(Iterable<? extends Component> components) {
         for (Component component : components) {
             searchWithin(component);
@@ -63,23 +74,17 @@ public class RecursiveComponentFinder<T extends Component> implements ComponentF
             found.add(componentType.cast(component));
         } else {
             if (component instanceof Container) {
-                searchWithin(((Container) component).getComponents());
+                searchWithin(componentsInside((Container) component));
             }
 
             if (component instanceof Window) {
-                searchWithin(((Window) component).getOwnedWindows());
+                searchWithin(windowsOwnedBy((Window) component));
             }
 
             if (component instanceof MenuElement) {
-                searchWithin(((MenuElement) component).getSubElements());
+                searchWithin(componentsInMenu((MenuElement) component));
             }
         }
-    }
-
-    public void describeTo(Description description) {
-        describeBrieflyTo(description);
-        description.appendText("\n    in ")
-                .appendDescriptionOf(parentOrOwnerFinder);
     }
 
     private void describeBrieflyTo(Description description) {
@@ -88,16 +93,20 @@ public class RecursiveComponentFinder<T extends Component> implements ComponentF
                 .appendDescriptionOf(criteria);
     }
 
-    public boolean describeFailureTo(Description description) {
-        if (parentOrOwnerFinder.describeFailureTo(description)) {
-            return true;
-        }
-
-        description.appendText("\n    contained ")
-                .appendText(String.valueOf(found.size()))
-                .appendText(" ");
-        describeBrieflyTo(description);
-
-        return found.size() == 0;
+    private List<Component> componentsInMenu(MenuElement menuElement) {
+      List<Component> list = new ArrayList<Component>();
+      for (MenuElement element : menuElement.getSubElements()) {
+          list.add(element.getComponent());
+      }
+      return list;
     }
+
+    private List<Window> windowsOwnedBy(Window window) {
+      return asList(window.getOwnedWindows());
+    }
+
+    private List<Component> componentsInside(Container container) {
+      return asList(container.getComponents());
+    }
+
 }

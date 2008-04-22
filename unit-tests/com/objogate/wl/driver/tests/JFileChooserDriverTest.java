@@ -127,7 +127,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    public void testCanNavigateUpTheDirectoryTree() throws InterruptedException {
+    public void testCanNavigateUpTheDirectoryTree() {
         modalDialogShower.showInAnotherThread("Go");
 
         driver.currentDirectory(testFile.getParentFile());
@@ -142,7 +142,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    public void testCanNavigateUpAndDownTheDirectoryTree() throws InterruptedException {
+    public void testCanNavigateUpAndDownTheDirectoryTree() {
         modalDialogShower.showInAnotherThread("Go");
 
         driver.currentDirectory(testFile.getParentFile());
@@ -154,7 +154,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    public void testCanClickOnTheHomeButton() throws InterruptedException {
+    public void testCanClickOnTheHomeButton() {
         if (UI.is(UI.AQUA) || UI.is(UI.WINDOWS))
             return;
 
@@ -168,7 +168,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    public void testCanClickOnTheDesktopButton() throws InterruptedException {
+    public void testCanClickOnTheDesktopButton() {
         if (UI.is(UI.AQUA) || UI.is(UI.METAL))
             return;
 
@@ -182,7 +182,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     @Test
-    public void testCanClickOnTheDocumentsButton() throws InterruptedException {
+    public void testCanClickOnTheDocumentsButton() {
         if (UI.is(UI.AQUA) || UI.is(UI.METAL))
             return;
 
@@ -209,19 +209,19 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
     }
 
     class ModalDialogShower {
-        private final JFileChooser chooser;
+        private final JFileChooser fileChooser;
         private final CountDownLatch latch = new CountDownLatch(1);
         private int[] results = new int[]{-999};
 
-        public ModalDialogShower(JFileChooser chooser) {
-            this.chooser = chooser;
+        public ModalDialogShower(JFileChooser fileChooser) {
+            this.fileChooser = fileChooser;
         }
 
         public void showInAnotherThread(final String approveButtonText) {
 
             new Thread(new Runnable() {
                 public void run() {
-                    results[0] = chooser.showDialog(frame, approveButtonText);
+                    results[0] = fileChooser.showDialog(frame, approveButtonText);
                     latch.countDown();
                 }
             }).start();
