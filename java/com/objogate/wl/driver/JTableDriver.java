@@ -1,5 +1,6 @@
 package com.objogate.wl.driver;
 
+import static com.objogate.wl.driver.table.JTableCellManipulation.render;
 import static com.objogate.wl.gesture.Gestures.leftClickMouse;
 import static com.objogate.wl.gesture.Gestures.moveMouseTo;
 import static com.objogate.wl.gesture.Gestures.sequence;
@@ -9,9 +10,8 @@ import static com.objogate.wl.gesture.Gestures.whileHoldingMultiSelect;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Iterator;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -123,22 +123,22 @@ public class JTableDriver extends ComponentDriver<JTable> {
       return cellMatcher.foundCell.cell;
     }
     
-    public void hasRow(Matcher<List<? extends Component>> rowMatcher) {
+    public void hasRow(Matcher<Iterator<? extends Component>> rowMatcher) {
       is(new RowInTableMatcher(rowMatcher));
     }
 
-    public static Matcher<List<? extends Component>> matching(final Matcher<? extends JComponent>... matchers) {
-      return new TypeSafeMatcher<List<? extends Component>>() {
-        @Override public boolean matchesSafely(List<? extends Component> components) {
-          if (matchers.length != components.size()) {
-            return false;
-          }
-          for (int i = 0; i < matchers.length; i++) {
-            if (! matchers[i].matches(components.get(i))) {
+    public static Matcher<Iterator<? extends Component>> matching(final Matcher<? extends JComponent>... matchers) {
+      return new TypeSafeMatcher<Iterator<? extends Component>>() {
+        @Override public boolean matchesSafely(Iterator<? extends Component> components) {
+          for (Matcher<? extends JComponent> matcher : matchers) {
+            if (! components.hasNext()) {
+              return false;
+            }
+            if (! matcher.matches(components.next())) {
               return false;
             }
           }
-          return true;
+          return ! components.hasNext();
         }
 
         public void describeTo(Description description) {
@@ -355,18 +355,14 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     private static final class RowInTableMatcher extends TypeSafeMatcher<JTable> {
-      private final Matcher<List<? extends Component>> matcher;
-      RowInTableMatcher(Matcher<List<? extends Component>> matcher) { this.matcher = matcher; }
+      private final Matcher<Iterator<? extends Component>> matcher;
+      RowInTableMatcher(Matcher<Iterator<? extends Component>> matcher) { this.matcher = matcher; }
 
       @Override public boolean matchesSafely(JTable table) {
           for (int row = 0; row < table.getRowCount(); row++) {
-            ArrayList<Component> rowCells = new ArrayList<Component>();
-              for (int col = 0; col < table.getColumnCount(); col++) {
-                rowCells.add(JTableCellManipulation.render(table, cell(row, col)));
-              }
-              if (matcher.matches(rowCells)) {
-                return true;
-              }
+            if (matcher.matches(new CellRowIterator(table, row))) {
+              return true;
+            }
           }
           return false;
       }
@@ -375,6 +371,23 @@ public class JTableDriver extends ComponentDriver<JTable> {
           description.appendText("with row ")
                      .appendDescriptionOf(matcher);
       }
+    }
+    
+    private static class CellRowIterator implements Iterator<Component> {
+      private final JTable table;
+      private final int row;
+      private final int width;
+      private int col = 0;
+
+      public CellRowIterator(JTable table, int row) {
+        this.table = table;
+        this.row = row;
+        this.width = table.getColumnCount();
+      }
+
+      public boolean hasNext() { return col < width; }
+      public Component next() { return render(table, cell(row, col++)); }
+      public void remove() { throw new Defect("Not implemented"); }
     }
 
     private static class JTableRowHeightManipulation implements ComponentManipulation<JTable> {
