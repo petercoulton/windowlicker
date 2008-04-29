@@ -6,7 +6,6 @@ import java.io.File;
 import org.hamcrest.Matchers;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.gesture.Gestures;
-import com.objogate.wl.matcher.ComponentMatchers;
 import com.objogate.wl.matcher.JLabelTextMatcher;
 
 class GTKFileChooserUIDriver implements FileChooserUIDriver {
@@ -17,7 +16,7 @@ class GTKFileChooserUIDriver implements FileChooserUIDriver {
     }
 
     public void selectFile(String fileName) {
-        JLabelDriver fileEntry = new JLabelDriver(parentOrOwner, parentOrOwner.the(JLabel.class, ComponentMatchers.withLabelText(Matchers.equalTo(fileName))));
+        JLabelDriver fileEntry = new JLabelDriver(parentOrOwner, parentOrOwner.the(JLabel.class, JLabelTextMatcher.withLabelText(Matchers.equalTo(fileName))));
         fileEntry.leftClickOnComponent();
     }
 

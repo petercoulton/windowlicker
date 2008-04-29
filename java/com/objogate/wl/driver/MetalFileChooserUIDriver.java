@@ -10,6 +10,7 @@ import org.hamcrest.TypeSafeMatcher;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.matcher.ComponentMatchers;
+import com.objogate.wl.matcher.JLabelTextMatcher;
 import com.objogate.wl.probe.NthComponentFinder;
 import com.objogate.wl.probe.RecursiveComponentFinder;
 
@@ -22,7 +23,7 @@ class MetalFileChooserUIDriver implements FileChooserUIDriver {
 
     public void selectFile(String fileName) {
         JListDriver jListDriver = new JListDriver(parentOrOwner, JList.class);
-        jListDriver.selectItem(ComponentMatchers.withLabelText(Matchers.equalTo(fileName)));
+        jListDriver.selectItem(JLabelTextMatcher.withLabelText(Matchers.equalTo(fileName)));
     }
 
     public void intoDir(String directoryName) {

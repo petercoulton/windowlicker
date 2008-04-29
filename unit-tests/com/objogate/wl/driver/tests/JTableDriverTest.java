@@ -1,7 +1,6 @@
 package com.objogate.wl.driver.tests;
 
 import static com.objogate.wl.driver.JTableDriver.cell;
-import static com.objogate.wl.matcher.ComponentMatchers.withLabelText;
 import static org.hamcrest.Matchers.equalTo;
 
 import java.awt.Color;
@@ -21,6 +20,7 @@ import com.objogate.wl.Platform;
 import com.objogate.wl.driver.JTableDriver;
 import com.objogate.wl.driver.JTableHeaderDriver;
 import com.objogate.wl.driver.JTextFieldDriver;
+import com.objogate.wl.matcher.JLabelTextMatcher;
 
 public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> {
     public static final NamedColor BLACK = NamedColor.color("BLACK");
@@ -41,7 +41,7 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
 
     @Test public void 
     detectsHasCellMatching() {
-        driver.hasCell(withLabelText(equalTo("1x1")));
+        driver.hasCell(JLabelTextMatcher.withLabelText(equalTo("1x1")));
     }
 
     @Test public void 

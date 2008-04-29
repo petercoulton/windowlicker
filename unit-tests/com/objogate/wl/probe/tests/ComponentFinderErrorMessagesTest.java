@@ -1,6 +1,5 @@
 package com.objogate.wl.probe.tests;
 
-import static com.objogate.wl.matcher.ComponentMatchers.withLabelText;
 import static com.objogate.wl.matcher.StringContainsInOrderMatcher.containsInOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -19,6 +18,7 @@ import com.objogate.wl.driver.ComponentDriver;
 import com.objogate.wl.driver.JFrameDriver;
 import com.objogate.wl.driver.JLabelDriver;
 import com.objogate.wl.driver.tests.AbstractComponentDriverTest;
+import com.objogate.wl.matcher.JLabelTextMatcher;
 
 public class ComponentFinderErrorMessagesTest extends AbstractComponentDriverTest<ComponentDriver<? extends Component>> {
     @SuppressWarnings("unchecked")
@@ -55,7 +55,7 @@ public class ComponentFinderErrorMessagesTest extends AbstractComponentDriverTes
         prober.setTimeout(100);
         
         try {
-            JLabelDriver labelDriver = new JLabelDriver(frameDriver, ComponentDriver.named("label"), withLabelText(equalTo("HELLO")));
+            JLabelDriver labelDriver = new JLabelDriver(frameDriver, ComponentDriver.named("label"), JLabelTextMatcher.withLabelText(equalTo("HELLO")));
             
             labelDriver.is(ComponentDriver.showingOnScreen());
         }

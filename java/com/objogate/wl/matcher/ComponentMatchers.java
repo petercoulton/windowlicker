@@ -18,7 +18,10 @@ public class ComponentMatchers {
         return new HasFocusMatcher();
     }
 
+    /**
+     * @deprecated Use {@link JLabelTextMatcher#withLabelText(Matcher<String>)} instead
+     */
     public static JLabelTextMatcher withLabelText(Matcher<String> text) {
-        return new JLabelTextMatcher(text);
+      return JLabelTextMatcher.withLabelText(text);
     }
 }

@@ -1,5 +1,7 @@
 package com.objogate.wl.matcher;
 
+import static org.hamcrest.Matchers.equalTo;
+
 import javax.swing.JLabel;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -20,5 +22,13 @@ public class JLabelTextMatcher extends TypeSafeMatcher<JLabel> {
     public void describeTo(Description description) {
         description.appendText("with text ")
                 .appendDescriptionOf(matcher);
+    }
+
+    public static JLabelTextMatcher withLabelText(String text) {
+      return withLabelText(equalTo(text));
+    }
+
+    public static JLabelTextMatcher withLabelText(Matcher<String> text) {
+        return new JLabelTextMatcher(text);
     }
 }
