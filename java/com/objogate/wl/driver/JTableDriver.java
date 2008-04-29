@@ -9,6 +9,9 @@ import static com.objogate.wl.gesture.Gestures.whileHoldingMultiSelect;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -120,6 +123,29 @@ public class JTableDriver extends ComponentDriver<JTable> {
       return cellMatcher.foundCell.cell;
     }
     
+    public void hasRow(Matcher<List<? extends Component>> rowMatcher) {
+      is(new RowInTableMatcher(rowMatcher));
+    }
+
+    public static Matcher<List<? extends Component>> matching(final Matcher<? extends JComponent>... matchers) {
+      return new TypeSafeMatcher<List<? extends Component>>() {
+        @Override public boolean matchesSafely(List<? extends Component> components) {
+          if (matchers.length != components.size()) {
+            return false;
+          }
+          for (int i = 0; i < matchers.length; i++) {
+            if (! matchers[i].matches(components.get(i))) {
+              return false;
+            }
+          }
+          return true;
+        }
+
+        public void describeTo(Description description) {
+          description.appendList("with cells ", ",", "", Arrays.asList(matchers));
+        }
+      };
+    }
     public Component editCell(int row, int col) {
         mouseOverCell(row, col);
         performGesture(Gestures.doubleClickMouse());
@@ -324,6 +350,29 @@ public class JTableDriver extends ComponentDriver<JTable> {
 
       public void describeTo(Description description) {
           description.appendText("with cell ")
+                     .appendDescriptionOf(matcher);
+      }
+    }
+
+    private static final class RowInTableMatcher extends TypeSafeMatcher<JTable> {
+      private final Matcher<List<? extends Component>> matcher;
+      RowInTableMatcher(Matcher<List<? extends Component>> matcher) { this.matcher = matcher; }
+
+      @Override public boolean matchesSafely(JTable table) {
+          for (int row = 0; row < table.getRowCount(); row++) {
+            ArrayList<Component> rowCells = new ArrayList<Component>();
+              for (int col = 0; col < table.getColumnCount(); col++) {
+                rowCells.add(JTableCellManipulation.render(table, cell(row, col)));
+              }
+              if (matcher.matches(rowCells)) {
+                return true;
+              }
+          }
+          return false;
+      }
+
+      public void describeTo(Description description) {
+          description.appendText("with row ")
                      .appendDescriptionOf(matcher);
       }
     }

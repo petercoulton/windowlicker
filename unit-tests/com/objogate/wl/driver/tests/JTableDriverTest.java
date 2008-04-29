@@ -1,6 +1,8 @@
 package com.objogate.wl.driver.tests;
 
 import static com.objogate.wl.driver.JTableDriver.cell;
+import static com.objogate.wl.driver.JTableDriver.matching;
+import static com.objogate.wl.matcher.JLabelTextMatcher.withLabelText;
 import static org.hamcrest.Matchers.equalTo;
 
 import java.awt.Color;
@@ -8,6 +10,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
@@ -20,7 +23,6 @@ import com.objogate.wl.Platform;
 import com.objogate.wl.driver.JTableDriver;
 import com.objogate.wl.driver.JTableHeaderDriver;
 import com.objogate.wl.driver.JTextFieldDriver;
-import com.objogate.wl.matcher.JLabelTextMatcher;
 
 public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> {
     public static final NamedColor BLACK = NamedColor.color("BLACK");
@@ -28,22 +30,39 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
     public static final NamedColor YELLOW = NamedColor.color("YELLOW");
     private ReallyBigTable table = new ReallyBigTable();
 
-    @Before
-    public void setUp() throws Exception {
-        table.pad();
-        table.setRowHeight(table.getRowHeight() + 10);
-        JScrollPane pane = new JScrollPane(table);
-        pane.setPreferredSize(new Dimension(800, 600));
-        view(pane);
+    @Before public void setUp() throws Exception {
+      table.pad();
+      table.setRowHeight(table.getRowHeight() + 10);
+      driver = createDriverFor(table);
+    }
 
-        driver = new JTableDriver(gesturePerformer, table, prober);
+    private JTableDriver createDriverFor(JTable drivenTable) {
+      JScrollPane pane = new JScrollPane(drivenTable);
+      pane.setPreferredSize(new Dimension(800, 600));
+      view(pane);
+
+      return new JTableDriver(gesturePerformer, drivenTable, prober);
     }
 
     @Test public void 
     detectsHasCellMatching() {
-        driver.hasCell(JLabelTextMatcher.withLabelText(equalTo("1x1")));
+        driver.hasCell(withLabelText(equalTo("1x1")));
     }
 
+    @SuppressWarnings("unchecked")
+    @Test public void
+    detectsHasRowMatching() {
+      JTable smallTable = new JTable(
+          new Object[][] {
+              new Object[] { "1x1", "1x2", "1x3" },
+              new Object[] { "2x1", "2x2", "2x3" }
+          },
+          new Object[] { "one", "two", "three" }
+          );
+      JTableDriver smallDriver = createDriverFor(smallTable);
+      smallDriver.hasRow(matching(withLabelText("2x1"), withLabelText("2x2"), withLabelText("2x3"))); 
+    }
+    
     @Test public void 
     matchesOnCellColour() {
         table.stripe(YELLOW, WHITE, BLACK);
