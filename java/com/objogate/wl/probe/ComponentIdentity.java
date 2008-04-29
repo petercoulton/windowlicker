@@ -17,6 +17,10 @@ public class ComponentIdentity<T extends Component> implements ComponentSelector
         this.component = component;
     }
 
+    public static <U extends Component> ComponentIdentity<U> selectorFor(U component) {
+        return new ComponentIdentity<U>(component);
+    }
+    
     public T component() {
         return component;
     }
