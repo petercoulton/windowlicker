@@ -264,6 +264,7 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
             return end;
         }
 
+        @Override
         public boolean matchesSafely(JTextComponent component) {
             String s = component.getText();
             int lastIndex = 0;

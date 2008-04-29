@@ -17,6 +17,7 @@ class AquaFileChooserUIDriver extends MetalFileChooserUIDriver {
         super(jFileChooserDriver);
     }
 
+    @Override 
     public void selectFile(String fileName) {
         JTableDriver fileEntry = new JTableDriver(parentOrOwner, JTable.class);
         fileEntry.selectCell(new JLabelTextMatcher(Matchers.equalTo(fileName)));
@@ -30,14 +31,18 @@ class AquaFileChooserUIDriver extends MetalFileChooserUIDriver {
         }
     }
 
+    @Override
     public void intoDir(String directoryName) {
         selectFile(directoryName);
         parentOrOwner.performGesture(Gestures.doubleClickMouse());
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
     public void createNewFolder(String folderName) {
         new AbstractButtonDriver<JButton>(parentOrOwner, JButton.class, ComponentMatchers.withButtonText("New Folder")).click();
         JTextFieldDriver textDriver = new JTextFieldDriver(parentOrOwner, JTextField.class, new TypeSafeMatcher<JTextField>() {
+            @Override
             public boolean matchesSafely(JTextField jTextField) {
                 Container container = jTextField.getParent();
                 Component component = container.getComponent(0);
@@ -61,20 +66,25 @@ class AquaFileChooserUIDriver extends MetalFileChooserUIDriver {
         textDriver.typeText(" ");//select 'Create' button
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
     public void upOneFolder() {
         JComboBoxDriver boxDriver = new JComboBoxDriver(parentOrOwner, JComboBox.class,
                 new MacComboBoxModelTypeMatcher(), new ComboBoxModelMinSizeMatcher(2));
         boxDriver.selectItem(1);
     }
 
+    @Override
     public void documents() {
         throw new UnsupportedOperationException("There is no 'Documents' button in the Aqua L&F");
     }
 
+    @Override
     public void home() {
         throw new UnsupportedOperationException("There is no 'Home' button in the Aqua L&F");
     }
 
+    @Override
     public void desktop() {
         throw new UnsupportedOperationException("There is no 'Desktop' button in the Aqua L&F");
     }
@@ -82,6 +92,7 @@ class AquaFileChooserUIDriver extends MetalFileChooserUIDriver {
     private class MacComboBoxModelTypeMatcher extends TypeSafeMatcher<JComboBox> {
         private static final String TYPE = "apple.laf.AquaFileChooserUI$DirectoryComboBoxModel";
 
+        @Override
         public boolean matchesSafely(JComboBox jComboBox) {
             ComboBoxModel comboBoxModel = jComboBox.getModel();
             return comboBoxModel.getClass().getName().equals(TYPE);
@@ -99,6 +110,7 @@ class AquaFileChooserUIDriver extends MetalFileChooserUIDriver {
             this.minSize = minSize;
         }
 
+        @Override
         public boolean matchesSafely(JComboBox jComboBox) {
             ComboBoxModel comboBoxModel = jComboBox.getModel();
             return comboBoxModel.getSize() >= minSize;

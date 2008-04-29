@@ -1,19 +1,31 @@
 package com.objogate.wl.driver;
 
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import static com.objogate.wl.gesture.Gestures.leftClickMouse;
+import static com.objogate.wl.gesture.Gestures.moveMouseTo;
+import static com.objogate.wl.gesture.Gestures.sequence;
+import static com.objogate.wl.gesture.Gestures.whileHoldingMouseButton;
+import static com.objogate.wl.gesture.Gestures.whileHoldingMultiSelect;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+
 import com.objogate.exception.Defect;
-import com.objogate.wl.*;
+import com.objogate.wl.ComponentManipulation;
+import com.objogate.wl.ComponentSelector;
+import com.objogate.wl.Gesture;
+import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
-import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.gesture.Tracker;
 
 public class JTableDriver extends ComponentDriver<JTable> {
@@ -96,13 +108,13 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public Cell hasCell(final Matcher<? extends JComponent> matcher) {
-        WithCellMatcher withCellMatching = new WithCellMatcher(matcher);
+      RenderedCellMatcher cellMatcher = new RenderedCellMatcher(matcher);
         
-        is(withCellMatching);
+      is(new CellInTableMatcher(cellMatcher));
 
-        return withCellMatching.foundCell;
+      return cellMatcher.foundCell.cell;
     }
-
+    
     public Component editCell(int row, int col) {
         mouseOverCell(row, col);
         performGesture(Gestures.doubleClickMouse());
@@ -171,81 +183,130 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public void cellHasBackgroundColor(final int row, final Object columnIdentifier, Matcher<Color> backgroundColor) {
-        has(new Query<JTable, Color>() {
-            public Color query(JTable component) {
-                return JTableCellManipulation.render(component, row, columnIdentifier).getBackground();
-            }
-
-            public void describeTo(Description description) {
-                description.appendText("background color in cell at " + row + "x" + columnIdentifier);
-            }
-        }, backgroundColor);
+      cellHasBackgroundColor(cell(row, columnIdentifier), backgroundColor);
     }
 
     public void cellHasBackgroundColor(final int row, final int col, Matcher<Color> backgroundColor) {
-        has(new Query<JTable, Color>() {
-            public Color query(JTable component) {
-                return JTableCellManipulation.render(component, row, col).getBackground();
-            }
-
-            public void describeTo(Description description) {
-                description.appendText("background colour in cell at " + row + "x" + col);
-            }
-        }, backgroundColor);
+      cellHasBackgroundColor(cell(row, col), backgroundColor);
     }
-
+    
     public void cellHasForegroundColor(final int row, final Object columnIdentifier, Matcher<Color> foregroundColor) {
-        has(new Query<JTable, Color>() {
-            public Color query(JTable component) {
-                Component rendered = JTableCellManipulation.render(component, row, columnIdentifier);
-                return rendered.getForeground();
-            }
-
-            public void describeTo(Description description) {
-                description.appendText("foreground color in cell at " + row + "x" + columnIdentifier);
-            }
-        }, foregroundColor);
+      cellHasForegroundColor(cell(row, columnIdentifier), foregroundColor);
     }
 
     public void cellHasForegroundColor(final int row, final int col, Matcher<Color> foregroundColor) {
-        has(new Query<JTable, Color>() {
-            public Color query(JTable component) {
-                return JTableCellManipulation.render(component, row, col).getForeground();
-            }
-
-            public void describeTo(Description description) {
-                description.appendText("foreground colour in cell at " + row + "x" + col);
-            }
-        }, foregroundColor);
+      cellHasForegroundColor(cell(row, col), foregroundColor);
     }
-
-    public static Cell cell(int row, int col) {
-        return new Cell(row, col);
-    }
-
+    
     public void cellRenderedWithText(final int row, final Object columnIdentifier, Matcher<String> expectedText) {
-        has(new CellTextQuery(row, columnIdentifier), expectedText);
+        cellRenderedWithText(cell(row, columnIdentifier), expectedText);
     }
 
     public void cellRenderedWithText(final int row, final int col, Matcher<String> expectedText) {
-        has(new CellTextQuery(row, col), expectedText);
+        cellRenderedWithText(cell(row, col), expectedText);
     }
 
-    public static class Cell {
+    public void cellHasForegroundColor(final Location cell, Matcher<Color> foregroundColor) {
+      has(renderedCell(cell, foregroundColor()), foregroundColor);
+    }
+    
+    public void cellHasBackgroundColor(final Location cell, Matcher<Color> backgroundColor) {
+      has(renderedCell(cell, backgroundColor()), backgroundColor);
+    }
 
-        public final int row, col;
+    public void cellRenderedWithText(final Location cell, Matcher<String> expectedText) {
+      has(renderedCell(cell, labelText()), expectedText);
+    }
 
-        public Cell(int row, int col) {
-            this.row = row;
-            this.col = col;
+    public static <T> Query<JTable, T> renderedCell(Location cell, Query<Component, T> detail) {
+      return new RenderedCellQuery<T>(cell, detail);
+    }
+    
+    public static Query<Component, Color> foregroundColor() {
+      return new Query<Component, Color>() {
+        public Color query(Component component) { return component.getForeground(); }
+        public void describeTo(Description description) { description.appendText("foreground colour"); }
+      };
+    }
+
+    public static Query<Component, Color> backgroundColor() {
+      return new Query<Component, Color>() {
+        public Color query(Component component) { return component.getBackground(); }
+        public void describeTo(Description description) { description.appendText("background colour"); }
+      };
+    }
+
+    public static IdentifierCell cell(final int row, final Object columnIdentifier) {
+      return new IdentifierCell(row, columnIdentifier);
+    }
+
+    public static Cell cell(int row, int col) {
+      return new Cell(row, col);
+    }
+
+    public static Query<Component, String> labelText() {
+      return new Query<Component, String>() {
+        public String query(Component cell) {
+          return ((JLabel) cell).getText();
         }
 
-        @Override
-        public String toString() {
+        public void describeTo(Description description) {
+            description.appendText("text");
+        }
+      };
+    }
+
+    public interface Location {
+      Cell asCellIn(JTable table);
+    }
+    
+    public static class Cell implements Location {
+        public final int row;
+        public final int col;
+
+        public Cell(int row, int col) {
+          this.row = row;
+          this.col = col;
+        }
+        public Object valueFrom(JTable table) { return table.getValueAt(row, col); }
+        public Cell asCellIn(JTable unused) { return this; }
+
+        @Override public String toString() {
             return "r" + row + " x " + "c" + col;
         }
     }
 
+    public static class IdentifierCell implements Location {
+      private final int row;
+      public final Object columnIdentifier;
+
+      public IdentifierCell(int row, Object columnIdentifier) {
+        this.row = row;
+        this.columnIdentifier = columnIdentifier;
+      }
+
+      public Cell asCellIn(JTable table) {
+        return new Cell(row, viewIndex(table));
+      }
+      @Override public String toString() {
+          return "row " + row + " at " + columnIdentifier;
+      }
+      private int viewIndex(JTable table) {
+        int modelIndex = table.getColumn(columnIdentifier).getModelIndex();
+        return table.convertColumnIndexToView(modelIndex);
+      }
+    }
+
+    public static class RenderedCell {
+      public final Cell cell;
+      public final Component rendered;
+
+      public RenderedCell(Cell cell, Component rendered) {
+        this.cell = cell;
+        this.rendered = rendered;
+      }
+    }
+    
     private class SelectedCellsMatcher extends TypeSafeMatcher<JTable> {
         public Cell unselectedCell;
         private final Cell[] cells;
@@ -255,9 +316,9 @@ public class JTableDriver extends ComponentDriver<JTable> {
         }
 
         @Override
-        public boolean matchesSafely(JTable component) {
+        public boolean matchesSafely(JTable table) {
             for (Cell cell : cells) {
-                if (!component.isCellSelected(cell.row, cell.col)) {
+                if (!table.isCellSelected(cell.row, cell.col)) {
                     this.unselectedCell = cell;
                     return false;
                 }
@@ -270,23 +331,36 @@ public class JTableDriver extends ComponentDriver<JTable> {
         }
     }
     
-    private static final class WithCellMatcher extends TypeSafeMatcher<JTable> {
+    private static final class RenderedCellMatcher extends TypeSafeMatcher<RenderedCell> {
       private final Matcher<? extends JComponent> matcher;
-      Cell foundCell;
+      RenderedCell foundCell;
 
-      WithCellMatcher(Matcher<? extends JComponent> matcher) {
+      RenderedCellMatcher(Matcher<? extends JComponent> matcher) {
         this.matcher = matcher;
       }
 
-      @Override public boolean matchesSafely(JTable table) {
-          int rowCount = table.getRowCount();
-          int columnCount = table.getColumnCount();
+      @Override public boolean matchesSafely(RenderedCell renderedCell) {
+        if (matcher.matches(renderedCell.rendered)) {
+          foundCell = renderedCell;
+          return true;
+        }
+        return false;
+      }
 
-          for (int row = 0; row < rowCount; row++) {
-              for (int col = 0; col < columnCount; col++) {
-                  Component renderedCell = JTableCellManipulation.render(table, row, col);
-                  if (matcher.matches(renderedCell)) {
-                      foundCell = new Cell(row, col);
+      public void describeTo(Description description) {
+          description.appendDescriptionOf(matcher);
+      }
+    }
+
+    private static final class CellInTableMatcher extends TypeSafeMatcher<JTable> {
+      private final Matcher<RenderedCell> matcher;
+      CellInTableMatcher(Matcher<RenderedCell> matcher) { this.matcher = matcher; }
+
+      @Override public boolean matchesSafely(JTable table) {
+          for (int row = 0; row < table.getRowCount(); row++) {
+              for (int col = 0; col < table.getColumnCount(); col++) {
+                  Cell cell = cell(row, col);
+                  if (matcher.matches(new RenderedCell(cell, JTableCellManipulation.render(table, cell)))) {
                       return true;
                   }
               }
@@ -319,46 +393,31 @@ public class JTableDriver extends ComponentDriver<JTable> {
         public ColumnManipulation(int col) {
             this.col = col;
         }
-
         public void manipulate(JTable component) {
             midpoint = JTableHeaderDriver.ColumnManipulation.midpointOfColumn(col, component.getColumnModel());
         }
-
         public int getMidPoint() {
             return midpoint;
         }
     }
 
-    private static class CellTextQuery implements Query<JTable, String> {
-        private final int row;
-        private Object columnIdentifier;
-        private int col;
+    private static class RenderedCellQuery<T> implements Query<JTable, T> {
+      private final Location location;
+      private final Query<Component, T> detail;
 
-        public CellTextQuery(int row, int col) {
-            this.row = row;
-            this.col = col;
-        }
+      public RenderedCellQuery(Location location, Query<Component, T> detail) {
+          this.location = location;
+          this.detail = detail;
+      }
 
-        public CellTextQuery(int row, Object columnIdentifier) {
-            this.row = row;
-            this.columnIdentifier = columnIdentifier;
-        }
+      public T query(JTable table) {
+          return detail.query(JTableCellManipulation.render(table, location));
+      }
 
-        public String query(JTable component) {
-            Component cell = columnIdentifier == null ?
-                    JTableCellManipulation.render(component, row, col) :
-                    JTableCellManipulation.render(component, row, columnIdentifier);
-
-            if (cell instanceof JLabel) {
-                JLabel label = (JLabel) cell;
-                return label.getText();
-            } else {
-                throw new Defect("Rendered component in cell " + row + "x" + col + " is not a JLabel but a " + component.getClass().getName());
-            }
-        }
-
-        public void describeTo(Description description) {
-            description.appendText("text in cell at " + row + " x " + col);
-        }
+      public void describeTo(Description description) {
+          description.appendDescriptionOf(detail)
+                     .appendText(" in cell at " + location);
+      }
     }
+
 }

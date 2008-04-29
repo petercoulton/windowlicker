@@ -12,15 +12,20 @@ class WindowsFileChooserUIDriver extends MetalFileChooserUIDriver {
         super(jFileChooserDriver);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
     public void desktop() {
         new AbstractButtonDriver<JToggleButton>(parentOrOwner, JToggleButton.class,
                 new HtmlToggleButtonMatcher(DESKTOP_BUTTON_TEXT)).click();
     }
 
+    @Override
     public void home() {
         throw new UnsupportedOperationException("There is no 'Home' button in the Windows L&F");
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
     public void documents() {
         new AbstractButtonDriver<JToggleButton>(parentOrOwner, JToggleButton.class,
                 new HtmlToggleButtonMatcher(HOME_BUTTON_TEXT)).click();
@@ -33,6 +38,7 @@ class WindowsFileChooserUIDriver extends MetalFileChooserUIDriver {
             this.desktopButtonText = desktopButtonText;
         }
 
+        @Override
         public boolean matchesSafely(JToggleButton jButton) {
             return jButton.getText().equals(wrapInWindowsHtml(desktopButtonText));
         }

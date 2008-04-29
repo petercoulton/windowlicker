@@ -27,6 +27,7 @@ public class JMenuDriver extends AbstractButtonDriver<JMenu> {
         return menuDriver;
     }
 
+    @SuppressWarnings("unchecked")
     public JMenuDriver subMenu(Matcher<? super JMenu> matcher) {
         return new JMenuDriver(this, matcher);
     }

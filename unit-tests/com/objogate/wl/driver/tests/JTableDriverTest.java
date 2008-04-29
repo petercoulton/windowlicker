@@ -23,6 +23,9 @@ import com.objogate.wl.driver.JTableHeaderDriver;
 import com.objogate.wl.driver.JTextFieldDriver;
 
 public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> {
+    public static final NamedColor BLACK = NamedColor.color("BLACK");
+    public static final NamedColor WHITE = NamedColor.color("WHITE");
+    public static final NamedColor YELLOW = NamedColor.color("YELLOW");
     private ReallyBigTable table = new ReallyBigTable();
 
     @Before
@@ -36,32 +39,28 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         driver = new JTableDriver(gesturePerformer, table, prober);
     }
 
-    @Test
-    public void testHasCellMatching() {
+    @Test public void 
+    detectsHasCellMatching() {
         driver.hasCell(withLabelText(equalTo("1x1")));
     }
 
-    @Test
-    public void testCellColour() {
-        NamedColor yellow = NamedColor.color("YELLOW");
-        NamedColor white = NamedColor.color("WHITE");
-        NamedColor black = NamedColor.color("BLACK");
+    @Test public void 
+    matchesOnCellColour() {
+        table.stripe(YELLOW, WHITE, BLACK);
 
-        table.stripe(yellow, white, black);
+        driver.cellHasColour(0, 1, matchingColor(BLACK), matchingColor(YELLOW));
+        driver.cellHasColour(0, "b", matchingColor(BLACK), matchingColor(YELLOW));
+        driver.cellHasBackgroundColor(0, 1, matchingColor(YELLOW));
+        driver.cellHasBackgroundColor(0, "b", matchingColor(YELLOW));
 
-        driver.cellHasColour(0, 1, matchingColor(black), matchingColor(yellow));
-        driver.cellHasColour(0, "b", matchingColor(black), matchingColor(yellow));
-        driver.cellHasBackgroundColor(0, 1, matchingColor(yellow));
-        driver.cellHasBackgroundColor(0, "b", matchingColor(yellow));
-
-        driver.cellHasColour(1, 1, matchingColor(black), matchingColor(white));
-        driver.cellHasColour(1, "b", matchingColor(black), matchingColor(white));
-        driver.cellHasForegroundColor(1, 1, matchingColor(black));
-        driver.cellHasForegroundColor(1, "b", matchingColor(black));
+        driver.cellHasColour(1, 1, matchingColor(BLACK), matchingColor(WHITE));
+        driver.cellHasColour(1, "b", matchingColor(BLACK), matchingColor(WHITE));
+        driver.cellHasForegroundColor(1, 1, matchingColor(BLACK));
+        driver.cellHasForegroundColor(1, "b", matchingColor(BLACK));
     }
 
-    @Test
-    public void testSingleCellSelection() throws Exception {
+    @Test public void
+    selectingSingleCell() throws Exception {
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -79,8 +78,8 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         driver.hasSelectedCells(cell(table.getRowCount() - 1, 3));
     }
 
-    @Test
-    public void testSelectingMultipleNonContiguousCells() throws Exception {
+    @Test public void 
+    selectingMultipleNonContiguousCells() throws Exception {
         table.setCellSelectionEnabled(true);
         table.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -89,8 +88,8 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         driver.hasSelectedCells(cell(1, 1), cell(3, 3), cell(6, 5));
     }
 
-    @Test
-    public void testSelectingMultipleRows() throws Exception {
+    @Test public void 
+    selectingMultipleRows() throws Exception {
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
 
@@ -103,8 +102,8 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         );
     }
 
-    @Test
-    public void testSelectingMultipleColumns() throws Exception {
+    @Test public void 
+    selectingMultipleColumns() throws Exception {
         table.setRowSelectionAllowed(false);
         table.setColumnSelectionAllowed(true);
 
@@ -116,8 +115,8 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         );
     }
 
-    @Test
-    public void testBlockSelectionWithKeyboard() throws Exception {
+    @Test public void 
+    blockSelectionWithKeyboard() throws Exception {
         table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         table.setRowSelectionAllowed(true);
@@ -132,8 +131,8 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         );
     }
 
-    @Test
-    public void testBlockSelectionWithMouse() throws Exception {
+    @Test public void 
+    blockSelectionWithMouse() throws Exception {
         table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         table.setRowSelectionAllowed(true);
@@ -152,8 +151,8 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         );
     }
 
-    @Test
-    public void testCellText() throws Exception {
+    @Test public void 
+    cellRenderedWithText() throws Exception {
         driver.cellRenderedWithText(0, 0, Matchers.containsString("0x0"));
 
         moveColumn("a", 1);
@@ -164,7 +163,8 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
 
     @Test
     @Problematic(why="doesnt seem to be able to select the right cell", platform = Platform.Linux )
-    public void testEditingCells() throws Exception {
+    public void 
+    editingCells() throws Exception {
         table.addJTextFieldEditorToColumn(0);
 
         enterText(driver.editCell(0, 0), "hello");

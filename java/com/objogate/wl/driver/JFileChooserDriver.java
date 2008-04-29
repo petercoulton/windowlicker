@@ -90,7 +90,7 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
     public void currentDirectory(final File expectedDir) {
         currentDirectory(new TypeSafeMatcher<File>() {
-            public boolean matchesSafely(File file) {
+            @Override public boolean matchesSafely(File file) {
                 try {
                     return file.getCanonicalPath().equals(expectedDir.getCanonicalPath());
                 } catch (IOException e) {

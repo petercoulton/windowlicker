@@ -30,10 +30,12 @@ class MetalFileChooserUIDriver implements FileChooserUIDriver {
         parentOrOwner.performGesture(Gestures.doubleClickMouse());        
     }
 
+    @SuppressWarnings("unchecked")
     public void cancel() {
         new AbstractButtonDriver<JButton>(parentOrOwner, JButton.class, ComponentMatchers.withButtonText("Cancel")).click();
     }
 
+    @SuppressWarnings("unchecked")
     public void approve() {
         final String[] approveButtonText = new String[1];
         parentOrOwner.perform("finding the approve button text", new ComponentManipulation<JFileChooser>() {
@@ -43,6 +45,7 @@ class MetalFileChooserUIDriver implements FileChooserUIDriver {
         });
         String text = approveButtonText[0] == null ? "Open" : approveButtonText[0];
         new AbstractButtonDriver<JButton>(parentOrOwner, JButton.class, ComponentMatchers.withButtonText(text), new TypeSafeMatcher<JButton>() {
+            @Override
             public boolean matchesSafely(JButton jButton) {
                 return jButton.isVisible();
             }
@@ -53,6 +56,7 @@ class MetalFileChooserUIDriver implements FileChooserUIDriver {
         }).click();
     }
 
+    @SuppressWarnings("unchecked")
     public JTextFieldDriver textBox() {
         // only one textfield in this laf...
         return new JTextFieldDriver(parentOrOwner, JTextField.class, Matchers.anything());

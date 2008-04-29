@@ -64,6 +64,7 @@ public class JOptionPaneDriver extends ComponentDriver<JOptionPane> {
         textField.typeText(text);
     }
 
+    @SuppressWarnings("unchecked")
     public void selectValue(String value) {
         GeneralListDriver driver = new GeneralListDriver(this, JComponent.class, anyOf(ComponentDriver.named("OptionPane.comboBox"), ComponentDriver.named("OptionPane.list")));
         driver.selectItem(new JLabelTextMatcher(new IsEqual<String>(value)));

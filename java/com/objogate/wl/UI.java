@@ -20,7 +20,8 @@ public enum UI {
         String name = UIManager.getLookAndFeel().getName();
         switch (l) {
             case AQUA:
-                return name.toLowerCase().contains("aqua");
+                return name.toLowerCase().contains("aqua")
+                    || name.equals("Mac OS X");
             case GTK:
                 return name.toLowerCase().contains("gtk");
             case METAL:

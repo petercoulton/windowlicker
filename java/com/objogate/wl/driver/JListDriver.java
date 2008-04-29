@@ -141,6 +141,7 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
             return index;
         }
 
+        @Override
         public boolean matchesSafely(JList component) {
             ListModel model = component.getModel();
             for (int i = 0; i < model.getSize(); i++) {
