@@ -24,6 +24,11 @@ import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Gesture;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
+import com.objogate.wl.driver.table.Cell;
+import com.objogate.wl.driver.table.IdentifierCell;
+import com.objogate.wl.driver.table.JTableCellManipulation;
+import com.objogate.wl.driver.table.Location;
+import com.objogate.wl.driver.table.RenderedCell;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.gesture.Tracker;
@@ -256,57 +261,6 @@ public class JTableDriver extends ComponentDriver<JTable> {
       };
     }
 
-    public interface Location {
-      Cell asCellIn(JTable table);
-    }
-    
-    public static class Cell implements Location {
-        public final int row;
-        public final int col;
-
-        public Cell(int row, int col) {
-          this.row = row;
-          this.col = col;
-        }
-        public Object valueFrom(JTable table) { return table.getValueAt(row, col); }
-        public Cell asCellIn(JTable unused) { return this; }
-
-        @Override public String toString() {
-            return "r" + row + " x " + "c" + col;
-        }
-    }
-
-    public static class IdentifierCell implements Location {
-      private final int row;
-      public final Object columnIdentifier;
-
-      public IdentifierCell(int row, Object columnIdentifier) {
-        this.row = row;
-        this.columnIdentifier = columnIdentifier;
-      }
-
-      public Cell asCellIn(JTable table) {
-        return new Cell(row, viewIndex(table));
-      }
-      @Override public String toString() {
-          return "row " + row + " at " + columnIdentifier;
-      }
-      private int viewIndex(JTable table) {
-        int modelIndex = table.getColumn(columnIdentifier).getModelIndex();
-        return table.convertColumnIndexToView(modelIndex);
-      }
-    }
-
-    public static class RenderedCell {
-      public final Cell cell;
-      public final Component rendered;
-
-      public RenderedCell(Cell cell, Component rendered) {
-        this.cell = cell;
-        this.rendered = rendered;
-      }
-    }
-    
     private class SelectedCellsMatcher extends TypeSafeMatcher<JTable> {
         public Cell unselectedCell;
         private final Cell[] cells;

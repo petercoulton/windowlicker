@@ -1,4 +1,4 @@
-package com.objogate.wl.driver;
+package com.objogate.wl.driver.table;
 
 import java.awt.Component;
 
@@ -7,9 +7,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.driver.JTableDriver.Cell;
-import com.objogate.wl.driver.JTableDriver.IdentifierCell;
-import com.objogate.wl.driver.JTableDriver.Location;
+import com.objogate.wl.driver.JTableDriver;
 
 public class JTableCellManipulation implements ComponentManipulation<JTable> {
     private final Location location;
