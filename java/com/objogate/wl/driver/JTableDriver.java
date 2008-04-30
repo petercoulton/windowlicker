@@ -238,18 +238,18 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     public void cellHasForegroundColor(final Location cell, Matcher<Color> foregroundColor) {
-      has(renderedCell(cell, foregroundColor()), foregroundColor);
+      has(cellWith(cell, foregroundColor()), foregroundColor);
     }
     
     public void cellHasBackgroundColor(final Location cell, Matcher<Color> backgroundColor) {
-      has(renderedCell(cell, backgroundColor()), backgroundColor);
+      has(cellWith(cell, backgroundColor()), backgroundColor);
     }
 
     public void cellRenderedWithText(final Location cell, Matcher<String> expectedText) {
-      has(renderedCell(cell, labelText()), expectedText);
+      has(cellWith(cell, labelText()), expectedText);
     }
 
-    public static <T> Query<JTable, T> renderedCell(Location cell, Query<Component, T> detail) {
+    public static <T> Query<JTable, T> cellWith(Location cell, Query<Component, T> detail) {
       return new RenderedCellQuery<T>(cell, detail);
     }
     
