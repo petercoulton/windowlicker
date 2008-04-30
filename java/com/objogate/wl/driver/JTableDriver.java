@@ -123,26 +123,27 @@ public class JTableDriver extends ComponentDriver<JTable> {
       return cellMatcher.foundCell.cell;
     }
     
-    public void hasRow(Matcher<Iterator<? extends Component>> rowMatcher) {
+    public void hasRow(Matcher<Iterable<? extends Component>> rowMatcher) {
       is(new RowInTableMatcher(rowMatcher));
     }
 
-    public static Matcher<Iterator<? extends Component>> matching(final Matcher<? extends JComponent>... matchers) {
-      return new TypeSafeMatcher<Iterator<? extends Component>>() {
-        @Override public boolean matchesSafely(Iterator<? extends Component> components) {
+    public static Matcher<Iterable<? extends Component>> matching(final Matcher<? extends JComponent>... matchers) {
+      return new TypeSafeMatcher<Iterable<? extends Component>>() {
+        @Override public boolean matchesSafely(Iterable<? extends Component> components) {
+          Iterator<? extends Component> iterator = components.iterator();
           for (Matcher<? extends JComponent> matcher : matchers) {
-            if (! components.hasNext()) {
-              return false;
-            }
-            if (! matcher.matches(components.next())) {
+            if (! isAMatch(matcher, iterator)) {
               return false;
             }
           }
-          return ! components.hasNext();
+          return ! iterator.hasNext();
         }
 
         public void describeTo(Description description) {
           description.appendList("with cells ", ", ", "", Arrays.asList(matchers));
+        }
+        private boolean isAMatch(Matcher<? extends JComponent> matcher, Iterator<? extends Component> iterator) {
+          return iterator.hasNext() && matcher.matches(iterator.next());
         }
       };
     }
@@ -355,12 +356,12 @@ public class JTableDriver extends ComponentDriver<JTable> {
     }
 
     private static final class RowInTableMatcher extends TypeSafeMatcher<JTable> {
-      private final Matcher<Iterator<? extends Component>> matcher;
-      RowInTableMatcher(Matcher<Iterator<? extends Component>> matcher) { this.matcher = matcher; }
+      private final Matcher<Iterable<? extends Component>> matcher;
+      RowInTableMatcher(Matcher<Iterable<? extends Component>> matcher) { this.matcher = matcher; }
 
       @Override public boolean matchesSafely(JTable table) {
           for (int row = 0; row < table.getRowCount(); row++) {
-            if (matcher.matches(new CellRowIterator(table, row))) {
+            if (matcher.matches(CellRowIterator.asIterable(table, row))) {
               return true;
             }
           }
@@ -388,6 +389,12 @@ public class JTableDriver extends ComponentDriver<JTable> {
       public boolean hasNext() { return col < width; }
       public Component next() { return render(table, cell(row, col++)); }
       public void remove() { throw new Defect("Not implemented"); }
+      
+      public static Iterable<Component> asIterable(final JTable table, final int row) {
+        return new Iterable<Component>() {
+          public Iterator<Component> iterator() { return new CellRowIterator(table, row); }
+        };
+      }
     }
 
     private static class JTableRowHeightManipulation implements ComponentManipulation<JTable> {
