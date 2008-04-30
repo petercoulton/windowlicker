@@ -142,7 +142,7 @@ public class JTableDriver extends ComponentDriver<JTable> {
         }
 
         public void describeTo(Description description) {
-          description.appendList("with cells ", ",", "", Arrays.asList(matchers));
+          description.appendList("with cells ", ", ", "", Arrays.asList(matchers));
         }
       };
     }

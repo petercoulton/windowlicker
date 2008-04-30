@@ -73,7 +73,7 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         smallDriver.hasRow(matching(withLabelText("2x1"), withLabelText("1x2"), withLabelText("2x3")));
       } catch (AssertionError expected) {
         assertThat(expected.getMessage(), 
-                   containsString("row with cells with text \"2x1\",with text \"1x2\",with text \"2x3\""));
+                   containsString("row with cells with text \"2x1\", with text \"1x2\", with text \"2x3\""));
         return;
       }
       fail("Should have failed");
