@@ -3,7 +3,10 @@ package com.objogate.wl.driver.tests;
 import static com.objogate.wl.driver.JTableDriver.cell;
 import static com.objogate.wl.driver.JTableDriver.matching;
 import static com.objogate.wl.matcher.JLabelTextMatcher.withLabelText;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -25,6 +28,10 @@ import com.objogate.wl.driver.JTableHeaderDriver;
 import com.objogate.wl.driver.JTextFieldDriver;
 
 public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> {
+    private static final JTable SMALL_TABLE = new JTable(
+            new Object[][] { new Object[] { "1x1", "1x2", "1x3" },
+                             new Object[] { "2x1", "2x2", "2x3" } },
+            new Object[] { "one", "two", "three" } );
     public static final NamedColor BLACK = NamedColor.color("BLACK");
     public static final NamedColor WHITE = NamedColor.color("WHITE");
     public static final NamedColor YELLOW = NamedColor.color("YELLOW");
@@ -52,17 +59,26 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
     @SuppressWarnings("unchecked")
     @Test public void
     detectsHasRowMatching() {
-      JTable smallTable = new JTable(
-          new Object[][] {
-              new Object[] { "1x1", "1x2", "1x3" },
-              new Object[] { "2x1", "2x2", "2x3" }
-          },
-          new Object[] { "one", "two", "three" }
-          );
-      JTableDriver smallDriver = createDriverFor(smallTable);
+      JTableDriver smallDriver = createDriverFor(SMALL_TABLE);
       smallDriver.hasRow(matching(withLabelText("2x1"), withLabelText("2x2"), withLabelText("2x3"))); 
     }
+
     
+    @SuppressWarnings("unchecked")
+    @Test public void
+    reportsWhenDoesNotHaveRowMatching() {
+      prober.setTimeout(300);
+      JTableDriver smallDriver = createDriverFor(SMALL_TABLE);
+      try {
+        smallDriver.hasRow(matching(withLabelText("2x1"), withLabelText("1x2"), withLabelText("2x3")));
+      } catch (AssertionError expected) {
+        assertThat(expected.getMessage(), 
+                   containsString("row with cells with text \"2x1\",with text \"1x2\",with text \"2x3\""));
+        return;
+      }
+      fail("Should have failed");
+    }
+
     @Test public void 
     matchesOnCellColour() {
         table.stripe(YELLOW, WHITE, BLACK);
