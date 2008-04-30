@@ -1,22 +1,33 @@
 package com.objogate.wl.driver.tests;
 
-import javax.swing.*;
-import java.awt.BorderLayout;
+import static com.objogate.wl.driver.tests.JMenuBarDriverTest.Type.PLAIN;
+import static com.objogate.wl.driver.tests.JMenuBarDriverTest.Type.RADIO;
+import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
+import static com.objogate.wl.matcher.ComponentMatchers.withMnemonicKey;
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import java.awt.BorderLayout;
+
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.driver.ComponentDriver;
 import com.objogate.wl.driver.JFrameDriver;
 import com.objogate.wl.driver.JMenuBarDriver;
 import com.objogate.wl.driver.JMenuDriver;
-import static com.objogate.wl.driver.tests.JMenuBarDriverTest.Type.PLAIN;
-import static com.objogate.wl.driver.tests.JMenuBarDriverTest.Type.RADIO;
-import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
-import static com.objogate.wl.matcher.ComponentMatchers.withMnemonicKey;
 import com.objogate.wl.matcher.JMenuTextMatcher;
 import com.objogate.wl.probe.ActionListenerProbe;
 
@@ -46,7 +57,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
 
         frame.pack();
 
-        driver = new JMenuBarDriver(new JFrameDriver(gesturePerformer, frame), sameInstance(menuBar));
+        driver = new JMenuBarDriver(new JFrameDriver(gesturePerformer, selectorFor(frame), prober), sameInstance(menuBar));
     }
 
     @Test

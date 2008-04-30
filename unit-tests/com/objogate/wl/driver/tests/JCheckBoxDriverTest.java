@@ -1,9 +1,14 @@
 package com.objogate.wl.driver.tests;
 
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+
 import javax.swing.JCheckBox;
+
 import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.driver.JCheckBoxDriver;
 
 public class JCheckBoxDriverTest extends AbstractButtonDriverTest<JCheckBox, JCheckBoxDriver> {
@@ -14,7 +19,7 @@ public class JCheckBoxDriverTest extends AbstractButtonDriverTest<JCheckBox, JCh
 
         view(button);
 
-        driver = new JCheckBoxDriver(gesturePerformer, button, prober);
+        driver = new JCheckBoxDriver(gesturePerformer, selectorFor(button), prober);
     }
 
     @Test

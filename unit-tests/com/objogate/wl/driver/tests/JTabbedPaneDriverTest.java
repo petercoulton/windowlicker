@@ -1,11 +1,19 @@
 package com.objogate.wl.driver.tests;
 
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+import static javax.swing.SwingConstants.BOTTOM;
+import static javax.swing.SwingConstants.LEFT;
+import static javax.swing.SwingConstants.RIGHT;
+import static javax.swing.SwingConstants.TOP;
+
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
-import static javax.swing.SwingConstants.*;
-import java.awt.Dimension;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.driver.JTabbedPaneDriver;
 
 public class JTabbedPaneDriverTest extends AbstractComponentDriverTest<JTabbedPaneDriver> {
@@ -15,7 +23,7 @@ public class JTabbedPaneDriverTest extends AbstractComponentDriverTest<JTabbedPa
     public void testShowMessageDialog() throws Exception {
         view(pane);
 
-        driver = new JTabbedPaneDriver(gesturePerformer, pane, prober);
+        driver = new JTabbedPaneDriver(gesturePerformer, selectorFor(pane), prober);
 
         pane.addTab("aaaaa", component("the"));
         pane.addTab("bb", component("quick"));

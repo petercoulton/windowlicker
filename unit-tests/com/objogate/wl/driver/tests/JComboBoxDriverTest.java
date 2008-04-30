@@ -1,11 +1,15 @@
 package com.objogate.wl.driver.tests;
 
-import javax.swing.JComboBox;
+import static com.objogate.wl.driver.tests.ReallyBigJList.applyFontRenderer;
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.Matchers.containsString;
+
+import javax.swing.JComboBox;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.driver.JComboBoxDriver;
-import static com.objogate.wl.driver.tests.ReallyBigJList.applyFontRenderer;
 import com.objogate.wl.matcher.JLabelTextMatcher;
 
 public class JComboBoxDriverTest extends AbstractComponentDriverTest<JComboBoxDriver> {
@@ -17,19 +21,16 @@ public class JComboBoxDriverTest extends AbstractComponentDriverTest<JComboBoxDr
     public void setUp() throws Exception {
         view(comboBox);
 
-        driver = new JComboBoxDriver(gesturePerformer, comboBox, prober);
+        driver = new JComboBoxDriver(gesturePerformer, selectorFor(comboBox), prober);
     }
 
     @Test
     public void testSelectingItemsByIndex() {
         driver.selectItem(0);
-
         driver.hasSelectedIndex(0);
-
+        
         driver.selectItem(lastItemIndex);
-
         driver.hasSelectedIndex(lastItemIndex);
-
     }
 
     @Test

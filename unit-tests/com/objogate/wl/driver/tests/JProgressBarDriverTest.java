@@ -1,9 +1,13 @@
 package com.objogate.wl.driver.tests;
 
-import javax.swing.JProgressBar;
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.Matchers.equalTo;
+
+import javax.swing.JProgressBar;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.driver.JProgressBarDriver;
 
 public class JProgressBarDriverTest extends AbstractComponentDriverTest<JProgressBarDriver>{
@@ -27,6 +31,6 @@ public class JProgressBarDriverTest extends AbstractComponentDriverTest<JProgres
 
         view(bar);
 
-        driver = new JProgressBarDriver(gesturePerformer, bar);
+        driver = new JProgressBarDriver(gesturePerformer, selectorFor(bar), prober);
     }
 }

@@ -1,10 +1,15 @@
 package com.objogate.wl.driver.tests;
 
-import javax.swing.JPasswordField;
-import junit.framework.Assert;
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.Matchers.equalTo;
+
+import javax.swing.JPasswordField;
+
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.exception.Defect;
 import com.objogate.wl.driver.JPasswordFieldDriver;
 
@@ -17,7 +22,7 @@ public class JPasswordFieldDriverTest extends AbstractJTextComponentDriverTest<J
 
         view(passwordField);
 
-        driver = new JPasswordFieldDriver(gesturePerformer, passwordField);
+        driver = new JPasswordFieldDriver(gesturePerformer, selectorFor(passwordField), prober);
     }
 
     @Test

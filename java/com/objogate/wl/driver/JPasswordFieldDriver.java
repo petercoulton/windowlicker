@@ -9,19 +9,6 @@ import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
 
 public class JPasswordFieldDriver extends JTextComponentDriver<JPasswordField> {
-
-    public JPasswordFieldDriver(GesturePerformer gesturePerformer, JPasswordField component) {
-        super(gesturePerformer, component);
-    }
-
-    public JPasswordFieldDriver(GesturePerformer gesturePerformer, JPasswordField component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JPasswordFieldDriver(GesturePerformer gesturePerformer, ComponentSelector<JPasswordField> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JPasswordFieldDriver(GesturePerformer gesturePerformer, ComponentSelector<JPasswordField> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

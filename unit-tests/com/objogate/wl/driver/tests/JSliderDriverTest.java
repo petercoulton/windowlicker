@@ -1,14 +1,19 @@
 package com.objogate.wl.driver.tests;
 
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+import static org.hamcrest.Matchers.equalTo;
+
+import java.awt.Color;
+
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
-import static org.hamcrest.Matchers.equalTo;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
 import com.objogate.wl.driver.JSliderDriver;
 
 public class JSliderDriverTest extends AbstractComponentDriverTest<JSliderDriver> {
@@ -134,10 +139,10 @@ public class JSliderDriverTest extends AbstractComponentDriverTest<JSliderDriver
 
         view(panel);
 
-        horizontalDriver = new JSliderDriver(gesturePerformer, horizontal);
-        verticalDriver = new JSliderDriver(gesturePerformer, vertical);
-        invertedHorizontalDriver = new JSliderDriver(gesturePerformer, invertedHorizontal);
-        invertedVerticalDriver = new JSliderDriver(gesturePerformer, invertedVertical);
-        verticalSnapToDriver = new JSliderDriver(gesturePerformer, verticalSnapTo);
+        horizontalDriver = new JSliderDriver(gesturePerformer, selectorFor(horizontal), prober);
+        verticalDriver = new JSliderDriver(gesturePerformer, selectorFor(vertical), prober);
+        invertedHorizontalDriver = new JSliderDriver(gesturePerformer, selectorFor(invertedHorizontal), prober);
+        invertedVerticalDriver = new JSliderDriver(gesturePerformer, selectorFor(invertedVertical), prober);
+        verticalSnapToDriver = new JSliderDriver(gesturePerformer, selectorFor(verticalSnapTo), prober);
     }
 }

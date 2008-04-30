@@ -1,11 +1,17 @@
 package com.objogate.wl.driver.tests;
 
-import javax.swing.JScrollPane;
-import java.awt.Font;
-import org.hamcrest.Matchers;
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.Matchers.containsString;
+
+import java.awt.Font;
+
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.driver.JListDriver;
 import com.objogate.wl.matcher.JLabelTextMatcher;
 
@@ -16,7 +22,7 @@ public class JListDriverTest extends AbstractComponentDriverTest<JListDriver> {
     public void setUp() throws Exception {
         view(new JScrollPane(list));
 
-        driver = new JListDriver(gesturePerformer, list, prober);
+        driver = new JListDriver(gesturePerformer, selectorFor((JList)list), prober);
     }
 
     @Test

@@ -1,9 +1,20 @@
 package com.objogate.wl.driver;
 
-import javax.swing.*;
-import javax.swing.text.JTextComponent;
+import static com.objogate.wl.driver.JFileChooserDriver.rootFrameFor;
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+
 import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
+
 import org.hamcrest.Matchers;
+
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.matcher.JLabelTextMatcher;
@@ -28,8 +39,9 @@ class GTKFileChooserUIDriver implements FileChooserUIDriver {
     public void createNewFolder(String folderName) {
         AbstractButtonDriver<JButton> newFolderButton = new AbstractButtonDriver<JButton>(parentOrOwner, parentOrOwner.the(JButton.class, ComponentDriver.named("GTKFileChooser.newFolderButton")));
         newFolderButton.click();
-
-        JFrameDriver jframe = new JFrameDriver(parentOrOwner.gesturePerformer, JFileChooserDriver.rootFrameFor(parentOrOwner.component().component()));
+        
+        //TODO: (nat) this breaks the probe threading model!
+        JFrameDriver jframe = new JFrameDriver(parentOrOwner, selectorFor(rootFrameFor(parentOrOwner.component().component())));
 
         JOptionPaneDriver folderEntry = new JOptionPaneDriver(jframe, JOptionPane.class);
         folderEntry.typeText(folderName);

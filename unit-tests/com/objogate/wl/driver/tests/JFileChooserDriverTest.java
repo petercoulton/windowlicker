@@ -1,19 +1,26 @@
 package com.objogate.wl.driver.tests;
 
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
+
 import java.awt.Component;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+
 import junit.framework.Assert;
+
 import org.hamcrest.Matcher;
-import static org.hamcrest.MatcherAssert.assertThat;
 import org.hamcrest.Matchers;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.not;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.UI;
 import com.objogate.wl.driver.JFileChooserDriver;
 import com.objogate.wl.probe.ComponentIdentity;
@@ -34,7 +41,7 @@ public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileCho
 
         chooser = new JFileChooser(dir);
         chooser.setControlButtonsAreShown(true);
-        driver = new JFileChooserDriver(gesturePerformer, chooser);
+        driver = new JFileChooserDriver(gesturePerformer, selectorFor(chooser), new AWTEventQueueProber());
 
         modalDialogShower = new ModalDialogShower(chooser);
     }

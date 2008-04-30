@@ -1,13 +1,16 @@
 package com.objogate.wl.driver;
 
-import javax.swing.JList;
-import javax.swing.ListModel;
 import java.awt.Component;
 import java.awt.Rectangle;
+
+import javax.swing.JList;
+import javax.swing.ListModel;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
@@ -17,19 +20,6 @@ import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.matcher.JLabelTextMatcher;
 
 public class JListDriver extends ComponentDriver<JList> implements ListDriver {
-
-    public JListDriver(GesturePerformer gesturePerformer, JList component) {
-        super(gesturePerformer, component);
-    }
-
-    public JListDriver(GesturePerformer gesturePerformer, JList component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JListDriver(GesturePerformer gesturePerformer, ComponentSelector<JList> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JListDriver(GesturePerformer gesturePerformer, ComponentSelector<JList> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }
@@ -37,7 +27,7 @@ public class JListDriver extends ComponentDriver<JList> implements ListDriver {
     public JListDriver(ComponentDriver<? extends Component> parentOrOwner, ComponentSelector<JList> componentSelector) {
         super(parentOrOwner, componentSelector);
     }
-
+    
     public JListDriver(ComponentDriver<? extends Component> parentOrOwner, Class<JList> componentType, Matcher<? super JList>... matchers) {
         super(parentOrOwner, componentType, matchers);
     }

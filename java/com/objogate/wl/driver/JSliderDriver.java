@@ -1,34 +1,31 @@
 package com.objogate.wl.driver;
 
+import static com.objogate.wl.gesture.ComponentEdgeTracker.Edge.Bottom;
+import static com.objogate.wl.gesture.ComponentEdgeTracker.Edge.Left;
+import static com.objogate.wl.gesture.ComponentEdgeTracker.Edge.Right;
+import static com.objogate.wl.gesture.ComponentEdgeTracker.Edge.Top;
+import static com.objogate.wl.gesture.Gestures.leftClickMouse;
+import static com.objogate.wl.gesture.Gestures.moveMouseTo;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
+
+import java.awt.Component;
+
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
-import java.awt.Component;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import static org.hamcrest.Matchers.*;
 import org.hamcrest.TypeSafeMatcher;
+
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.ComponentEdgeTracker;
-import static com.objogate.wl.gesture.ComponentEdgeTracker.Edge.*;
 import com.objogate.wl.gesture.GesturePerformer;
-import static com.objogate.wl.gesture.Gestures.leftClickMouse;
-import static com.objogate.wl.gesture.Gestures.moveMouseTo;
 
 public class JSliderDriver extends ComponentDriver<JSlider> {
-    public JSliderDriver(GesturePerformer gesturePerformer, JSlider component) {
-        super(gesturePerformer, component);
-    }
-
-    public JSliderDriver(GesturePerformer gesturePerformer, JSlider component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JSliderDriver(GesturePerformer gesturePerformer, ComponentSelector<JSlider> jSliderComponentSelector) {
-        super(gesturePerformer, jSliderComponentSelector);
-    }
-
     public JSliderDriver(GesturePerformer gesturePerformer, ComponentSelector<JSlider> jSliderComponentSelector, Prober prober) {
         super(gesturePerformer, jSliderComponentSelector, prober);
     }

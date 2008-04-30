@@ -1,36 +1,29 @@
 package com.objogate.wl.driver;
 
-import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
+import static com.objogate.wl.gesture.Gestures.BUTTON1;
+import static com.objogate.wl.gesture.Gestures.clickMouseButton;
+import static com.objogate.wl.gesture.Gestures.moveMouseTo;
+
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.Rectangle;
+
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
-import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.gesture.Tracker;
 
 public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
-
-    public JTabbedPaneDriver(GesturePerformer gesturePerformer, JTabbedPane component) {
-        super(gesturePerformer, component);
-    }
-
-    public JTabbedPaneDriver(GesturePerformer gesturePerformer, JTabbedPane component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JTabbedPaneDriver(GesturePerformer gesturePerformer, ComponentSelector<JTabbedPane> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JTabbedPaneDriver(GesturePerformer gesturePerformer, ComponentSelector<JTabbedPane> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

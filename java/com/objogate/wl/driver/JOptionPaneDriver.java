@@ -1,17 +1,21 @@
 package com.objogate.wl.driver;
 
+import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
+import static org.hamcrest.Matchers.anyOf;
+
+import java.awt.Component;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import java.awt.Component;
+
 import org.hamcrest.Matcher;
-import static org.hamcrest.Matchers.anyOf;
 import org.hamcrest.core.IsEqual;
+
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
-import static com.objogate.wl.matcher.ComponentMatchers.withButtonText;
 import com.objogate.wl.matcher.JLabelTextMatcher;
 
 /**
@@ -21,19 +25,6 @@ import com.objogate.wl.matcher.JLabelTextMatcher;
  * otherwise this will not work as expected</strong>
  */
 public class JOptionPaneDriver extends ComponentDriver<JOptionPane> {
-
-    public JOptionPaneDriver(GesturePerformer gesturePerformer, JOptionPane component) {
-        super(gesturePerformer, component);
-    }
-
-    public JOptionPaneDriver(GesturePerformer gesturePerformer, JOptionPane component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JOptionPaneDriver(GesturePerformer gesturePerformer, ComponentSelector<JOptionPane> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JOptionPaneDriver(GesturePerformer gesturePerformer, ComponentSelector<JOptionPane> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

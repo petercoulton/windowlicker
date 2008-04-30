@@ -19,18 +19,6 @@ import com.objogate.wl.gesture.GesturePerformer;
  * This is a wrapper so simple operations on these components can be generalised.
  */
 public class GeneralListDriver extends ComponentDriver<JComponent> implements ListDriver {
-    public GeneralListDriver(GesturePerformer gesturePerformer, JComponent component) {
-        super(gesturePerformer, component);
-    }
-
-    public GeneralListDriver(GesturePerformer gesturePerformer, JComponent component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public GeneralListDriver(GesturePerformer gesturePerformer, ComponentSelector<JComponent> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public GeneralListDriver(GesturePerformer gesturePerformer, ComponentSelector<JComponent> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

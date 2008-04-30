@@ -1,31 +1,35 @@
 package com.objogate.wl.driver;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
+
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.text.JTextComponent;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+
 import com.objogate.exception.Defect;
+import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Probe;
+import com.objogate.wl.Prober;
 import com.objogate.wl.UI;
 import com.objogate.wl.gesture.GesturePerformer;
 
 public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
-
-    public JFileChooserDriver(GesturePerformer gesturePerformer, JFileChooser chooser) {
-        super(gesturePerformer, chooser);
-    }
-
     @SuppressWarnings("unchecked")
     public JFileChooserDriver(ComponentDriver<? extends Component> parentOrOwner, Matcher<? super JFileChooser> matcher) {
         super(parentOrOwner, JFileChooser.class, matcher);
     }
 
+    public JFileChooserDriver(GesturePerformer gesturePerformer, ComponentSelector<JFileChooser> selector, Prober prober) {
+        super(gesturePerformer, selector, prober);
+    }
+    
     private FileChooserUIDriver getRelevantComponentDriver() {
         if (UI.is(UI.METAL)) {
             return new MetalFileChooserUIDriver(this);
@@ -90,7 +94,8 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
 
     public void currentDirectory(final File expectedDir) {
         currentDirectory(new TypeSafeMatcher<File>() {
-            @Override public boolean matchesSafely(File file) {
+            @Override
+            public boolean matchesSafely(File file) {
                 try {
                     return file.getCanonicalPath().equals(expectedDir.getCanonicalPath());
                 } catch (IOException e) {
@@ -134,10 +139,10 @@ public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
     }
 
     public static JFrame rootFrameFor(Component parentComponent)
-            throws HeadlessException {
+            throws HeadlessException 
+    {
         if (parentComponent == null) throw new IllegalArgumentException("Dialog needs a parent");
         if (parentComponent instanceof JFrame) return (JFrame) parentComponent;
         return rootFrameFor(parentComponent.getParent());
     }
-
 }

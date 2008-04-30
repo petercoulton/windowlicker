@@ -1,8 +1,12 @@
 package com.objogate.wl.driver.tests;
 
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+
 import javax.swing.JScrollPane;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.driver.JTableHeaderDriver;
 
 public class  JTableHeaderDriverTest extends AbstractComponentDriverTest<JTableHeaderDriver> {
@@ -12,7 +16,7 @@ public class  JTableHeaderDriverTest extends AbstractComponentDriverTest<JTableH
     public void setUp() throws Exception {
         view(new JScrollPane(table));
 
-        driver = new JTableHeaderDriver(gesturePerformer, table.getTableHeader(), prober);
+        driver = new JTableHeaderDriver(gesturePerformer, selectorFor(table.getTableHeader()), prober);
     }
 
     @Test

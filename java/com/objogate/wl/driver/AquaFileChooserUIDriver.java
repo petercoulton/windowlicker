@@ -1,12 +1,20 @@
 package com.objogate.wl.driver;
 
-import javax.swing.*;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.ComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+
 import com.objogate.exception.Defect;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.matcher.ComponentMatchers;

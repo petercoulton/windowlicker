@@ -8,19 +8,6 @@ import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
 
 public class JRadioButtonDriver extends AbstractButtonDriver<JRadioButton> {
-
-    public JRadioButtonDriver(GesturePerformer gesturePerformer, JRadioButton component) {
-        super(gesturePerformer, component);
-    }
-
-    public JRadioButtonDriver(GesturePerformer gesturePerformer, JRadioButton component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JRadioButtonDriver(GesturePerformer gesturePerformer, ComponentSelector<JRadioButton> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JRadioButtonDriver(GesturePerformer gesturePerformer, ComponentSelector<JRadioButton> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

@@ -1,37 +1,30 @@
 package com.objogate.wl.driver;
 
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+import static org.hamcrest.Matchers.equalTo;
+
+import java.awt.Component;
+
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.plaf.basic.ComboPopup;
-import java.awt.Component;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import static org.hamcrest.Matchers.equalTo;
 import org.hamcrest.TypeSafeMatcher;
+
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.probe.ComponentIdentity;
 import com.objogate.wl.probe.RecursiveComponentFinder;
 import com.objogate.wl.probe.SingleComponentFinder;
 import com.objogate.wl.probe.TopLevelWindowFinder;
 
 public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListDriver {
-
-    public JComboBoxDriver(GesturePerformer gesturePerformer, JComboBox component) {
-        super(gesturePerformer, component);
-    }
-
-    public JComboBoxDriver(GesturePerformer gesturePerformer, JComboBox component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JComboBoxDriver(GesturePerformer gesturePerformer, ComponentSelector<JComboBox> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JComboBoxDriver(GesturePerformer gesturePerformer, ComponentSelector<JComboBox> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }
@@ -47,7 +40,7 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
     public void selectItem(int index) {
         clickToOpenPopup();
 
-        ComboPopupComponentDriver comboPopupDriver = new ComboPopupComponentDriver(gesturePerformer);
+        ComboPopupComponentDriver comboPopupDriver = new ComboPopupComponentDriver(this);
 
         comboPopupDriver.selectItem(index);
     }
@@ -55,7 +48,7 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
     public void selectItem(Matcher<? extends Component> item) {
         clickToOpenPopup();
 
-        ComboPopupComponentDriver comboPopupDriver = new ComboPopupComponentDriver(gesturePerformer);
+        ComboPopupComponentDriver comboPopupDriver = new ComboPopupComponentDriver(this);
 
         comboPopupDriver.selectItem(item);
     }
@@ -77,9 +70,11 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
     }
 
     private static class ComboPopupComponentDriver extends ComponentDriver<JComponent> {
-        public ComboPopupComponentDriver(GesturePerformer gesturePerformer) {
-            super(gesturePerformer, new SingleComponentFinder<JComponent>(
-                    new RecursiveComponentFinder<JComponent>(JComponent.class, thatImplementsComboPopup(), new TopLevelWindowFinder())));
+        public ComboPopupComponentDriver(ComponentDriver<?> parent) {
+            super(parent, 
+                new SingleComponentFinder<JComponent>(
+                    new RecursiveComponentFinder<JComponent>(JComponent.class, thatImplementsComboPopup(), 
+                        new TopLevelWindowFinder())));
         }
 
         private static TypeSafeMatcher<JComponent> thatImplementsComboPopup() {
@@ -98,20 +93,21 @@ public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListD
         public void selectItem(final int index) {
             JListFinderManipulation listFinderManipulation = new JListFinderManipulation();
             perform("selecting index in combo popup", listFinderManipulation);
-            JListDriver listDriver = new JListDriver(gesturePerformer, listFinderManipulation.list);
+            JListDriver listDriver = new JListDriver(this, ComponentIdentity.selectorFor(listFinderManipulation.list));
             listDriver.selectItem(index);
         }
 
         public void selectItem(Matcher<? extends Component> matcher) {
             JListFinderManipulation listFinderManipulation = new JListFinderManipulation();
             perform("selecting item in combo popup", listFinderManipulation);
-            JListDriver listDriver = new JListDriver(gesturePerformer, listFinderManipulation.list);
+            JListDriver listDriver = new JListDriver(this, selectorFor(listFinderManipulation.list));
             listDriver.selectItem(matcher);
         }
 
+        //TODO: (nat) this should be done with a component finder or component selector
         private class JListFinderManipulation implements ComponentManipulation<JComponent> {
             JList list;
-
+            
             public void manipulate(JComponent component) {
                 ComboPopup popup = (ComboPopup) component;
                 list = popup.getList();

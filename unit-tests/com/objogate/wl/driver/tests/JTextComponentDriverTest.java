@@ -1,10 +1,14 @@
 package com.objogate.wl.driver.tests;
 
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
+
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.driver.JTextComponentDriver;
 
 public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<JTextComponentDriver<JTextComponent>> {
@@ -16,7 +20,7 @@ public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<J
 
         view(textField);
 
-        driver = new JTextComponentDriver<JTextComponent>(gesturePerformer, textField, prober);
+        driver = new JTextComponentDriver<JTextComponent>(gesturePerformer, selectorFor((JTextComponent)textField), prober);
     }
 
     @Test

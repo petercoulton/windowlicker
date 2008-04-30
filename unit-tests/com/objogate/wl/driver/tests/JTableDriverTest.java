@@ -3,6 +3,7 @@ package com.objogate.wl.driver.tests;
 import static com.objogate.wl.driver.JTableDriver.cell;
 import static com.objogate.wl.driver.JTableDriver.matching;
 import static com.objogate.wl.matcher.JLabelTextMatcher.withLabelText;
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -48,7 +49,7 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
       pane.setPreferredSize(new Dimension(800, 600));
       view(pane);
 
-      return new JTableDriver(gesturePerformer, drivenTable, prober);
+      return new JTableDriver(gesturePerformer, selectorFor(drivenTable), prober);
     }
 
     @Test public void 
@@ -210,13 +211,13 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
     }
 
     private void enterText(Component editorComponent, String text) {
-        JTextFieldDriver textFieldDriver = new JTextFieldDriver(gesturePerformer, (JTextField) editorComponent, prober);
+        JTextFieldDriver textFieldDriver = new JTextFieldDriver(gesturePerformer, selectorFor((JTextField) editorComponent), prober);
         textFieldDriver.replaceAllText(text);
         textFieldDriver.typeText("\n");
     }
 
     private void moveColumn(String columnIdentifier, int movement) {
-        new JTableHeaderDriver(gesturePerformer, table.getTableHeader(), prober).moveColumn(columnIdentifier, movement);
+        new JTableHeaderDriver(gesturePerformer, selectorFor(table.getTableHeader()), prober).moveColumn(columnIdentifier, movement);
     }
 
     private Matcher<Color> matchingColor(final Color expected) {

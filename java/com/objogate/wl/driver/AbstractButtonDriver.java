@@ -18,18 +18,6 @@ import com.objogate.wl.internal.query.TextQuery;
 public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDriver<T>
         implements TextQuery, MnemonicQuery {
 
-    public AbstractButtonDriver(GesturePerformer gesturePerformer, T component) {
-        super(gesturePerformer, component);
-    }
-
-    public AbstractButtonDriver(GesturePerformer gesturePerformer, T component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public AbstractButtonDriver(GesturePerformer gesturePerformer, ComponentSelector<T> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public AbstractButtonDriver(GesturePerformer gesturePerformer, ComponentSelector<T> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

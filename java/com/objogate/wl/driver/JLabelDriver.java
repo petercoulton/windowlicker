@@ -1,9 +1,12 @@
 package com.objogate.wl.driver;
 
-import javax.swing.JLabel;
 import java.awt.Component;
+
+import javax.swing.JLabel;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
@@ -11,10 +14,6 @@ import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.internal.query.TextQuery;
 
 public class JLabelDriver extends ComponentDriver<JLabel> implements TextQuery {
-    public JLabelDriver(GesturePerformer gesturePerformer, JLabel component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
     public JLabelDriver(ComponentDriver<? extends Component> containerDriver, Matcher<? super JLabel>... matchers) {
         super(containerDriver, JLabel.class, matchers);
     }
@@ -22,7 +21,11 @@ public class JLabelDriver extends ComponentDriver<JLabel> implements TextQuery {
     public JLabelDriver(ComponentDriver<? extends Component> parentOrOwner, ComponentSelector<JLabel> componentSelector) {
         super(parentOrOwner, componentSelector);
     }
-
+    
+    public JLabelDriver(GesturePerformer gesturePerformer, ComponentSelector<JLabel> selector, Prober prober) {
+        super(gesturePerformer, selector, prober);
+    }
+    
     public void text(Matcher<String> textMatcher) {
         hasText(textMatcher);
     }

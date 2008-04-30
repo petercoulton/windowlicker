@@ -1,5 +1,6 @@
 package com.objogate.wl.driver.tests;
 
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.not;
 
@@ -140,7 +141,7 @@ public class JOptionPaneDriverTest extends AbstractComponentDriverTest<JOptionPa
 
         view(button);
 
-        new AbstractButtonDriver<JButton>(gesturePerformer, button, prober).click();
+        new AbstractButtonDriver<JButton>(gesturePerformer, selectorFor(button), prober).click();
     }
 
 }

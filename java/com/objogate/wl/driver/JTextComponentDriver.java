@@ -1,14 +1,22 @@
 package com.objogate.wl.driver;
 
-import javax.swing.text.BadLocationException;
-import javax.swing.text.JTextComponent;
+import static com.objogate.wl.gesture.Gestures.repeat;
+import static com.objogate.wl.gesture.Gestures.type;
+import static com.objogate.wl.gesture.Gestures.typeKey;
+import static com.objogate.wl.gesture.Gestures.whileHoldingKey;
+import static org.hamcrest.Matchers.equalTo;
+
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import static org.hamcrest.Matchers.equalTo;
 import org.hamcrest.TypeSafeMatcher;
+
 import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
@@ -16,23 +24,9 @@ import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
-import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.internal.query.TextQuery;
 
 public class JTextComponentDriver<T extends JTextComponent> extends ComponentDriver<T> implements TextQuery {
-
-    public JTextComponentDriver(GesturePerformer gesturePerformer, T component) {
-        super(gesturePerformer, component);
-    }
-
-    public JTextComponentDriver(GesturePerformer gesturePerformer, T component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JTextComponentDriver(GesturePerformer gesturePerformer, ComponentSelector<T> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JTextComponentDriver(GesturePerformer gesturePerformer, ComponentSelector<T> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

@@ -1,33 +1,29 @@
 package com.objogate.wl.driver;
 
-import javax.swing.JTextField;
+import static com.objogate.wl.gesture.Gestures.BUTTON1;
+import static com.objogate.wl.gesture.Gestures.clickMouseButton;
+import static com.objogate.wl.gesture.Gestures.moveMouseTo;
+import static com.objogate.wl.gesture.Gestures.translateMouseTo;
+import static com.objogate.wl.gesture.Gestures.whileHoldingMouseButton;
+
 import java.awt.Component;
 import java.awt.Insets;
 import java.awt.Point;
+
+import javax.swing.JTextField;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.matchers.TypeSafeMatcher;
+
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
-import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.gesture.Tracker;
 
 public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
-    public JTextFieldDriver(GesturePerformer gesturePerformer, JTextField component) {
-        super(gesturePerformer, component);
-    }
-
-    public JTextFieldDriver(GesturePerformer gesturePerformer, JTextField component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JTextFieldDriver(GesturePerformer gesturePerformer, ComponentSelector<JTextField> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JTextFieldDriver(GesturePerformer gesturePerformer, ComponentSelector<JTextField> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

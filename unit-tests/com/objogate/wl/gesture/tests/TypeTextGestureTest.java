@@ -1,9 +1,13 @@
 package com.objogate.wl.gesture.tests;
 
-import javax.swing.JTextField;
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.Matchers.equalTo;
+
+import javax.swing.JTextField;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.driver.JTextFieldDriver;
 import com.objogate.wl.driver.tests.AbstractJTextComponentDriverTest;
 
@@ -15,7 +19,7 @@ public class TypeTextGestureTest extends AbstractJTextComponentDriverTest<JTextF
         
         view(textField);
         
-        driver = new JTextFieldDriver(gesturePerformer, textField);
+        driver = new JTextFieldDriver(gesturePerformer, selectorFor(textField), prober);
     }
 
     @Test

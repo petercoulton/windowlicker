@@ -42,18 +42,6 @@ public class JTableDriver extends ComponentDriver<JTable> {
         super(containerDriver, JTable.class, matchers);
     }
 
-    public JTableDriver(GesturePerformer gesturePerformer, JTable component) {
-        super(gesturePerformer, component);
-    }
-
-    public JTableDriver(GesturePerformer gesturePerformer, JTable component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JTableDriver(GesturePerformer gesturePerformer, ComponentSelector<JTable> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JTableDriver(GesturePerformer gesturePerformer, ComponentSelector<JTable> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

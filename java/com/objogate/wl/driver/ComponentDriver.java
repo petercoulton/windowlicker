@@ -1,54 +1,50 @@
 package com.objogate.wl.driver;
 
+import static com.objogate.wl.gesture.Gestures.BUTTON1;
+import static com.objogate.wl.gesture.Gestures.clickMouseButton;
+import static com.objogate.wl.gesture.Gestures.moveMouseTo;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Rectangle;
+
 import org.hamcrest.BaseMatcher;
-import static org.hamcrest.CoreMatchers.allOf;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import static org.hamcrest.Matchers.equalTo;
-import com.objogate.wl.*;
-import com.objogate.wl.gesture.*;
-import static com.objogate.wl.gesture.Gestures.*;
+
+import com.objogate.wl.ComponentFinder;
+import com.objogate.wl.ComponentManipulation;
+import com.objogate.wl.ComponentSelector;
+import com.objogate.wl.Gesture;
+import com.objogate.wl.Probe;
+import com.objogate.wl.Prober;
+import com.objogate.wl.Query;
+import com.objogate.wl.gesture.ComponentCenterTracker;
+import com.objogate.wl.gesture.ComponentOffsetTracker;
+import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.gesture.Gestures;
+import com.objogate.wl.gesture.Tracker;
 import com.objogate.wl.internal.PropertyQuery;
 import com.objogate.wl.matcher.ComponentEnabledMatcher;
 import com.objogate.wl.matcher.ComponentOpaqueMatcher;
 import com.objogate.wl.matcher.DisplayableComponentMatcher;
 import com.objogate.wl.matcher.ShowingOnScreenMatcher;
-import com.objogate.wl.probe.*;
+import com.objogate.wl.probe.ComponentAssertionProbe;
+import com.objogate.wl.probe.ComponentFinders;
+import com.objogate.wl.probe.ComponentManipulatorProbe;
+import com.objogate.wl.probe.ComponentPropertyAssertionProbe;
+import com.objogate.wl.probe.RecursiveComponentFinder;
+import com.objogate.wl.probe.SingleComponentFinder;
 
 public abstract class ComponentDriver<T extends Component> {
     private final Prober prober;
     private final ComponentSelector<T> selector;
-
+    
+    //TODO: (nat) make this private
     protected final GesturePerformer gesturePerformer;
-
-    /**
-     * Used to unit-test a component
-     *
-     * @param gesturePerformer
-     * @param component        The component to test.
-     */
-    public ComponentDriver(GesturePerformer gesturePerformer, T component) {
-        this(gesturePerformer, new ComponentIdentity<T>(component));
-    }
-
-    /**
-     * Used to unit-test a component with timeouts specified by the given prober.
-     *
-     * @param gesturePerformer
-     * @param component        The component to test.
-     * @param prober           The prober used to probe the component under test with specific timeouts
-     */
-    public ComponentDriver(GesturePerformer gesturePerformer, T component, Prober prober) {
-        this(gesturePerformer, new ComponentIdentity<T>(component), prober);
-    }
-
-    public ComponentDriver(GesturePerformer gesturePerformer, ComponentSelector<T> selector) {
-        this(gesturePerformer, selector, new AWTEventQueueProber());
-    }
-
+    
     public ComponentDriver(GesturePerformer gesturePerformer, ComponentSelector<T> selector, Prober prober) {
         this.selector = selector;
         this.prober = prober;

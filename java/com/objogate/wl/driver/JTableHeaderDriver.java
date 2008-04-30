@@ -21,20 +21,6 @@ import com.objogate.wl.gesture.MouseMoveGesture;
 import com.objogate.wl.gesture.Tracker;
 
 public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
-
-
-    public JTableHeaderDriver(GesturePerformer gesturePerformer, JTableHeader component) {
-        super(gesturePerformer, component);
-    }
-
-    public JTableHeaderDriver(GesturePerformer gesturePerformer, JTableHeader component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JTableHeaderDriver(GesturePerformer gesturePerformer, ComponentSelector<JTableHeader> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JTableHeaderDriver(GesturePerformer gesturePerformer, ComponentSelector<JTableHeader> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

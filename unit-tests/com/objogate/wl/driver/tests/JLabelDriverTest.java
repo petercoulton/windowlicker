@@ -1,15 +1,20 @@
 package com.objogate.wl.driver.tests;
 
+import static com.objogate.wl.driver.tests.NamedColor.color;
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+import static org.hamcrest.Matchers.equalTo;
+
+import java.awt.Dimension;
+
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import java.awt.Dimension;
-import static org.hamcrest.Matchers.equalTo;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.driver.JLabelDriver;
-import static com.objogate.wl.driver.tests.NamedColor.color;
 
 public class JLabelDriverTest extends AbstractComponentDriverTest<JLabelDriver> {
     JLabel label = new JLabel("label");
@@ -20,7 +25,7 @@ public class JLabelDriverTest extends AbstractComponentDriverTest<JLabelDriver> 
 
         view(label);
 
-        driver = new JLabelDriver(gesturePerformer, label, prober);
+        driver = new JLabelDriver(gesturePerformer, selectorFor(label), prober);
     }
 
     @Test

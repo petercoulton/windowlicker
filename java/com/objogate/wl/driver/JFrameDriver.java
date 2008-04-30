@@ -16,19 +16,6 @@ import com.objogate.wl.probe.SingleComponentFinder;
 import com.objogate.wl.probe.TopLevelWindowFinder;
 
 public class JFrameDriver extends ComponentDriver<JFrame> {
-
-    public JFrameDriver(GesturePerformer gesturePerformer, JFrame component) {
-        super(gesturePerformer, component);
-    }
-
-    public JFrameDriver(GesturePerformer gesturePerformer, JFrame component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JFrameDriver(GesturePerformer gesturePerformer, ComponentSelector<JFrame> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JFrameDriver(GesturePerformer gesturePerformer, ComponentSelector<JFrame> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }
@@ -41,8 +28,8 @@ public class JFrameDriver extends ComponentDriver<JFrame> {
         super(parentOrOwner, componentType, matchers);
     }
 
-    public JFrameDriver(GesturePerformer gesturePerformer, Matcher<? super JFrame>... withMatchers) {
-        this(gesturePerformer, topLevelFrame(withMatchers));
+    public JFrameDriver(GesturePerformer gesturePerformer, Prober prober, Matcher<? super JFrame>... withMatchers) {
+        this(gesturePerformer, topLevelFrame(withMatchers), prober);
     }
 
     public JFrameDriver(ComponentDriver<? extends Component> ownerDriver, Matcher<? super JFrame>... matchers) {

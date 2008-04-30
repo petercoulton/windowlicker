@@ -8,18 +8,6 @@ import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
 
 public class JButtonDriver extends AbstractButtonDriver<JButton> {
-    public JButtonDriver(GesturePerformer gesturePerformer, JButton component) {
-        super(gesturePerformer, component);
-    }
-
-    public JButtonDriver(GesturePerformer gesturePerformer, JButton component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JButtonDriver(GesturePerformer gesturePerformer, ComponentSelector<JButton> componentSelector) {
-        super(gesturePerformer, componentSelector);
-    }
-
     public JButtonDriver(GesturePerformer gesturePerformer, ComponentSelector<JButton> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

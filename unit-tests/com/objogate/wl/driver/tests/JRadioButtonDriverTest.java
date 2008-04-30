@@ -1,11 +1,16 @@
 package com.objogate.wl.driver.tests;
 
+import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+
+import java.awt.GridLayout;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import java.awt.GridLayout;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import com.objogate.wl.driver.JRadioButtonDriver;
 
 public class JRadioButtonDriverTest extends AbstractButtonDriverTest<JRadioButton, JRadioButtonDriver> {
@@ -26,8 +31,8 @@ public class JRadioButtonDriverTest extends AbstractButtonDriverTest<JRadioButto
 
         view(jPanel);
 
-        driver = new JRadioButtonDriver(gesturePerformer, button, prober);
-        otherDriver = new JRadioButtonDriver(gesturePerformer, otherButton, prober);
+        driver = new JRadioButtonDriver(gesturePerformer, selectorFor(button), prober);
+        otherDriver = new JRadioButtonDriver(gesturePerformer, selectorFor(otherButton), prober);
     }
 
     @Test

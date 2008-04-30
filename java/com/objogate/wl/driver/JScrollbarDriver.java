@@ -1,14 +1,17 @@
 package com.objogate.wl.driver;
 
-import javax.swing.BoundedRangeModel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import java.awt.Adjustable;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.InputEvent;
+
+import javax.swing.BoundedRangeModel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+
 import org.hamcrest.Matcher;
+
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
@@ -26,19 +29,6 @@ public class JScrollbarDriver extends ComponentDriver<JScrollBar> {
     @SuppressWarnings("unchecked")
     public JScrollbarDriver(ComponentDriver<? extends Container> containerDriver, JScrollPane pane, int orientation) {
         this(containerDriver, new ScrollBarMatcher(pane, orientation));
-    }
-
-
-    public JScrollbarDriver(GesturePerformer gesturePerformer, JScrollBar component) {
-        super(gesturePerformer, component);
-    }
-
-    public JScrollbarDriver(GesturePerformer gesturePerformer, JScrollBar component, Prober prober) {
-        super(gesturePerformer, component, prober);
-    }
-
-    public JScrollbarDriver(GesturePerformer gesturePerformer, ComponentSelector<JScrollBar> componentSelector) {
-        super(gesturePerformer, componentSelector);
     }
 
     public JScrollbarDriver(GesturePerformer gesturePerformer, ComponentSelector<JScrollBar> componentSelector, Prober prober) {
