@@ -10,7 +10,6 @@ import static com.objogate.wl.gesture.Gestures.whileHoldingMultiSelect;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.swing.JComponent;
@@ -115,26 +114,6 @@ public class JTableDriver extends ComponentDriver<JTable> {
       is(new RowInTableMatcher(rowMatcher));
     }
 
-    public static Matcher<Iterable<? extends Component>> matching(final Matcher<? extends JComponent>... matchers) {
-      return new TypeSafeMatcher<Iterable<? extends Component>>() {
-        @Override public boolean matchesSafely(Iterable<? extends Component> components) {
-          Iterator<? extends Component> iterator = components.iterator();
-          for (Matcher<? extends JComponent> matcher : matchers) {
-            if (! isAMatch(matcher, iterator)) {
-              return false;
-            }
-          }
-          return ! iterator.hasNext();
-        }
-
-        public void describeTo(Description description) {
-          description.appendList("with cells ", ", ", "", Arrays.asList(matchers));
-        }
-        private boolean isAMatch(Matcher<? extends JComponent> matcher, Iterator<? extends Component> iterator) {
-          return iterator.hasNext() && matcher.matches(iterator.next());
-        }
-      };
-    }
     public Component editCell(int row, int col) {
         mouseOverCell(row, col);
         performGesture(Gestures.doubleClickMouse());

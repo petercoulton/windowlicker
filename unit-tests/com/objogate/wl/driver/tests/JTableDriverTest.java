@@ -1,7 +1,6 @@
 package com.objogate.wl.driver.tests;
 
 import static com.objogate.wl.driver.JTableDriver.cell;
-import static com.objogate.wl.driver.JTableDriver.matching;
 import static com.objogate.wl.matcher.JLabelTextMatcher.withLabelText;
 import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.Matchers.containsString;
@@ -27,9 +26,10 @@ import com.objogate.wl.Platform;
 import com.objogate.wl.driver.JTableDriver;
 import com.objogate.wl.driver.JTableHeaderDriver;
 import com.objogate.wl.driver.JTextFieldDriver;
+import com.objogate.wl.matcher.IterableComponentsMatcher;
 
 public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> {
-    private static final JTable SMALL_TABLE = new JTable(
+    public static final JTable SMALL_TABLE = new JTable(
             new Object[][] { new Object[] { "1x1", "1x2", "1x3" },
                              new Object[] { "2x1", "2x2", "2x3" } },
             new Object[] { "one", "two", "three" } );
@@ -61,7 +61,7 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
     @Test public void
     detectsHasRowMatching() {
       JTableDriver smallDriver = createDriverFor(SMALL_TABLE);
-      smallDriver.hasRow(matching(withLabelText("2x1"), withLabelText("2x2"), withLabelText("2x3"))); 
+      smallDriver.hasRow(IterableComponentsMatcher.matching(withLabelText("2x1"), withLabelText("2x2"), withLabelText("2x3"))); 
     }
 
     
@@ -71,7 +71,7 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
       prober.setTimeout(300);
       JTableDriver smallDriver = createDriverFor(SMALL_TABLE);
       try {
-        smallDriver.hasRow(matching(withLabelText("2x1"), withLabelText("1x2"), withLabelText("2x3")));
+        smallDriver.hasRow(IterableComponentsMatcher.matching(withLabelText("2x1"), withLabelText("1x2"), withLabelText("2x3")));
       } catch (AssertionError expected) {
         assertThat(expected.getMessage(), 
                    containsString("row with cells with text \"2x1\", with text \"1x2\", with text \"2x3\""));

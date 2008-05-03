@@ -1,22 +1,30 @@
 package com.objogate.wl.driver;
 
-import javax.swing.JTable;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+import static com.objogate.wl.gesture.Gestures.moveMouseTo;
+import static com.objogate.wl.gesture.Gestures.whileHoldingMouseButton;
+
 import java.awt.Component;
 import java.awt.Point;
+import java.util.Iterator;
+
+import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.hamcrest.TypeSafeMatcher;
+
+import com.objogate.exception.Defect;
 import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
-import static com.objogate.wl.gesture.Gestures.moveMouseTo;
-import static com.objogate.wl.gesture.Gestures.whileHoldingMouseButton;
 import com.objogate.wl.gesture.MouseMoveGesture;
 import com.objogate.wl.gesture.Tracker;
 
@@ -162,6 +170,10 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
         return manipulation.getWidth();
     }
 
+    public void hasHeaders(Matcher<Iterable<? extends Component>> headersMatcher) {
+      is(new TableHeadersMatcher(headersMatcher));
+    }
+
     private static class ColumnIndexManipulation implements ComponentManipulation<JTableHeader> {
         private int index;
         private final Object columnIdentifier;
@@ -178,6 +190,66 @@ public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
             return index;
         }
     }
+   
+    
+    private static final class TableHeadersMatcher extends TypeSafeMatcher<JTableHeader> {
+      private final Matcher<Iterable<? extends Component>> matcher;
+      TableHeadersMatcher(Matcher<Iterable<? extends Component>> matcher) { this.matcher = matcher; }
+
+      @Override public boolean matchesSafely(JTableHeader tableHeader) {
+          return matcher.matches(HeadersIterator.asIterable(tableHeader));
+      }
+
+      public void describeTo(Description description) {
+          description.appendText("with headers ")
+                     .appendDescriptionOf(matcher);
+      }
+    }
+    
+    private static class HeadersIterator implements Iterator<Component> {
+      private final JTable table;
+      private final TableColumnModel columnModel;
+      private final TableCellRenderer defaultRenderer;
+      private int col = 0;
+
+      public HeadersIterator(JTableHeader tableHeader) {
+        this.table = tableHeader.getTable();
+        this.columnModel = tableHeader.getColumnModel();
+        this.defaultRenderer = tableHeader.getDefaultRenderer();
+      }
+
+      public boolean hasNext() { return col < columnModel.getColumnCount(); }
+      public Component next() { 
+        Component renderedHeader = renderedHeader();
+        col++; 
+        return renderedHeader; 
+      }
+      public void remove() { throw new Defect("Not implemented"); }
+      
+      private Component renderedHeader() {
+        TableColumn column = columnModel.getColumn(col);
+        TableCellRenderer renderer = rendererFor(column);
+        return renderer == null ? null : columnRenderedWith(column, renderer);
+      }
+
+      private TableCellRenderer rendererFor(TableColumn column) {
+        TableCellRenderer renderer = column.getHeaderRenderer();
+        return renderer == null ? defaultRenderer : renderer;
+      }
+      
+      private Component columnRenderedWith(TableColumn column,
+                                           TableCellRenderer renderer) {
+        return renderer.getTableCellRendererComponent(
+                  table, column.getHeaderValue(), false, false, -1, col);
+      }
+
+      public static Iterable<Component> asIterable(final JTableHeader tableHeader) {
+        return new Iterable<Component>() {
+          public Iterator<Component> iterator() { return new HeadersIterator(tableHeader); }
+        };
+      }
+    }
+
 
     public static class ColumnManipulation implements ComponentManipulation<JTableHeader> {
         private final int index;
