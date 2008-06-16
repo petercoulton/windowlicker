@@ -55,12 +55,7 @@ public class MouseMoveGesture implements Gesture {
     }
 
     private Point getDestination(Point currentLocation) {
-        try {
-            return tracker.target(currentLocation);
-        } catch (AssertionError e) {
-            // todo special exception for this?
-            throw new Defect(tracker + " returned null", e);
-        }
+        return tracker.target(currentLocation);
     }
 
     private Point clipToScreen(Point p) {
