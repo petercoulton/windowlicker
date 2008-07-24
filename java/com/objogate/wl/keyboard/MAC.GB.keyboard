@@ -2,7 +2,7 @@
 ~ shift BACK_QUOTE
 ! shift 1
 @ shift 2
-£ shift 3
+Â£ shift 3
 $ shift 4
 % shift 5
 ^ shift 6
@@ -22,17 +22,17 @@ _ shift MINUS
 | shift BACK_SLASH
 ; SEMICOLON
 : shift SEMICOLON
-É alt SEMICOLON
+Ã‰ alt SEMICOLON
 ' QUOTE
 " shift QUOTE
 , COMMA
 < shift COMMA
 . PERIOD
 > shift PERIOD
-³ alt PERIOD
+Â³ alt PERIOD
 / SLASH
 ? shift SLASH
 # alt 3
-Û alt 2
-¤ twizzle
-± shift twizzle
+Ã› alt 2
+Â¤ twizzle
+Â± shift twizzle
