@@ -1,5 +1,6 @@
 package com.objogate.wl.driver.tests;
 
+import static org.hamcrest.Matchers.equalTo;
 import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 
 import javax.swing.JTextField;
@@ -29,7 +30,7 @@ public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<J
 
         driver.replaceAllText("ok");
 
-        driver.hasText(Matchers.equalTo("ok"));
+        driver.hasText(equalTo("ok"));
     }
 
     @Test
@@ -39,7 +40,7 @@ public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<J
         driver.leftClickOnComponent();
         driver.selectAll();
 
-        driver.hasSelectedText(Matchers.equalTo("select all"));
+        driver.hasSelectedText(equalTo("select all"));
     }
 
     @Test
@@ -55,7 +56,7 @@ public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<J
 
         driver.paste();
 
-        driver.hasText(Matchers.equalTo("cut and paste"));
+        driver.hasText(equalTo("cut and paste"));
     }
 
     @Test
@@ -71,7 +72,7 @@ public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<J
 
         driver.paste();
 
-        driver.hasText(Matchers.equalTo("copy and paste"));
+        driver.hasText(equalTo("copy and paste"));
     }
 
     @Test
@@ -79,8 +80,9 @@ public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<J
         setText("the good the bad the ugly and the smelly");
 
         driver.selectText(occurence(3).of("the"));
+        driver.deleteSelectedText();
 
-        driver.selectionStartsAt(17);
+        driver.hasText(equalTo("the good the bad the ugly and smelly"));
     }
 
     @Test

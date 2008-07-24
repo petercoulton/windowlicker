@@ -1,5 +1,6 @@
 package com.objogate.wl.driver;
 
+import static java.awt.event.KeyEvent.VK_DELETE;
 import static com.objogate.wl.gesture.Gestures.repeat;
 import static com.objogate.wl.gesture.Gestures.type;
 import static com.objogate.wl.gesture.Gestures.typeKey;
@@ -39,10 +40,6 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
         super(parentOrOwner, componentType, matchers);
     }
 
-    public void text(Matcher<String> textMatcher) {
-        hasText(textMatcher);
-    }
-
     public void hasText(String expectedText) {
         hasText(equalTo(expectedText));
     }
@@ -75,64 +72,22 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
         }, matcher);
     }
 
-    public void selectionStartsAt(int index) {
-        has(new Query<T, Integer>() {
-            public Integer query(T component) {
-                return component.getSelectionStart();
-            }
-
-            public void describeTo(Description description) {
-                description.appendText("start of selected text");
-            }
-        }, equalTo(index));
-    }
-
-    public void selectionEndsAt(int index) {
-        has(new Query<T, Integer>() {
-            public Integer query(T component) {
-                return component.getSelectionEnd();
-            }
-
-            public void describeTo(Description description) {
-                description.appendText("end of selected text");
-            }
-        }, equalTo(index));
-    }
-
     public void replaceAllText(String text) {
         moveMouseToCenter();
-
         selectAll();
-
         typeText(text);
     }
 
     public void typeText(String text) {
         performGesture(type(text));
     }
-
+    
     public void pressReturn() {
         typeText("\n");
     }
 
-    @Override
-    public void selectAll() {
-        super.selectAll();
-    }
-
-    @Override
-    public void cut() {
-        super.cut();
-    }
-
-    @Override
-    public void copy() {
-        super.copy();
-    }
-
-    @Override
-    public void paste() {
-        super.paste();
+    public void deleteSelectedText() {
+        typeKey(VK_DELETE);
     }
 
     public void replaceText(TextOccurence textOccurence, String replacement) {
@@ -177,6 +132,19 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
 
     public static TextOccurence occurence(int count) {
         return new TextOccurence(count);
+    }
+
+    public void isEmpty() {
+        hasText(equalTo(""));
+    }
+
+    public void focusWithMouse() {
+        leftClickOnComponent();
+    }
+
+    public void clearText() {
+        selectAll();
+        deleteSelectedText();
     }
 
     public static class TextOccurence {

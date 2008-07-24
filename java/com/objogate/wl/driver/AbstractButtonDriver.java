@@ -34,10 +34,6 @@ public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDri
         leftClickOnComponent();
     }
 
-    public void text(Matcher<String> textMatcher) {
-        hasText(textMatcher);
-    }
-
     public void hasText(Matcher<String> matcher) {
         has(text(), matcher);
     }

@@ -207,19 +207,19 @@ public abstract class ComponentDriver<T extends Component> {
     }
 
 
-    protected void cut() {
+    public void cut() {
         performGesture(Gestures.cut());
     }
 
-    protected void copy() {
+    public void copy() {
         performGesture(Gestures.copy());
     }
 
-    protected void paste() {
+    public void paste() {
         performGesture(Gestures.paste());
     }
 
-    protected void selectAll() {
+    public void selectAll() {
         performGesture(Gestures.selectAll());
     }
 

@@ -50,6 +50,6 @@ public class TypeTextGestureTest extends AbstractJTextComponentDriverTest<JTextF
     private void assertCanType(String text) {
         driver.focusWithMouse();
         driver.typeText(text);
-        driver.text(equalTo(text));
+        driver.hasText(equalTo(text));
     }
 }

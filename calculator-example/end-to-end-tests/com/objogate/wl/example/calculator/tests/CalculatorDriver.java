@@ -14,10 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import com.objogate.wl.AWTEventQueueProber;
-import com.objogate.wl.driver.ComponentDriver;
-import com.objogate.wl.driver.JButtonDriver;
-import com.objogate.wl.driver.JFrameDriver;
-import com.objogate.wl.driver.JTextFieldDriver;
+import com.objogate.wl.driver.*;
 import com.objogate.wl.gesture.GesturePerformer;
 
 public class CalculatorDriver extends JFrameDriver {
@@ -71,7 +68,7 @@ public class CalculatorDriver extends JFrameDriver {
     }
     
     public void displaysNumber(String expectedResult) {
-        display().text(equalTo(expectedResult));
+        display().hasText(equalTo(expectedResult));
     }
     
     @SuppressWarnings("unchecked")

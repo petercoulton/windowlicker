@@ -30,10 +30,9 @@ public class JPasswordFieldDriverTest extends AbstractJTextComponentDriverTest<J
         setText("password");
 
         try {
-            driver.text(equalTo("password"));
+            driver.hasText(equalTo("password"));
             Assert.fail("should not be able query the text of a password field");
         } catch (Defect expected) {
-
         }
 
         try {
@@ -41,7 +40,6 @@ public class JPasswordFieldDriverTest extends AbstractJTextComponentDriverTest<J
 
             Assert.fail("should not be able query the text of a password field");
         } catch (Defect expected) {
-
         }
 
         try {
@@ -49,7 +47,6 @@ public class JPasswordFieldDriverTest extends AbstractJTextComponentDriverTest<J
 
             Assert.fail("should not be able query the text of a password field");
         } catch (Defect expected) {
-
         }
     }
 

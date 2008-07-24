@@ -32,11 +32,11 @@ public class JLabelDriverTest extends AbstractComponentDriverTest<JLabelDriver> 
     public void assertsLabelText() {
         setLabelText("foo");
 
-        driver.text(equalTo("foo"));
+        driver.hasText(equalTo("foo"));
 
         try {
             prober.setTimeout(100);
-            driver.text(equalTo("bar"));
+            driver.hasText(equalTo("bar"));
         }
         catch (AssertionError e) {
             return; // expected

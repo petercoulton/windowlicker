@@ -24,10 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.objogate.wl.ComponentSelector;
-import com.objogate.wl.driver.ComponentDriver;
-import com.objogate.wl.driver.JFrameDriver;
-import com.objogate.wl.driver.JMenuBarDriver;
-import com.objogate.wl.driver.JMenuDriver;
+import com.objogate.wl.driver.*;
 import com.objogate.wl.matcher.JMenuTextMatcher;
 import com.objogate.wl.probe.ActionListenerProbe;
 
@@ -78,7 +75,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
             ComponentSelector<JMenu> selector = menu.component();
             prober.check(selector);
             assertNotNull("Can find component", selector.component());
-            menu.text(equalTo(menuText));
+            menu.hasText(equalTo(menuText));
         }
     }
 
@@ -88,7 +85,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
         ComponentSelector<JMenu> selector = menu.component();
         prober.check(selector);
         assertNotNull("Can find component", selector.component());
-        menu.text(equalTo("Edit"));
+        menu.hasText(equalTo("Edit"));
         menu.mnemonic(equalTo('E'));
     }
 

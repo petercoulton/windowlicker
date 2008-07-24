@@ -37,7 +37,7 @@ public class RightAngleMouseMoveGesture implements Gesture {
         return new RightAngleMouseMoveGesture(tracker, Mode.V_THEN_H);
     }
 
-    public static RightAngleMouseMoveGesture createHorizontalThenVerticalMouseMoveGesture(Tracker tracker) {
+    public static RightAngleMouseMoveGesture horizontalThenVerticalMouseMove(Tracker tracker) {
         return new RightAngleMouseMoveGesture(tracker, Mode.H_THEN_V);
     }
 

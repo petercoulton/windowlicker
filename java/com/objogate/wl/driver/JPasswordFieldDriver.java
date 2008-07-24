@@ -22,11 +22,6 @@ public class JPasswordFieldDriver extends JTextComponentDriver<JPasswordField> {
     }
 
     @Override
-    public void text(Matcher<String> textMatcher) {
-        throw new Defect("selecting or inspecting text from a password field is not allowed");
-    }
-
-    @Override
     public void selectText(TextOccurence textOccurence) {
         throw new Defect("selecting or inspecting text from a password field is not allowed");
     }

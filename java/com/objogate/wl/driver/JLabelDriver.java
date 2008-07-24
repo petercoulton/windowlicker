@@ -25,10 +25,6 @@ public class JLabelDriver extends ComponentDriver<JLabel> implements TextQuery {
     public JLabelDriver(GesturePerformer gesturePerformer, ComponentSelector<JLabel> selector, Prober prober) {
         super(gesturePerformer, selector, prober);
     }
-    
-    public void text(Matcher<String> textMatcher) {
-        hasText(textMatcher);
-    }
 
     public void hasText(Matcher<String> matcher) {
         has(text(), matcher);

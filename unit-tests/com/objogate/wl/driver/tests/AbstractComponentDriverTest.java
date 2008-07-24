@@ -63,7 +63,7 @@ public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? ex
 
     @After
     public void disposeOfFrame() throws Exception {
-        pause(endOfTestPause); // just to give the view a chance to see the result of the test
+        pause(endOfTestPause); // just to give the viewer a chance to see the result of the test
         if (frame != null) {
             frame.setName(null);
             frame.dispose();

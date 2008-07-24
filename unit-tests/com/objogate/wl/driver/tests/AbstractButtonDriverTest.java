@@ -17,11 +17,11 @@ public abstract class AbstractButtonDriverTest<B extends AbstractButton, U exten
         String text = button.getClass().getSimpleName();
         setButtonText(text);
 
-        driver.text(equalTo(text));
+        driver.hasText(equalTo(text));
 
         try {
             prober.setTimeout(100);
-            driver.text(equalTo("bar"));
+            driver.hasText(equalTo("bar"));
         }
         catch (AssertionError e) {
             return; // expected
