@@ -7,6 +7,8 @@ import java.awt.Container;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.swing.MenuElement;
 
@@ -14,14 +16,13 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
 import com.objogate.wl.ComponentFinder;
-import com.objogate.wl.internal.NoDuplicateList;
 
 public class RecursiveComponentFinder<T extends Component> implements ComponentFinder<T> {
     private final ComponentFinder<? extends Component> parentOrOwnerFinder;
     private final Class<T> componentType;
     private final Matcher<? super T> criteria;
 
-    private List<T> found = new NoDuplicateList<T>();
+    private Set<T> found = new LinkedHashSet<T>();
 
     public RecursiveComponentFinder(Class<T> componentType, Matcher<? super T> criteria, ComponentFinder<? extends Component> parentOrOwnerFinder) {
         this.parentOrOwnerFinder = parentOrOwnerFinder;
@@ -34,7 +35,7 @@ public class RecursiveComponentFinder<T extends Component> implements ComponentF
     }
 
     public List<T> components() {
-        return found;
+        return new ArrayList<T>(found);
     }
 
     public void probe() {

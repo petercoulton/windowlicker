@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import com.objogate.wl.Gesture;
-import com.objogate.wl.Platform;
+import com.objogate.wl.internal.Platform;
 import com.objogate.wl.SystemProperties;
 import static com.objogate.wl.gesture.Gestures.typeKey;
 import static com.objogate.wl.gesture.Gestures.withModifierMask;
@@ -76,7 +76,8 @@ public class KeyboardLayout implements SystemProperties {
     }
 
     public static KeyboardLayout getKeyboardLayout(String layoutName) {
-        URL configURL = KeyboardLayout.class.getResource(layoutName + ".keyboard");
+        URL configURL = KeyboardLayout.class.getResource( layoutName + ".keyboard");
+
         if (configURL == null) {
             throw new IllegalArgumentException("keyboard layout " + layoutName + " not available.");
         }
@@ -101,9 +102,9 @@ public class KeyboardLayout implements SystemProperties {
         keyStrokes.put('\b', KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0));
         keyStrokes.put(' ', KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
     }
-
+    
     private void parseKeyStrokes(URL resource) throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(resource.openStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(resource.openStream(), "UTF-8"));
         try {
             parseKeyStrokes(in);
         }

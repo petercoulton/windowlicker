@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import static java.util.Arrays.asList;
 import java.util.List;
 import com.objogate.wl.Gesture;
-import com.objogate.wl.Platform;
+import com.objogate.wl.internal.Platform;
 import com.objogate.wl.UI;
 
 /**

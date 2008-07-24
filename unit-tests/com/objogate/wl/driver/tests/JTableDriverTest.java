@@ -22,7 +22,7 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.objogate.wl.Platform;
+import com.objogate.wl.internal.Platform;
 import com.objogate.wl.driver.JTableDriver;
 import com.objogate.wl.driver.JTableHeaderDriver;
 import com.objogate.wl.driver.JTextFieldDriver;

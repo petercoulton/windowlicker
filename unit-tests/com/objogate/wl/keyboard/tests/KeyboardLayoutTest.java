@@ -2,7 +2,7 @@ package com.objogate.wl.keyboard.tests;
 
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-import com.objogate.wl.Platform;
+import com.objogate.wl.internal.Platform;
 import com.objogate.wl.driver.tests.Problematic;
 import com.objogate.wl.keyboard.KeyboardLayout;
 import static com.objogate.wl.keyboard.KeyboardLayout.getKeyboardLayout;
@@ -44,11 +44,11 @@ public class KeyboardLayoutTest {
             assertHasTranslations(layout, " \t\b\n");
         }
     }
-
+    
     @Test
     @Problematic(platform = Platform.Mac, why="throws - java.lang.IllegalArgumentException: no stroke available for character '¨'")
     public void translatesAllPunctuationAndSymbolsOnGBKeyboardToKeyStrokes() {
-        assertHasTranslations(getKeyboardLayout("GB"), "¬`!\"£$%^&*()-_=+[{]};:'@#~,<.>/?\\|");
+        assertHasTranslations(getKeyboardLayout("GB"), "\u00AC`!\"\u00A3$%^&*()-_=+[{]};:'@#~,<.>/?\\|");
     }
     
     @Test

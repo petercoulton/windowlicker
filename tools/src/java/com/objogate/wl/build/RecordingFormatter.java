@@ -11,7 +11,7 @@ import junit.framework.Test;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitResultFormatter;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTest;
-import com.objogate.wl.Platform;
+import com.objogate.wl.internal.Platform;
 
 public class RecordingFormatter implements JUnitResultFormatter {
     private static final File FAILED_TEST_RECORDINGS = new File("build/artifacts/reports/tests/recordings");

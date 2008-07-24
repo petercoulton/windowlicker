@@ -1,4 +1,4 @@
-package com.objogate.wl;
+package com.objogate.wl.internal;
 
 import com.objogate.exception.Defect;
 
@@ -19,9 +19,13 @@ public enum Platform {
         throw new Defect("Need to handle " + platform);
     }
 
+    public static String osName() {
+        return System.getProperty("os.name").replace(" ", "");
+    }
+    
     public static void main(String[] args) {
-        System.out.println(Platform.is(Mac));
-        System.setProperty("os.name", "Linux");
-        System.out.println(Platform.is(Linux));
+        for (Object key : System.getProperties().keySet()) {
+            System.out.println(key + "=" + System.getProperty((String)key));
+        }
     }
 }
