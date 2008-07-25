@@ -49,30 +49,4 @@ public class JPasswordFieldDriverTest extends AbstractJTextComponentDriverTest<J
         } catch (Defect expected) {
         }
     }
-
-    @Test
-    public void testCannotSelectText() {
-        setText("my passsword is secret");
-
-        try {
-            driver.selectText(occurence(1).of("secret"));
-
-            Assert.fail("should not be able query the text of a password field");
-        } catch (Defect expected) {
-
-        }
-    }
-
-    @Test
-    public void testReplaceTextUsingTextOccurence() {
-        setText("my passsword is secret");
-
-        try {
-            driver.replaceText(occurence(1).of("secret"), "should not be allowed");
-
-            Assert.fail("should not be able query the text of a password field");
-        } catch (Defect expected) {
-
-        }
-    }
 }

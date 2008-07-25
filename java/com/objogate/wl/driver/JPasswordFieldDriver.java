@@ -22,11 +22,6 @@ public class JPasswordFieldDriver extends JTextComponentDriver<JPasswordField> {
     }
 
     @Override
-    public void selectText(TextOccurence textOccurence) {
-        throw new Defect("selecting or inspecting text from a password field is not allowed");
-    }
-
-    @Override
     public void hasText(String expectedText) {
         throw new Defect("selecting or inspecting text from a password field is not allowed");
     }
@@ -43,11 +38,6 @@ public class JPasswordFieldDriver extends JTextComponentDriver<JPasswordField> {
 
     @Override
     public void hasSelectedText(Matcher<String> matcher) {
-        throw new Defect("selecting or inspecting text from a password field is not allowed");
-    }
-
-    @Override
-    public void replaceText(TextOccurence textOccurence, String replacement) {
         throw new Defect("selecting or inspecting text from a password field is not allowed");
     }
 }

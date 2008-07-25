@@ -44,13 +44,4 @@ public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
     public JTextFieldDriver(ComponentDriver<? extends Component> parentOrOwner, Class<JTextField> componentType, Matcher<? super JTextField>... matchers) {
         super(parentOrOwner, componentType, matchers);
     }
-    
-    @Override
-    public void moveCaretTo(final int position) {
-        perform("moving caret", new ComponentManipulation<JTextField>() {
-            public void manipulate(JTextField component) {
-                component.setCaretPosition(position);
-            }
-        });
-    }
 }

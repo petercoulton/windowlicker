@@ -90,50 +90,6 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
         typeKey(VK_DELETE);
     }
 
-    public void replaceText(TextOccurence textOccurence, String replacement) {
-        selectText(textOccurence);
-
-        typeText(replacement);
-    }
-
-    public void selectText(TextOccurence textOccurence) {
-        moveMouseToCenter();
-        performGesture(Gestures.leftClickMouse());
-
-
-        TextSearchMatcher search = new TextSearchMatcher(textOccurence);
-        is(search);
-        int start = search.getStart();
-
-        moveCaretTo(start);
-
-        int repetitions = search.getEnd() - start;
-        performGesture(whileHoldingKey(KeyEvent.VK_SHIFT,
-                repeat(repetitions, typeKey(KeyEvent.VK_RIGHT))));
-
-    }
-
-    public void moveCaretTo(int targetPosition) {
-
-        int currentPosition = getCaretPosition();
-
-        if (currentPosition < targetPosition) {
-            performGesture(repeat(targetPosition - currentPosition, typeKey(KeyEvent.VK_RIGHT)));
-        } else {
-            performGesture(repeat(currentPosition - targetPosition, typeKey(KeyEvent.VK_LEFT)));
-        }
-    }
-
-    public int getCaretPosition() {
-        CarentPositionManipulation positionManipulation = new CarentPositionManipulation();
-        perform("caret position", positionManipulation);
-        return positionManipulation.getPosition();
-    }
-
-    public static TextOccurence occurence(int count) {
-        return new TextOccurence(count);
-    }
-
     public void isEmpty() {
         hasText(equalTo(""));
     }
@@ -145,28 +101,6 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
     public void clearText() {
         selectAll();
         deleteSelectedText();
-    }
-
-    public static class TextOccurence {
-        private final int count;
-        private String text;
-
-        public TextOccurence(int count) {
-            this.count = count;
-        }
-
-        public int getCount() {
-            return count;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public TextOccurence of(String s) {
-            this.text = s;
-            return this;
-        }
     }
 
     protected static class TextWidthManipulation implements ComponentManipulation<JTextComponent> {
@@ -194,62 +128,4 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
         }
     }
 
-    private static class CarentPositionManipulation implements ComponentManipulation<JTextComponent> {
-        private int position;
-
-        public void manipulate(JTextComponent component) {
-            position = component.getCaretPosition();
-        }
-
-        public int getPosition() {
-            return position;
-        }
-    }
-
-    public static class TextSearchMatcher extends TypeSafeMatcher<JTextComponent> {
-        private final int occurence;
-        private final String text;
-        private int start;
-        private int end;
-
-
-        public TextSearchMatcher(JTextFieldDriver.TextOccurence textOccurence) {
-            occurence = textOccurence.getCount();
-            text = textOccurence.getText();
-        }
-
-        public int getStart() {
-            return start;
-        }
-
-        public int getEnd() {
-            return end;
-        }
-
-        @Override
-        public boolean matchesSafely(JTextComponent component) {
-            String s = component.getText();
-            int lastIndex = 0;
-            for (int i = 0; i < occurence; i++) {
-                int index = s.indexOf(text, lastIndex);
-
-                if(index == -1)
-                    return false;
-
-                if (i == occurence - 1)
-                    lastIndex = index;
-                else
-                    lastIndex = index + text.length();
-            }
-
-            this.start = lastIndex;
-            this.end = start + text.length();
-
-            return true;
-        }
-
-        public void describeTo(Description description) {
-            description.appendText("occurence " + occurence + " of " + text);
-        }
-    }
 }

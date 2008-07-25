@@ -23,13 +23,13 @@ public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<J
 
         driver = new JTextComponentDriver<JTextComponent>(gesturePerformer, selectorFor((JTextComponent)textField), prober);
     }
-
+    
     @Test
     public void testReplaceAllText() throws Exception {
         setText("replace me");
 
         driver.replaceAllText("ok");
-
+        
         driver.hasText(equalTo("ok"));
     }
 
@@ -46,51 +46,30 @@ public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<J
     @Test
     public void testCutAndPaste() {
         setText("cut and paste");
-
+        
         driver.leftClickOnComponent();
         driver.selectAll();
 
         driver.cut();
-
-        driver.hasSelectedText(Matchers.nullValue(String.class));
+        driver.isEmpty();
 
         driver.paste();
-
         driver.hasText(equalTo("cut and paste"));
     }
-
+    
     @Test
     public void testCopyAndPaste() {
-        setText("copy and paste");
-
-        driver.leftClickOnComponent();
+        setText("original text");
+        
+        driver.focusWithMouse();
         driver.selectAll();
-
+        
         driver.copy();
-
-        driver.replaceAllText("");
-
+        driver.replaceAllText("this will be replaced");
+        driver.hasText("this will be replaced");
+        
+        driver.selectAll();
         driver.paste();
-
-        driver.hasText(equalTo("copy and paste"));
-    }
-
-    @Test
-    public void testSelectingTextUsingTheKeyboard() {
-        setText("the good the bad the ugly and the smelly");
-
-        driver.selectText(occurence(3).of("the"));
-        driver.deleteSelectedText();
-
-        driver.hasText(equalTo("the good the bad the ugly and smelly"));
-    }
-
-    @Test
-    public void testReplacingTextUsingTheKeyboard() {
-        setText("the quick brown fox jumps over the the dog");
-
-        driver.replaceText(occurence(3).of("the"), "lazy");
-
-        driver.hasText("the quick brown fox jumps over the lazy dog");
+        driver.hasText(equalTo("original text"));
     }
 }

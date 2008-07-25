@@ -21,8 +21,4 @@ public abstract class AbstractJTextComponentDriverTest<U extends JTextComponentD
             }
         });
     }
-
-    protected JTextComponentDriver.TextOccurence occurence(int count) {
-        return JTextComponentDriver.occurence(count);
-    }
 }
