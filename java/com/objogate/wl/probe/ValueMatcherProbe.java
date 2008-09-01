@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.objogate.wl.probe;
 
 import org.hamcrest.Description;
@@ -11,6 +8,7 @@ import com.objogate.wl.Probe;
 public class ValueMatcherProbe<T> implements Probe {
   private final Matcher<T> matcher;
   private final String message;
+  private boolean hasReceivedAValue = false;
   private T receivedValue;
   
   public ValueMatcherProbe(Matcher<T> matcher, String message) {
@@ -19,9 +17,12 @@ public class ValueMatcherProbe<T> implements Probe {
   }
   
   public boolean describeFailureTo(Description description) {
-    description.appendText(message).appendText(" ").appendDescriptionOf(matcher)
-      .appendText(". Received: <").appendValue(receivedValue).appendText(">");
-    
+    description.appendText(message).appendText(" ").appendDescriptionOf(matcher).appendText(". ");
+    if (hasReceivedAValue) {
+      description .appendText(". Received: <").appendValue(receivedValue).appendText(">");
+    } else {
+      description.appendText(" Received nothing");
+    }
     return isSatisfied();
   }
 
@@ -39,5 +40,6 @@ public class ValueMatcherProbe<T> implements Probe {
   
   public void setReceivedValue(T receivedValue) {
     this.receivedValue = receivedValue;
+    this.hasReceivedAValue = true;
   }
 }
