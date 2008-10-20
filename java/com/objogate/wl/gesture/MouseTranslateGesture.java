@@ -5,7 +5,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import org.hamcrest.Description;
 import com.objogate.wl.Gesture;
-import com.objogate.wl.robot.Automaton;
+import com.objogate.wl.Automaton;
 
 public class MouseTranslateGesture implements Gesture {
     private int animationDelayMs = 25;

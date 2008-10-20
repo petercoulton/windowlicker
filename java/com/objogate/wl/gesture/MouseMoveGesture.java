@@ -6,11 +6,10 @@ import java.awt.Toolkit;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import org.hamcrest.Description;
-import com.objogate.exception.Defect;
 import com.objogate.math.CubicBezierCurve2D;
 import com.objogate.math.Vector2D;
 import com.objogate.wl.Gesture;
-import com.objogate.wl.robot.Automaton;
+import com.objogate.wl.Automaton;
 
 public class MouseMoveGesture implements Gesture {
     private static final double ANIMATE_STEP = 0.02;

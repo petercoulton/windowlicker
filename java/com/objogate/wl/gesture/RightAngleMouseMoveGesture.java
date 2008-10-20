@@ -3,7 +3,7 @@ package com.objogate.wl.gesture;
 import java.awt.Point;
 import org.hamcrest.Description;
 import com.objogate.wl.Gesture;
-import com.objogate.wl.robot.Automaton;
+import com.objogate.wl.Automaton;
 
 public class RightAngleMouseMoveGesture implements Gesture {
     private final Tracker tracker;

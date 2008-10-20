@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="4" relativePaths="false">
+<project relativePaths="false" version="4">
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
     <buildFile url="file://$PROJECT_DIR$/build.xml">
@@ -32,6 +32,15 @@
             <emptyLine />
           </value>
         </option>
+        <ADDITIONAL_INDENT_OPTIONS fileType="js">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
       </value>
     </option>
     <option name="USE_PER_PROJECT_SETTINGS" value="true" />
@@ -56,11 +65,12 @@
       <entry name="?*.keyboard" />
     </wildcardResourcePatterns>
   </component>
-  <component name="DataSourceManagerImpl" />
   <component name="DependenciesAnalyzeManager">
     <option name="myForwardDirection" value="false" />
   </component>
-  <component name="DependencyValidationManager" />
+  <component name="DependencyValidationManager">
+    <option name="SKIP_IMPORT_STATEMENTS" value="false" />
+  </component>
   <component name="EclipseCompilerSettings">
     <option name="DEBUGGING_INFO" value="true" />
     <option name="GENERATE_NO_WARNINGS" value="true" />
@@ -76,14 +86,13 @@
     <option name="MAXIMUM_HEAP_SIZE" value="128" />
   </component>
   <component name="EntryPointsManager">
-    <entry_points />
+    <entry_points version="2.0" />
   </component>
   <component name="ExportToHTMLSettings">
     <option name="PRINT_LINE_NUMBERS" value="false" />
     <option name="OPEN_IN_BROWSER" value="false" />
     <option name="OUTPUT_DIRECTORY" />
   </component>
-  <component name="GUI Designer component loader factory" />
   <component name="IdProvider" IDEtalkID="309084DE596980FBD33BAB87C7F5E608" />
   <component name="InspectionProjectProfileManager">
     <option name="PROJECT_PROFILE" value="Project Default" />
@@ -93,24 +102,6 @@
       <profile version="1.0" is_locked="false">
         <option name="myName" value="Project Default" />
         <option name="myLocal" value="false" />
-        <used_levels>
-          <error>
-            <option name="myName" value="ERROR" />
-            <option name="myVal" value="400" />
-          </error>
-          <warning>
-            <option name="myName" value="WARNING" />
-            <option name="myVal" value="300" />
-          </warning>
-          <information>
-            <option name="myName" value="INFO" />
-            <option name="myVal" value="200" />
-          </information>
-          <server>
-            <option name="myName" value="SERVER PROBLEM" />
-            <option name="myVal" value="100" />
-          </server>
-        </used_levels>
         <inspection_tool class="JavaDoc" level="WARNING" enabled="false">
           <option name="TOP_LEVEL_CLASS_OPTIONS">
             <value>
@@ -150,6 +141,7 @@
         <inspection_tool class="JavadocReference" level="ERROR" enabled="false" />
       </profile>
     </profiles>
+    <list size="0" />
   </component>
   <component name="JavacSettings">
     <option name="DEBUGGING_INFO" value="true" />
@@ -332,10 +324,13 @@
       <option name="VM_PARAMETERS" value="" />
       <option name="PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
       <option name="ADDITIONAL_CLASS_PATH" />
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="singleModule" />
       </option>
+      <envs />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
       <method>
@@ -357,7 +352,9 @@
     <option name="GENERATE_IIOP_STUBS" value="false" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
-  <component name="StarteamVcsAdapter" />
+  <component name="SvnBranchConfigurationManager">
+    <option name="myVersion" value="123" />
+  </component>
   <component name="TestDox.ConfigurationController">
     <option name="allowCustomPackages" value="true" />
     <option name="testNameTemplate" value="&lt;classname&gt;Test" />
@@ -375,10 +372,13 @@
       <package>&lt;package&gt;.tests</package>
     </custom-packaging>
   </component>
+  <component name="TestDoxConfiguration">
+    <option name="createTestIfMissing" value="true" />
+    <option name="deletePackageOccurrences" value="true" />
+  </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
   </component>
-  <component name="VssVcs" />
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="com.intellij.jsf.UserDefinedFacesConfigs">
     <option name="USER_DEFINED_CONFIGS">
@@ -451,6 +451,5 @@
     <option name="COPY_FORMS_RUNTIME_TO_OUTPUT" value="true" />
     <option name="DEFAULT_LAYOUT_MANAGER" value="GridLayoutManager" />
   </component>
-  <UsedPathMacros />
 </project>
 

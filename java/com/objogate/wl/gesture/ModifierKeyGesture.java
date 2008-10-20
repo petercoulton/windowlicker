@@ -2,7 +2,7 @@ package com.objogate.wl.gesture;
 
 import org.hamcrest.Description;
 import com.objogate.wl.Gesture;
-import com.objogate.wl.robot.Automaton;
+import com.objogate.wl.Automaton;
 
 public class ModifierKeyGesture implements Gesture {
     private final int modifierKeyCode;

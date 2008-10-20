@@ -1,4 +1,4 @@
-package com.objogate.wl.robot;
+package com.objogate.wl;
 
 import java.awt.Point;
 

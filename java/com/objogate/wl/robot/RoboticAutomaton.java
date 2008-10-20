@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.Robot;
 import com.objogate.exception.Defect;
 import com.objogate.wl.keyboard.KeyboardLayout;
+import com.objogate.wl.Automaton;
 
 public class RoboticAutomaton implements Automaton {
     private final Robot robot;

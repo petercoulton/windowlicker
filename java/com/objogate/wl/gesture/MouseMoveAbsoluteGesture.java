@@ -5,7 +5,7 @@ import java.awt.Point;
 import org.hamcrest.Description;
 import com.objogate.exception.Defect;
 import com.objogate.wl.Gesture;
-import com.objogate.wl.robot.Automaton;
+import com.objogate.wl.Automaton;
 
 public class MouseMoveAbsoluteGesture implements Gesture {
     private final int direction;
