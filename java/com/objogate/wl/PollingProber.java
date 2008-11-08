@@ -38,6 +38,7 @@ public abstract class PollingProber implements Prober, SystemProperties {
     
         for (;;) {
             runProbe(probe);
+            
             if (probe.isSatisfied()) {
                 return true;
             }
@@ -45,12 +46,12 @@ public abstract class PollingProber implements Prober, SystemProperties {
                 return false;
             }
             else {
-                sleepWithoutInterruption(pollDelayMillis);
+                waitFor(pollDelayMillis);
             }
         }
     }
 
-    private void sleepWithoutInterruption(long duration) {
+    private void waitFor(long duration) {
         try {
             Thread.sleep(duration);
         }
@@ -58,7 +59,7 @@ public abstract class PollingProber implements Prober, SystemProperties {
             throw new IllegalStateException("unexpected interrupt", e);
         }
     }
-
+    
     public void check(Probe probe) {
         if (!poll(probe)) {
             StringDescription description = new StringDescription();

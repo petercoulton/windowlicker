@@ -2,22 +2,20 @@ package com.objogate.wl.tests;
 
 import static org.hamcrest.Matchers.containsString;
 
-import javax.swing.SwingUtilities;
-
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
-import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.Probe;
 import com.objogate.wl.Prober;
+import com.objogate.wl.UnsynchronizedProber;
 
 
-public class AWTEventQueueProberTest {
+public class UnsynchronizedProberTest {
     static final int TIMEOUT = 250;
     
-    Prober prober = new AWTEventQueueProber(TIMEOUT, 50);
-
+    Prober prober = new UnsynchronizedProber(TIMEOUT, 50);
+    
     @Test public void
     assertionFailsIfProbeIsSatisfiedWithinTimeout() {
         try {
@@ -87,25 +85,27 @@ public class AWTEventQueueProberTest {
     }
     
     @Test public void
-    runsProbeOnAWTEventDispatchThread() {
+    runsProbeOnTestThread() {
+        final Thread testThread = Thread.currentThread();
+        
         prober.check(new Probe() {
-            boolean wasOnEventDispatchThread = false;
+            boolean wasOnTestThread = false;
             
             public void probe() {
-                wasOnEventDispatchThread = SwingUtilities.isEventDispatchThread();
+                wasOnTestThread = Thread.currentThread() == testThread;
             }
             
             public boolean isSatisfied() {
-                return wasOnEventDispatchThread;
+                return wasOnTestThread;
             }
 
             public boolean describeFailureTo(Description description) {
-                description.appendText("was not event dispatch thread");
+                description.appendText("was not test thread");
                 return true;
             }
 
             public void describeTo(Description description) {
-                description.appendText("run on event dispatch thread");
+                description.appendText("run on test thread");
             }
         });
     }
