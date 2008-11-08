@@ -1,4 +1,4 @@
-package com.objogate.wl;
+package com.objogate.wl.swing;
 
 import javax.swing.UIManager;
 import com.objogate.exception.Defect;

@@ -8,9 +8,9 @@ import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
-import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.Probe;
 import com.objogate.wl.Prober;
+import com.objogate.wl.swing.AWTEventQueueProber;
 
 
 public class AWTEventQueueProberTest {

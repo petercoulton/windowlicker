@@ -8,7 +8,7 @@ import static java.util.Arrays.asList;
 import java.util.List;
 import com.objogate.wl.Gesture;
 import com.objogate.wl.internal.Platform;
-import com.objogate.wl.UI;
+import com.objogate.wl.swing.UI;
 
 /**
  * Convenient factory functions for gestures that can be combined to act as a gesture "DSL".

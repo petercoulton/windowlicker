@@ -10,13 +10,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import com.objogate.exception.Defect;
-import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.UI;
 import com.objogate.wl.driver.ComponentDriver;
 import com.objogate.wl.driver.JFrameDriver;
 import static com.objogate.wl.driver.JFrameDriver.topLevelFrame;
 import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.swing.AWTEventQueueProber;
+import com.objogate.wl.swing.UI;
 
 public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? extends Component>> {
 

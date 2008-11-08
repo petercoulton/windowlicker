@@ -14,8 +14,7 @@ public class WaitGesture implements Gesture {
     public void performGesture(Automaton automaton) {
         automaton.delay(waitMs);
     }
-
-
+    
     public void describeTo(Description description) {
         description.appendText("wait ");
         description.appendValue(waitMs);

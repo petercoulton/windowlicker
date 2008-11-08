@@ -13,9 +13,9 @@ import static org.hamcrest.Matchers.equalTo;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-import com.objogate.wl.AWTEventQueueProber;
 import com.objogate.wl.driver.*;
 import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.swing.AWTEventQueueProber;
 
 public class CalculatorDriver extends JFrameDriver {
     @SuppressWarnings("unchecked")

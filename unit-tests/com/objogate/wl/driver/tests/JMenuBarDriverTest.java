@@ -8,7 +8,6 @@ import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.awt.BorderLayout;
 
@@ -24,7 +23,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.objogate.wl.ComponentSelector;
-import com.objogate.wl.driver.*;
+import com.objogate.wl.driver.ComponentDriver;
+import com.objogate.wl.driver.JFrameDriver;
+import com.objogate.wl.driver.JMenuBarDriver;
+import com.objogate.wl.driver.JMenuDriver;
 import com.objogate.wl.matcher.JMenuTextMatcher;
 import com.objogate.wl.probe.ActionListenerProbe;
 
@@ -93,7 +95,7 @@ public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriv
     public void canClickOnANamedMenu() {
         JMenuDriver menu = driver.menu(withButtonText("File"));
         ComponentSelector<JMenu> selector = menu.component();
-        assertTrue(prober.poll(selector));
+        prober.check(selector);
         menu.leftClickOnComponent();
         menu.isShowing();
     }

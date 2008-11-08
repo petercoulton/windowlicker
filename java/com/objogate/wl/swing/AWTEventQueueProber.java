@@ -1,7 +1,10 @@
-package com.objogate.wl;
+package com.objogate.wl.swing;
 
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
+
+import com.objogate.wl.PollingProber;
+import com.objogate.wl.Probe;
 import com.objogate.wl.internal.ProbeRunner;
 
 
