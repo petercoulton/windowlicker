@@ -33,7 +33,25 @@ public abstract class PollingProber implements Prober, SystemProperties {
         this.pollDelayMillis = pollDelayMillis;
     }
 
-    public boolean poll(Probe probe) {
+    public void check(Probe probe) {
+        if (!poll(probe)) {
+            throw new AssertionError(describeFailureOf(probe));
+        }
+    }
+    
+    protected String describeFailureOf(Probe probe) {
+        StringDescription description = new StringDescription();
+   
+        description.appendText("\nTried to look for...\n    ");
+        probe.describeTo(description);
+        description.appendText("\nbut...\n    ");
+        probe.describeFailureTo(description);
+   
+        final String failureDescription = description.toString();
+        return failureDescription;
+    }
+
+    private boolean poll(Probe probe) {
         Timeout timeout = new Timeout(timeoutMillis);
     
         for (;;) {
@@ -50,6 +68,8 @@ public abstract class PollingProber implements Prober, SystemProperties {
             }
         }
     }
+    
+    protected abstract void runProbe(Probe probe);
 
     private void waitFor(long duration) {
         try {
@@ -60,19 +80,6 @@ public abstract class PollingProber implements Prober, SystemProperties {
         }
     }
     
-    public void check(Probe probe) {
-        if (!poll(probe)) {
-            StringDescription description = new StringDescription();
-    
-            description.appendText("\nTried to look for...\n    ");
-            probe.describeTo(description);
-            description.appendText("\nbut...\n    ");
-            probe.describeFailureTo(description);
-    
-            throw new AssertionError(description.toString());
-        }
-    }
-
     private static long defaultPollDelay() {
         return parseIntSystemProperty(POLL_DELAY, DEFAULT_POLL_DELAY);
     }
@@ -84,6 +91,4 @@ public abstract class PollingProber implements Prober, SystemProperties {
     private static long parseIntSystemProperty(String propertyName, long defaultValue) {
         return Long.parseLong(System.getProperty(propertyName, String.valueOf(defaultValue)));
     }
-
-    protected abstract void runProbe(Probe probe);
 }
