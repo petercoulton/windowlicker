@@ -46,6 +46,7 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
     public void canClearTheTextField() {
         setText("pineapples");
         
+        driver.focusWithMouse();
         driver.clearText();
         
         driver.isEmpty();

@@ -1,11 +1,14 @@
 package com.objogate.wl.driver;
 
-import javax.swing.JMenuItem;
-import java.awt.Component;
-import org.hamcrest.Matcher;
 import static com.objogate.wl.gesture.Gestures.BUTTON1;
 import static com.objogate.wl.gesture.Gestures.clickMouseButton;
-import static com.objogate.wl.gesture.RightAngleMouseMoveGesture.*;
+import static com.objogate.wl.gesture.RightAngleMouseMoveGesture.horizontalThenVerticalMouseMove;
+
+import java.awt.Component;
+
+import javax.swing.JMenuItem;
+
+import org.hamcrest.Matcher;
 
 public class JMenuItemDriver extends AbstractButtonDriver<JMenuItem> {
     @SuppressWarnings("unchecked")

@@ -1,12 +1,11 @@
 package com.objogate.wl.driver.tests;
 
-import static org.hamcrest.Matchers.equalTo;
 import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+import static org.hamcrest.Matchers.equalTo;
 
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
