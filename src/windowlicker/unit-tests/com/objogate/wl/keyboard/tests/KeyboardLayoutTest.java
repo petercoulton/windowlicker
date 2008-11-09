@@ -1,12 +1,13 @@
 package com.objogate.wl.keyboard.tests;
 
+import static com.objogate.wl.keyboard.KeyboardLayout.getKeyboardLayout;
 import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
+
+import com.objogate.wl.Problematic;
 import com.objogate.wl.internal.Platform;
 import com.objogate.wl.keyboard.KeyboardLayout;
-import com.objogate.wl.swing.driver.tests.Problematic;
-
-import static com.objogate.wl.keyboard.KeyboardLayout.getKeyboardLayout;
 
 
 public class KeyboardLayoutTest {

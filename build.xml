@@ -1,123 +1,136 @@
 <project name="windowlicker" default="build">
+	<property name="version" value="DEV" />
 
-    <property name="build.number" value="DEVELOPER-BUILD"/>
+	<property name="test.report.dir" location="build/reports/tests" />
+	<property name="test.output.dir" location="build/tests/output" />
+	
+	<property name="keyboard.type" value="US" />
 
-    <property name="build.dir" location="${basedir}/build"/>
-    <property name="product.class.dir" location="${build.dir}/product-classes"/>
-    <property name="test.class.dir" location="${build.dir}/test-classes"/>
+	<path id="classpath.core">
+		<fileset dir="lib/hamcrest" />
+	</path>
 
-    <property name="test.report.dir" location="${build.dir}/artifacts/reports/tests"/>
-    <property name="test.output.dir" location="${build.dir}/tests/output"/>
-    <property name="artifacts.dir" location="${build.dir}/artifacts"/>
+	<path id="classpath.swing">
+		<path refid="classpath.core" />
+		<pathelement location="build/jars/windowlicker-${version}.jar" />
+	</path>
 
-    <property name="product.jar.path" location="${artifacts.dir}/windowlicker-${build.number}.jar"/>
-    <property name="test.jar.path" location="${build.dir}/artifacts/windowlicker-tests-${build.number}.jar"/>
-    <property name="product.src.jar.path" location="${build.dir}/artifacts/windowlicker-${build.number}.src.jar"/>
+	<path id="classpath.unit-test">
+		<fileset dir="lib/junit" />
+		<fileset dir="lib/jmock" />
+	</path>
+	
+	<path id="classpath.tools">
+		<pathelement location="build/jars/windowlicker-${version}.jar" />
+		<path refid="classpath.unit-test"/>
+		<fileset dir="tools/apache-ant-1.7.0/lib"/>
+	</path>
+	
+	<target name="clean">
+		<delete dir="classes" />
+		<delete dir="build" />
+	</target>
 
-    <property name="keyboard.type" value="US"/>
+	<target name="build" depends="clean, test" />
 
-    <path id="library.path">
-        <fileset dir="${basedir}/lib">
-            <include name="**/*.jar"/>
-        </fileset>
-    </path>
+	<macrodef name="compile-jar">
+		<attribute name="srcdir" />
+		<attribute name="jarfile" />
+		<attribute name="classpathref" />
 
-    <path id="unit-test.classpath">
-        <path refid="library.path"/>
-        <pathelement location="${product.jar.path}"/>
-        <pathelement location="${test.jar.path}"/>
-    </path>
+		<!-- this should be a local variable/property, but Ant treats all properties as global -->
+		<attribute name="classdir" default="build/classes/@{jarfile}" />
 
-    <path id="unit-test-source.path">
-        <pathelement location="${basedir}/unit-tests"/>
-    </path>
+		<sequential>
+			<mkdir dir="@{classdir}" />
 
-    <path id="unit-test-source.path">
-        <pathelement location="${basedir}/unit-tests"/>
-        <pathelement location="${basedir}/tools/src/"/>
-    </path>
+			<javac srcdir="@{srcdir}" classpathref="@{classpathref}" destdir="@{classdir}" debug="true" source="1.5" target="1.5" fork="true" />
 
-    <path id="product-source.path">
-        <pathelement location="${basedir}/java"/>
-    </path>
+			<copy todir="@{classdir}">
+				<fileset dir="@{srcdir}" excludes="**/*.java" />
+			</copy>
 
-    <target name="clean">
-        <delete dir="classes"/>
-        <delete dir="${build.dir}"/>
-    </target>
+			<jar jarfile="build/jars/@{jarfile}" basedir="@{classdir}" />
+		</sequential>
+	</macrodef>
 
-    <target name="build" depends="clean, unit-test"/>
+	<macrodef name="compile-module">
+		<attribute name="name" />
+		<attribute name="classpathref" />
 
-    <target name="compile" description="Compile all code and create product and test jar files">
-        <mkdir dir="${build.dir}"/>
-        <mkdir dir="${artifacts.dir}"/>
-        <mkdir dir="${product.class.dir}"/>
-        <mkdir dir="${test.class.dir}"/>
+		<sequential>
+			<path id="test-classpath">
+				<path refid="@{classpathref}" />
+				<path refid="classpath.unit-test" />
+				<pathelement location="build/jars/@{name}-${version}.jar" />
+			</path>
 
-        <javac destdir="${product.class.dir}" debug="true" source="1.5" target="1.5" fork="true">
-            <src refid="product-source.path"/>
-            <classpath refid="library.path"/>
-        </javac>
+			<compile-jar srcdir="src/@{name}/main" jarfile="@{name}-${version}.jar" classpathref="@{classpathref}" />
 
-        <copy todir="${product.class.dir}">
-            <fileset dir="${basedir}/java" excludes="**/*.java"/>
-        </copy>
+			<compile-jar srcdir="src/@{name}/unit-tests" jarfile="@{name}-unit-tests-${version}.jar" classpathref="test-classpath" />
+		</sequential>
+	</macrodef>
 
-        <jar destfile="${product.jar.path}">
-            <fileset dir="${product.class.dir}"/>
-        </jar>
+	<target name="compile">
+		<mkdir dir="build/classes" />
+		<mkdir dir="build/jars" />
 
-        <jar destfile="${product.src.jar.path}">
-            <fileset dir="${basedir}/java"/>
-        </jar>
+		<compile-module name="windowlicker" classpathref="classpath.core" />
+		<compile-module name="swinglicker" classpathref="classpath.swing" />
+		
+		<compile-jar srcdir="tools/src" classpathref="classpath.tools" jarfile="tools.jar"/>
+	</target>
+	
+	<macrodef name="run-tests">
+		<attribute name="module" />
+		<attribute name="classpathref" />
 
-        <javac destdir="${test.class.dir}"
-               debug="true" source="1.5" target="1.5" fork="true">
-            <src refid="unit-test-source.path"/>
-            <classpath refid="library.path"/>
-            <classpath location="${product.class.dir}"/>
-        </javac>
+		<sequential>
+			<!--600000 = 10 minutes-->
+			<junit timeout="600000" fork="true" printsummary="yes" failureproperty="test.failure">
+				<classpath>
+					<path refid="@{classpathref}" />
+					<path refid="classpath.unit-test"/>
+					<path refid="classpath.tools" />
+					<pathelement location="build/jars/tools.jar"/>
+					<pathelement location="build/jars/@{module}-${version}.jar" />
+					<pathelement location="build/jars/@{module}-unit-tests-${version}.jar" />
+				</classpath>
 
-        <jar destfile="${test.jar.path}">
-            <fileset dir="${test.class.dir}"/>
-        </jar>
-    </target>
+				<jvmarg value="-Dcom.objogate.wl.timeout=10000" />
+				<jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}" />
+				<jvmarg value="-Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel" />
+				
+				<formatter classname="com.objogate.wl.build.RecordingFormatter" />
+				<formatter type="xml" />
 
-    <target name="-unit-test" depends="compile" description="Compile code and run all unit testcases">
-        <mkdir dir="${test.output.dir}"/>
+				<batchtest todir="${test.output.dir}">
+					<fileset dir="src/@{module}/unit-tests">
+						<include name="**/*Test.java" />
+						<exclude name="**/Abstract*Test.java" />
+					</fileset>
+				</batchtest>
+			</junit>
+		</sequential>
+	</macrodef>
 
-        <!--600000 = 10 minutes-->
-        <junit timeout="600000" fork="true" printsummary="yes" errorproperty="test.failure"
-               failureproperty="test.failure">
-            <classpath refid="unit-test.classpath"/>
-            <jvmarg value="-Dcom.objogate.wl.timeout=10000"/>
-            <jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}"/>
-            <!--<jvmarg value="-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"/>-->
-            <jvmarg value="-Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel"/>
+	<target name="-test.all" depends="compile">
+		<mkdir dir="${test.output.dir}" />
+		<run-tests module="windowlicker" classpathref="classpath.core" />
+		<run-tests module="swinglicker" classpathref="classpath.swing" />
+	</target>
 
-            <formatter classname="com.objogate.wl.build.RecordingFormatter"/>
-            <formatter type="xml"/>
-
-            <batchtest todir="${test.output.dir}">
-                <fileset dir="${basedir}/unit-tests">
-                    <include name="**/*Test.java"/>
-                    <exclude name="**/Abstract*Test.java"/>
-                </fileset>
-            </batchtest>
-        </junit>
-    </target>
-
-    <target name="unit-test" depends="-unit-test, junit-report">
-        <fail if="test.failure" message="There were test failures. Look at file://${test.report.dir}/index.html"/>
-    </target>
-
-    <target name="junit-report">
-        <mkdir dir="${test.report.dir}"/>
-        <junitreport todir="${test.report.dir}">
-            <fileset dir="${test.output.dir}">
-                <include name="TEST-*.xml"/>
-            </fileset>
-            <report format="frames" todir="${test.report.dir}"/>
-        </junitreport>
-    </target>
+	<target name="-test.report">
+		<mkdir dir="${test.report.dir}" />
+		<junitreport todir="${test.report.dir}">
+			<fileset dir="${test.output.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${test.report.dir}" />
+		</junitreport>
+	</target>
+	
+	<target name="test" depends="-test.all, -test.report">
+		<fail if="test.failure" message="There were test failures. Look at file://${test.report.dir}/index.html" />
+	</target>
 </project>

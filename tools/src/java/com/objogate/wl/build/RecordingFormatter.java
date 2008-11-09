@@ -1,16 +1,23 @@
 package com.objogate.wl.build;
 
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
+
 import junit.framework.AssertionFailedError;
 import junit.framework.JUnit4TestCaseFacade;
 import junit.framework.Test;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitResultFormatter;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTest;
+
 import com.objogate.wl.internal.Platform;
 
 public class RecordingFormatter implements JUnitResultFormatter {

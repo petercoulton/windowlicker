@@ -29,7 +29,6 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
         setText("");
 
         driver.replaceAllText("hello");
-
         driver.hasText(equalTo("hello"));
     }
 
@@ -38,7 +37,6 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
         setText("bananas");
 
         driver.replaceAllText("hello");
-
         driver.hasText(equalTo("hello"));
     }
     
@@ -48,7 +46,6 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
         
         driver.focusWithMouse();
         driver.clearText();
-        
         driver.isEmpty();
     }
     
@@ -56,9 +53,38 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
     public void canTypeSymbolsIntoTextField() {
         setText("");
         
-        String input = SYMBOLS_THAT_ARE_IN_DIFFERENT_PLACES_ON_US_UK_AND_MAC_KEYBOARDS;
+        assertCanType(SYMBOLS_THAT_ARE_IN_DIFFERENT_PLACES_ON_US_UK_AND_MAC_KEYBOARDS);
+    }
 
-        driver.replaceAllText(input);
-        driver.hasText(equalTo(input));
+    @Test
+    public void canTypeLowerCase() {
+        assertCanType("hello");
+    }
+
+    @Test
+    public void canTypeUpperCase() {
+        assertCanType("HELLO");
+    }
+
+    @Test
+    public void canTypeSpaces() {
+        assertCanType("hello world");
+    }
+
+    @Test
+    public void canTypeNumbers() {
+        assertCanType("0123456789");
+    }
+
+    @Test
+    public void canTypePunctuationAndSymbols() {
+        assertCanType("!\"$^&*()-_=+[{]};:'@#~,<.>/`\\");
+    }
+    
+    private void assertCanType(String text) {
+        setText("");
+        driver.focusWithMouse();
+        driver.typeText(text);
+        driver.hasText(equalTo(text));
     }
 }

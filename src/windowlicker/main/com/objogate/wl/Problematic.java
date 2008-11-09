@@ -1,4 +1,4 @@
-package com.objogate.wl.swing.driver.tests;
+package com.objogate.wl;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

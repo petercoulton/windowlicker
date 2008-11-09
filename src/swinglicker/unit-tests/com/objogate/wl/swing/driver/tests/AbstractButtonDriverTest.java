@@ -7,6 +7,7 @@ import javax.swing.AbstractButton;
 
 import org.junit.Test;
 
+import com.objogate.wl.Problematic;
 import com.objogate.wl.internal.Platform;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.driver.AbstractButtonDriver;
