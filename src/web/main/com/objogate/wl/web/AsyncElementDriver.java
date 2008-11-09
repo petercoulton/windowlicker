@@ -19,7 +19,7 @@ public class AsyncElementDriver implements SelfDescribing {
         this.webDriver = webDriver;
         this.criteria = criteria;
     }
-
+    
     public void assertText(final Matcher<String> textMatcher) {
         prober.check(new ElementTextProbe(this, textMatcher));
     }
@@ -28,7 +28,7 @@ public class AsyncElementDriver implements SelfDescribing {
         prober.check(new ElementValueProbe(this, valueMatcher));
     }
     
-    public WebElement findElement() {
+    WebElement findElement() {
         return webDriver.findElement(criteria);
     }
     
