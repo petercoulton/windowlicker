@@ -15,14 +15,14 @@
 		<pathelement location="build/jars/windowlicker-${version}.jar" />
 	</path>
 
-	<path id="classpath.unit-test">
+	<path id="classpath.test">
 		<fileset dir="lib/junit" />
 		<fileset dir="lib/jmock" />
 	</path>
 	
 	<path id="classpath.tools">
 		<pathelement location="build/jars/windowlicker-${version}.jar" />
-		<path refid="classpath.unit-test"/>
+		<path refid="classpath.test"/>
 		<fileset dir="tools/apache-ant-1.7.0/lib"/>
 	</path>
 	
@@ -61,13 +61,13 @@
 		<sequential>
 			<path id="test-classpath">
 				<path refid="@{classpathref}" />
-				<path refid="classpath.unit-test" />
+				<path refid="classpath.test" />
 				<pathelement location="build/jars/@{name}-${version}.jar" />
 			</path>
 
 			<compile-jar srcdir="src/@{name}/main" jarfile="@{name}-${version}.jar" classpathref="@{classpathref}" />
 
-			<compile-jar srcdir="src/@{name}/unit-tests" jarfile="@{name}-unit-tests-${version}.jar" classpathref="test-classpath" />
+			<compile-jar srcdir="src/@{name}/tests" jarfile="@{name}-tests-${version}.jar" classpathref="test-classpath" />
 		</sequential>
 	</macrodef>
 
@@ -90,11 +90,11 @@
 			<junit timeout="600000" fork="true" printsummary="yes" failureproperty="test.failure">
 				<classpath>
 					<path refid="@{classpathref}" />
-					<path refid="classpath.unit-test"/>
+					<path refid="classpath.test"/>
 					<path refid="classpath.tools" />
 					<pathelement location="build/jars/tools.jar"/>
 					<pathelement location="build/jars/@{module}-${version}.jar" />
-					<pathelement location="build/jars/@{module}-unit-tests-${version}.jar" />
+					<pathelement location="build/jars/@{module}-tests-${version}.jar" />
 				</classpath>
 
 				<jvmarg value="-Dcom.objogate.wl.timeout=10000" />
@@ -105,7 +105,7 @@
 				<formatter type="xml" />
 
 				<batchtest todir="${test.output.dir}">
-					<fileset dir="src/@{module}/unit-tests">
+					<fileset dir="src/@{module}/tests">
 						<include name="**/*Test.java" />
 						<exclude name="**/Abstract*Test.java" />
 					</fileset>
