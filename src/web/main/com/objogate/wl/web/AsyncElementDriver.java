@@ -4,6 +4,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.SelfDescribing;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -27,14 +28,20 @@ public class AsyncElementDriver implements SelfDescribing {
             private String actualText;
             
             public void probe() {
-                element = webDriver.findElement(criteria);
-                if (element != null) {
+                element = null;
+                actualText = null;
+                
+                try {
+                    element = webDriver.findElement(criteria);
                     actualText = element.getText();
+                }
+                catch (NoSuchElementException e) {
+                    // try next time
                 }
             }
             
             public boolean isSatisfied() {
-                return textMatcher.matches(actualText);
+                return element != null && textMatcher.matches(actualText);
             }
             
             public void describeTo(Description description) {

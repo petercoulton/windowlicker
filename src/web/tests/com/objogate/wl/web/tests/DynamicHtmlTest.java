@@ -16,14 +16,32 @@ public class DynamicHtmlTest {
     AsyncWebDriver browser = new AsyncWebDriver(new UnsynchronizedProber(), new FirefoxDriver());
         
     @Test 
-    public void canAssertStateOfAsynchronouslyLoadedElements() {
-        URL asyncPage = getClass().getResource("async.html");
+    public void asynchronousText() {
+        URL asyncPage = getClass().getResource("async-text.html");
         
         browser.navigate().to(asyncPage.toExternalForm());
         
         browser.element(By.id("x")).assertText(containsString("Changed"));
     }
-    
+
+    @Test 
+    public void asynchronousTitle() {
+        URL asyncPage = getClass().getResource("async-title.html");
+        
+        browser.navigate().to(asyncPage.toExternalForm());
+        
+        browser.assertTitle(containsString("Changed"));
+    }
+
+    @Test 
+    public void dynamicElement() {
+        URL asyncPage = getClass().getResource("async-element.html");
+        
+        browser.navigate().to(asyncPage.toExternalForm());
+        
+        browser.element(By.id("x")).assertText(containsString("Created"));
+    }
+
     @After
     public void quitBrowser() {
         browser.quit();

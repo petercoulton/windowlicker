@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Example Async Behaviour</title>
+  </head>
+  <body>
+    <h1>Example Async Behaviour</h1>
+    
+    <script type="text/javascript">
+    	function timeout() {
+    		e = document.createElement("p");
+    		e.id = "x";
+    		e.textContent = "Created!";
+    		document.getElementsByTagName("body")[0].appendChild(e);
+    	}
+    	
+    	setTimeout("timeout();", 1000);
+    </script>
+  </body>
+</html>

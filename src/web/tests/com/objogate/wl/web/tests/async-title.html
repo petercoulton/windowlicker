@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>This will change</title>
+  </head>
+  <body>
+    <h1>Example Async Behaviour</h1>
+    
+    <p id="x">Title will change.</p>
+	
+    <script type="text/javascript">
+    	function timeout() {
+    		document.title = "Changed!";
+    	}
+    	
+    	setTimeout("timeout();", 1000);
+    </script>
+  </body>
+</html>
