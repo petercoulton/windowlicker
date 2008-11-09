@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import com.objogate.wl.PollingProber;
 import com.objogate.wl.Probe;
-import com.objogate.wl.internal.ProbeRunner;
+import com.objogate.wl.swing.internal.ProbeRunner;
 
 
 public class AWTEventQueueProber extends PollingProber {

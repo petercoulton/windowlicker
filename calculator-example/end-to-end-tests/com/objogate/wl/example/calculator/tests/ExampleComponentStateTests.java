@@ -1,6 +1,6 @@
 package com.objogate.wl.example.calculator.tests;
 
-import static com.objogate.wl.driver.ComponentDriver.enabled;
+import static com.objogate.wl.swing.driver.ComponentDriver.enabled;
 import static org.hamcrest.Matchers.not;
 
 import org.junit.Test;

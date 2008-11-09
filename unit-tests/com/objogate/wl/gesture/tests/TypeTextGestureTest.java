@@ -8,8 +8,8 @@ import javax.swing.JTextField;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.objogate.wl.driver.JTextFieldDriver;
-import com.objogate.wl.driver.tests.AbstractJTextComponentDriverTest;
+import com.objogate.wl.swing.driver.JTextFieldDriver;
+import com.objogate.wl.swing.driver.tests.AbstractJTextComponentDriverTest;
 
 public class TypeTextGestureTest extends AbstractJTextComponentDriverTest<JTextFieldDriver> {
     @Before

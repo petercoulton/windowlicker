@@ -2,7 +2,12 @@ package com.objogate.wl.probe;
 
 import java.awt.Frame;
 import java.awt.Window;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.hamcrest.Description;
 
 import com.objogate.wl.swing.ComponentFinder;
