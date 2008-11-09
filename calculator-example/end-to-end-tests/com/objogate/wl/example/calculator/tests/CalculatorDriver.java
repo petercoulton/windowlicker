@@ -13,12 +13,12 @@ import static org.hamcrest.Matchers.equalTo;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.swing.AWTEventQueueProber;
 import com.objogate.wl.swing.driver.ComponentDriver;
 import com.objogate.wl.swing.driver.JButtonDriver;
 import com.objogate.wl.swing.driver.JFrameDriver;
 import com.objogate.wl.swing.driver.JTextFieldDriver;
+import com.objogate.wl.swing.gesture.GesturePerformer;
 
 public class CalculatorDriver extends JFrameDriver {
     @SuppressWarnings("unchecked")

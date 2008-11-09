@@ -21,12 +21,12 @@ import org.hamcrest.TypeSafeMatcher;
 import com.objogate.exception.Defect;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
-import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.gesture.MouseMoveGesture;
 import com.objogate.wl.gesture.Tracker;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.ComponentSelector;
+import com.objogate.wl.swing.gesture.GesturePerformer;
 
 public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
     public JTableHeaderDriver(GesturePerformer gesturePerformer, ComponentSelector<JTableHeader> componentSelector, Prober prober) {

@@ -4,8 +4,8 @@ import javax.swing.JRadioButton;
 import java.awt.Component;
 import org.hamcrest.Matcher;
 import com.objogate.wl.Prober;
-import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.swing.ComponentSelector;
+import com.objogate.wl.swing.gesture.GesturePerformer;
 
 public class JRadioButtonDriver extends AbstractButtonDriver<JRadioButton> {
     public JRadioButtonDriver(GesturePerformer gesturePerformer, ComponentSelector<JRadioButton> componentSelector, Prober prober) {

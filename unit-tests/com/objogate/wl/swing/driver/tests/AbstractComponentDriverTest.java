@@ -15,12 +15,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.junit.After;
 
 import com.objogate.exception.Defect;
-import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.swing.AWTEventQueueProber;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.UI;
 import com.objogate.wl.swing.driver.ComponentDriver;
 import com.objogate.wl.swing.driver.JFrameDriver;
+import com.objogate.wl.swing.gesture.GesturePerformer;
 
 public abstract class AbstractComponentDriverTest<T extends ComponentDriver<? extends Component>> {
 

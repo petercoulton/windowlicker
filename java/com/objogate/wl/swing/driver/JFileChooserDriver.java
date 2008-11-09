@@ -16,9 +16,9 @@ import org.hamcrest.TypeSafeMatcher;
 import com.objogate.exception.Defect;
 import com.objogate.wl.Probe;
 import com.objogate.wl.Prober;
-import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.UI;
+import com.objogate.wl.swing.gesture.GesturePerformer;
 
 public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
     @SuppressWarnings("unchecked")

@@ -1,4 +1,4 @@
-package com.objogate.wl.gesture;
+package com.objogate.wl.swing.gesture;
 
 import java.awt.Component;
 import java.awt.Rectangle;

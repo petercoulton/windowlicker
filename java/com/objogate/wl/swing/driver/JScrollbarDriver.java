@@ -13,12 +13,12 @@ import javax.swing.JScrollPane;
 import org.hamcrest.Matcher;
 
 import com.objogate.wl.Prober;
-import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.MouseMoveAbsoluteGesture;
 import com.objogate.wl.gesture.MousePressGesture;
 import com.objogate.wl.gesture.MouseReleaseGesture;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.ComponentSelector;
+import com.objogate.wl.swing.gesture.GesturePerformer;
 import com.objogate.wl.swing.matcher.ScrollBarMatcher;
 
 public class JScrollbarDriver extends ComponentDriver<JScrollBar> {

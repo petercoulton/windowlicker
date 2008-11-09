@@ -14,8 +14,8 @@ import org.hamcrest.Matcher;
 import org.hamcrest.core.IsEqual;
 
 import com.objogate.wl.Prober;
-import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.swing.ComponentSelector;
+import com.objogate.wl.swing.gesture.GesturePerformer;
 import com.objogate.wl.swing.matcher.JLabelTextMatcher;
 
 /**

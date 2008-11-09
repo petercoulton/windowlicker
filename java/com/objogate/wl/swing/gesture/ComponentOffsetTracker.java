@@ -1,8 +1,9 @@
-package com.objogate.wl.gesture;
+package com.objogate.wl.swing.gesture;
 
 import java.awt.Component;
 import java.awt.Point;
 import com.objogate.wl.Prober;
+import com.objogate.wl.gesture.Tracker;
 import com.objogate.wl.swing.ComponentSelector;
 
 /**

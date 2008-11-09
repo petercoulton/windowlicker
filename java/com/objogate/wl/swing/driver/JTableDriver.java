@@ -24,7 +24,6 @@ import com.objogate.exception.Defect;
 import com.objogate.wl.Gesture;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
-import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.gesture.Tracker;
 import com.objogate.wl.swing.ComponentManipulation;
@@ -34,6 +33,7 @@ import com.objogate.wl.swing.driver.table.IdentifierCell;
 import com.objogate.wl.swing.driver.table.JTableCellManipulation;
 import com.objogate.wl.swing.driver.table.Location;
 import com.objogate.wl.swing.driver.table.RenderedCell;
+import com.objogate.wl.swing.gesture.GesturePerformer;
 
 public class JTableDriver extends ComponentDriver<JTable> {
 

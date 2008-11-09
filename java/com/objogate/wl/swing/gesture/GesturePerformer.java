@@ -1,4 +1,4 @@
-package com.objogate.wl.gesture;
+package com.objogate.wl.swing.gesture;
 
 import javax.swing.SwingUtilities;
 import com.objogate.exception.Defect;

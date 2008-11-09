@@ -1,11 +1,11 @@
 package com.objogate.wl.swing.driver;
 
-import static com.objogate.wl.gesture.ComponentEdgeTracker.Edge.Bottom;
-import static com.objogate.wl.gesture.ComponentEdgeTracker.Edge.Left;
-import static com.objogate.wl.gesture.ComponentEdgeTracker.Edge.Right;
-import static com.objogate.wl.gesture.ComponentEdgeTracker.Edge.Top;
 import static com.objogate.wl.gesture.Gestures.leftClickMouse;
 import static com.objogate.wl.gesture.Gestures.moveMouseTo;
+import static com.objogate.wl.swing.gesture.ComponentEdgeTracker.Edge.Bottom;
+import static com.objogate.wl.swing.gesture.ComponentEdgeTracker.Edge.Left;
+import static com.objogate.wl.swing.gesture.ComponentEdgeTracker.Edge.Right;
+import static com.objogate.wl.swing.gesture.ComponentEdgeTracker.Edge.Top;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
@@ -20,10 +20,10 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 import com.objogate.wl.Prober;
-import com.objogate.wl.gesture.ComponentEdgeTracker;
-import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.ComponentSelector;
+import com.objogate.wl.swing.gesture.ComponentEdgeTracker;
+import com.objogate.wl.swing.gesture.GesturePerformer;
 
 public class JSliderDriver extends ComponentDriver<JSlider> {
     public JSliderDriver(GesturePerformer gesturePerformer, ComponentSelector<JSlider> jSliderComponentSelector, Prober prober) {
