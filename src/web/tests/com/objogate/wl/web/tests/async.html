@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>Example Async Behaviour</title>
+  </head>
+  <body>
+    <h1>Example Async Behaviour</h1>
+    
+    <p id="x">This will change</p>
+	
+    <script type="text/javascript">
+    	function timeout() {
+    		document.getElementById("x").textContent = "Changed!";
+    	}
+    	
+    	setTimeout("timeout();", 1000);
+    </script>
+  </body>
+</html>

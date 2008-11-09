@@ -8,5 +8,4 @@ public interface SystemProperties {
     long DEFAULT_POLL_TIMEOUT = 5000;
 
     String KEYBOARD_LAYOUT = "com.objogate.wl.keyboard";
-
 }

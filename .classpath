@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="calculator-example/end-to-end-tests"/>
-	<classpathentry kind="src" path="src/web/tests"/>
-	<classpathentry kind="src" path="src/swing/main"/>
-	<classpathentry kind="src" path="src/core/tests"/>
-	<classpathentry kind="src" path="src/swing/tests"/>
 	<classpathentry kind="src" path="src/core/main"/>
+	<classpathentry kind="src" path="src/core/tests"/>
+	<classpathentry kind="src" path="src/swing/main"/>
+	<classpathentry kind="src" path="src/swing/tests"/>
 	<classpathentry kind="src" path="src/web/main"/>
+	<classpathentry kind="src" path="src/web/tests"/>
 	<classpathentry kind="src" path="calculator-example/src"/>
+	<classpathentry kind="src" path="calculator-example/end-to-end-tests"/>
 	<classpathentry kind="src" path="tools/src/java"/>
 	<classpathentry kind="lib" path="lib/hamcrest/hamcrest-all-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/junit/junit-4.4-src.jar"/>
