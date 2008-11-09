@@ -6,9 +6,9 @@ import javax.swing.JTextField;
 
 import org.hamcrest.Matcher;
 
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class JTextFieldDriver extends JTextComponentDriver<JTextField> {
     public JTextFieldDriver(GesturePerformer gesturePerformer, ComponentSelector<JTextField> componentSelector, Prober prober) {

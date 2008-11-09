@@ -6,13 +6,13 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.internal.PropertyQuery;
 import com.objogate.wl.internal.query.MnemonicQuery;
 import com.objogate.wl.internal.query.TextQuery;
+import com.objogate.wl.swing.ComponentSelector;
 
 
 public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDriver<T>

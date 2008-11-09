@@ -2,9 +2,9 @@ package com.objogate.wl.probe;
 
 import java.awt.Component;
 import org.hamcrest.Description;
-import com.objogate.wl.ComponentFinder;
-import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.Probe;
+import com.objogate.wl.swing.ComponentFinder;
+import com.objogate.wl.swing.ComponentManipulation;
 
 public class ComponentManipulatorProbe<T extends Component> implements Probe {
     private final ComponentFinder<T> finder;

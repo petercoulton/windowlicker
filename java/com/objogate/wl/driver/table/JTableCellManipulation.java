@@ -6,8 +6,8 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.driver.JTableDriver;
+import com.objogate.wl.swing.ComponentManipulation;
 
 public class JTableCellManipulation implements ComponentManipulation<JTable> {
     private final Location location;

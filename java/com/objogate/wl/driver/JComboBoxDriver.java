@@ -14,8 +14,6 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
@@ -23,6 +21,8 @@ import com.objogate.wl.probe.ComponentIdentity;
 import com.objogate.wl.probe.RecursiveComponentFinder;
 import com.objogate.wl.probe.SingleComponentFinder;
 import com.objogate.wl.probe.TopLevelWindowFinder;
+import com.objogate.wl.swing.ComponentManipulation;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListDriver {
     public JComboBoxDriver(GesturePerformer gesturePerformer, ComponentSelector<JComboBox> componentSelector, Prober prober) {

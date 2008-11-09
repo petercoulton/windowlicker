@@ -15,7 +15,7 @@ import javax.swing.MenuElement;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
-import com.objogate.wl.ComponentFinder;
+import com.objogate.wl.swing.ComponentFinder;
 
 public class RecursiveComponentFinder<T extends Component> implements ComponentFinder<T> {
     private final ComponentFinder<? extends Component> parentOrOwnerFinder;

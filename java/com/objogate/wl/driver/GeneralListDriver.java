@@ -6,9 +6,9 @@ import javax.swing.JList;
 import java.awt.Component;
 import org.hamcrest.Matcher;
 import com.objogate.exception.Defect;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.swing.ComponentSelector;
 
 /**
  * Simple wrapper for list operations on either JComboBox or JList.

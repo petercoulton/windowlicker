@@ -13,12 +13,12 @@ import javax.swing.JPanel;
 
 import org.junit.Test;
 
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.driver.ComponentDriver;
 import com.objogate.wl.driver.JFrameDriver;
 import com.objogate.wl.driver.JLabelDriver;
 import com.objogate.wl.driver.tests.AbstractComponentDriverTest;
 import com.objogate.wl.matcher.JLabelTextMatcher;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class ComponentFinderErrorMessagesTest extends AbstractComponentDriverTest<ComponentDriver<? extends Component>> {
     @SuppressWarnings("unchecked")

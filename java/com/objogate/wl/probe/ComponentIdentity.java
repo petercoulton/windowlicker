@@ -3,7 +3,8 @@ package com.objogate.wl.probe;
 import java.awt.Component;
 import java.util.Collections;
 import org.hamcrest.Description;
-import com.objogate.wl.ComponentSelector;
+
+import com.objogate.wl.swing.ComponentSelector;
 
 /**
  * A ComponentFinder that always find a given component.

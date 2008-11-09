@@ -22,13 +22,13 @@ import javax.swing.JRadioButtonMenuItem;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.driver.ComponentDriver;
 import com.objogate.wl.driver.JFrameDriver;
 import com.objogate.wl.driver.JMenuBarDriver;
 import com.objogate.wl.driver.JMenuDriver;
 import com.objogate.wl.matcher.JMenuTextMatcher;
 import com.objogate.wl.probe.ActionListenerProbe;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriver> {
     private JMenuItem displayItem;

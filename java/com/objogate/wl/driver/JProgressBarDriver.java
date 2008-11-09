@@ -8,9 +8,9 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class JProgressBarDriver extends ComponentDriver<JProgressBar> {
     public JProgressBarDriver(GesturePerformer gesturePerformer, ComponentSelector<JProgressBar> jProgressBarComponentSelector, Prober prober) {

@@ -9,9 +9,9 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.objogate.wl.ComponentFinder;
-import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.probe.ComponentManipulatorProbe;
+import com.objogate.wl.swing.ComponentFinder;
+import com.objogate.wl.swing.ComponentManipulation;
 
 @RunWith(JMock.class)
 public class ComponentManipulatorProbeTest {

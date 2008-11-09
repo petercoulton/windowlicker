@@ -21,8 +21,6 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 import com.objogate.exception.Defect;
-import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Gesture;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
@@ -34,6 +32,8 @@ import com.objogate.wl.driver.table.RenderedCell;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.gesture.Tracker;
+import com.objogate.wl.swing.ComponentManipulation;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class JTableDriver extends ComponentDriver<JTable> {
 

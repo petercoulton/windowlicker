@@ -7,12 +7,12 @@ import javax.swing.JTextField;
 import org.hamcrest.Description;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
-import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.matcher.ComponentMatchers;
 import com.objogate.wl.matcher.JLabelTextMatcher;
 import com.objogate.wl.probe.NthComponentFinder;
 import com.objogate.wl.probe.RecursiveComponentFinder;
+import com.objogate.wl.swing.ComponentManipulation;
 
 class MetalFileChooserUIDriver implements FileChooserUIDriver {
     protected JFileChooserDriver parentOrOwner;

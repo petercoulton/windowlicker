@@ -3,9 +3,9 @@ package com.objogate.wl.driver;
 import javax.swing.JRadioButton;
 import java.awt.Component;
 import org.hamcrest.Matcher;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class JRadioButtonDriver extends AbstractButtonDriver<JRadioButton> {
     public JRadioButtonDriver(GesturePerformer gesturePerformer, ComponentSelector<JRadioButton> componentSelector, Prober prober) {

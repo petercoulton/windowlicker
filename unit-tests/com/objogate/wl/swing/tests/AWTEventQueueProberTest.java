@@ -1,4 +1,4 @@
-package com.objogate.wl.tests;
+package com.objogate.wl.swing.tests;
 
 import static org.hamcrest.Matchers.containsString;
 

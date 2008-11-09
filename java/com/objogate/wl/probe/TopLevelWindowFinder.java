@@ -4,7 +4,8 @@ import java.awt.Frame;
 import java.awt.Window;
 import java.util.*;
 import org.hamcrest.Description;
-import com.objogate.wl.ComponentFinder;
+
+import com.objogate.wl.swing.ComponentFinder;
 
 public class TopLevelWindowFinder implements ComponentFinder<Window> {
     private List<Window> found = Collections.emptyList();

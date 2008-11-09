@@ -14,9 +14,6 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
-import com.objogate.wl.ComponentFinder;
-import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Gesture;
 import com.objogate.wl.Probe;
 import com.objogate.wl.Prober;
@@ -37,6 +34,9 @@ import com.objogate.wl.probe.ComponentManipulatorProbe;
 import com.objogate.wl.probe.ComponentPropertyAssertionProbe;
 import com.objogate.wl.probe.RecursiveComponentFinder;
 import com.objogate.wl.probe.SingleComponentFinder;
+import com.objogate.wl.swing.ComponentFinder;
+import com.objogate.wl.swing.ComponentManipulation;
+import com.objogate.wl.swing.ComponentSelector;
 
 public abstract class ComponentDriver<T extends Component> {
     private final Prober prober;

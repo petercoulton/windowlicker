@@ -2,8 +2,8 @@ package com.objogate.wl.gesture;
 
 import java.awt.Component;
 import java.awt.Point;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
+import com.objogate.wl.swing.ComponentSelector;
 
 /**
  * @Deprecated introduced temporarily as refactoring code to use Trackers, but should be replaced

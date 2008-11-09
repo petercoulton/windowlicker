@@ -2,8 +2,9 @@ package com.objogate.wl.probe;
 
 import java.awt.Component;
 import org.hamcrest.Matcher;
-import com.objogate.wl.ComponentFinder;
-import com.objogate.wl.ComponentSelector;
+
+import com.objogate.wl.swing.ComponentFinder;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class ComponentFinders {
     /**

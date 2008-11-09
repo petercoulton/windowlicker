@@ -4,8 +4,9 @@ import java.awt.Component;
 import java.util.Arrays;
 import java.util.List;
 import org.hamcrest.Description;
-import com.objogate.wl.ComponentFinder;
-import com.objogate.wl.ComponentSelector;
+
+import com.objogate.wl.swing.ComponentFinder;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class NthComponentFinder<T extends Component> implements ComponentSelector<T> {
     private ComponentFinder<T> parentOrOwnerFinder;

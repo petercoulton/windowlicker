@@ -3,9 +3,9 @@ package com.objogate.wl.driver;
 import javax.swing.JCheckBox;
 import java.awt.Component;
 import org.hamcrest.Matcher;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class JCheckBoxDriver extends AbstractButtonDriver<JCheckBox> {
     public JCheckBoxDriver(GesturePerformer gesturePerformer, ComponentSelector<JCheckBox> componentSelector, Prober prober) {

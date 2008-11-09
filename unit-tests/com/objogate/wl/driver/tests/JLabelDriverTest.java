@@ -13,8 +13,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.driver.JLabelDriver;
+import com.objogate.wl.swing.ComponentManipulation;
 
 public class JLabelDriverTest extends AbstractComponentDriverTest<JLabelDriver> {
     JLabel label = new JLabel("label");

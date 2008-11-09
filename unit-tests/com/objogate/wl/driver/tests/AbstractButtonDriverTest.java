@@ -4,10 +4,10 @@ import javax.swing.AbstractButton;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.fail;
 import org.junit.Test;
-import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.internal.Platform;
 import com.objogate.wl.driver.AbstractButtonDriver;
 import com.objogate.wl.probe.ActionListenerProbe;
+import com.objogate.wl.swing.ComponentManipulation;
 
 public abstract class AbstractButtonDriverTest<B extends AbstractButton, U extends AbstractButtonDriver<B>> extends AbstractComponentDriverTest<U> {
     protected B button;

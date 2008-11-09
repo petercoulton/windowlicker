@@ -16,12 +16,12 @@ import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 
 import com.objogate.exception.Defect;
-import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Tracker;
+import com.objogate.wl.swing.ComponentManipulation;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
     public JTabbedPaneDriver(GesturePerformer gesturePerformer, ComponentSelector<JTabbedPane> componentSelector, Prober prober) {

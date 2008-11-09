@@ -1,4 +1,4 @@
-package com.objogate.wl;
+package com.objogate.wl.swing;
 
 import java.awt.Component;
 

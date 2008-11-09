@@ -4,8 +4,8 @@ import java.awt.Component;
 import java.awt.Point;
 import org.hamcrest.Description;
 import org.hamcrest.SelfDescribing;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class ComponentEdgeTracker implements Tracker, SelfDescribing {
     private final Prober prober;

@@ -4,9 +4,9 @@ import javax.swing.JPasswordField;
 import java.awt.Component;
 import org.hamcrest.Matcher;
 import com.objogate.exception.Defect;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class JPasswordFieldDriver extends JTextComponentDriver<JPasswordField> {
     public JPasswordFieldDriver(GesturePerformer gesturePerformer, ComponentSelector<JPasswordField> componentSelector, Prober prober) {

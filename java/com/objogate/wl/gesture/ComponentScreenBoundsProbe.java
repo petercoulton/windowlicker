@@ -3,8 +3,8 @@ package com.objogate.wl.gesture;
 import java.awt.Component;
 import java.awt.Rectangle;
 import org.hamcrest.Description;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Probe;
+import com.objogate.wl.swing.ComponentSelector;
 
 class ComponentScreenBoundsProbe implements Probe {
     private final ComponentSelector<? extends Component> componentSelector;

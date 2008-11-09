@@ -2,8 +2,8 @@ package com.objogate.wl.driver.tests;
 
 import javax.swing.text.JTextComponent;
 import java.awt.Font;
-import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.driver.JTextComponentDriver;
+import com.objogate.wl.swing.ComponentManipulation;
 
 public abstract class AbstractJTextComponentDriverTest<U extends JTextComponentDriver<? extends JTextComponent>> extends AbstractComponentDriverTest<U> {
     public void setText(final String text) {

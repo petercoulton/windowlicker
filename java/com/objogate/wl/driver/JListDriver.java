@@ -11,13 +11,13 @@ import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 
-import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.matcher.JLabelTextMatcher;
+import com.objogate.wl.swing.ComponentManipulation;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class JListDriver extends ComponentDriver<JList> implements ListDriver {
     public JListDriver(GesturePerformer gesturePerformer, ComponentSelector<JList> componentSelector, Prober prober) {

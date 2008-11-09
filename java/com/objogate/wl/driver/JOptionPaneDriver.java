@@ -13,10 +13,10 @@ import javax.swing.JTextField;
 import org.hamcrest.Matcher;
 import org.hamcrest.core.IsEqual;
 
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.matcher.JLabelTextMatcher;
+import com.objogate.wl.swing.ComponentSelector;
 
 /**
  * Driver for a JOptionPane

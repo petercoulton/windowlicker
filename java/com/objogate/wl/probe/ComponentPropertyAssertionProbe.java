@@ -3,9 +3,9 @@ package com.objogate.wl.probe;
 import java.awt.Component;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Probe;
 import com.objogate.wl.Query;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class ComponentPropertyAssertionProbe<C extends Component, P> implements Probe {
     private final ComponentSelector<C> selector;

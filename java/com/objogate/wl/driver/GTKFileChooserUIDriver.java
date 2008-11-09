@@ -15,9 +15,9 @@ import javax.swing.text.JTextComponent;
 
 import org.hamcrest.Matchers;
 
-import com.objogate.wl.ComponentManipulation;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.matcher.JLabelTextMatcher;
+import com.objogate.wl.swing.ComponentManipulation;
 
 class GTKFileChooserUIDriver implements FileChooserUIDriver {
     private final JFileChooserDriver parentOrOwner;

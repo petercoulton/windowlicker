@@ -6,14 +6,14 @@ import static org.hamcrest.CoreMatchers.allOf;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import static org.hamcrest.Matchers.equalTo;
-import com.objogate.wl.ComponentManipulation;
-import com.objogate.wl.ComponentSelector;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.GesturePerformer;
 import com.objogate.wl.probe.RecursiveComponentFinder;
 import com.objogate.wl.probe.SingleComponentFinder;
 import com.objogate.wl.probe.TopLevelWindowFinder;
+import com.objogate.wl.swing.ComponentManipulation;
+import com.objogate.wl.swing.ComponentSelector;
 
 public class JFrameDriver extends ComponentDriver<JFrame> {
     public JFrameDriver(GesturePerformer gesturePerformer, ComponentSelector<JFrame> componentSelector, Prober prober) {
