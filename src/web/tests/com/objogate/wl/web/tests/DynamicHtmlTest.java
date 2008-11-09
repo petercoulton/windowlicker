@@ -2,8 +2,6 @@ package com.objogate.wl.web.tests;
 
 import static org.hamcrest.Matchers.containsString;
 
-import java.net.URL;
-
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -17,31 +15,36 @@ public class DynamicHtmlTest {
         
     @Test 
     public void asynchronousText() {
-        URL asyncPage = getClass().getResource("async-text.html");
-        
-        browser.navigate().to(asyncPage.toExternalForm());
+        openResource("async-text.html");
         
         browser.element(By.id("x")).assertText(containsString("Changed"));
     }
 
     @Test 
     public void asynchronousTitle() {
-        URL asyncPage = getClass().getResource("async-title.html");
-        
-        browser.navigate().to(asyncPage.toExternalForm());
+        openResource("async-title.html");
         
         browser.assertTitle(containsString("Changed"));
     }
 
     @Test 
     public void dynamicElement() {
-        URL asyncPage = getClass().getResource("async-element.html");
-        
-        browser.navigate().to(asyncPage.toExternalForm());
+        openResource("async-element.html");
         
         browser.element(By.id("x")).assertText(containsString("Created"));
     }
+    
+    @Test
+    public void dynamicInputValue() {
+        openResource("async-input-value.html");
+        
+        browser.element(By.id("x")).assertValue(containsString("Changed"));
+    }
 
+    private void openResource(String htmlResource) {
+        browser.navigate().to(getClass().getResource(htmlResource).toExternalForm());
+    }
+    
     @After
     public void quitBrowser() {
         browser.quit();

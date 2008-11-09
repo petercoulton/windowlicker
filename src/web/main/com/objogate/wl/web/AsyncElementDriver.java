@@ -4,11 +4,9 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.SelfDescribing;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.objogate.wl.Probe;
 import com.objogate.wl.Prober;
 
 public class AsyncElementDriver implements SelfDescribing {
@@ -23,45 +21,15 @@ public class AsyncElementDriver implements SelfDescribing {
     }
 
     public void assertText(final Matcher<String> textMatcher) {
-        prober.check(new Probe() {
-            private WebElement element;
-            private String actualText;
-            
-            public void probe() {
-                element = null;
-                actualText = null;
-                
-                try {
-                    element = webDriver.findElement(criteria);
-                    actualText = element.getText();
-                }
-                catch (NoSuchElementException e) {
-                    // try next time
-                }
-            }
-            
-            public boolean isSatisfied() {
-                return element != null && textMatcher.matches(actualText);
-            }
-            
-            public void describeTo(Description description) {
-                description
-                    .appendDescriptionOf(AsyncElementDriver.this)
-                    .appendText(" with text ")
-                    .appendDescriptionOf(textMatcher);
-            }
-            
-            public boolean describeFailureTo(Description description) {
-                if (element == null) {
-                    description.appendText("did not find matching element");
-                    return true;
-                }
-                else {
-                    description.appendText("text was ").appendValue(actualText);
-                    return true;
-                }
-            }
-        });
+        prober.check(new ElementTextProbe(this, textMatcher));
+    }
+    
+    public void assertValue(final Matcher<String> valueMatcher) {
+        prober.check(new ElementValueProbe(this, valueMatcher));
+    }
+    
+    public WebElement findElement() {
+        return webDriver.findElement(criteria);
     }
     
     public void describeTo(Description description) {

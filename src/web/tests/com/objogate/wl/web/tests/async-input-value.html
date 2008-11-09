@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>Example Async Behaviour</title>
+  </head>
+  <body>
+    <h1>Example Async Behaviour</h1>
+    
+    <input id="x" value="This will change" />
+	
+    <script type="text/javascript">
+    	function timeout() {
+    		document.getElementById("x").value = "Changed!";
+    	}
+    	
+    	setTimeout("timeout();", 1000);
+    </script>
+  </body>
+</html>
