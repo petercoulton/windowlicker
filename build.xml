@@ -3,7 +3,7 @@
 
 	<property name="test.report.dir" location="build/reports/tests" />
 	<property name="test.output.dir" location="build/tests/output" />
-	
+
 	<property name="keyboard.type" value="US" />
 
 	<path id="classpath.core">
@@ -12,20 +12,20 @@
 
 	<path id="classpath.swing">
 		<path refid="classpath.core" />
-		<pathelement location="build/jars/windowlicker-${version}.jar" />
+		<pathelement location="build/jars/windowlicker-core-${version}.jar" />
 	</path>
 
 	<path id="classpath.test">
 		<fileset dir="lib/junit" />
 		<fileset dir="lib/jmock" />
 	</path>
-	
+
 	<path id="classpath.tools">
-		<pathelement location="build/jars/windowlicker-${version}.jar" />
-		<path refid="classpath.test"/>
-		<fileset dir="tools/apache-ant-1.7.0/lib"/>
+		<pathelement location="build/jars/windowlicker-core-${version}.jar" />
+		<path refid="classpath.test" />
+		<fileset dir="tools/apache-ant-1.7.0/lib" />
 	</path>
-	
+
 	<target name="clean">
 		<delete dir="classes" />
 		<delete dir="build" />
@@ -62,12 +62,11 @@
 			<path id="test-classpath">
 				<path refid="@{classpathref}" />
 				<path refid="classpath.test" />
-				<pathelement location="build/jars/@{name}-${version}.jar" />
+				<pathelement location="build/jars/windowlicker-@{name}-${version}.jar" />
 			</path>
 
-			<compile-jar srcdir="src/@{name}/main" jarfile="@{name}-${version}.jar" classpathref="@{classpathref}" />
-
-			<compile-jar srcdir="src/@{name}/tests" jarfile="@{name}-tests-${version}.jar" classpathref="test-classpath" />
+			<compile-jar srcdir="src/@{name}/main" jarfile="windowlicker-@{name}-${version}.jar" classpathref="@{classpathref}" />
+			<compile-jar srcdir="src/@{name}/tests" jarfile="windowlicker-@{name}-tests-${version}.jar" classpathref="test-classpath" />
 		</sequential>
 	</macrodef>
 
@@ -75,12 +74,13 @@
 		<mkdir dir="build/classes" />
 		<mkdir dir="build/jars" />
 
-		<compile-module name="windowlicker" classpathref="classpath.core" />
-		<compile-module name="swinglicker" classpathref="classpath.swing" />
-		
-		<compile-jar srcdir="tools/src" classpathref="classpath.tools" jarfile="tools.jar"/>
+		<compile-module name="core" classpathref="classpath.core" />
+		<compile-module name="swing" classpathref="classpath.swing" />
+		<compile-module name="web" classpathref="classpath.swing" />
+
+		<compile-jar srcdir="tools/src" classpathref="classpath.tools" jarfile="tools.jar" />
 	</target>
-	
+
 	<macrodef name="run-tests">
 		<attribute name="module" />
 		<attribute name="classpathref" />
@@ -90,17 +90,17 @@
 			<junit timeout="600000" fork="true" printsummary="yes" failureproperty="test.failure">
 				<classpath>
 					<path refid="@{classpathref}" />
-					<path refid="classpath.test"/>
+					<path refid="classpath.test" />
 					<path refid="classpath.tools" />
-					<pathelement location="build/jars/tools.jar"/>
-					<pathelement location="build/jars/@{module}-${version}.jar" />
-					<pathelement location="build/jars/@{module}-tests-${version}.jar" />
+					<pathelement location="build/jars/tools.jar" />
+					<pathelement location="build/jars/windowlicker-@{module}-${version}.jar" />
+					<pathelement location="build/jars/windowlicker-@{module}-tests-${version}.jar" />
 				</classpath>
 
 				<jvmarg value="-Dcom.objogate.wl.timeout=10000" />
 				<jvmarg value="-Dcom.objogate.wl.keyboard=${keyboard.type}" />
 				<jvmarg value="-Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel" />
-				
+
 				<formatter classname="com.objogate.wl.build.RecordingFormatter" />
 				<formatter type="xml" />
 
@@ -116,8 +116,9 @@
 
 	<target name="-test.all" depends="compile">
 		<mkdir dir="${test.output.dir}" />
-		<run-tests module="windowlicker" classpathref="classpath.core" />
-		<run-tests module="swinglicker" classpathref="classpath.swing" />
+		<run-tests module="core" classpathref="classpath.core" />
+		<run-tests module="swing" classpathref="classpath.swing" />
+		<run-tests module="web" classpathref="classpath.swing" />
 	</target>
 
 	<target name="-test.report">
@@ -129,7 +130,7 @@
 			<report format="frames" todir="${test.report.dir}" />
 		</junitreport>
 	</target>
-	
+
 	<target name="test" depends="-test.all, -test.report">
 		<fail if="test.failure" message="There were test failures. Look at file://${test.report.dir}/index.html" />
 	</target>
