@@ -8,12 +8,12 @@ import org.hamcrest.Matcher;
 import static org.hamcrest.Matchers.equalTo;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
-import com.objogate.wl.probe.RecursiveComponentFinder;
-import com.objogate.wl.probe.SingleComponentFinder;
-import com.objogate.wl.probe.TopLevelWindowFinder;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.gesture.GesturePerformer;
+import com.objogate.wl.swing.probe.RecursiveComponentFinder;
+import com.objogate.wl.swing.probe.SingleComponentFinder;
+import com.objogate.wl.swing.probe.TopLevelWindowFinder;
 
 public class JFrameDriver extends ComponentDriver<JFrame> {
     public JFrameDriver(GesturePerformer gesturePerformer, ComponentSelector<JFrame> componentSelector, Prober prober) {

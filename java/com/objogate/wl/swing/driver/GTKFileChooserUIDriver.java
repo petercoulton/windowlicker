@@ -1,7 +1,7 @@
 package com.objogate.wl.swing.driver;
 
-import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static com.objogate.wl.swing.driver.JFileChooserDriver.rootFrameFor;
+import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
 
 import java.io.File;
 

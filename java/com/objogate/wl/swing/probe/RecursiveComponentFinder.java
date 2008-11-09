@@ -1,4 +1,4 @@
-package com.objogate.wl.probe;
+package com.objogate.wl.swing.probe;
 
 import static java.util.Arrays.asList;
 

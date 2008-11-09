@@ -1,6 +1,6 @@
 package com.objogate.wl.swing.driver.tests;
 
-import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.not;
 

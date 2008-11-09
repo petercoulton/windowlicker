@@ -21,12 +21,6 @@ import com.objogate.wl.Query;
 import com.objogate.wl.gesture.Gestures;
 import com.objogate.wl.gesture.Tracker;
 import com.objogate.wl.internal.PropertyQuery;
-import com.objogate.wl.probe.ComponentAssertionProbe;
-import com.objogate.wl.probe.ComponentFinders;
-import com.objogate.wl.probe.ComponentManipulatorProbe;
-import com.objogate.wl.probe.ComponentPropertyAssertionProbe;
-import com.objogate.wl.probe.RecursiveComponentFinder;
-import com.objogate.wl.probe.SingleComponentFinder;
 import com.objogate.wl.swing.ComponentFinder;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.ComponentSelector;
@@ -37,6 +31,12 @@ import com.objogate.wl.swing.matcher.ComponentEnabledMatcher;
 import com.objogate.wl.swing.matcher.ComponentOpaqueMatcher;
 import com.objogate.wl.swing.matcher.DisplayableComponentMatcher;
 import com.objogate.wl.swing.matcher.ShowingOnScreenMatcher;
+import com.objogate.wl.swing.probe.ComponentAssertionProbe;
+import com.objogate.wl.swing.probe.ComponentFinders;
+import com.objogate.wl.swing.probe.ComponentManipulatorProbe;
+import com.objogate.wl.swing.probe.ComponentPropertyAssertionProbe;
+import com.objogate.wl.swing.probe.RecursiveComponentFinder;
+import com.objogate.wl.swing.probe.SingleComponentFinder;
 
 public abstract class ComponentDriver<T extends Component> {
     private final Prober prober;

@@ -1,10 +1,10 @@
 package com.objogate.wl.swing.driver.tests;
 
-import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
 import static com.objogate.wl.swing.driver.tests.JMenuBarDriverTest.Type.PLAIN;
 import static com.objogate.wl.swing.driver.tests.JMenuBarDriverTest.Type.RADIO;
 import static com.objogate.wl.swing.matcher.ComponentMatchers.withButtonText;
 import static com.objogate.wl.swing.matcher.ComponentMatchers.withMnemonicKey;
+import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertNotNull;
@@ -22,13 +22,13 @@ import javax.swing.JRadioButtonMenuItem;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.objogate.wl.probe.ActionListenerProbe;
 import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.driver.ComponentDriver;
 import com.objogate.wl.swing.driver.JFrameDriver;
 import com.objogate.wl.swing.driver.JMenuBarDriver;
 import com.objogate.wl.swing.driver.JMenuDriver;
 import com.objogate.wl.swing.matcher.JMenuTextMatcher;
+import com.objogate.wl.swing.probe.ActionListenerProbe;
 
 public class JMenuBarDriverTest extends AbstractComponentDriverTest<JMenuBarDriver> {
     private JMenuItem displayItem;

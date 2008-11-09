@@ -1,6 +1,6 @@
 package com.objogate.wl.gesture.tests;
 
-import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.Matchers.equalTo;
 
 import javax.swing.JTextField;

@@ -1,6 +1,6 @@
 package com.objogate.wl.swing.driver.tests;
 
-import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
 import static javax.swing.SwingConstants.BOTTOM;
 import static javax.swing.SwingConstants.LEFT;
 import static javax.swing.SwingConstants.RIGHT;

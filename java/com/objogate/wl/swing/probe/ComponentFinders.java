@@ -1,4 +1,4 @@
-package com.objogate.wl.probe;
+package com.objogate.wl.swing.probe;
 
 import java.awt.Component;
 import org.hamcrest.Matcher;

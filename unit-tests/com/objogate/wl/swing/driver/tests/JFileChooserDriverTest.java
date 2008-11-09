@@ -1,6 +1,6 @@
 package com.objogate.wl.swing.driver.tests;
 
-import static com.objogate.wl.probe.ComponentIdentity.selectorFor;
+import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
@@ -20,11 +20,11 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.objogate.wl.probe.ComponentIdentity;
-import com.objogate.wl.probe.RecursiveComponentFinder;
 import com.objogate.wl.swing.AWTEventQueueProber;
 import com.objogate.wl.swing.UI;
 import com.objogate.wl.swing.driver.JFileChooserDriver;
+import com.objogate.wl.swing.probe.ComponentIdentity;
+import com.objogate.wl.swing.probe.RecursiveComponentFinder;
 
 public class JFileChooserDriverTest extends AbstractComponentDriverTest<JFileChooserDriver> {
     private JFileChooser chooser;

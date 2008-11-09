@@ -8,11 +8,11 @@ import org.hamcrest.Description;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import com.objogate.wl.gesture.Gestures;
-import com.objogate.wl.probe.NthComponentFinder;
-import com.objogate.wl.probe.RecursiveComponentFinder;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.matcher.ComponentMatchers;
 import com.objogate.wl.swing.matcher.JLabelTextMatcher;
+import com.objogate.wl.swing.probe.NthComponentFinder;
+import com.objogate.wl.swing.probe.RecursiveComponentFinder;
 
 class MetalFileChooserUIDriver implements FileChooserUIDriver {
     protected JFileChooserDriver parentOrOwner;

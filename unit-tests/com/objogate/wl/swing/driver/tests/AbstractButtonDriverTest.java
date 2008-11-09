@@ -8,9 +8,9 @@ import javax.swing.AbstractButton;
 import org.junit.Test;
 
 import com.objogate.wl.internal.Platform;
-import com.objogate.wl.probe.ActionListenerProbe;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.driver.AbstractButtonDriver;
+import com.objogate.wl.swing.probe.ActionListenerProbe;
 
 public abstract class AbstractButtonDriverTest<B extends AbstractButton, U extends AbstractButtonDriver<B>> extends AbstractComponentDriverTest<U> {
     protected B button;
