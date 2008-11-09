@@ -1,0 +1,6 @@
+#!/bin/sh
+
+REVNO=`svn info | grep Revision: | cut -c 11-`
+
+
+ant -Dversion=a$REVNO
