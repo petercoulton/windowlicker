@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Example Async Behaviour Initiated by User Interaction</title>
+  </head>
+  <body>
+    <h1>Example Async Behaviour Initiated by User Interaction</h1>
+    
+    <p id="display">This will change.</p>
+    
+    <input id="buttonA" type="button" value="Button A" onclick="startTimer(timeoutA);" />
+    <div id="dynamic"></div>
+    
+    <script type="text/javascript">
+    	function timeoutA() {
+    		document.getElementById("display").textContent = "A";
+    		div = document.getElementById("dynamic");
+    		
+    		if (div.childNodes.length == 0) {
+	    		buttonB = document.createElement("input");
+	    		buttonB.value = "Button B";
+	    		buttonB.id = "buttonB";
+	    		buttonB.type = "button";
+	    		buttonB.addEventListener("click", function() {startTimer(timeoutB);}, false);
+	    		
+    			div.appendChild(buttonB);
+    		}
+    	}
+    	
+    	function timeoutB() {
+    		document.getElementById("display").textContent = "B";
+    	}
+    	
+    	function startTimer(callback) {
+    		setTimeout(callback, 250);
+    	}
+    </script>
+  </body>
+</html>

@@ -13,4 +13,13 @@ public class InteractionTest extends AbstractWebTest {
         browser.element(id("button")).click();
         browser.element(id("display")).assertText(containsString("Changed"));
     }
+    
+    @Test
+    public void interactingWithDynamicContent() {
+        openResource("dynamic-button.html");
+        
+        browser.element(id("buttonA")).click();
+        browser.element(id("buttonB")).click();
+        browser.element(id("display")).assertText(containsString("B"));
+    }
 }

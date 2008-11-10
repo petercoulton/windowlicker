@@ -1,6 +1,7 @@
 package com.objogate.wl.web;
 
 import org.hamcrest.Description;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import com.objogate.wl.Probe;
@@ -15,9 +16,13 @@ public abstract class ElementActionProbe implements Probe {
     }
     
     public void probe() {
-        foundElement = driver.findElement();
-        if (foundElement != null) {
+        foundElement = null;
+        try {
+            foundElement = driver.findElement();
             action(foundElement);
+        }
+        catch (NoSuchElementException e) {
+            // try next time
         }
     }
     
