@@ -8,7 +8,7 @@
 	<classpathentry kind="src" path="src/web/tests"/>
 	<classpathentry kind="src" path="calculator-example/src"/>
 	<classpathentry kind="src" path="calculator-example/end-to-end-tests"/>
-	<classpathentry kind="src" path="tools/src/java"/>
+	<classpathentry kind="src" path="tools/src/main"/>
 	<classpathentry kind="lib" path="lib/hamcrest/hamcrest-all-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/junit/junit-4.4-src.jar"/>
 	<classpathentry kind="lib" path="lib/junit/junit-4.4.jar"/>

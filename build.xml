@@ -15,6 +15,12 @@
 		<pathelement location="build/jars/windowlicker-core-${version}.jar" />
 	</path>
 
+	<path id="classpath.web">
+		<path refid="classpath.core" />
+		<pathelement location="build/jars/windowlicker-core-${version}.jar" />
+		<fileset dir="lib/webdriver"/>
+	</path>
+	
 	<path id="classpath.test">
 		<fileset dir="lib/junit" />
 		<fileset dir="lib/jmock" />
@@ -76,9 +82,9 @@
 
 		<compile-module name="core" classpathref="classpath.core" />
 		<compile-module name="swing" classpathref="classpath.swing" />
-		<compile-module name="web" classpathref="classpath.swing" />
+		<compile-module name="web" classpathref="classpath.web" />
 
-		<compile-jar srcdir="tools/src" classpathref="classpath.tools" jarfile="tools.jar" />
+		<compile-jar srcdir="tools/src/main" classpathref="classpath.tools" jarfile="tools.jar" />
 	</target>
 
 	<macrodef name="run-tests">
@@ -117,8 +123,8 @@
 	<target name="-test.all" depends="compile">
 		<mkdir dir="${test.output.dir}" />
 		<run-tests module="core" classpathref="classpath.core" />
+		<run-tests module="web" classpathref="classpath.web" />
 		<run-tests module="swing" classpathref="classpath.swing" />
-		<run-tests module="web" classpathref="classpath.swing" />
 	</target>
 
 	<target name="-test.report">
