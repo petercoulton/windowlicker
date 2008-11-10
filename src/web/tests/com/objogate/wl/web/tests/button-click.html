@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Example Async Behaviour Initiated by User Interaction</title>
+  </head>
+  <body>
+    <h1>Example Async Behaviour Initiated by User Interaction</h1>
+    
+    <input id="button" type="button" value="Click" onclick="startTimer();" />
+    
+    <p id="display">This will change.</p>
+	
+    <script type="text/javascript">
+    	function timeout() {
+    		document.getElementById("display").textContent = "Changed!";
+    	}
+    	
+    	function startTimer() {
+    		setTimeout("timeout();", 1000);
+    	}
+    </script>
+  </body>
+</html>

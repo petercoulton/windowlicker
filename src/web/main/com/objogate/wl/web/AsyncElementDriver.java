@@ -35,4 +35,13 @@ public class AsyncElementDriver implements SelfDescribing {
     public void describeTo(Description description) {
         description.appendText("an element ").appendText(criteria.toString());
     }
+    
+    public void click() {
+        prober.check(new ElementActionProbe(this) {
+            @Override
+            protected void action(WebElement element) {
+                element.click();
+            }
+        });
+    }
 }
