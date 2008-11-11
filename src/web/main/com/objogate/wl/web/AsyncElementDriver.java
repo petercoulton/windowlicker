@@ -21,27 +21,55 @@ public class AsyncElementDriver implements SelfDescribing {
     }
     
     public void assertText(final Matcher<String> textMatcher) {
-        prober.check(new ElementTextProbe(this, textMatcher));
+        prober.check(new ElementPropertyProbe(this, "text", textMatcher) {
+            @Override
+            protected String propertyValue(WebElement e) {
+                return e.getText();
+            }
+        });
     }
     
     public void assertValue(final Matcher<String> valueMatcher) {
-        prober.check(new ElementValueProbe(this, valueMatcher));
+        prober.check(new ElementPropertyProbe(this, "value", valueMatcher) {
+            @Override
+            protected String propertyValue(WebElement e) {
+                return e.getValue();
+            }
+        });
+    }
+    
+    public void assertIsEnabled() {
+        assertEnabledFlagIs(true);
+    }
+    
+    public void assertIsNotEnabled() {
+        assertEnabledFlagIs(false);
+    }
+    
+    private void assertEnabledFlagIs(final boolean expectedFlagValue) {
+        prober.check(new ElementFlagProbe(this, "enabled", expectedFlagValue) {
+            @Override
+            protected boolean flagValue(WebElement e) {
+                return e.isEnabled();
+            }
+        });
     }
     
     WebElement findElement() {
         return webDriver.findElement(criteria);
     }
     
-    public void describeTo(Description description) {
-        description.appendText("an element ").appendText(criteria.toString());
-    }
-    
     public void click() {
-        prober.check(new ElementActionProbe(this) {
+        prober.check(new ElementProbe(this) {
             @Override
-            protected void action(WebElement element) {
+            protected void probe(WebElement element) {
                 element.click();
             }
         });
     }
+
+    public void describeTo(Description description) {
+        description.appendText("an element ").appendText(criteria.toString());
+    }
+
 }

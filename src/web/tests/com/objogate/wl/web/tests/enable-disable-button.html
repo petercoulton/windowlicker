@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Enabled and Disabled Controls</title>
+  </head>
+  <body>
+    <h1>Enabled and Disabled Controls</h1>
+    
+    <p id="display">This will change.</p>
+	
+    <div>
+      <input id="enable" type="checkbox" value="Enable Button" onclick="eventually(enableDisableButton());">Enable</input>
+    </div>
+    
+    <div>
+      <input id="button" disabled="disabled" type="button" value="Click" onclick="eventually(updateDisplay());" />
+    </div>
+    
+    <script type="text/javascript">
+    	function updateDisplay() {
+    		document.getElementById("display").textContent = "Changed!";
+    	}
+    	
+    	function enableDisableButton() {
+    		button = document.getElementById("button");
+    		button.disabled = !button.disabled;
+    	}
+    	
+    	function eventually(f) {
+    		setTimeout(f, 500);
+    	}
+    </script>
+  </body>
+</html>

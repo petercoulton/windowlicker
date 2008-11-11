@@ -22,4 +22,15 @@ public class InteractionTest extends AbstractWebTest {
         browser.element(id("buttonB")).click();
         browser.element(id("display")).assertText(containsString("B"));
     }
+    
+    @Test
+    public void enablingElements() {
+        openResource("enable-disable-button.html");
+        
+        browser.element(id("button")).assertIsNotEnabled();
+        browser.element(id("enable")).click();
+        browser.element(id("button")).assertIsEnabled();
+        browser.element(id("button")).click();
+        browser.element(id("display")).assertText(containsString("Changed"));
+    }
 }

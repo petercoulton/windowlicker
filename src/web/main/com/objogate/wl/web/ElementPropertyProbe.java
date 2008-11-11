@@ -2,61 +2,50 @@ package com.objogate.wl.web;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
-import com.objogate.wl.Probe;
 
-public abstract class ElementPropertyProbe implements Probe {
-    private final AsyncElementDriver elementDriver;
+public abstract class ElementPropertyProbe extends ElementProbe {
     private final String propertyName;
     private final Matcher<String> valueMatcher;
-    
-    private WebElement element;
+
     private String actualValue;
-    
+
     protected ElementPropertyProbe(AsyncElementDriver elementDriver, String propertyName, Matcher<String> textMatcher) {
-        this.elementDriver = elementDriver;
+        super(elementDriver);
         this.propertyName = propertyName;
         this.valueMatcher = textMatcher;
     }
-    
-    public void probe() {
-        element = null;
-        actualValue = null;
-        
-        try {
-            element = elementDriver.findElement();
-            actualValue = propertyValue(element);
-        }
-        catch (NoSuchElementException e) {
-            // try next time
-        }
+
+    @Override
+    protected void probe(WebElement element) {
+        actualValue = propertyValue(element);
     }
-    
+
     protected abstract String propertyValue(WebElement e);
-    
+
+    @Override
     public boolean isSatisfied() {
-        return element != null && valueMatcher.matches(actualValue);
+        return super.isSatisfied() 
+            && valueMatcher.matches(actualValue);
     }
-    
+
+    @Override
     public void describeTo(Description description) {
-        description
-            .appendDescriptionOf(elementDriver)
-            .appendText(" with ")
-            .appendText(propertyName)
-            .appendText(" ")
-            .appendDescriptionOf(valueMatcher);
+        super.describeTo(description);
+        description.appendText(" with ")
+                   .appendText(propertyName)
+                   .appendText(" ")
+                   .appendDescriptionOf(valueMatcher);
     }
-    
+
+    @Override
     public boolean describeFailureTo(Description description) {
-        if (element == null) {
-            description.appendText("did not find matching element");
-            return true;
-        }
-        else {
-            description.appendText("text was ").appendValue(actualValue);
-            return true;
-        }
+        if (super.describeFailureTo(description)) return true;
+        
+        description.appendText(propertyName)
+                   .appendText(" was ")
+                   .appendValue(actualValue);
+        return true;
     }
 }

@@ -6,12 +6,12 @@ import org.openqa.selenium.WebElement;
 
 import com.objogate.wl.Probe;
 
-public abstract class ElementActionProbe implements Probe {
+public abstract class ElementProbe implements Probe {
     private final AsyncElementDriver driver;
     
     private WebElement foundElement = null;
     
-    public ElementActionProbe(AsyncElementDriver driver) {
+    public ElementProbe(AsyncElementDriver driver) {
         this.driver = driver;
     }
     
@@ -19,7 +19,7 @@ public abstract class ElementActionProbe implements Probe {
         foundElement = null;
         try {
             foundElement = driver.findElement();
-            action(foundElement);
+            probe(foundElement);
         }
         catch (NoSuchElementException e) {
             // try next time
@@ -31,13 +31,18 @@ public abstract class ElementActionProbe implements Probe {
     }
     
     public void describeTo(Description description) {
-        // TODO Auto-generated method stub
+        description.appendDescriptionOf(driver);
     }
-
+    
     public boolean describeFailureTo(Description description) {
-        // TODO Auto-generated method stub
-        return false;
+        if (foundElement == null) {
+            description.appendText("did not find matching element");
+            return true;
+        } 
+        else {
+            return false;
+        }
     }
-
-    protected abstract void action(WebElement element);
+    
+    protected abstract void probe(WebElement element);
 }
