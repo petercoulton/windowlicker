@@ -2,9 +2,12 @@ package com.objogate.wl.web.tests;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 import static org.openqa.selenium.By.id;
 
 import org.junit.Test;
+
+import com.objogate.wl.web.AsyncElementDriver;
 
 public class InteractionTest extends AbstractWebTest {
     @Test
@@ -41,5 +44,20 @@ public class InteractionTest extends AbstractWebTest {
         
         browser.element(id("input")).type("hello world\n");
         browser.element(id("reversed")).assertText(equalTo("dlrow olleh"));
+    }
+
+    @Test
+    public void clearingText() {
+        openResource("text-entry.html");
+        
+        AsyncElementDriver input = browser.element(id("input"));
+        AsyncElementDriver output = browser.element(id("reversed"));
+        
+        input.type("bananas\n");
+        output.assertText(not(equalTo("")));
+        
+        input.clear();
+        input.type("\n");
+        output.assertText(equalTo(""));
     }
 }

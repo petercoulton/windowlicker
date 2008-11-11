@@ -9,17 +9,18 @@ import org.openqa.selenium.WebElement;
 
 import com.objogate.wl.Prober;
 
+
 public class AsyncElementDriver implements SelfDescribing {
     private final Prober prober;
     private final WebDriver webDriver;
     private final By criteria;
-    
+
     public AsyncElementDriver(Prober prober, WebDriver webDriver, By criteria) {
         this.prober = prober;
         this.webDriver = webDriver;
         this.criteria = criteria;
     }
-    
+
     public void assertText(final Matcher<String> textMatcher) {
         prober.check(new ElementPropertyProbe(this, "text", textMatcher) {
             @Override
@@ -28,7 +29,7 @@ public class AsyncElementDriver implements SelfDescribing {
             }
         });
     }
-    
+
     public void assertValue(final Matcher<String> valueMatcher) {
         prober.check(new ElementPropertyProbe(this, "value", valueMatcher) {
             @Override
@@ -37,15 +38,15 @@ public class AsyncElementDriver implements SelfDescribing {
             }
         });
     }
-    
+
     public void assertIsEnabled() {
         assertEnabledFlagIs(true);
     }
-    
+
     public void assertIsNotEnabled() {
         assertEnabledFlagIs(false);
     }
-    
+
     private void assertEnabledFlagIs(final boolean expectedFlagValue) {
         prober.check(new ElementFlagProbe(this, "enabled", expectedFlagValue) {
             @Override
@@ -54,11 +55,11 @@ public class AsyncElementDriver implements SelfDescribing {
             }
         });
     }
-    
+
     WebElement findElement() {
         return webDriver.findElement(criteria);
     }
-    
+
     public void click() {
         prober.check(new ElementProbe(this) {
             @Override
@@ -67,7 +68,7 @@ public class AsyncElementDriver implements SelfDescribing {
             }
         });
     }
-    
+
     public void type(final String string) {
         prober.check(new ElementProbe(this) {
             @Override
@@ -77,9 +78,17 @@ public class AsyncElementDriver implements SelfDescribing {
         });
     }
 
+    public void clear() {
+        prober.check(new ElementProbe(this) {
+            @Override
+            protected void probe(WebElement element) {
+                element.clear();
+            }
+        });
+    }
+
     public void describeTo(Description description) {
         description.appendText("an element ").appendText(criteria.toString());
     }
-
 
 }

@@ -5,14 +5,14 @@
   <body>
     <h1>Text Entry</h1>
     
-    <p>Input: <input id="input" onchange="eventually(reverseText);"/>
+    <p>Input: <input id="input" onkeypress="eventually(reverseText);"/>
     <p>Reversed: <span id="reversed"></span></p>
 	
     <script type="text/javascript">
     	function reverseText() {
     		input = document.getElementById("input").value;
 			
-			reversed = ""    		
+			reversed = ""
     		for (i in input) {
     			reversed = input[i] + reversed;
     		}
