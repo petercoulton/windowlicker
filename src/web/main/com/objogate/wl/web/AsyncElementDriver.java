@@ -67,9 +67,19 @@ public class AsyncElementDriver implements SelfDescribing {
             }
         });
     }
+    
+    public void type(final String string) {
+        prober.check(new ElementProbe(this) {
+            @Override
+            protected void probe(WebElement element) {
+                element.sendKeys(string);
+            }
+        });
+    }
 
     public void describeTo(Description description) {
         description.appendText("an element ").appendText(criteria.toString());
     }
+
 
 }

@@ -1,5 +1,7 @@
 package com.objogate.wl.web.tests;
 
+import java.net.URL;
+
 import org.junit.After;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -13,8 +15,13 @@ public abstract class AbstractWebTest {
         super();
     }
 
-    protected void openResource(String htmlResource) {
-        browser.navigate().to(getClass().getResource(htmlResource).toExternalForm());
+    protected void openResource(String htmlResourceName) {
+        URL resourceURL = getClass().getResource(htmlResourceName);
+        if (resourceURL == null) {
+            throw new IllegalArgumentException("could not find resource named " + htmlResourceName);
+        }
+        
+        browser.navigate().to(resourceURL.toExternalForm());
     }
 
     @After
