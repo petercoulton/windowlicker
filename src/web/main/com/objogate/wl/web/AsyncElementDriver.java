@@ -94,16 +94,17 @@ public class AsyncElementDriver implements SelfDescribing {
             private Point center;
             
             public Point target(Point currentLocation) {
-                prober.check(new ElementProbe(AsyncElementDriver.this) {
-                    @Override
-                    protected void probe(WebElement e) {
-                        Point p = ((Locatable)e).getLocationOnScreenOnceScrolledIntoView();
-                        Dimension d = ((RenderedWebElement)e).getSize();
-                        
-                        center = new Point(p.x + d.width/2, p.y + d.height/2);
-                    }
-                });
-                
+            	if (center == null) {
+	                prober.check(new ElementProbe(AsyncElementDriver.this) {
+	                    @Override
+	                    protected void probe(WebElement e) {
+	                        Point p = ((Locatable)e).getLocationOnScreenOnceScrolledIntoView();
+	                        Dimension d = ((RenderedWebElement)e).getSize();
+	                        
+	                        center = new Point(p.x + d.width/2, p.y + d.height/2);
+	                    }
+	                });
+            	}
                 return center;
             }
         };
