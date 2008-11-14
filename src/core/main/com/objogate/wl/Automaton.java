@@ -6,6 +6,14 @@ import java.awt.Point;
  * Wanted to have an interface so that more complex interactions can be tested without using a real awt robot
  */
 public interface Automaton {
+	/**
+	 * Performs all the given gestures on this Automaton.
+	 * 
+	 * @param 
+	 * 		gestures the gestures to perform.
+	 */
+	void perform(Gesture... gestures);
+	
     Point getPointerLocation();
 
     void mouseMove(int x, int y);

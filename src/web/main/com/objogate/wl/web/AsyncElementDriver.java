@@ -1,13 +1,19 @@
 package com.objogate.wl.web;
 
+import java.awt.Dimension;
+import java.awt.Point;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.SelfDescribing;
 import org.openqa.selenium.By;
+import org.openqa.selenium.RenderedWebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.internal.Locatable;
 
 import com.objogate.wl.Prober;
+import com.objogate.wl.gesture.Tracker;
 
 
 public class AsyncElementDriver implements SelfDescribing {
@@ -56,10 +62,6 @@ public class AsyncElementDriver implements SelfDescribing {
         });
     }
 
-    WebElement findElement() {
-        return webDriver.findElement(criteria);
-    }
-
     public void click() {
         prober.check(new ElementProbe(this) {
             @Override
@@ -86,9 +88,32 @@ public class AsyncElementDriver implements SelfDescribing {
             }
         });
     }
-
+    
+    public Tracker center() {
+        return new Tracker() {
+            private Point center;
+            
+            public Point target(Point currentLocation) {
+                prober.check(new ElementProbe(AsyncElementDriver.this) {
+                    @Override
+                    protected void probe(WebElement e) {
+                        Point p = ((Locatable)e).getLocationOnScreenOnceScrolledIntoView();
+                        Dimension d = ((RenderedWebElement)e).getSize();
+                        
+                        center = new Point(p.x + d.width/2, p.y + d.height/2);
+                    }
+                });
+                
+                return center;
+            }
+        };
+    }
+    
     public void describeTo(Description description) {
         description.appendText("an element ").appendText(criteria.toString());
     }
-
+    
+    WebElement findElement() {
+        return webDriver.findElement(criteria);
+    }
 }

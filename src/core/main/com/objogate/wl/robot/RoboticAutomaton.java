@@ -4,9 +4,11 @@ import java.awt.AWTException;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
+
 import com.objogate.exception.Defect;
-import com.objogate.wl.keyboard.KeyboardLayout;
 import com.objogate.wl.Automaton;
+import com.objogate.wl.Gesture;
+import com.objogate.wl.keyboard.KeyboardLayout;
 
 public class RoboticAutomaton implements Automaton {
     private final Robot robot;
@@ -35,7 +37,13 @@ public class RoboticAutomaton implements Automaton {
         return robot;
     }
 
-    public Point getPointerLocation() {
+    public void perform(Gesture... gestures) {
+    	for (Gesture gesture : gestures) {
+			gesture.performGesture(this);
+		}
+	}
+    
+	public Point getPointerLocation() {
         return MouseInfo.getPointerInfo().getLocation();
     }
 
@@ -64,9 +72,9 @@ public class RoboticAutomaton implements Automaton {
     }
 
     public void typeCharacter(char ch) {
-        keyboard.gestureForTyping(ch).performGesture(this);
+    	perform(keyboard.gestureForTyping(ch));
     }
-
+    
     public void delay(int ms) {
         robot.delay(ms);
     }
