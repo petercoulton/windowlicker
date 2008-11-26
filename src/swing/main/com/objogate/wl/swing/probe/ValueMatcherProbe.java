@@ -5,13 +5,14 @@ import org.hamcrest.Matcher;
 
 import com.objogate.wl.Probe;
 
+
 public class ValueMatcherProbe<T> implements Probe {
-  private final Matcher<T> matcher;
+  private final Matcher<? super T> matcher;
   private final String message;
   private boolean hasReceivedAValue = false;
   private T receivedValue;
   
-  public ValueMatcherProbe(Matcher<T> matcher, String message) {
+  public ValueMatcherProbe(Matcher<? super T> matcher, String message) {
     this.matcher = matcher;
     this.message = message;
   }
