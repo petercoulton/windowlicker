@@ -60,4 +60,28 @@ public class InteractionTest extends AbstractWebTest {
         input.type("\n");
         output.assertText(equalTo(""));
     }
+    
+    @Test
+    public void radioButtons() {
+    	openResource("radio-buttons.html");
+    	
+    	AsyncElementDriver output = browser.element(id("output"));
+        AsyncElementDriver bananas = browser.element(id("bananas"));
+        AsyncElementDriver breadfruit = browser.element(id("breadfruit"));
+        
+        bananas.click();
+        bananas.assertIsSelected();
+        breadfruit.assertIsNotSelected();
+        output.assertText(equalTo("Bananas"));
+        
+        breadfruit.click();
+        breadfruit.assertIsSelected();
+        bananas.assertIsNotSelected();
+        output.assertText(equalTo("Bread Fruit"));
+
+        bananas.click();
+        bananas.assertIsSelected();
+        breadfruit.assertIsNotSelected();
+        output.assertText(equalTo("Bananas"));
+    }
 }

@@ -61,6 +61,23 @@ public class AsyncElementDriver implements SelfDescribing {
             }
         });
     }
+    
+    public void assertIsSelected() {
+    	assertSelectedFlagIs(true);
+    }
+    
+    public void assertIsNotSelected() {
+    	assertSelectedFlagIs(false);
+    }
+    
+    private void assertSelectedFlagIs(final boolean expectedFlagValue) {
+        prober.check(new ElementFlagProbe(this, "selected", expectedFlagValue) {
+            @Override
+            protected boolean flagValue(WebElement e) {
+                return e.isSelected();
+            }
+        });
+    }
 
     public void click() {
         prober.check(new ElementProbe(this) {

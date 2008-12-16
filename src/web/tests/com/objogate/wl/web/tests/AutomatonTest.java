@@ -93,4 +93,28 @@ public class AutomatonTest extends AbstractWebTest {
         automaton.perform(clear(input), typeInto(input, "\n"));
         output.assertText(equalTo(""));
     }
+
+    @Test
+    public void radioButtons() {
+    	openResource("radio-buttons.html");
+    	
+    	AsyncElementDriver output = browser.element(id("output"));
+        AsyncElementDriver bananas = browser.element(id("bananas"));
+        AsyncElementDriver breadfruit = browser.element(id("breadfruit"));
+        
+        automaton.perform(clickOn(bananas));
+        bananas.assertIsSelected();
+        breadfruit.assertIsNotSelected();
+        output.assertText(equalTo("Bananas"));
+        
+        automaton.perform(clickOn(breadfruit));
+        breadfruit.assertIsSelected();
+        bananas.assertIsNotSelected();
+        output.assertText(equalTo("Bread Fruit"));
+
+        automaton.perform(clickOn(bananas));
+        bananas.assertIsSelected();
+        breadfruit.assertIsNotSelected();
+        output.assertText(equalTo("Bananas"));
+    }
 }

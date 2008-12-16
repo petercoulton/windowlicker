@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Radio Buttons</title>
+  </head>
+  <body>
+    <h1>Radio Buttons</h1>
+    
+    <p id="output">This will change.</p>
+	
+    <div>
+      <input id="bananas" type="radio" name="fruit" value="Bananas" onclick="eventually(function(){showSelected('Bananas');});"/><label for="bananas">Bananas</label>
+      <input id="breadfruit" type="radio" name="fruit" value="Bread Fruit" onclick="eventually(function(){showSelected('Bread Fruit');});" /><label for="breadfruit">Bread Fruit</label>
+    </div>
+    
+    <script type="text/javascript">
+    	function showSelected(text) {
+    		document.getElementById("output").textContent = text;
+    	}
+    	
+    	function eventually(f) {
+    		setTimeout(f, 500);
+    	}
+    </script>
+  </body>
+</html>
