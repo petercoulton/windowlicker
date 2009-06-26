@@ -1,16 +1,8 @@
-package com.objogate.wl.win32;
+package com.objogate.wl.capture;
 
 import javax.imageio.ImageIO;
-import java.awt.Robot;
-import java.awt.AWTException;
-import java.awt.MouseInfo;
-import java.awt.Toolkit;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsConfiguration;
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
