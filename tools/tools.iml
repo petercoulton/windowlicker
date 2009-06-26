@@ -10,7 +10,7 @@
     <orderEntry type="library" name="junit" level="project" />
     <orderEntry type="library" name="ant" level="project" />
     <orderEntry type="module" module-name="windowlicker" />
-    <orderEntryProperties />
+    <orderEntry type="library" name="jna" level="project" />
   </component>
 </module>
 

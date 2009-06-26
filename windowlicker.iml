@@ -18,7 +18,6 @@
     <orderEntry type="library" exported="" name="hamcrest" level="project" />
     <orderEntry type="library" exported="" name="jmock" level="project" />
     <orderEntry type="library" name="webdriver" level="project" />
-    <orderEntryProperties />
   </component>
 </module>
 
