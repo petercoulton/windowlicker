@@ -30,6 +30,7 @@
 		<pathelement location="build/jars/windowlicker-core-${version}.jar" />
 		<path refid="classpath.test" />
 		<fileset dir="tools/apache-ant-1.7.0/lib" />
+        <fileset dir="lib/jna"/>
 	</path>
 
 	<target name="clean">
