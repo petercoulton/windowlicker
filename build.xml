@@ -40,6 +40,12 @@
 
 	<target name="build" depends="clean, test" />
 
+    <target  name="web" depends="clean, compile">
+        <run-tests module="core" classpathref="classpath.core" />
+        <run-tests module="web" classpathref="classpath.web" />
+        <antcall target="-test.report"/>
+    </target>
+
 	<macrodef name="compile-jar">
 		<attribute name="srcdir" />
 		<attribute name="jarfile" />
@@ -60,11 +66,6 @@
 			<jar jarfile="build/jars/@{jarfile}" basedir="@{classdir}" />
 		</sequential>
 	</macrodef>
-
-    <target  name="build-web" depends="compile">
-        <run-tests module="core" classpathref="classpath.core" />
-        <run-tests module="web" classpathref="classpath.web" />
-    </target>
 
 	<macrodef name="compile-module">
 		<attribute name="name" />
@@ -142,9 +143,10 @@
 			</fileset>
 			<report format="frames" todir="${test.report.dir}" />
 		</junitreport>
+
+        <fail if="test.failure" message="There were test failures. Look at file://${test.report.dir}/index.html" />
 	</target>
 
-	<target name="test" depends="-test.all, -test.report">
-		<fail if="test.failure" message="There were test failures. Look at file://${test.report.dir}/index.html" />
-	</target>
+	<target name="test" depends="-test.all, -test.report"/>
+
 </project>

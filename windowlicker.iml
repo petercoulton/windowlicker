@@ -11,6 +11,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/swing/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/web/main" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/web/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
