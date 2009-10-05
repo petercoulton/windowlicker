@@ -61,6 +61,11 @@
 		</sequential>
 	</macrodef>
 
+    <target  name="build-web" depends="compile">
+        <run-tests module="core" classpathref="classpath.core" />
+        <run-tests module="web" classpathref="classpath.web" />
+    </target>
+
 	<macrodef name="compile-module">
 		<attribute name="name" />
 		<attribute name="classpathref" />
@@ -93,6 +98,8 @@
 		<attribute name="classpathref" />
 
 		<sequential>
+            <mkdir dir="${test.output.dir}" />
+
 			<!--600000 = 10 minutes-->
 			<junit timeout="600000" fork="true" printsummary="yes" failureproperty="test.failure">
 				<classpath>
@@ -122,7 +129,6 @@
 	</macrodef>
 
 	<target name="-test.all" depends="compile">
-		<mkdir dir="${test.output.dir}" />
 		<run-tests module="core" classpathref="classpath.core" />
 		<run-tests module="web" classpathref="classpath.web" />
 		<run-tests module="swing" classpathref="classpath.swing" />
