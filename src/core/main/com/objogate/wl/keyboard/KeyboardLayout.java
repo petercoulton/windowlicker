@@ -10,11 +10,12 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import com.objogate.exception.Defect;
 import com.objogate.wl.Gesture;
-import com.objogate.wl.internal.Platform;
 import com.objogate.wl.SystemProperties;
 import static com.objogate.wl.gesture.Gestures.typeKey;
 import static com.objogate.wl.gesture.Gestures.withModifierMask;
+import com.objogate.wl.internal.Platform;
 
 /**
  * Represents how characters are input by key strokes.
@@ -25,14 +26,10 @@ import static com.objogate.wl.gesture.Gestures.withModifierMask;
  * @see com.objogate.wl.SystemProperties
  */
 public class KeyboardLayout implements SystemProperties {
+    private static final String FALLBACK_KEYBOARD_LAYOUT = "FALLBACK";
+    
     private final Map<Character, KeyStroke> keyStrokes = new HashMap<Character, KeyStroke>();
     private final String name;
-
-    static {
-        if(System.getProperty(KEYBOARD_LAYOUT) == null && Platform.is(Platform.Mac)) {
-            System.setProperty(KEYBOARD_LAYOUT, "MAC.GB");
-        }
-    }
 
     private KeyboardLayout(String name, URL resource) throws IOException {
         this.name = name;
@@ -71,22 +68,30 @@ public class KeyboardLayout implements SystemProperties {
      * @return the default keyboard layout
      */
     public static KeyboardLayout getDefaultKeyboardLayout() {
-        String layoutName = System.getProperty(KEYBOARD_LAYOUT, InputContext.getInstance().getLocale().getCountry());
-        return getKeyboardLayout(layoutName);
+        return getKeyboardLayout(System.getProperty(KEYBOARD_LAYOUT, defaultKeyboardLayoutName()));
+    }
+    
+    private static String defaultKeyboardLayoutName() {
+        String country = InputContext.getInstance().getLocale().getCountry();
+        return Platform.is(Platform.Mac) ? "Mac." + country : country;
+    }
+    
+    public static KeyboardLayout getKeyboardLayout(String layoutRelativeURL) {
+        try {
+            return possiblyGetKeyboardLayout(layoutRelativeURL);
+        } catch (IOException e) {
+            System.err.println("WARNING: could not parse keyboard layout " + layoutRelativeURL + ", using fallback layout with reduced capabilities ("+ e.getMessage() + ")");
+            try {
+                return possiblyGetKeyboardLayout(FALLBACK_KEYBOARD_LAYOUT);
+            } catch (IOException e2) {
+                throw new Defect("could not parse fallback keyboard layout properties", e);
+            }
+        }
     }
 
-    public static KeyboardLayout getKeyboardLayout(String layoutName) {
-        URL configURL = KeyboardLayout.class.getResource( layoutName + ".keyboard");
-
-        if (configURL == null) {
-            throw new IllegalArgumentException("keyboard layout " + layoutName + " not available.");
-        }
-
-        try {
-            return new KeyboardLayout(layoutName, configURL);
-        } catch (IOException e) {
-            throw new IllegalStateException("could not parse " + layoutName + " keyboard layout properties");
-        }
+    private static KeyboardLayout possiblyGetKeyboardLayout(String layoutRelativeURL) throws IOException {
+        URL configURL = new URL(KeyboardLayout.class.getResource(FALLBACK_KEYBOARD_LAYOUT), layoutRelativeURL);
+        return new KeyboardLayout(layoutRelativeURL, configURL);
     }
 
     private void initialiseDefaults() {
@@ -102,7 +107,7 @@ public class KeyboardLayout implements SystemProperties {
         keyStrokes.put('\b', KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0));
         keyStrokes.put(' ', KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
     }
-    
+
     private void parseKeyStrokes(URL resource) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(resource.openStream(), "UTF-8"));
         try {
