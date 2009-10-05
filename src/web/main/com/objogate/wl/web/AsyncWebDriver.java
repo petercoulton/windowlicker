@@ -25,7 +25,30 @@ public class AsyncWebDriver {
     public AsyncElementDriver element(By criteria) {
         return new AsyncElementDriver(prober, webDriver, criteria);
     }
-    
+
+    public void assertPageSource(final Matcher<String> pageSourceMatcher) {
+        prober.check(new Probe() {
+            private String pageSource = null;
+
+            public void describeTo(Description description) {
+                description.appendText("page source ").appendDescriptionOf(pageSourceMatcher);
+            }
+
+            public boolean isSatisfied() {
+                return pageSourceMatcher.matches(pageSource);
+            }
+
+            public void probe() {
+                pageSource = webDriver.getPageSource();
+            }
+
+            public boolean describeFailureTo(Description description) {
+                description.appendText("page source was ").appendValue(pageSource);
+                return true;
+            }
+        });
+    }
+
     public void quit() {
         webDriver.quit();
     }
