@@ -80,7 +80,7 @@ public class KeyboardLayout implements SystemProperties {
         try {
             return possiblyGetKeyboardLayout(layoutRelativeURL);
         } catch (IOException e) {
-            System.err.println("WARNING: could not parse keyboard layout " + layoutRelativeURL + ", using fallback layout with reduced capabilities ("+ e.getMessage() + ")");
+            System.err.println("WARNING: could not load keyboard layout " + layoutRelativeURL + ", using fallback layout with reduced capabilities ("+ e.getMessage() + ")");
             try {
                 return possiblyGetKeyboardLayout(FALLBACK_KEYBOARD_LAYOUT);
             } catch (IOException e2) {
