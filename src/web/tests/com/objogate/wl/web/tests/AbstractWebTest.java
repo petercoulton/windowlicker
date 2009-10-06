@@ -25,7 +25,7 @@ public abstract class AbstractWebTest {
     }
 
     @After
-    public void quitBrowser() {
+    public final void quitBrowser() {
         browser.quit();
     }
 
