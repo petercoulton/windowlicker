@@ -9,6 +9,8 @@ import com.objogate.wl.swing.UI;
 
 /**
  * Gestures for interacting with Swing components
+ * 
+ * TODO (nat, stevef) - use InputMaps instead.
  */
 public class SwingGestures extends Gestures {
     /**
