@@ -1,18 +1,15 @@
 package com.objogate.wl.swing.driver;
 
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
-
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.text.JTextComponent;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-
 import com.objogate.exception.Defect;
 import com.objogate.wl.Probe;
 import com.objogate.wl.Prober;
@@ -20,7 +17,7 @@ import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.UI;
 import com.objogate.wl.swing.gesture.GesturePerformer;
 
-public class JFileChooserDriver extends ComponentDriver<JFileChooser> {
+public class JFileChooserDriver extends JComponentDriver<JFileChooser> {
     @SuppressWarnings("unchecked")
     public JFileChooserDriver(ComponentDriver<? extends Component> parentOrOwner, Matcher<? super JFileChooser> matcher) {
         super(parentOrOwner, JFileChooser.class, matcher);

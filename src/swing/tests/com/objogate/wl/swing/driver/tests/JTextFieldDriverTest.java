@@ -1,14 +1,11 @@
 package com.objogate.wl.swing.driver.tests;
 
-import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
-import static org.hamcrest.Matchers.equalTo;
-
 import javax.swing.JTextField;
-
+import static org.hamcrest.Matchers.equalTo;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.objogate.wl.swing.driver.JTextFieldDriver;
+import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
 
 public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JTextFieldDriver> {
     private static final String INITIAL_TEXT = "initial text";
@@ -39,20 +36,20 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
         driver.replaceAllText("hello");
         driver.hasText(equalTo("hello"));
     }
-    
+
     @Test
     public void canClearTheTextField() {
         setText("pineapples");
-        
+
         driver.focusWithMouse();
         driver.clearText();
         driver.isEmpty();
     }
-    
+
     @Test
     public void canTypeSymbolsIntoTextField() {
         setText("");
-        
+
         assertCanType(SYMBOLS_THAT_ARE_IN_DIFFERENT_PLACES_ON_US_UK_AND_MAC_KEYBOARDS);
     }
 
@@ -80,7 +77,7 @@ public class JTextFieldDriverTest extends AbstractJTextComponentDriverTest<JText
     public void canTypePunctuationAndSymbols() {
         assertCanType("!\"$^&*()-_=+[{]};:'@#~,<.>/`\\");
     }
-    
+
     private void assertCanType(String text) {
         setText("");
         driver.focusWithMouse();

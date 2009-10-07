@@ -1,28 +1,22 @@
 package com.objogate.wl.swing.driver;
 
-import static com.objogate.wl.gesture.Gestures.type;
-import static com.objogate.wl.gesture.Gestures.typeKey;
-import static java.awt.event.KeyEvent.VK_DELETE;
-import static org.hamcrest.Matchers.equalTo;
-
-import java.awt.Component;
-import java.awt.Font;
-
 import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
-
+import java.awt.Component;
+import java.awt.Font;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-
+import static org.hamcrest.Matchers.equalTo;
 import com.objogate.exception.Defect;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
+import static com.objogate.wl.gesture.Gestures.type;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.gesture.GesturePerformer;
 import com.objogate.wl.swing.internal.query.TextQuery;
 
-public class JTextComponentDriver<T extends JTextComponent> extends ComponentDriver<T> implements TextQuery {
+public class JTextComponentDriver<T extends JTextComponent> extends JComponentDriver<T> implements TextQuery {
     public JTextComponentDriver(GesturePerformer gesturePerformer, ComponentSelector<T> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }
@@ -68,8 +62,9 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
     }
 
     public void replaceAllText(String text) {
-        moveMouseToCenter();
+        focusWithMouse();
         selectAll();
+        deleteSelectedText();
         typeText(text);
     }
 
@@ -82,7 +77,7 @@ public class JTextComponentDriver<T extends JTextComponent> extends ComponentDri
     }
 
     public void deleteSelectedText() {
-        typeKey(VK_DELETE);
+        performShortcut("delete-next");
     }
 
     public void isEmpty() {

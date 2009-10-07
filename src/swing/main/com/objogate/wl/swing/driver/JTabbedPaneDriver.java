@@ -1,29 +1,23 @@
 package com.objogate.wl.swing.driver;
 
-import static com.objogate.wl.gesture.Gestures.BUTTON1;
-import static com.objogate.wl.gesture.Gestures.clickMouseButton;
-import static com.objogate.wl.gesture.Gestures.moveMouseTo;
-
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.Rectangle;
-
-import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-
 import com.objogate.exception.Defect;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
+import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.gesture.Tracker;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.gesture.GesturePerformer;
 
-public class JTabbedPaneDriver extends ComponentDriver<JTabbedPane> {
+public class JTabbedPaneDriver extends JComponentDriver<JTabbedPane> {
     public JTabbedPaneDriver(GesturePerformer gesturePerformer, ComponentSelector<JTabbedPane> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

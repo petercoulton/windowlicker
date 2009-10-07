@@ -15,7 +15,7 @@ import com.objogate.wl.swing.internal.query.MnemonicQuery;
 import com.objogate.wl.swing.internal.query.TextQuery;
 
 
-public class AbstractButtonDriver<T extends AbstractButton> extends ComponentDriver<T>
+public class AbstractButtonDriver<T extends AbstractButton> extends JComponentDriver<T>
         implements TextQuery, MnemonicQuery {
 
     public AbstractButtonDriver(GesturePerformer gesturePerformer, ComponentSelector<T> componentSelector, Prober prober) {

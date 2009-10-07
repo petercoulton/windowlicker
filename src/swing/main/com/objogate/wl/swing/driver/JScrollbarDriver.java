@@ -1,17 +1,14 @@
 package com.objogate.wl.swing.driver;
 
+import javax.swing.BoundedRangeModel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import java.awt.Adjustable;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.InputEvent;
-
-import javax.swing.BoundedRangeModel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-
 import org.hamcrest.Matcher;
-
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.MouseMoveAbsoluteGesture;
 import com.objogate.wl.gesture.MousePressGesture;
@@ -21,7 +18,7 @@ import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.gesture.GesturePerformer;
 import com.objogate.wl.swing.matcher.ScrollBarMatcher;
 
-public class JScrollbarDriver extends ComponentDriver<JScrollBar> {
+public class JScrollbarDriver extends JComponentDriver<JScrollBar> {
     public JScrollbarDriver(ComponentDriver<? extends Container> containerDriver, Matcher<JScrollBar>... matchers) {
         super(containerDriver, JScrollBar.class, matchers);
     }

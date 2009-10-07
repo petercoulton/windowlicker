@@ -1,19 +1,16 @@
 package com.objogate.wl.swing.driver;
 
-import java.awt.Component;
-
 import javax.swing.JLabel;
-
+import java.awt.Component;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.gesture.GesturePerformer;
 import com.objogate.wl.swing.internal.query.TextQuery;
 
-public class JLabelDriver extends ComponentDriver<JLabel> implements TextQuery {
+public class JLabelDriver extends JComponentDriver<JLabel> implements TextQuery {
     public JLabelDriver(ComponentDriver<? extends Component> containerDriver, Matcher<? super JLabel>... matchers) {
         super(containerDriver, JLabel.class, matchers);
     }

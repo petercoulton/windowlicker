@@ -1,24 +1,17 @@
 package com.objogate.wl.swing.driver;
 
-import static com.objogate.wl.gesture.Gestures.BUTTON1;
-import static com.objogate.wl.gesture.Gestures.clickMouseButton;
-import static com.objogate.wl.gesture.Gestures.moveMouseTo;
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Rectangle;
-
 import org.hamcrest.BaseMatcher;
+import static org.hamcrest.CoreMatchers.allOf;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-
+import static org.hamcrest.Matchers.equalTo;
 import com.objogate.wl.Gesture;
 import com.objogate.wl.Probe;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
-import com.objogate.wl.gesture.Gestures;
+import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.gesture.Tracker;
 import com.objogate.wl.internal.PropertyQuery;
 import com.objogate.wl.swing.ComponentFinder;
@@ -31,18 +24,13 @@ import com.objogate.wl.swing.matcher.ComponentEnabledMatcher;
 import com.objogate.wl.swing.matcher.ComponentOpaqueMatcher;
 import com.objogate.wl.swing.matcher.DisplayableComponentMatcher;
 import com.objogate.wl.swing.matcher.ShowingOnScreenMatcher;
-import com.objogate.wl.swing.probe.ComponentAssertionProbe;
-import com.objogate.wl.swing.probe.ComponentFinders;
-import com.objogate.wl.swing.probe.ComponentManipulatorProbe;
-import com.objogate.wl.swing.probe.ComponentPropertyAssertionProbe;
-import com.objogate.wl.swing.probe.RecursiveComponentFinder;
-import com.objogate.wl.swing.probe.SingleComponentFinder;
+import com.objogate.wl.swing.probe.*;
 
 public abstract class ComponentDriver<T extends Component> {
     private final Prober prober;
     private final ComponentSelector<T> selector;
     
-    //TODO: (nat) make this private
+    //TODO: (nat) make drivers create gestures, not use a gesturePerformer directly
     protected final GesturePerformer gesturePerformer;
     
     public ComponentDriver(GesturePerformer gesturePerformer, ComponentSelector<T> selector, Prober prober) {
@@ -157,6 +145,7 @@ public abstract class ComponentDriver<T extends Component> {
         check(new ComponentManipulatorProbe<T>(selector, manipulation));
     }
 
+    //TODO: (nat) make drivers create gestures, not use a gesturePerformer directly    
     public void performGesture(Gesture... gestures) {
         gesturePerformer.perform(gestures);
     }
@@ -192,37 +181,7 @@ public abstract class ComponentDriver<T extends Component> {
     public void moveMouseToOffset(int offsetX, int offsetY) {
         performGesture(moveMouseTo(offset(offsetX, offsetY)));
     }
-
-    /**
-     * @deprecated use a Tracker instead
-     */
-    protected Rectangle screenBounds() {
-        isShowingOnScreen();
-
-        ComponentLayoutManipulation<T> layout = new ComponentLayoutManipulation<T>();
-        perform("ensure component is layed out", layout);
-        ComponentBoundsManipulation<T> manipulation = new ComponentBoundsManipulation<T>();
-        perform("bounds of component on screen", manipulation);
-        return manipulation.getBounds();
-    }
-
-
-    public void cut() {
-        performGesture(Gestures.cut());
-    }
-
-    public void copy() {
-        performGesture(Gestures.copy());
-    }
-
-    public void paste() {
-        performGesture(Gestures.paste());
-    }
-
-    public void selectAll() {
-        performGesture(Gestures.selectAll());
-    }
-
+    
     public void hasForegroundColor(Color color) {
         hasForegroundColor(equalTo(color));
     }
@@ -316,28 +275,5 @@ public abstract class ComponentDriver<T extends Component> {
                 return component.getForeground();
             }
         };
-    }
-
-    /**
-     * @Deprecated use a Tracker instead
-     */
-    @SuppressWarnings("hiding")
-    private class ComponentBoundsManipulation<T extends Component> implements ComponentManipulation<T> {
-        Rectangle bounds;
-
-        public void manipulate(T component) {
-            bounds = new Rectangle(component.getLocationOnScreen(), component.getSize());
-        }
-
-        public Rectangle getBounds() {
-            return bounds;
-        }
-    }
-
-    @SuppressWarnings("hiding")
-    private class ComponentLayoutManipulation<T extends Component> implements ComponentManipulation<T> {
-        public void manipulate(T component) {
-            component.getParent().doLayout();
-        }
     }
 }

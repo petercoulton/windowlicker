@@ -1,21 +1,17 @@
 package com.objogate.wl.swing.driver;
 
-import static com.objogate.wl.swing.matcher.ComponentMatchers.withButtonText;
-import static org.hamcrest.Matchers.anyOf;
-
-import java.awt.Component;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
+import java.awt.Component;
 import org.hamcrest.Matcher;
+import static org.hamcrest.Matchers.anyOf;
 import org.hamcrest.core.IsEqual;
-
 import com.objogate.wl.Prober;
 import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.gesture.GesturePerformer;
+import static com.objogate.wl.swing.matcher.ComponentMatchers.withButtonText;
 import com.objogate.wl.swing.matcher.JLabelTextMatcher;
 
 /**
@@ -24,7 +20,7 @@ import com.objogate.wl.swing.matcher.JLabelTextMatcher;
  * <strong>You should make sure that the owner driver for this is for a top level frame,
  * otherwise this will not work as expected</strong>
  */
-public class JOptionPaneDriver extends ComponentDriver<JOptionPane> {
+public class JOptionPaneDriver extends JComponentDriver<JOptionPane> {
     public JOptionPaneDriver(GesturePerformer gesturePerformer, ComponentSelector<JOptionPane> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

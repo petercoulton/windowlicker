@@ -1,10 +1,10 @@
-<project name="windowlicker" default="build">
+<project name="windowlicker" default="all">
 	<property name="version" value="DEV" />
 
 	<property name="test.report.dir" location="build/reports/tests" />
 	<property name="test.output.dir" location="build/tests/output" />
 
-	<property name="keyboard.type" value="US" />
+	<property name="keyboard" value="US" />
 
 	<path id="classpath.core">
 		<fileset dir="lib/hamcrest" />
@@ -27,7 +27,8 @@
 	</path>
 
 	<path id="classpath.tools">
-		<pathelement location="build/jars/windowlicker-core-${version}.jar" />
+		<pathelement location="build/jars/windowlicker-swing-${version}.jar" />
+		<path refid="classpath.swing" />
 		<path refid="classpath.test" />
 		<fileset dir="tools/apache-ant-1.7.0/lib" />
         <fileset dir="lib/jna"/>
@@ -37,15 +38,11 @@
 		<delete dir="classes" />
 		<delete dir="build" />
 	</target>
-
-	<target name="build" depends="clean, test" />
-
-    <target  name="web" depends="clean, compile">
-        <run-tests module="core" classpathref="classpath.core" />
-        <run-tests module="web" classpathref="classpath.web" />
-        <antcall target="-test.report"/>
-    </target>
-
+    
+	<target name="all" depends="clean, -test.all, -test.report" />
+    <target name="web" depends="clean, -test.web, -test.report"/>
+    <target name="swing" depends="clean, -test.swing, -test.report"/>
+    
 	<macrodef name="compile-jar">
 		<attribute name="srcdir" />
 		<attribute name="jarfile" />
@@ -69,16 +66,15 @@
 
 	<macrodef name="compile-module">
 		<attribute name="name" />
-		<attribute name="classpathref" />
 
 		<sequential>
 			<path id="test-classpath">
-				<path refid="@{classpathref}" />
+				<path refid="classpath.@{name}" />
 				<path refid="classpath.test" />
 				<pathelement location="build/jars/windowlicker-@{name}-${version}.jar" />
 			</path>
 
-			<compile-jar srcdir="src/@{name}/main" jarfile="windowlicker-@{name}-${version}.jar" classpathref="@{classpathref}" />
+			<compile-jar srcdir="src/@{name}/main" jarfile="windowlicker-@{name}-${version}.jar" classpathref="classpath.@{name}" />
 			<compile-jar srcdir="src/@{name}/tests" jarfile="windowlicker-@{name}-tests-${version}.jar" classpathref="test-classpath" />
 		</sequential>
 	</macrodef>
@@ -87,16 +83,15 @@
 		<mkdir dir="build/classes" />
 		<mkdir dir="build/jars" />
 
-		<compile-module name="core" classpathref="classpath.core" />
-		<compile-module name="swing" classpathref="classpath.swing" />
-		<compile-module name="web" classpathref="classpath.web" />
+		<compile-module name="core" />
+		<compile-module name="swing" />
+		<compile-module name="web" />
 
 		<compile-jar srcdir="tools/src/main" classpathref="classpath.tools" jarfile="tools.jar" />
 	</target>
-
+    
 	<macrodef name="run-tests">
 		<attribute name="module" />
-		<attribute name="classpathref" />
 
 		<sequential>
             <mkdir dir="${test.output.dir}" />
@@ -104,12 +99,12 @@
 			<!--600000 = 10 minutes-->
 			<junit timeout="600000" fork="true" printsummary="yes" failureproperty="test.failure">
 				<classpath>
-					<path refid="@{classpathref}" />
+                    <pathelement location="build/jars/windowlicker-@{module}-${version}.jar" />
+                    <pathelement location="build/jars/windowlicker-@{module}-tests-${version}.jar" />
+					<path refid="classpath.@{module}" />
 					<path refid="classpath.test" />
+                    <pathelement location="build/jars/tools.jar" />
 					<path refid="classpath.tools" />
-					<pathelement location="build/jars/tools.jar" />
-					<pathelement location="build/jars/windowlicker-@{module}-${version}.jar" />
-					<pathelement location="build/jars/windowlicker-@{module}-tests-${version}.jar" />
 				</classpath>
 
 				<jvmarg value="-Dcom.objogate.wl.timeout=10000" />
@@ -129,12 +124,17 @@
 		</sequential>
 	</macrodef>
 
-	<target name="-test.all" depends="compile">
-		<run-tests module="core" classpathref="classpath.core" />
-		<run-tests module="web" classpathref="classpath.web" />
-		<run-tests module="swing" classpathref="classpath.swing" />
+	<target name="-test.all" depends="-test.swing, -test.web"/>
+	<target name="-test.core" depends="compile">
+		<run-tests module="core"/>
 	</target>
-
+	<target name="-test.swing" depends="-test.core">
+		<run-tests module="swing"/>
+	</target>
+	<target name="-test.web" depends="-test.core">
+		<run-tests module="web"/>
+	</target>
+    
 	<target name="-test.report">
 		<mkdir dir="${test.report.dir}" />
 		<junitreport todir="${test.report.dir}">

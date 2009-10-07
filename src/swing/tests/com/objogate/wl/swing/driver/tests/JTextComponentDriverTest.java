@@ -1,15 +1,12 @@
 package com.objogate.wl.swing.driver.tests;
 
-import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
-import static org.hamcrest.Matchers.equalTo;
-
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
-
+import static org.hamcrest.Matchers.equalTo;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.objogate.wl.swing.driver.JTextComponentDriver;
+import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
 
 public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<JTextComponentDriver<JTextComponent>> {
     JTextField textField = new JTextField("");
@@ -46,12 +43,12 @@ public class JTextComponentDriverTest extends AbstractJTextComponentDriverTest<J
     public void testCutAndPaste() {
         setText("cut and paste");
         
-        driver.leftClickOnComponent();
+        driver.focusWithMouse();
         driver.selectAll();
-
         driver.cut();
-        driver.isEmpty();
 
+        driver.isEmpty();
+        
         driver.paste();
         driver.hasText(equalTo("cut and paste"));
     }

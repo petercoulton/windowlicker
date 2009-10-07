@@ -73,7 +73,7 @@ public class KeyboardLayout implements SystemProperties {
     
     private static String defaultKeyboardLayoutName() {
         String country = InputContext.getInstance().getLocale().getCountry();
-        return Platform.is(Platform.Mac) ? "Mac." + country : country;
+        return Platform.is(Platform.Mac) ? "Mac-" + country : country;
     }
     
     public static KeyboardLayout getKeyboardLayout(String layoutRelativeURL) {

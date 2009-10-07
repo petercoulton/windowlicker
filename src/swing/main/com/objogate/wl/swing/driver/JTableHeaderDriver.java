@@ -1,34 +1,30 @@
 package com.objogate.wl.swing.driver;
 
-import static com.objogate.wl.gesture.Gestures.moveMouseTo;
-import static com.objogate.wl.gesture.Gestures.whileHoldingMouseButton;
-
-import java.awt.Component;
-import java.awt.Point;
-import java.util.Iterator;
-
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-
+import java.awt.Component;
+import java.awt.Point;
+import java.util.Iterator;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
-
 import com.objogate.exception.Defect;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.Gestures;
+import static com.objogate.wl.gesture.Gestures.moveMouseTo;
+import static com.objogate.wl.gesture.Gestures.whileHoldingMouseButton;
 import com.objogate.wl.gesture.MouseMoveGesture;
 import com.objogate.wl.gesture.Tracker;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.gesture.GesturePerformer;
 
-public class JTableHeaderDriver extends ComponentDriver<JTableHeader> {
+public class JTableHeaderDriver extends JComponentDriver<JTableHeader> {
     public JTableHeaderDriver(GesturePerformer gesturePerformer, ComponentSelector<JTableHeader> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

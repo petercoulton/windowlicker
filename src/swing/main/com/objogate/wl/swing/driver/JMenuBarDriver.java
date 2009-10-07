@@ -7,7 +7,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import com.objogate.wl.Query;
 
-public class JMenuBarDriver extends ComponentDriver<JMenuBar> {
+public class JMenuBarDriver extends JComponentDriver<JMenuBar> {
 
     public JMenuBarDriver(ComponentDriver<? extends Component> parentOrOwner, Matcher<? super JMenuBar>... matchers) {
         super(parentOrOwner, JMenuBar.class, matchers);

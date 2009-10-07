@@ -1,42 +1,29 @@
 package com.objogate.wl.swing.driver;
 
-import static com.objogate.wl.gesture.Gestures.leftClickMouse;
-import static com.objogate.wl.gesture.Gestures.moveMouseTo;
-import static com.objogate.wl.gesture.Gestures.sequence;
-import static com.objogate.wl.gesture.Gestures.whileHoldingMouseButton;
-import static com.objogate.wl.gesture.Gestures.whileHoldingMultiSelect;
-import static com.objogate.wl.swing.driver.table.JTableCellManipulation.render;
-
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.Iterator;
-
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-
 import com.objogate.exception.Defect;
 import com.objogate.wl.Gesture;
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.Gestures;
+import static com.objogate.wl.gesture.Gestures.*;
 import com.objogate.wl.gesture.Tracker;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.ComponentSelector;
-import com.objogate.wl.swing.driver.table.Cell;
-import com.objogate.wl.swing.driver.table.IdentifierCell;
-import com.objogate.wl.swing.driver.table.JTableCellManipulation;
-import com.objogate.wl.swing.driver.table.Location;
-import com.objogate.wl.swing.driver.table.RenderedCell;
+import com.objogate.wl.swing.driver.table.*;
+import static com.objogate.wl.swing.driver.table.JTableCellManipulation.render;
 import com.objogate.wl.swing.gesture.GesturePerformer;
 
-public class JTableDriver extends ComponentDriver<JTable> {
-
+public class JTableDriver extends JComponentDriver<JTable> {
     public JTableDriver(ComponentDriver<? extends Container> containerDriver, Matcher<? super JTable>... matchers) {
         super(containerDriver, JTable.class, matchers);
     }

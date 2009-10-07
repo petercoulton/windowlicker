@@ -1,16 +1,13 @@
 package com.objogate.wl.swing.driver;
 
-import java.awt.Component;
-import java.awt.Rectangle;
-
 import javax.swing.JList;
 import javax.swing.ListModel;
-
+import java.awt.Component;
+import java.awt.Rectangle;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
-
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.gesture.Gestures;
@@ -19,7 +16,7 @@ import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.gesture.GesturePerformer;
 import com.objogate.wl.swing.matcher.JLabelTextMatcher;
 
-public class JListDriver extends ComponentDriver<JList> implements ListDriver {
+public class JListDriver extends JComponentDriver<JList> implements ListDriver {
     public JListDriver(GesturePerformer gesturePerformer, ComponentSelector<JList> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }

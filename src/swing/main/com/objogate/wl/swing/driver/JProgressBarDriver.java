@@ -1,18 +1,15 @@
 package com.objogate.wl.swing.driver;
 
-import java.awt.Component;
-
 import javax.swing.JProgressBar;
-
+import java.awt.Component;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-
 import com.objogate.wl.Prober;
 import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.gesture.GesturePerformer;
 
-public class JProgressBarDriver extends ComponentDriver<JProgressBar> {
+public class JProgressBarDriver extends JComponentDriver<JProgressBar> {
     public JProgressBarDriver(GesturePerformer gesturePerformer, ComponentSelector<JProgressBar> jProgressBarComponentSelector, Prober prober) {
         super(gesturePerformer, jProgressBarComponentSelector, prober);
     }

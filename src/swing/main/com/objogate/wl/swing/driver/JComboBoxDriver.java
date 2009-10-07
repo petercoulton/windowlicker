@@ -1,30 +1,26 @@
 package com.objogate.wl.swing.driver;
 
-import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
-import static org.hamcrest.Matchers.equalTo;
-
-import java.awt.Component;
-
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.plaf.basic.ComboPopup;
-
+import java.awt.Component;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import static org.hamcrest.Matchers.equalTo;
 import org.hamcrest.TypeSafeMatcher;
-
 import com.objogate.wl.Prober;
 import com.objogate.wl.Query;
 import com.objogate.wl.swing.ComponentManipulation;
 import com.objogate.wl.swing.ComponentSelector;
 import com.objogate.wl.swing.gesture.GesturePerformer;
 import com.objogate.wl.swing.probe.ComponentIdentity;
+import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
 import com.objogate.wl.swing.probe.RecursiveComponentFinder;
 import com.objogate.wl.swing.probe.SingleComponentFinder;
 import com.objogate.wl.swing.probe.TopLevelWindowFinder;
 
-public class JComboBoxDriver extends ComponentDriver<JComboBox> implements ListDriver {
+public class JComboBoxDriver extends JComponentDriver<JComboBox> implements ListDriver {
     public JComboBoxDriver(GesturePerformer gesturePerformer, ComponentSelector<JComboBox> componentSelector, Prober prober) {
         super(gesturePerformer, componentSelector, prober);
     }
