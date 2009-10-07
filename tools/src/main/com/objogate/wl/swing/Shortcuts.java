@@ -1,6 +1,5 @@
 package com.objogate.wl.swing;
 
-import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -17,8 +16,7 @@ public class Shortcuts {
 
         if (args.length == 0) {
             components.add(new JTextField());
-        }
-        else {
+        } else {
             for (String arg : args) {
                 components.add((JComponent) Class.forName(arg).newInstance());
             }
@@ -28,15 +26,17 @@ public class Shortcuts {
             printShortcutsFor(component);
         }
     }
-    
-    private static void printShortcutsFor(JComponent component) {
-        InputMap inputMap = component.getInputMap();
 
-        TreeMap<Object, SortedSet<KeyStroke>> inverse = invertInputMap(inputMap);
-        
+    private static void printShortcutsFor(JComponent component) {
+        TreeMap<Object, SortedSet<KeyStroke>> inverse = invertInputMap(component.getInputMap());
+
         System.out.println(component.getClass().getName());
-        for (Object key : inverse.keySet()) {
-            System.out.println("  " + key + " -> " + inverse.get(key));
+        if (inverse.isEmpty()) {
+            System.out.println("  no shortcuts");
+        } else {
+            for (Object key : inverse.keySet()) {
+                System.out.println("  " + key + " -> " + inverse.get(key));
+            }
         }
     }
 }

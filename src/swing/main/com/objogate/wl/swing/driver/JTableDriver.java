@@ -69,8 +69,9 @@ public class JTableDriver extends JComponentDriver<JTable> {
     public void selectCell(final Matcher<? extends JComponent> matcher) {
         final Cell cell = hasCell(matcher);
 
-        if (cell == null)
+        if (cell == null) {
             throw new Defect("Cannot find cell");
+        }
 
         selectCells(cell);
     }
@@ -80,7 +81,7 @@ public class JTableDriver extends JComponentDriver<JTable> {
 
         performGesture(
                 moveMouseTo(pointIn(start)),
-                whileHoldingMouseButton(Gestures.BUTTON1,
+                whileHoldingMouseButton(BUTTON1,
                         moveMouseTo(pointIn(end)))
         );
     }

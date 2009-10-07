@@ -64,7 +64,8 @@ public class MappedKeyStrokeProbe implements Probe {
     
     public static TreeMap<Object, SortedSet<KeyStroke>> invertInputMap(InputMap inputMap) {
         TreeMap<Object, SortedSet<KeyStroke>> inverse = new TreeMap<Object, SortedSet<KeyStroke>>();
-        for (KeyStroke keyStroke : inputMap.allKeys()) {
+        
+        for (KeyStroke keyStroke : allKeysIn(inputMap)) {
             Object name = inputMap.get(keyStroke);
 
             SortedSet<KeyStroke> keyStrokesForName = inverse.get(name);
@@ -77,6 +78,11 @@ public class MappedKeyStrokeProbe implements Probe {
         }
         
         return inverse;
+    }
+
+    private static KeyStroke[] allKeysIn(InputMap inputMap) {
+        KeyStroke[] allKeys = inputMap.allKeys(); // Might be null -- crap API
+        return allKeys == null ? new KeyStroke[0] : allKeys;
     }
 
     private static class SortedByKeyCodeValue implements Comparator<KeyStroke> {
