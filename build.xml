@@ -76,6 +76,7 @@
 
 			<compile-jar srcdir="src/@{name}/main" jarfile="windowlicker-@{name}-${version}.jar" classpathref="classpath.@{name}" />
 			<compile-jar srcdir="src/@{name}/tests" jarfile="windowlicker-@{name}-tests-${version}.jar" classpathref="test-classpath" />
+            <jar jarfile="build/jars/windowlicker-@{name}-${version}-src.jar" basedir="src/@{name}/main" />
 		</sequential>
 	</macrodef>
 
