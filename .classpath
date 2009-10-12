@@ -10,17 +10,15 @@
 	<classpathentry kind="src" path="calculator-example/end-to-end-tests"/>
 	<classpathentry kind="src" path="tools/src/main"/>
 	<classpathentry kind="lib" path="lib/hamcrest/hamcrest-all-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="lib/junit/junit-4.4-src.jar"/>
-	<classpathentry kind="lib" path="lib/junit/junit-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/junit/junit-4.4.jar" sourcepath="lib/junit/junit-4.4-src.jar"/>
 	<classpathentry kind="lib" path="lib/webdriver/json-20080701.jar"/>
 	<classpathentry kind="lib" path="tools/apache-ant-1.7.0/lib/ant.jar"/>
 	<classpathentry kind="lib" path="tools/apache-ant-1.7.0/lib/ant-junit.jar"/>
-	<classpathentry kind="lib" path="lib/webdriver/webdriver-firefox-619.jar"/>
-	<classpathentry kind="lib" path="lib/webdriver/webdriver-support-619.jar"/>
-	<classpathentry kind="lib" path="lib/webdriver/webdriver-common-619.jar"/>
 	<classpathentry kind="lib" path="lib/jna/jna-3.1.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jmock/jmock-2.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/jmock/jmock-junit4-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/webdriver-common.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/webdriver-firefox.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
