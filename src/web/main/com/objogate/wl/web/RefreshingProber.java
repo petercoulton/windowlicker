@@ -1,19 +1,20 @@
 package com.objogate.wl.web;
 
 import org.openqa.selenium.WebDriver;
-import com.objogate.wl.Prober;
+
+import com.objogate.wl.PollingProber;
 import com.objogate.wl.Probe;
 
-public class RefreshingProber implements Prober {
+public class RefreshingProber extends PollingProber {
     private final WebDriver webDriver;
-    private final Prober prober;
 
-    public RefreshingProber(WebDriver webDriver, Prober prober) {
+    public RefreshingProber(WebDriver webDriver) {
         this.webDriver = webDriver;
-        this.prober = prober;
     }
-    
-    public void check(Probe probe) {
-        prober.check(new RefreshingProbe(webDriver, probe));
+
+    @Override
+	protected void runProbe(Probe probe) {
+    	webDriver.navigate().refresh();
+    	probe.probe();
     }
 }
