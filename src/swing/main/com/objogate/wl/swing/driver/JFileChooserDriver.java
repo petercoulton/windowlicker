@@ -126,11 +126,10 @@ public class JFileChooserDriver extends JComponentDriver<JFileChooser> {
                 description.appendText("current directory matches ").
                         appendDescriptionOf(matcher);
             }
-
-            public boolean describeFailureTo(Description description) {
+            
+            public void describeFailureTo(Description description) {
                 description.appendText("current directory was ")
                         .appendValue(currentDirectory);
-                return !isSatisfied();
             }
         });
     }

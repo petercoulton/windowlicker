@@ -5,7 +5,6 @@ import org.hamcrest.Matcher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Navigation;
-
 import com.objogate.wl.Probe;
 import com.objogate.wl.Prober;
 
@@ -42,9 +41,8 @@ public class AsyncWebDriver {
                 pageSource = webDriver.getPageSource();
             }
 
-            public boolean describeFailureTo(Description description) {
+            public void describeFailureTo(Description description) {
                 description.appendText("page source was ").appendValue(pageSource);
-                return true;
             }
         });
     }
@@ -69,9 +67,8 @@ public class AsyncWebDriver {
                 description.appendText("title is ").appendDescriptionOf(titleMatcher);
             }
             
-            public boolean describeFailureTo(Description description) {
+            public void describeFailureTo(Description description) {
                 description.appendText("title was ").appendValue(actualTitle);
-                return true;
             }
         });
     }

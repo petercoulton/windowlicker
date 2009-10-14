@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.util.Arrays;
 import java.util.List;
 import org.hamcrest.Description;
-
 import com.objogate.wl.swing.ComponentFinder;
 import com.objogate.wl.swing.ComponentSelector;
 
@@ -44,7 +43,7 @@ public class NthComponentFinder<T extends Component> implements ComponentSelecto
     /**
      * This expects the ComponentFinder it wraps to describe how many were actually found.
      */
-    public boolean describeFailureTo(Description description) {
-        return parentOrOwnerFinder.describeFailureTo(description) && components().size() <= whichToChoose;
+    public void describeFailureTo(Description description) {
+        parentOrOwnerFinder.describeFailureTo(description);
     }
 }

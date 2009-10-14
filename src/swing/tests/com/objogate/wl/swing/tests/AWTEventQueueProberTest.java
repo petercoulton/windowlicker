@@ -1,13 +1,10 @@
 package com.objogate.wl.swing.tests;
 
-import static org.hamcrest.Matchers.containsString;
-
 import javax.swing.SwingUtilities;
-
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
+import static org.hamcrest.Matchers.containsString;
 import org.junit.Test;
-
 import com.objogate.wl.Probe;
 import com.objogate.wl.Prober;
 import com.objogate.wl.swing.AWTEventQueueProber;
@@ -33,8 +30,7 @@ public class AWTEventQueueProberTest {
                     description.appendText("error message");
                 }
 
-                public boolean describeFailureTo(Description description) {
-                    return true;
+                public void describeFailureTo(Description description) {
                 }
             });
         }
@@ -56,8 +52,7 @@ public class AWTEventQueueProberTest {
             public void describeTo(Description description) {
             }
 
-            public boolean describeFailureTo(Description description) {
-                return true;
+            public void describeFailureTo(Description description) {
             }
         });
     }
@@ -80,8 +75,7 @@ public class AWTEventQueueProberTest {
             public void describeTo(Description description) {
             }
 
-            public boolean describeFailureTo(Description description) {
-                return true;
+            public void describeFailureTo(Description description) {
             }
         });
     }
@@ -99,9 +93,8 @@ public class AWTEventQueueProberTest {
                 return wasOnEventDispatchThread;
             }
 
-            public boolean describeFailureTo(Description description) {
+            public void describeFailureTo(Description description) {
                 description.appendText("was not event dispatch thread");
-                return true;
             }
 
             public void describeTo(Description description) {

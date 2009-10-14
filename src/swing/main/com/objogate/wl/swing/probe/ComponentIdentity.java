@@ -3,7 +3,6 @@ package com.objogate.wl.swing.probe;
 import java.awt.Component;
 import java.util.Collections;
 import org.hamcrest.Description;
-
 import com.objogate.wl.swing.ComponentSelector;
 
 /**
@@ -46,8 +45,7 @@ public class ComponentIdentity<T extends Component> implements ComponentSelector
         description.appendText("' ");
     }
 
-    public boolean describeFailureTo(Description description) {
+    public void describeFailureTo(Description description) {
         // Cannot fail
-        return false;
     }
 }

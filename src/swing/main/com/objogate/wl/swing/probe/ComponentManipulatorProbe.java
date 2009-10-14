@@ -32,7 +32,7 @@ public class ComponentManipulatorProbe<T extends Component> implements Probe {
         finder.describeTo(description);
     }
 
-    public boolean describeFailureTo(Description description) {
-        return finder.describeFailureTo(description);
+    public void describeFailureTo(Description description) {
+        finder.describeFailureTo(description);
     }
 }

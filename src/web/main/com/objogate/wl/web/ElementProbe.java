@@ -37,12 +37,9 @@ public abstract class ElementProbe implements Probe {
         description.appendDescriptionOf(driver);
     }
 
-    public boolean describeFailureTo(Description description) {
+    public void describeFailureTo(Description description) {
         if (foundElement == null) {
             description.appendText("did not find matching element");
-            return true;
-        } else {
-            return false;
         }
     }
 

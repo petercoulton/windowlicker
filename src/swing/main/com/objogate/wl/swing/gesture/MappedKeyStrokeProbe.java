@@ -53,13 +53,11 @@ public class MappedKeyStrokeProbe implements Probe {
 				   .appendValue(actionName);
 	}
 
-	public boolean describeFailureTo(Description description) {
-        if (componentSelector.describeFailureTo(description)) {
-            return true;
+	public void describeFailureTo(Description description) {
+        componentSelector.describeFailureTo(description);
+        if (componentSelector.isSatisfied()) {
+            description.appendText(" action not bound to any keystroke");
         }
-
-		description.appendText(" action not bound to any keystroke");
-		return true;
 	}
     
     public static TreeMap<Object, SortedSet<KeyStroke>> invertInputMap(InputMap inputMap) {

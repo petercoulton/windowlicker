@@ -24,11 +24,9 @@ public class ActionListenerProbe implements ActionListener, Probe {
         description.appendText("click action should have been performed");
     }
 
-    public boolean describeFailureTo(Description description) {
+    public void describeFailureTo(Description description) {
         description.appendText("the action was ")
                 .appendText(hasBeenPerformed ? "" : "not ")
                 .appendText("performed");
-
-        return !hasBeenPerformed;
     }
 }

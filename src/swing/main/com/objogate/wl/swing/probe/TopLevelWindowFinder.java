@@ -2,14 +2,8 @@ package com.objogate.wl.swing.probe;
 
 import java.awt.Frame;
 import java.awt.Window;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import java.util.*;
 import org.hamcrest.Description;
-
 import com.objogate.wl.swing.ComponentFinder;
 
 public class TopLevelWindowFinder implements ComponentFinder<Window> {
@@ -43,8 +37,7 @@ public class TopLevelWindowFinder implements ComponentFinder<Window> {
         description.appendText("all top level windows");
     }
 
-    public boolean describeFailureTo(Description description) {
+    public void describeFailureTo(Description description) {
         describeTo(description);
-        return false;
     }
 }

@@ -2,7 +2,6 @@ package com.objogate.wl.swing.probe;
 
 import java.awt.Component;
 import org.hamcrest.Description;
-
 import com.objogate.wl.swing.ComponentFinder;
 import com.objogate.wl.swing.ComponentSelector;
 
@@ -40,8 +39,8 @@ public class SingleComponentFinder<T extends Component> implements ComponentSele
     /**
      * This expects the ComponentFinder it wraps to describe how many were actually found.
      */
-    public boolean describeFailureTo(Description description) {
-        return finder.describeFailureTo(description) && !isSingle();
+    public void describeFailureTo(Description description) {
+        finder.describeFailureTo(description);
     }
 
     private boolean isSingle() {

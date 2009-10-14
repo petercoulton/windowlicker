@@ -1,20 +1,16 @@
 package com.objogate.wl.swing.probe;
 
-import static java.util.Arrays.asList;
-
+import javax.swing.MenuElement;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Window;
 import java.util.ArrayList;
-import java.util.List;
+import static java.util.Arrays.asList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
-
-import javax.swing.MenuElement;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-
 import com.objogate.wl.swing.ComponentFinder;
 
 public class RecursiveComponentFinder<T extends Component> implements ComponentFinder<T> {
@@ -46,22 +42,20 @@ public class RecursiveComponentFinder<T extends Component> implements ComponentF
     }
 
     public void describeTo(Description description) {
-      describeBrieflyTo(description);
-      description.appendText("\n    in ")
-              .appendDescriptionOf(parentOrOwnerFinder);
+        describeBrieflyTo(description);
+        description.appendText("\n    in ")
+                .appendDescriptionOf(parentOrOwnerFinder);
     }
 
-    public boolean describeFailureTo(Description description) {
-      if (parentOrOwnerFinder.describeFailureTo(description)) {
-          return true;
-      }
-
-      description.appendText("\n    contained ")
-              .appendText(String.valueOf(found.size()))
-              .appendText(" ");
-      describeBrieflyTo(description);
-
-      return found.size() == 0;
+    public void describeFailureTo(Description description) {
+        parentOrOwnerFinder.describeFailureTo(description);
+        
+        if (parentOrOwnerFinder.isSatisfied()) {
+            description.appendText("\n    contained ")
+                    .appendText(String.valueOf(found.size()))
+                    .appendText(" ");
+            describeBrieflyTo(description);
+        }
     }
     
     private void searchWithin(Iterable<? extends Component> components) {
@@ -95,19 +89,19 @@ public class RecursiveComponentFinder<T extends Component> implements ComponentF
     }
 
     private List<Component> componentsInMenu(MenuElement menuElement) {
-      List<Component> list = new ArrayList<Component>();
-      for (MenuElement element : menuElement.getSubElements()) {
-          list.add(element.getComponent());
-      }
-      return list;
+        List<Component> list = new ArrayList<Component>();
+        for (MenuElement element : menuElement.getSubElements()) {
+            list.add(element.getComponent());
+        }
+        return list;
     }
 
     private List<Window> windowsOwnedBy(Window window) {
-      return asList(window.getOwnedWindows());
+        return asList(window.getOwnedWindows());
     }
 
     private List<Component> componentsInside(Container container) {
-      return asList(container.getComponents());
+        return asList(container.getComponents());
     }
 
 }

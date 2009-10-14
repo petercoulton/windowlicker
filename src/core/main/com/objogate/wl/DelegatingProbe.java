@@ -16,8 +16,7 @@ public class DelegatingProbe<T extends Probe> implements Probe {
 		
 	}
 
-	public boolean describeFailureTo(Description description) {
-		return false;
+	public void describeFailureTo(Description description) {
 	}
 	
 }

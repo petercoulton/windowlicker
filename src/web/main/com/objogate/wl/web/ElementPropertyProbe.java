@@ -26,26 +26,26 @@ public abstract class ElementPropertyProbe extends ElementProbe {
 
     @Override
     public boolean isSatisfied() {
-        return super.isSatisfied() 
-            && valueMatcher.matches(actualValue);
+        return super.isSatisfied()
+                && valueMatcher.matches(actualValue);
     }
 
     @Override
     public void describeTo(Description description) {
         super.describeTo(description);
         description.appendText(" with ")
-                   .appendText(propertyName)
-                   .appendText(" ")
-                   .appendDescriptionOf(valueMatcher);
+                .appendText(propertyName)
+                .appendText(" ")
+                .appendDescriptionOf(valueMatcher);
     }
 
     @Override
-    public boolean describeFailureTo(Description description) {
-        if (super.describeFailureTo(description)) return true;
-        
-        description.appendText(propertyName)
-                   .appendText(" was ")
-                   .appendValue(actualValue);
-        return true;
+    public void describeFailureTo(Description description) {
+        super.describeFailureTo(description);
+        if (super.isSatisfied()) {
+            description.appendText(propertyName)
+                    .appendText(" was ")
+                    .appendValue(actualValue);
+        }
     }
 }

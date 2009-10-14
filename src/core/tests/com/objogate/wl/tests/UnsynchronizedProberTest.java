@@ -1,11 +1,9 @@
 package com.objogate.wl.tests;
 
-import static org.hamcrest.Matchers.containsString;
-
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
+import static org.hamcrest.Matchers.containsString;
 import org.junit.Test;
-
 import com.objogate.wl.Probe;
 import com.objogate.wl.Prober;
 import com.objogate.wl.UnsynchronizedProber;
@@ -31,8 +29,7 @@ public class UnsynchronizedProberTest {
                     description.appendText("error message");
                 }
 
-                public boolean describeFailureTo(Description description) {
-                    return true;
+                public void describeFailureTo(Description description) {
                 }
             });
         }
@@ -54,8 +51,7 @@ public class UnsynchronizedProberTest {
             public void describeTo(Description description) {
             }
 
-            public boolean describeFailureTo(Description description) {
-                return true;
+            public void describeFailureTo(Description description) {
             }
         });
     }
@@ -78,8 +74,7 @@ public class UnsynchronizedProberTest {
             public void describeTo(Description description) {
             }
 
-            public boolean describeFailureTo(Description description) {
-                return true;
+            public void describeFailureTo(Description description) {
             }
         });
     }
@@ -99,9 +94,8 @@ public class UnsynchronizedProberTest {
                 return wasOnTestThread;
             }
 
-            public boolean describeFailureTo(Description description) {
+            public void describeFailureTo(Description description) {
                 description.appendText("was not test thread");
-                return true;
             }
 
             public void describeTo(Description description) {

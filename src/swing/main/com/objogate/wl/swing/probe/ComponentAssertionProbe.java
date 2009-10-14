@@ -3,7 +3,6 @@ package com.objogate.wl.swing.probe;
 import java.awt.Component;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-
 import com.objogate.wl.swing.ComponentFinder;
 import com.objogate.wl.swing.ComponentSelector;
 
@@ -37,15 +36,12 @@ public class ComponentAssertionProbe<T extends Component> implements ComponentFi
                 .appendDescriptionOf(assertion);
     }
 
-    public boolean describeFailureTo(Description description) {
-        if (selector.describeFailureTo(description)) {
-            return true;
+    public void describeFailureTo(Description description) {
+        selector.describeFailureTo(description);
+        if (selector.isSatisfied()) {
+            description.appendText("\n   it ")
+                    .appendText(assertionMet ? "is " : "is not ")
+                    .appendDescriptionOf(assertion);
         }
-
-        description.appendText("\n   it ")
-                .appendText(assertionMet ? "is " : "is not ")
-                .appendDescriptionOf(assertion);
-
-        return !assertionMet;
     }
 }
