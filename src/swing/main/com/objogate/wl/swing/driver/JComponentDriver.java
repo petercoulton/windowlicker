@@ -35,13 +35,17 @@ public class JComponentDriver<T extends JComponent> extends ComponentDriver<T> {
             }
 
             public void performGesture(Automaton automaton) {
-                MappedKeyStrokeProbe keyStrokeProbe = new MappedKeyStrokeProbe(component(), shortcutName);
+                MappedKeyStrokeProbe keyStrokeProbe = new MappedKeyStrokeProbe(component(), appropriateInputMapId(), shortcutName);
                 check(keyStrokeProbe);
                 automaton.perform(interpretKeyStroke(keyStrokeProbe.mappedKeyStroke));
             }
         });
     }
 
+    protected int appropriateInputMapId() {
+        return JComponent.WHEN_FOCUSED;
+    }
+    
     private Gesture interpretKeyStroke(KeyStroke keyStroke) {
         return withModifierMask(keyStroke.getModifiers(),
                 keyStroke.isOnKeyRelease()

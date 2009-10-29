@@ -13,13 +13,15 @@ import com.objogate.wl.swing.ComponentSelector;
 
 public class MappedKeyStrokeProbe implements Probe {
     private final ComponentSelector<? extends JComponent> componentSelector;
+    private final int inputMapId;
     private final Object actionName;
-    
+
     public KeyStroke mappedKeyStroke = null;
 
-    public MappedKeyStrokeProbe(ComponentSelector<? extends JComponent> componentSelector, Object actionName) {
+    public MappedKeyStrokeProbe(ComponentSelector<? extends JComponent> componentSelector, int inputMapId, Object actionName) {
 		this.actionName = actionName;
         this.componentSelector = componentSelector;
+        this.inputMapId = inputMapId;
     }
 
 	public void probe() {
@@ -34,7 +36,7 @@ public class MappedKeyStrokeProbe implements Probe {
     // Pick key strokes with lower valued key codes because higher key codes seem to be used for obscure keyboards
     // like the cut/copy/paste keys that only exist on old Sun keyboards.
 	private KeyStroke preferredKeyStrokeBoundToAction(JComponent component) {
-        TreeMap<Object, SortedSet<KeyStroke>> invertedInputMap = invertInputMap(component.getInputMap());
+        TreeMap<Object, SortedSet<KeyStroke>> invertedInputMap = invertInputMap(component.getInputMap(inputMapId));
         
         if (invertedInputMap.containsKey(actionName)) {
             return invertedInputMap.get(actionName).first();
@@ -85,7 +87,7 @@ public class MappedKeyStrokeProbe implements Probe {
 
     private static class SortedByKeyCodeValue implements Comparator<KeyStroke> {
         public int compare(KeyStroke o1, KeyStroke o2) {
-            return new Integer(o1.getKeyCode()).compareTo(new Integer(o2.getKeyCode()));
+            return new Integer(o1.getKeyCode()).compareTo(o2.getKeyCode());
         }
     }
 }

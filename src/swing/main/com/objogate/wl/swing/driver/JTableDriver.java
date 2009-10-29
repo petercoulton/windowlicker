@@ -39,6 +39,11 @@ public class JTableDriver extends JComponentDriver<JTable> {
     public JTableDriver(ComponentDriver<? extends Component> parentOrOwner, Class<JTable> componentType, Matcher<? super JTable>... matchers) {
         super(parentOrOwner, componentType, matchers);
     }
+    
+    @Override
+    protected int appropriateInputMapId() {
+        return JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT;
+    }
 
     public static boolean arrayContains(int[] stuff, int item) {
         for (int selectedRow : stuff) {
