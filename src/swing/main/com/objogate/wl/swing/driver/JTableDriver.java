@@ -64,7 +64,7 @@ public class JTableDriver extends JComponentDriver<JTable> {
            );
         }
 
-        performGesture(whileHoldingMultiSelect(sequence(gestures)));
+        performGesture(sequence(gestures));
     }
 
     public void selectCell(final int row, final int col) {

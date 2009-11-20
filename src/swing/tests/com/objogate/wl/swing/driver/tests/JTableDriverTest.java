@@ -1,33 +1,30 @@
 package com.objogate.wl.swing.driver.tests;
 
-import static com.objogate.wl.swing.driver.JTableDriver.cell;
-import static com.objogate.wl.swing.matcher.JLabelTextMatcher.withLabelText;
-import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-
 import com.objogate.wl.Problematic;
 import com.objogate.wl.internal.Platform;
 import com.objogate.wl.swing.driver.JTableDriver;
+import static com.objogate.wl.swing.driver.JTableDriver.cell;
 import com.objogate.wl.swing.driver.JTableHeaderDriver;
 import com.objogate.wl.swing.driver.JTextFieldDriver;
 import com.objogate.wl.swing.matcher.IterableComponentsMatcher;
+import static com.objogate.wl.swing.matcher.JLabelTextMatcher.withLabelText;
+import static com.objogate.wl.swing.probe.ComponentIdentity.selectorFor;
 
 public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> {
     public static final JTable SMALL_TABLE = new JTable(
@@ -115,7 +112,9 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         driver.hasSelectedCells(cell(table.getRowCount() - 1, 3));
     }
 
-    @Test public void 
+    @Test
+    @Ignore // there is no way to implement this both cross-platform and cross-look-and-feel
+    public void
     selectingMultipleNonContiguousCells() throws Exception {
         table.setCellSelectionEnabled(true);
         table.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -125,48 +124,6 @@ public class JTableDriverTest extends AbstractComponentDriverTest<JTableDriver> 
         driver.hasSelectedCells(cell(1, 1), cell(3, 3), cell(6, 5));
     }
 
-    @Test public void 
-    selectingMultipleRows() throws Exception {
-        table.setRowSelectionAllowed(true);
-        table.setColumnSelectionAllowed(false);
-
-        driver.selectCells(cell(1, 1), cell(2, 1), cell(3, 1));
-
-        driver.hasSelectedCells(
-                cell(1, 0), cell(1, 4),
-                cell(2, 0), cell(2, 4),
-                cell(3, 0), cell(3, 4)
-        );
-    }
-
-    @Test public void 
-    selectingMultipleColumns() throws Exception {
-        table.setRowSelectionAllowed(false);
-        table.setColumnSelectionAllowed(true);
-
-        driver.selectCells(cell(1, 1), cell(2, 2), cell(3, 3));
-
-        driver.hasSelectedCells(
-                cell(1, 1), cell(1, 2), cell(1, 3),
-                cell(9, 1), cell(9, 2), cell(9, 3)
-        );
-    }
-
-    @Test public void 
-    blockSelectionWithKeyboard() throws Exception {
-        table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-
-        table.setRowSelectionAllowed(true);
-        table.setColumnSelectionAllowed(true);
-
-        driver.selectCells(cell(1, 1), cell(2, 2), cell(3, 3));
-
-        driver.hasSelectedCells(
-                cell(1, 1), cell(1, 2), cell(1, 3),
-                cell(2, 1), cell(2, 2), cell(2, 3),
-                cell(3, 1), cell(3, 2), cell(3, 3)
-        );
-    }
 
     @Test public void 
     blockSelectionWithMouse() throws Exception {
