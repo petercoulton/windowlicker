@@ -29,13 +29,23 @@
         </option>
         <option name="IMPORT_LAYOUT_TABLE">
           <value>
-            <package name="javax" withSubpackages="true" />
-            <package name="java" withSubpackages="true" />
-            <package name="" withSubpackages="true" />
-            <package name="com.objogate" withSubpackages="true" />
+            <package name="javax" withSubpackages="true" static="false" />
+            <package name="java" withSubpackages="true" static="false" />
+            <package name="" withSubpackages="true" static="false" />
+            <package name="com.objogate" withSubpackages="true" static="false" />
             <emptyLine />
+            <package name="" withSubpackages="true" static="true" />
           </value>
         </option>
+        <ADDITIONAL_INDENT_OPTIONS fileType="clj">
+          <option name="INDENT_SIZE" value="2" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="2" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
         <ADDITIONAL_INDENT_OPTIONS fileType="groovy">
           <option name="INDENT_SIZE" value="2" />
           <option name="CONTINUATION_INDENT_SIZE" value="8" />
@@ -123,7 +133,6 @@
   </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
-    <option name="DEPLOY_AFTER_MAKE" value="0" />
     <resourceExtensions>
       <entry name=".+\.(properties|xml|html|dtd|tld)" />
       <entry name=".+\.(gif|png|jpeg|jpg)" />
@@ -213,6 +222,7 @@
           </option>
           <option name="IGNORE_DEPRECATED" value="false" />
           <option name="IGNORE_JAVADOC_PERIOD" value="true" />
+          <option name="IGNORE_DUPLICATED_THROWS" value="false" />
           <option name="myAdditionalJavadocTags" value="" />
         </inspection_tool>
         <inspection_tool class="JavadocReference" enabled="false" level="ERROR" enabled_by_default="false" />
@@ -231,11 +241,7 @@
     </list>
   </component>
   <component name="JavacSettings">
-    <option name="DEBUGGING_INFO" value="true" />
-    <option name="GENERATE_NO_WARNINGS" value="false" />
-    <option name="DEPRECATION" value="true" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="-Xlint" />
-    <option name="MAXIMUM_HEAP_SIZE" value="128" />
   </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
@@ -393,8 +399,8 @@
     <option name="projectName" value="windowlicker" />
   </component>
   <component name="ProjectDictionaryState">
-    <dictionary name="nat" />
     <dictionary name="pomfreni" />
+    <dictionary name="nat" />
   </component>
   <component name="ProjectKey">
     <option name="state" value="https://windowlicker.googlecode.com/svn/trunk/windowlicker.ipr" />
@@ -405,7 +411,7 @@
       <module fileurl="file://$PROJECT_DIR$/windowlicker.iml" filepath="$PROJECT_DIR$/windowlicker.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/classes" />
   </component>
   <component name="ProjectRunConfigurationManager">
@@ -479,27 +485,40 @@
       </value>
     </option>
   </component>
-  <component name="RmicSettings">
-    <option name="IS_EANABLED" value="false" />
-    <option name="DEBUGGING_INFO" value="true" />
-    <option name="GENERATE_NO_WARNINGS" value="false" />
-    <option name="GENERATE_IIOP_STUBS" value="false" />
-    <option name="ADDITIONAL_OPTIONS_STRING" value="" />
-  </component>
   <component name="SvnBranchConfigurationManager">
     <option name="myConfigurationMap">
       <map>
         <entry key="$PROJECT_DIR$">
           <value>
             <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://windowlicker.googlecode.com:443/svn/branches">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                  <entry key="https://windowlicker.googlecode.com:443/svn/tags">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                  <entry key="https://windowlicker.googlecode.com:443/svn/wiki">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
               <option name="branchUrls">
                 <list>
-                  <option value="https://npomfret@windowlicker.googlecode.com/svn/branches" />
-                  <option value="https://npomfret@windowlicker.googlecode.com/svn/tags" />
-                  <option value="https://npomfret@windowlicker.googlecode.com/svn/wiki" />
+                  <option value="https://windowlicker.googlecode.com:443/svn/branches" />
+                  <option value="https://windowlicker.googlecode.com:443/svn/tags" />
+                  <option value="https://windowlicker.googlecode.com:443/svn/wiki" />
                 </list>
               </option>
-              <option name="trunkUrl" value="https://npomfret@windowlicker.googlecode.com/svn/trunk" />
+              <option name="trunkUrl" value="https://windowlicker.googlecode.com:443/svn/trunk" />
+              <option name="userinfoInUrl" value="true" />
             </SvnBranchConfiguration>
           </value>
         </entry>

@@ -46,9 +46,8 @@ public abstract class PollingProber implements Prober, SystemProperties {
         probe.describeTo(description);
         description.appendText("\nbut...\n    ");
         probe.describeFailureTo(description);
-   
-        final String failureDescription = description.toString();
-        return failureDescription;
+
+        return description.toString();
     }
 
     private boolean poll(Probe probe) {
