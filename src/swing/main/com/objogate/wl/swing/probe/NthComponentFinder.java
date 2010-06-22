@@ -1,6 +1,7 @@
 package com.objogate.wl.swing.probe;
 
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.hamcrest.Description;
@@ -18,7 +19,8 @@ public class NthComponentFinder<T extends Component> implements ComponentSelecto
 
     @SuppressWarnings("unchecked")
     public List<T> components() {
-        return Arrays.asList(parentOrOwnerFinder.components().get(whichToChoose));
+        final List<T> components = parentOrOwnerFinder.components();
+        return components.isEmpty() ? new ArrayList<T>() : Arrays.asList(components.get(whichToChoose));
     }
 
     public T component() {
