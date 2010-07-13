@@ -42,9 +42,9 @@ public abstract class PollingProber implements Prober, SystemProperties {
     protected String describeFailureOf(Probe probe) {
         StringDescription description = new StringDescription();
    
-        description.appendText("\nTried to look for...\n    ");
+        description.appendText("\nTried to find:\n    ");
         probe.describeTo(description);
-        description.appendText("\nbut...\n    ");
+        description.appendText("\nbut:\n    ");
         probe.describeFailureTo(description);
 
         return description.toString();

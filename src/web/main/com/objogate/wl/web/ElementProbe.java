@@ -1,7 +1,7 @@
 package com.objogate.wl.web;
 
 import org.hamcrest.Description;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import com.objogate.wl.Probe;
@@ -21,11 +21,15 @@ public abstract class ElementProbe implements Probe {
             foundElement = driver.findElement();
             probe(foundElement);
         }
-        catch (NoSuchElementException e) {
+        catch (NotFoundException e) {
             // try next time
         }
         catch (StaleElementReferenceException e) {
             // try next time
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 

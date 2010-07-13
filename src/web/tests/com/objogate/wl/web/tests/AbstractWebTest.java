@@ -11,10 +11,6 @@ import com.objogate.wl.web.AsyncWebDriver;
 public abstract class AbstractWebTest {
     protected AsyncWebDriver browser = new AsyncWebDriver(new UnsynchronizedProber(), new FirefoxDriver());
 
-    public AbstractWebTest() {
-        super();
-    }
-
     protected void openResource(String htmlResourceName) {
         URL resourceURL = getClass().getResource(htmlResourceName);
         if (resourceURL == null) {
@@ -28,5 +24,4 @@ public abstract class AbstractWebTest {
     public final void quitBrowser() {
         browser.quit();
     }
-
 }

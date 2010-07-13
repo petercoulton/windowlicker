@@ -2,7 +2,6 @@ package com.objogate.wl.web;
 
 import java.awt.Dimension;
 import java.awt.Point;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.SelfDescribing;
@@ -11,7 +10,6 @@ import org.openqa.selenium.RenderedWebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.Locatable;
-
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.Tracker;
 
@@ -19,12 +17,22 @@ import com.objogate.wl.gesture.Tracker;
 public class AsyncElementDriver implements SelfDescribing {
     private final Prober prober;
     private final WebDriver webDriver;
+    private final AsyncElementDriver searchStart;
     private final By criteria;
 
     public AsyncElementDriver(Prober prober, WebDriver webDriver, By criteria) {
+        this(prober, webDriver, null, criteria);
+    }
+
+    public AsyncElementDriver(Prober prober, WebDriver webDriver, AsyncElementDriver searchStart, By criteria) {
         this.prober = prober;
         this.webDriver = webDriver;
+        this.searchStart = searchStart;
         this.criteria = criteria;
+    }
+
+    public AsyncElementDriver element(By criteria) {
+        return new AsyncElementDriver(prober, webDriver, this, criteria);
     }
 
     public void assertText(final Matcher<String> textMatcher) {
@@ -128,10 +136,24 @@ public class AsyncElementDriver implements SelfDescribing {
     }
     
     public void describeTo(Description description) {
-        description.appendText("an element ").appendText(criteria.toString());
+        description.appendText("an element ").appendText(formatCriteria());
+        if (searchStart != null) {
+            description.appendText(", in ").appendDescriptionOf(searchStart);
+        }
     }
-    
+
+    private String formatCriteria() {
+        return criteria.toString().toLowerCase().replaceAll("[^\\w]+", " ");
+    }
+
     WebElement findElement() {
-        return webDriver.findElement(criteria);
+        if (searchStart == null) {
+            return webDriver.findElement(criteria);
+        }
+        else {
+            WebElement ancestor = searchStart.findElement();
+            WebElement descendent = ancestor.findElement(criteria);
+            return descendent;
+        }
     }
 }
