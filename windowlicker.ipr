@@ -617,7 +617,9 @@
         <root url="file://$PROJECT_DIR$/lib/webdriver" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/lib/webdriver/selenium-java-src-2.0a4.jar!/" />
+      </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/webdriver" recursive="false" />
     </library>
     <library name="jna">

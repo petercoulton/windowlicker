@@ -35,6 +35,15 @@ public class AsyncElementDriver implements SelfDescribing {
         return new AsyncElementDriver(prober, webDriver, this, criteria);
     }
 
+    public void assertExists() {
+        prober.check(new ElementProbe(this) {
+            @Override
+            protected void probe(WebElement element) {
+                // Nothing else to check!
+            }
+        });
+    }
+    
     public void assertText(final Matcher<String> textMatcher) {
         prober.check(new ElementPropertyProbe(this, "text", textMatcher) {
             @Override
@@ -69,15 +78,15 @@ public class AsyncElementDriver implements SelfDescribing {
             }
         });
     }
-    
+
     public void assertIsSelected() {
     	assertSelectedFlagIs(true);
     }
-    
+
     public void assertIsNotSelected() {
     	assertSelectedFlagIs(false);
     }
-    
+
     private void assertSelectedFlagIs(final boolean expectedFlagValue) {
         prober.check(new ElementFlagProbe(this, "selected", expectedFlagValue) {
             @Override
@@ -113,11 +122,11 @@ public class AsyncElementDriver implements SelfDescribing {
             }
         });
     }
-    
+
     public Tracker center() {
         return new Tracker() {
             private Point center;
-            
+
             public Point target(Point currentLocation) {
             	if (center == null) {
 	                prober.check(new ElementProbe(AsyncElementDriver.this) {
@@ -125,7 +134,7 @@ public class AsyncElementDriver implements SelfDescribing {
 	                    protected void probe(WebElement e) {
 	                        Point p = ((Locatable)e).getLocationOnScreenOnceScrolledIntoView();
 	                        Dimension d = ((RenderedWebElement)e).getSize();
-	                        
+
 	                        center = new Point(p.x + d.width/2, p.y + d.height/2);
 	                    }
 	                });
@@ -134,7 +143,7 @@ public class AsyncElementDriver implements SelfDescribing {
             }
         };
     }
-    
+
     public void describeTo(Description description) {
         description.appendText("an element ").appendText(formatCriteria());
         if (searchStart != null) {
@@ -143,7 +152,7 @@ public class AsyncElementDriver implements SelfDescribing {
     }
 
     private String formatCriteria() {
-        return criteria.toString().toLowerCase().replaceAll("[^\\w]+", " ");
+        return criteria.toString().replaceFirst("By\\.", "by ").replaceFirst(":", "");
     }
 
     WebElement findElement() {
@@ -151,9 +160,7 @@ public class AsyncElementDriver implements SelfDescribing {
             return webDriver.findElement(criteria);
         }
         else {
-            WebElement ancestor = searchStart.findElement();
-            WebElement descendent = ancestor.findElement(criteria);
-            return descendent;
+            return searchStart.findElement().findElement(criteria);
         }
     }
 }

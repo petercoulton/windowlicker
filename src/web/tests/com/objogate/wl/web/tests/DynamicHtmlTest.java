@@ -1,9 +1,9 @@
 package com.objogate.wl.web.tests;
 
-import static org.hamcrest.Matchers.containsString;
-
 import org.junit.Test;
 import org.openqa.selenium.By;
+
+import static org.hamcrest.Matchers.containsString;
 
 
 public class DynamicHtmlTest extends AbstractWebTest {
@@ -28,6 +28,13 @@ public class DynamicHtmlTest extends AbstractWebTest {
         browser.element(By.id("x")).assertText(containsString("Created"));
     }
     
+    @Test
+    public void dynamicElementExists() {
+        openResource("async-element.html");
+
+        browser.element(By.id("x")).assertExists();
+    }
+
     @Test
     public void dynamicInputValue() {
         openResource("async-input-value.html");
