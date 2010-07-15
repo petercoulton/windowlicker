@@ -36,6 +36,13 @@ public class DynamicHtmlTest extends AbstractWebTest {
     }
 
     @Test
+    public void dynamicElementIsDeleted() {
+        openResource("async-delete-element.html");
+        browser.element(By.id("deleteme")).assertExists();
+        browser.element(By.id("deleteme")).assertDoesNotExist();
+    }
+
+    @Test
     public void dynamicInputValue() {
         openResource("async-input-value.html");
         

@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Example Async Behaviour Deleting an Element</title>
+  </head>
+  <body>
+    <h1>Example Async Behaviour Deleting an Element</h1>
+
+    <p id="deleteme">Goodbye, cruel world!</p>
+    
+    <script type="text/javascript">
+    	function timeout() {
+            e = document.getElementById("deleteme");
+    		e.parentNode.removeChild(e);
+    	}
+    	
+    	setTimeout("timeout();", 1000);
+    </script>
+  </body>
+</html>

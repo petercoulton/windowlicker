@@ -43,7 +43,11 @@ public class AsyncElementDriver implements SelfDescribing {
             }
         });
     }
-    
+
+    public void assertDoesNotExist() {
+        prober.check(new MissingElementProbe(this));
+    }
+
     public void assertText(final Matcher<String> textMatcher) {
         prober.check(new ElementPropertyProbe(this, "text", textMatcher) {
             @Override
