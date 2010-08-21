@@ -14,11 +14,27 @@
 	<classpathentry kind="lib" path="lib/webdriver/json-20080701.jar"/>
 	<classpathentry kind="lib" path="tools/apache-ant-1.7.0/lib/ant.jar"/>
 	<classpathentry kind="lib" path="tools/apache-ant-1.7.0/lib/ant-junit.jar"/>
-	<classpathentry kind="lib" path="lib/jna/jna-3.1.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jmock/jmock-2.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/jmock/jmock-junit4-2.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/webdriver/webdriver-common.jar"/>
-	<classpathentry kind="lib" path="lib/webdriver/webdriver-firefox.jar"/>
+	<classpathentry kind="lib" path="lib/jna/jna-3.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/commons-io-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/cssparser-0.9.5.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/google-collect-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/htmlunit-2.7.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/htmlunit-core-js-2.7.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/jna.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/nekohtml-1.9.14.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/sac-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/selenium-java-2.0a4.jar" sourcepath="lib/webdriver/selenium-java-src-2.0a4.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/serializer-2.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/xalan-2.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/xercesImpl-2.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/webdriver/xml-apis-1.3.04.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
