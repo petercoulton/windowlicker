@@ -127,6 +127,33 @@ public class AsyncElementDriver implements SelfDescribing {
         });
     }
 
+    public void submit() {
+        prober.check(new ElementProbe(this) {
+            @Override
+            protected void probe(WebElement element) {
+                element.submit();
+            }
+        });
+    }
+
+    public void select() {
+        prober.check(new ElementProbe(this) {
+            @Override
+            protected void probe(WebElement element) {
+                element.setSelected();
+            }
+        });
+    }
+
+    public void toggle() {
+        prober.check(new ElementProbe(this) {
+            @Override
+            protected void probe(WebElement element) {
+                element.toggle();
+            }
+        });
+    }
+
     public Tracker center() {
         return new Tracker() {
             private Point center;
