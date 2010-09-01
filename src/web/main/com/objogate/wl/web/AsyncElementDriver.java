@@ -13,6 +13,10 @@ import org.openqa.selenium.internal.Locatable;
 import com.objogate.wl.Prober;
 import com.objogate.wl.gesture.Tracker;
 
+import static com.objogate.wl.web.ElementActions.*;
+import static com.objogate.wl.web.ElementActions.SELECT;
+import static com.objogate.wl.web.ElementActions.TOGGLE;
+
 
 public class AsyncElementDriver implements SelfDescribing {
     private final Prober prober;
@@ -36,7 +40,7 @@ public class AsyncElementDriver implements SelfDescribing {
     }
 
     public void assertExists() {
-        prober.check(new ElementProbe(this) {
+        prober.check(new ElementProbe(AsyncElementDriver.this) {
             @Override
             protected void probe(WebElement element) {
                 // Nothing else to check!
@@ -100,58 +104,32 @@ public class AsyncElementDriver implements SelfDescribing {
         });
     }
 
-    public void click() {
-        prober.check(new ElementProbe(this) {
-            @Override
-            protected void probe(WebElement element) {
-                element.click();
-            }
-        });
+    public void apply(ElementAction action) {
+        prober.check(new ElementActionProbe(this, action));
     }
-
+    
+    public void click() {
+        apply(CLICK);
+    }
+    
     public void type(final String string) {
-        prober.check(new ElementProbe(this) {
-            @Override
-            protected void probe(WebElement element) {
-                element.sendKeys(string);
-            }
-        });
+        apply(sendKeys(string));
     }
 
     public void clear() {
-        prober.check(new ElementProbe(this) {
-            @Override
-            protected void probe(WebElement element) {
-                element.clear();
-            }
-        });
+        apply(CLEAR);
     }
 
     public void submit() {
-        prober.check(new ElementProbe(this) {
-            @Override
-            protected void probe(WebElement element) {
-                element.submit();
-            }
-        });
+        apply(SUBMIT);
     }
 
     public void select() {
-        prober.check(new ElementProbe(this) {
-            @Override
-            protected void probe(WebElement element) {
-                element.setSelected();
-            }
-        });
+        apply(SELECT);
     }
 
     public void toggle() {
-        prober.check(new ElementProbe(this) {
-            @Override
-            protected void probe(WebElement element) {
-                element.toggle();
-            }
-        });
+        apply(TOGGLE);
     }
 
     public Tracker center() {
